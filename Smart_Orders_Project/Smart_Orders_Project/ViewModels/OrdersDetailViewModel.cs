@@ -1,8 +1,11 @@
-﻿using Smart_Orders_Project.Views;
+﻿using Smart_Orders_Project.Models;
+using Smart_Orders_Project.Views;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace Smart_Orders_Project.ViewModels
@@ -12,12 +15,43 @@ namespace Smart_Orders_Project.ViewModels
     {
         private string itemId;
         private string customerName;
+        public ObservableCollection<LineOfOrder> LinesList { get; set; }
         public Command AddLine { get; }
         public Command SelectCustomer { get; }
+        public Command LoadItemsCommand { get; }
         public OrdersDetailViewModel()
         {
             AddLine = new Command(OnAddLineClicked);
             SelectCustomer = new Command(OnSelectCustomerClicked);
+            LinesList = new ObservableCollection<LineOfOrder>();
+            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
+        }
+        private async Task ExecuteLoadItemsCommand()
+        {
+            IsBusy = true;
+
+            try
+            {
+                LinesList.Clear();
+                var items = await LinesRepo.GetItemsAsync(true);
+                foreach (var item in items)
+                {
+                    LinesList.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+        public void OnAppearing()
+        {
+            IsBusy = true;
+
         }
         public string CustomerName
         {

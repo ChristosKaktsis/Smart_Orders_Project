@@ -1,14 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:vm="clr-namespace:Smart_Orders_Project.ViewModels"
              x:Class="Smart_Orders_Project.Views.OrderDetailPage"  
+             xmlns:dxcv="http://schemas.devexpress.com/xamarin/2014/forms/collectionview" xmlns:model="clr-namespace:Smart_Orders_Project.Models"
              Shell.NavBarHasShadow="False"
              BackgroundColor="AliceBlue"
              Title="Παραγγελία 00001">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Ολοκήρωση"/>
     </ContentPage.ToolbarItems>
-    <ContentPage.Content>
+    <RefreshView x:DataType="vm:OrdersDetailViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
         <Grid>
             <StackLayout Padding="0" Margin="0">
                 <Frame BackgroundColor="{StaticResource Primary}" HeightRequest="10" >
@@ -31,35 +33,58 @@
                 </Frame>
                 <StackLayout Margin="10,30,10,0">
                     <Label Text="Line Of Orders" FontSize="16" FontAttributes="Bold"/>
-                    <CollectionView x:Name="OrdersList"  BackgroundColor="Transparent" SelectionMode="None" >
-                        <CollectionView.ItemsSource>
-                            <x:Array Type="{x:Type x:String}">
-                                <x:String>Hello List</x:String>
-                                <x:String>Hello List</x:String>
-                                <x:String>Hello List</x:String>
-                            </x:Array>
-                        </CollectionView.ItemsSource>
-                        <CollectionView.ItemTemplate>
+                    <dxcv:DXCollectionView x:Name="OrdersList" SelectionMode="Single" ItemsSource="{Binding LinesList}">
+                        <dxcv:DXCollectionView.ItemTemplate>
                             <DataTemplate>
                                 <Grid Padding="10">
                                     <Frame BackgroundColor="white"  Padding="10" Margin="0,0,0,0" CornerRadius="7" HasShadow="True">
-                                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
+                                        <StackLayout x:DataType="model:LineOfOrder" Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
                                             <StackLayout>
-                                                <Label Text="ITEM TITLE" FontSize="16" FontAttributes="Bold"/>
-                                                <Label Text="NO 1"/>
+                                                <Label Text="{Binding Product.Name}" FontSize="16" FontAttributes="Bold"/>
+                                                <Label Text="{Binding Product.BarCode}"/>
                                             </StackLayout>
-
-                                            <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
-                                                <Label Text="Price:" FontSize="16"/>
-                                                <Label Text="1600 $" FontSize="16"/>
+                                            <StackLayout HorizontalOptions="EndAndExpand">
+                                                <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                                                    <Label Text="Price:" FontSize="16"/>
+                                                    <Label Text="{Binding Sum , StringFormat='{0} €'}" FontSize="16"/>
+                                                </StackLayout>
+                                                <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                                                    <Label Text="Ποσότητα:" FontSize="16"/>
+                                                    <Label Text="{Binding Quantity}" FontSize="16"/>
+                                                </StackLayout>
                                             </StackLayout>
 
                                         </StackLayout>
                                     </Frame>
                                 </Grid>
                             </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
+                        </dxcv:DXCollectionView.ItemTemplate>
+                        <dxcv:DXCollectionView.SelectedItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="10">
+                                    <Frame BackgroundColor="white"  Padding="10" Margin="0,0,0,0" CornerRadius="7" HasShadow="True">
+                                        <StackLayout x:DataType="model:LineOfOrder" Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
+                                            <StackLayout>
+                                                <Label Text="ITEM TITLE" FontSize="16" FontAttributes="Bold"/>
+                                                <Label Text="NO 1"/>
+                                            </StackLayout>
+                                            <StackLayout HorizontalOptions="EndAndExpand">
+                                                <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                                                    <Label Text="Price:" FontSize="16"/>
+                                                    <Label Text="1600 $" FontSize="16"/>
+                                                </StackLayout>
+                                                <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                                                    <Label Text="Ποσότητα:" FontSize="16"/>
+                                                    <Label Text="15" FontSize="16"/>
+                                                </StackLayout>
+                                            </StackLayout>
+
+                                        </StackLayout>
+                                    </Frame>
+                                </Grid>
+                            </DataTemplate>
+                        </dxcv:DXCollectionView.SelectedItemTemplate>
+                    </dxcv:DXCollectionView>
                 </StackLayout>
             </StackLayout>
             <StackLayout HorizontalOptions="End" VerticalOptions="End" Margin="20">
@@ -68,5 +93,5 @@
                 </Frame>
             </StackLayout>
         </Grid>
-    </ContentPage.Content>
+    </RefreshView>
 </ContentPage>

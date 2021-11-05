@@ -16,6 +16,7 @@ namespace Smart_Orders_Project
             DependencyService.Register<MockDataStore>();
             DependencyService.Register<RepositoryCustomers>();
             DependencyService.Register<RepositoryItems>();
+            DependencyService.Register<RepositoryLineOfOrder>();
 
             MainPage = new AppShell();
         }
