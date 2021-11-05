@@ -1,0 +1,23 @@
+﻿using Smart_Orders_Project.Views;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using Xamarin.Forms;
+
+namespace Smart_Orders_Project.ViewModels
+{
+    class OrdersViewModel : BaseViewModel
+    {
+        public Command AddOrder { get; }
+        public OrdersViewModel()
+        {
+            AddOrder = new Command(OnAddOrderClicked);        
+        }
+
+        private async void OnAddOrderClicked(object obj)
+        {
+            // Prefixing with `//` switches to a different navigation stack instead of pushing to the active one
+            await Shell.Current.GoToAsync(nameof(OrderDetailPage));
+        }
+    }
+}

@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Smart_Orders_Project.Views.OrdersPage"
+             Shell.NavBarHasShadow="False"
+             BackgroundColor="AliceBlue"
+             Title="Παραγγελίες">
+    <ContentPage.Content>
+        <Grid>
+            <StackLayout Padding="0" Margin="0" >
+                <Frame BackgroundColor="{StaticResource Primary}" HeightRequest="10">
+                </Frame>
+            </StackLayout>
+            <StackLayout Margin="10,20,10,0">
+                <CollectionView x:Name="OrdersList"  BackgroundColor="Transparent" SelectionMode="None" >
+                    <CollectionView.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>1</x:String>
+                            <x:String>2</x:String>
+                            <x:String>3</x:String>
+                        </x:Array>
+                    </CollectionView.ItemsSource>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="10">
+                                <Frame BackgroundColor="white"  Padding="10" Margin="0,0,0,0" CornerRadius="7" HasShadow="True">
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
+                                        <StackLayout>
+                                            <Label Text="ORDER 1"/>
+                                            <Label Text="NO 1"/>
+                                        </StackLayout>
+                                        <Label Text="customer 31" FontSize="16" FontAttributes="Bold"  VerticalOptions="Start" HorizontalOptions="CenterAndExpand"/>
+                                        <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
+                                            <Label Text="Price:" FontSize="16"/>
+                                            <Label Text="1600 $" FontSize="16"/>
+                                        </StackLayout>
+
+                                    </StackLayout>
+                                </Frame>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                
+            </StackLayout>
+            <StackLayout HorizontalOptions="End" VerticalOptions="End" Margin="20">
+                <Frame Margin="0" Padding="0" CornerRadius="30" WidthRequest="60" HasShadow="True">
+                    <Button Text="+"  FontSize="30" CornerRadius="30" Command="{Binding AddOrder}"/>
+                </Frame>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

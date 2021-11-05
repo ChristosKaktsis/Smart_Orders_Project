@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Smart_Orders_Project.Views.OrderDetailPage"  
+             Shell.NavBarHasShadow="False"
+             BackgroundColor="AliceBlue"
+             Title="Παραγγελία 00001">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Ολοκήρωση"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <Grid>
+            <StackLayout Padding="0" Margin="0">
+                <Frame BackgroundColor="{StaticResource Primary}" HeightRequest="10" >
+                </Frame>
+            </StackLayout>
+            <StackLayout Padding="0" Margin="0">
+                <Frame BackgroundColor="{StaticResource Primary}" HeightRequest="90" CornerRadius="30" HasShadow="True">
+                </Frame>
+            </StackLayout>
+            <StackLayout Padding="0" Margin="0">
+                <Frame BackgroundColor="{StaticResource Primary}" Padding="0" Margin="10,10,10,0" HeightRequest="40" HasShadow="False">
+                    <StackLayout>
+                        <Label Text="{Binding CustomerName}" FontSize="18" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+            <StackLayout>
+                <Frame BackgroundColor="Transparent" Padding="0" Margin="10,70,10,0" CornerRadius="30" HasShadow="True">
+                    <Button Text="Select Customer" CornerRadius="30" BackgroundColor="{StaticResource Tradic}" Command="{Binding SelectCustomer}"/>
+                </Frame>
+                <StackLayout Margin="10,30,10,0">
+                    <Label Text="Line Of Orders" FontSize="16" FontAttributes="Bold"/>
+                    <CollectionView x:Name="OrdersList"  BackgroundColor="Transparent" SelectionMode="None" >
+                        <CollectionView.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Hello List</x:String>
+                                <x:String>Hello List</x:String>
+                                <x:String>Hello List</x:String>
+                            </x:Array>
+                        </CollectionView.ItemsSource>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="10">
+                                    <Frame BackgroundColor="white"  Padding="10" Margin="0,0,0,0" CornerRadius="7" HasShadow="True">
+                                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
+                                            <StackLayout>
+                                                <Label Text="ITEM TITLE" FontSize="16" FontAttributes="Bold"/>
+                                                <Label Text="NO 1"/>
+                                            </StackLayout>
+
+                                            <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                                                <Label Text="Price:" FontSize="16"/>
+                                                <Label Text="1600 $" FontSize="16"/>
+                                            </StackLayout>
+
+                                        </StackLayout>
+                                    </Frame>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
+            </StackLayout>
+            <StackLayout HorizontalOptions="End" VerticalOptions="End" Margin="20">
+                <Frame Margin="0" Padding="0" CornerRadius="30" WidthRequest="60" HasShadow="True">
+                    <Button Text="+"  FontSize="30" CornerRadius="30" Command="{Binding AddLine}"/>
+                </Frame>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

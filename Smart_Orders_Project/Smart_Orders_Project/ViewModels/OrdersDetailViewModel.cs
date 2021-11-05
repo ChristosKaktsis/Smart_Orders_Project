@@ -1,0 +1,62 @@
+﻿using Smart_Orders_Project.Views;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Text;
+using Xamarin.Forms;
+
+namespace Smart_Orders_Project.ViewModels
+{
+    [QueryProperty(nameof(ItemId), nameof(ItemId))]
+    class OrdersDetailViewModel : BaseViewModel
+    {
+        private string itemId;
+        private string customerName;
+        public Command AddLine { get; }
+        public Command SelectCustomer { get; }
+        public OrdersDetailViewModel()
+        {
+            AddLine = new Command(OnAddLineClicked);
+            SelectCustomer = new Command(OnSelectCustomerClicked);
+        }
+        public string CustomerName
+        {
+            get => customerName;
+            set => SetProperty(ref customerName, value);
+        }
+        public string ItemId
+        {
+            get
+            {
+                return itemId;
+            }
+            set
+            {
+                itemId = value;
+                LoadItemId(value);
+            }
+        }
+        public async void LoadItemId(string itemId)
+        {
+            try
+            {
+                var item = await CustomerRepo.GetItemAsync(itemId);
+                CustomerName = string.IsNullOrEmpty(item.AltName) ? item.Name : item.AltName;
+            }
+            catch (Exception)
+            {
+                Debug.WriteLine("Failed to Load Item");
+            }
+        }
+        private async void OnAddLineClicked(object obj)
+        {
+            // Prefixing with `//` switches to a different navigation stack instead of pushing to the active one
+            await Shell.Current.GoToAsync(nameof(LineOfOrdersSelectionPage));
+        }
+        private async void OnSelectCustomerClicked(object obj)
+        {
+            // Prefixing with `//` switches to a different navigation stack instead of pushing to the active one
+            await Shell.Current.GoToAsync(nameof(CustomerSelectionPage));
+        }
+    }
+}
