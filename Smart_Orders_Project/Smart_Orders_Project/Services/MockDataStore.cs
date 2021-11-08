@@ -56,5 +56,10 @@ namespace Smart_Orders_Project.Services
         {
             return await Task.FromResult(items);
         }
+
+        public Task<bool> UploadItemAsync(Item item)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Smart_Orders_Project.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,9 +23,12 @@ namespace Smart_Orders_Project.Services
             return await Task.FromResult(true);
         }
 
-        public Task<bool> DeleteItemAsync(string id)
+        public async Task<bool> DeleteItemAsync(string id)
         {
-            throw new NotImplementedException();
+            var oldItem = LineList.Where((LineOfOrder arg) => arg.Oid == Guid.Parse(id)).FirstOrDefault();
+            LineList.Remove(oldItem);
+
+            return await Task.FromResult(true);
         }
 
         public async Task<LineOfOrder> GetItemAsync(string id)
@@ -44,6 +48,28 @@ namespace Smart_Orders_Project.Services
             LineList.Add(item);
 
             return await Task.FromResult(true);
+        }
+
+        public async Task<bool> UploadItemAsync(LineOfOrder item)
+        {
+            return await Task.Run(() =>
+            {
+                int ok = 0;
+                string queryString = @"INSERT INTO RFΓραμμέςΠωλήσεων (Oid, RFΠωλήσεις, Είδος, Ποσότητα, Θέση, 
+                    OptimisticLockField, GCRecord, BarCodeΕίδους, ΠοσότηταΔιάστασης)
+                    VALUES((Convert(uniqueidentifier, N'" + item.Oid + "')), (Convert(uniqueidentifier, N'" + item.RFSalesOid + "')), (Convert(uniqueidentifier, N'" + item.Product.Oid + "')), '"+item.Quantity+"', null, '1', null, '"+item.Product.BarCode+"', '" + item.Product.Price + "'); ";
+                using (SqlConnection connection = new SqlConnection(ConnectionString()))
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(queryString, connection);
+                    ok = command.ExecuteNonQuery();
+                }
+                return ok <= 1 ? true : false;
+            });
+        }
+        private string ConnectionString()
+        {
+            return @"User Id=sa;password=1;Pooling=false;Data Source=192.168.3.44\SQLEXPRESS;Initial Catalog=maindemo";
         }
     }
 }

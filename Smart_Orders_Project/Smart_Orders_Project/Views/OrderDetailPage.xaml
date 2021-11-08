@@ -8,7 +8,7 @@
              BackgroundColor="AliceBlue"
              Title="Παραγγελία 00001">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Ολοκήρωση"/>
+        <ToolbarItem Text="Ολοκήρωση" Command="{Binding SaveRFSalesCommand}"/>
     </ContentPage.ToolbarItems>
     <RefreshView x:DataType="vm:OrdersDetailViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
         <Grid>
@@ -65,20 +65,19 @@
                                     <Frame BackgroundColor="white"  Padding="10" Margin="0,0,0,0" CornerRadius="7" HasShadow="True">
                                         <StackLayout x:DataType="model:LineOfOrder" Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
                                             <StackLayout>
-                                                <Label Text="ITEM TITLE" FontSize="16" FontAttributes="Bold"/>
-                                                <Label Text="NO 1"/>
+                                                <Label Text="{Binding Product.Name}" FontSize="16" FontAttributes="Bold"/>
+                                                <Label Text="{Binding Product.BarCode}"/>
                                             </StackLayout>
                                             <StackLayout HorizontalOptions="EndAndExpand">
                                                 <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
                                                     <Label Text="Price:" FontSize="16"/>
-                                                    <Label Text="1600 $" FontSize="16"/>
+                                                    <Label Text="{Binding Sum , StringFormat='{0} €'}" FontSize="16"/>
                                                 </StackLayout>
                                                 <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
                                                     <Label Text="Ποσότητα:" FontSize="16"/>
-                                                    <Label Text="15" FontSize="16"/>
+                                                    <Label Text="{Binding Quantity}" FontSize="16"/>
                                                 </StackLayout>
                                             </StackLayout>
-
                                         </StackLayout>
                                     </Frame>
                                 </Grid>

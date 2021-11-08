@@ -8,6 +8,7 @@ namespace Smart_Orders_Project.Models
     {
         public Guid Oid { get; set; }
         public Product Product { get; set; }
+        public Guid RFSalesOid { get; set; }
         public string ProductBarCode { get; set; }
         public int Quantity { get; set; }
         public double Sum { get; set; }

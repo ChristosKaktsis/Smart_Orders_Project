@@ -131,7 +131,12 @@ namespace Smart_Orders_Project.Services
         }
         private string ConnectionString()
         {
-            return @"User Id=sa;password=1;Pooling=false;Data Source=DESKTOP-DTOHJQR\SQLEXPRESS;Initial Catalog=maindemo";
+            return @"User Id=sa;password=1;Pooling=false;Data Source=192.168.3.44\SQLEXPRESS;Initial Catalog=maindemo";
+        }
+
+        public Task<bool> UploadItemAsync(Product item)
+        {
+            throw new NotImplementedException();
         }
     }
 }

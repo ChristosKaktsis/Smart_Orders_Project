@@ -11,5 +11,6 @@ namespace Smart_Orders_Project.Services
         Task<bool> DeleteItemAsync(string id);
         Task<T> GetItemAsync(string id);
         Task<List<T>> GetItemsAsync(bool forceRefresh = false);
+        Task<bool> UploadItemAsync(T item);
     }
 }

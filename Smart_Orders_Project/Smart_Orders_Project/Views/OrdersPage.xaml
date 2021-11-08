@@ -2,46 +2,58 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Smart_Orders_Project.Views.OrdersPage"
+             xmlns:dxcv="http://schemas.devexpress.com/xamarin/2014/forms/collectionview" 
+             xmlns:model="clr-namespace:Smart_Orders_Project.Models" 
+             xmlns:vm="clr-namespace:Smart_Orders_Project.ViewModels"
              Shell.NavBarHasShadow="False"
              BackgroundColor="AliceBlue"
              Title="Παραγγελίες">
-    <ContentPage.Content>
+    <RefreshView x:DataType="vm:OrdersViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
         <Grid>
             <StackLayout Padding="0" Margin="0" >
                 <Frame BackgroundColor="{StaticResource Primary}" HeightRequest="10">
                 </Frame>
             </StackLayout>
-            <StackLayout Margin="10,20,10,0">
-                <CollectionView x:Name="OrdersList"  BackgroundColor="Transparent" SelectionMode="None" >
-                    <CollectionView.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>1</x:String>
-                            <x:String>2</x:String>
-                            <x:String>3</x:String>
-                        </x:Array>
-                    </CollectionView.ItemsSource>
-                    <CollectionView.ItemTemplate>
+            <StackLayout Margin="0,20,0,0">
+                <dxcv:DXCollectionView x:Name="OrdersList" SelectionMode="None" ItemsSource="{Binding RFSalesList}">
+                    <dxcv:DXCollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <dxcv:SwipeContainer>
+                                <dxcv:SwipeContainer.ItemView>
+                                    <Grid Padding="10">
+                                        <Frame BackgroundColor="white"  Padding="10" Margin="0,0,0,0" CornerRadius="0" HasShadow="True">
+                                            <StackLayout x:DataType="model:RFSales" Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
+                                                <StackLayout>
+                                                    <Label Text="{Binding Customer.Name}" FontSize="16" FontAttributes="Bold"/>
+                                                    <Label Text="{Binding CreationDate}" FontSize="16"/>
+                                                </StackLayout>
+                                            </StackLayout>
+                                        </Frame>
+                                    </Grid>
+                                </dxcv:SwipeContainer.ItemView>
+                                <dxcv:SwipeContainer.EndSwipeItems>
+                                    <dxcv:SwipeItem Caption="Delete"
+                                        BackgroundColor="Red"   
+                                        />
+                                </dxcv:SwipeContainer.EndSwipeItems>
+                            </dxcv:SwipeContainer>
+                        </DataTemplate>
+                    </dxcv:DXCollectionView.ItemTemplate>
+                    <!--<dxcv:DXCollectionView.SelectedItemTemplate>
                         <DataTemplate>
                             <Grid Padding="10">
                                 <Frame BackgroundColor="white"  Padding="10" Margin="0,0,0,0" CornerRadius="7" HasShadow="True">
-                                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
+                                    <StackLayout x:DataType="model:RFSales" Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
                                         <StackLayout>
-                                            <Label Text="ORDER 1"/>
-                                            <Label Text="NO 1"/>
+                                            <Label Text="{Binding Customer.Name}" FontSize="16" FontAttributes="Bold"/>
+                                            <Label Text="{Binding CreationDate}" FontSize="16"/>
                                         </StackLayout>
-                                        <Label Text="customer 31" FontSize="16" FontAttributes="Bold"  VerticalOptions="Start" HorizontalOptions="CenterAndExpand"/>
-                                        <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
-                                            <Label Text="Price:" FontSize="16"/>
-                                            <Label Text="1600 $" FontSize="16"/>
-                                        </StackLayout>
-
                                     </StackLayout>
                                 </Frame>
                             </Grid>
                         </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-                
+                    </dxcv:DXCollectionView.SelectedItemTemplate>-->
+                </dxcv:DXCollectionView>
             </StackLayout>
             <StackLayout HorizontalOptions="End" VerticalOptions="End" Margin="20">
                 <Frame Margin="0" Padding="0" CornerRadius="30" WidthRequest="60" HasShadow="True">
@@ -49,5 +61,5 @@
                 </Frame>
             </StackLayout>
         </Grid>
-    </ContentPage.Content>
+    </RefreshView>
 </ContentPage>

@@ -9,10 +9,11 @@ using Xamarin.Forms;
 
 namespace Smart_Orders_Project.ViewModels
 {
+    [QueryProperty(nameof(ItemId), nameof(ItemId))]
     class LineOfOrdersViewModel : BaseViewModel
     {
-       
 
+        private string itemId;
         private Product _selectedProduct;
         private string _searchText;
         private int _quantity = 1;
@@ -130,7 +131,8 @@ namespace Smart_Orders_Project.ViewModels
                 Oid = Guid.NewGuid(),
                 Product = SelectedProduct,
                 Quantity = this.Quantity,
-                Sum = this.Sum
+                Sum = this.Sum,
+                RFSalesOid = Guid.Parse(ItemId)
             };
 
             await LinesRepo.AddItemAsync(newItem);
@@ -157,6 +159,17 @@ namespace Smart_Orders_Project.ViewModels
             {
                 SetProperty(ref _sum, value);
 
+            }
+        }
+        public string ItemId
+        {
+            get
+            {
+                return itemId;
+            }
+            set
+            {
+                itemId = value;
             }
         }
     }

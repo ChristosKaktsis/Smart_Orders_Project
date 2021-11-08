@@ -14,8 +14,8 @@ namespace Smart_Orders_Project.Services
         
         public RepositoryCustomers()
         {
-            CustomerList = new List<Customer>();
-            GetItemsFromDB();
+            //CustomerList = new List<Customer>();
+            //GetItemsFromDB();
         }
 
         private  void GetItemsFromDB()
@@ -79,7 +79,29 @@ namespace Smart_Orders_Project.Services
 
         public async Task<List<Customer>> GetItemsAsync(bool forceRefresh = false)
         { 
-            return await Task.FromResult(CustomerList);
+            return await Task.Run(()=>
+            {
+                CustomerList = new List<Customer>();
+                string queryString = "select Oid , Κωδικός ,Επωνυμία ,ΑΦΜ ,Email from Πελάτης where GCRecord is null";
+                using (SqlConnection connection = new SqlConnection(ConnectionString()))
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(queryString, connection);
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        CustomerList.Add(new Customer
+                        {
+                            Oid = Guid.Parse(reader["Oid"].ToString()),
+                            CodeNumber = reader["Κωδικός"] != null ? reader["Κωδικός"].ToString() : string.Empty,
+                            Name = reader["Επωνυμία"].ToString(),
+                            AFM = reader["ΑΦΜ"].ToString(),
+                            Email = reader["Email"].ToString()
+                        });
+                    }
+                    return CustomerList;
+                }
+            });
         }
 
         public Task<bool> UpdateItemAsync(Customer item)
@@ -88,7 +110,12 @@ namespace Smart_Orders_Project.Services
         }
         private string ConnectionString()
         {
-            return @"User Id=sa;password=1;Pooling=false;Data Source=DESKTOP-DTOHJQR\SQLEXPRESS;Initial Catalog=maindemo";
+            return @"User Id=sa;password=1;Pooling=false;Data Source=192.168.3.44\SQLEXPRESS;Initial Catalog=maindemo";
+        }
+
+        public Task<bool> UploadItemAsync(Customer item)
+        {
+            throw new NotImplementedException();
         }
     }
 }

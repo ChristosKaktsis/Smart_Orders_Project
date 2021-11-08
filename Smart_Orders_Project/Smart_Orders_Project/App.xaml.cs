@@ -17,6 +17,7 @@ namespace Smart_Orders_Project
             DependencyService.Register<RepositoryCustomers>();
             DependencyService.Register<RepositoryItems>();
             DependencyService.Register<RepositoryLineOfOrder>();
+            DependencyService.Register<RepositoryRFSales>();
 
             MainPage = new AppShell();
         }

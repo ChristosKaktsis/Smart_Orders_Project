@@ -13,10 +13,17 @@ namespace Smart_Orders_Project.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class OrdersPage : ContentPage
     {
+        private OrdersViewModel _viewModel;
+
         public OrdersPage()
         {
             InitializeComponent();
-            this.BindingContext = new OrdersViewModel();
+            this.BindingContext = _viewModel = new OrdersViewModel();
+        }
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            _viewModel.OnAppearing();
         }
     }
 }
