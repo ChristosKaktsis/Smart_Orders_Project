@@ -15,15 +15,19 @@
                 </Frame>
             </StackLayout>
             <StackLayout Margin="0,20,0,0">
-                <dxcv:DXCollectionView x:Name="OrdersList" SelectionMode="None" ItemsSource="{Binding RFSalesList}">
+                <dxcv:DXCollectionView x:Name="OrdersList" 
+                                       SelectionMode="None" 
+                                       ItemsSource="{Binding RFSalesList}">
+
                     <dxcv:DXCollectionView.ItemTemplate>
                         <DataTemplate>
                             <dxcv:SwipeContainer>
                                 <dxcv:SwipeContainer.ItemView>
-                                    <Grid Padding="10">
-                                        <Frame BackgroundColor="white"  Padding="10" Margin="0,0,0,0" CornerRadius="0" HasShadow="True">
+                                    <Grid Padding="0">
+                                        <Frame BackgroundColor="white" BorderColor="LightGray" Padding="10" Margin="0,0,0,0" CornerRadius="0" HasShadow="True">
                                             <StackLayout x:DataType="model:RFSales" Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
                                                 <StackLayout>
+                                                    
                                                     <Label Text="{Binding Customer.Name}" FontSize="16" FontAttributes="Bold"/>
                                                     <Label Text="{Binding CreationDate}" FontSize="16"/>
                                                 </StackLayout>
@@ -32,9 +36,9 @@
                                     </Grid>
                                 </dxcv:SwipeContainer.ItemView>
                                 <dxcv:SwipeContainer.EndSwipeItems>
-                                    <dxcv:SwipeItem Caption="Delete"
-                                        BackgroundColor="Red"   
-                                        />
+                                    <dxcv:SwipeItem Caption="Επεξεργασία"
+                                                    BackgroundColor="{StaticResource ComplementaryLight}"
+                                                    Invoked="SwipeItem_Edit_Invoked"/>
                                 </dxcv:SwipeContainer.EndSwipeItems>
                             </dxcv:SwipeContainer>
                         </DataTemplate>

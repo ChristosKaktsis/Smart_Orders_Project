@@ -7,37 +7,30 @@
              Shell.NavBarHasShadow="False"
              BackgroundColor="AliceBlue"
              Title="Παραγγελία 00001">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding BackCommand}"/>
+    </Shell.BackButtonBehavior>
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Ολοκήρωση" Command="{Binding SaveRFSalesCommand}"/>
     </ContentPage.ToolbarItems>
     <RefreshView x:DataType="vm:OrdersDetailViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
         <Grid>
             <StackLayout Padding="0" Margin="0">
-                <Frame BackgroundColor="{StaticResource Primary}" HeightRequest="10" >
+                <Frame BackgroundColor="{StaticResource Primary}" HeightRequest="20" >
                 </Frame>
             </StackLayout>
-            <StackLayout Padding="0" Margin="0">
-                <Frame BackgroundColor="{StaticResource Primary}" HeightRequest="90" CornerRadius="30" HasShadow="True">
-                </Frame>
-            </StackLayout>
-            <StackLayout Padding="0" Margin="0">
-                <Frame BackgroundColor="{StaticResource Primary}" Padding="0" Margin="10,10,10,0" HeightRequest="40" HasShadow="False">
-                    <StackLayout>
-                        <Label Text="{Binding CustomerName}" FontSize="18" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-                    </StackLayout>
-                </Frame>
-            </StackLayout>
+            
             <StackLayout>
-                <Frame BackgroundColor="Transparent" Padding="0" Margin="10,70,10,0" CornerRadius="30" HasShadow="True">
-                    <Button Text="Select Customer" CornerRadius="30" BackgroundColor="{StaticResource Tradic}" Command="{Binding SelectCustomer}"/>
+                <Frame BackgroundColor="Transparent" Padding="0" Margin="10,0,10,0" HeightRequest="50" CornerRadius="30" HasShadow="True">
+                    <Button Text="{Binding CustomerName}" CornerRadius="30" BackgroundColor="{StaticResource Tradic}" Command="{Binding SelectCustomer}"/>
                 </Frame>
-                <StackLayout Margin="10,30,10,0">
-                    <Label Text="Line Of Orders" FontSize="16" FontAttributes="Bold"/>
+                <StackLayout Margin="0,10,0,0">
+                    
                     <dxcv:DXCollectionView x:Name="OrdersList" SelectionMode="Single" ItemsSource="{Binding LinesList}">
                         <dxcv:DXCollectionView.ItemTemplate>
                             <DataTemplate>
-                                <Grid Padding="10">
-                                    <Frame BackgroundColor="white"  Padding="10" Margin="0,0,0,0" CornerRadius="7" HasShadow="True">
+                                <Grid Padding="0">
+                                    <Frame BackgroundColor="white" BorderColor="LightGray" Padding="10" Margin="0,0,0,0" CornerRadius="0" HasShadow="True">
                                         <StackLayout x:DataType="model:LineOfOrder" Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
                                             <StackLayout>
                                                 <Label Text="{Binding Product.Name}" FontSize="16" FontAttributes="Bold"/>

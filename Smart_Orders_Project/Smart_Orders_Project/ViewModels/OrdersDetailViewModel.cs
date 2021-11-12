@@ -12,26 +12,41 @@ using Xamarin.Forms;
 namespace Smart_Orders_Project.ViewModels
 {
     [QueryProperty(nameof(ItemId), nameof(ItemId))]
+    [QueryProperty(nameof(OrderOid), nameof(OrderOid))]
     class OrdersDetailViewModel : BaseViewModel
     {
-        private string itemId;
+        private string itemId;  
         private string customerName;
         private string orderOid;
+        private RFSales rfsale;
         public ObservableCollection<LineOfOrder> LinesList { get; set; }
         public Command AddLine { get; }
         public Command SelectCustomer { get; }
         public Command LoadItemsCommand { get; }
         public Command SaveRFSalesCommand { get; }
+        public Command BackCommand { get; }
         public OrdersDetailViewModel()
         {
             AddLine = new Command(OnAddLineClicked);
             SelectCustomer = new Command(OnSelectCustomerClicked);
             LinesList = new ObservableCollection<LineOfOrder>();
-            OrderOid = Guid.NewGuid().ToString();
+            OrderOid = Guid.NewGuid().ToString(); // παντα το βάζει αμα ειναι καινουρια πώληση αλλα αμα ερθεις απο edit εκτελείτε μετα και το Oid που ερχεται
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             SaveRFSalesCommand = new Command(ExecuteSaveRFSalesCommand, ValidateSave);
             this.PropertyChanged +=
                 (_, __) => SaveRFSalesCommand.ChangeCanExecute();
+            BackCommand = new Command(OnBackButtonPressed);
+        }
+
+        private async void OnBackButtonPressed(object obj)
+        {
+            //remove the items from the cart before going back
+            foreach (var i in LinesList)
+            {
+                await LinesRepo.DeleteItemAsync(i.Oid.ToString());
+            }
+            // This will pop the current page off the navigation stack
+            await Shell.Current.GoToAsync("..");
         }
 
         private async void ExecuteSaveRFSalesCommand()
@@ -71,6 +86,13 @@ namespace Smart_Orders_Project.ViewModels
             try
             {
                 LinesList.Clear();
+                if (RfSale != null)
+                {
+                    foreach (var line in RfSale.Lines)
+                    {
+                        LinesList.Add(line);
+                    }
+                }
                 var items = await LinesRepo.GetItemsAsync(true);
                 foreach (var item in items)
                 {
@@ -117,8 +139,31 @@ namespace Smart_Orders_Project.ViewModels
             set
             {
                 SetProperty(ref orderOid, value);
+                GetOrder(value);
             }
         }
+        public RFSales RfSale
+        {
+            get
+            {
+                return rfsale;
+            }
+            set
+            {
+                SetProperty(ref rfsale, value); 
+            }
+        }
+
+        private async void GetOrder(string value)
+        {
+            RfSale = await  RFSalesRepo.GetItemAsync(value); 
+            if(RfSale != null)
+            {
+                ItemId = rfsale.Customer.Oid.ToString();
+            }
+               
+        }
+
         public async void LoadItemId(string itemId)
         {
             try

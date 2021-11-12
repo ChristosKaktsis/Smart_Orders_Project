@@ -15,11 +15,22 @@ namespace Smart_Orders_Project.ViewModels
         public Command AddOrder { get; }
         public ObservableCollection<RFSales> RFSalesList { get; set; }
         public Command LoadItemsCommand { get; }
+        public Command<RFSales> RFEdit { get; }
         public OrdersViewModel()
         {
             RFSalesList = new ObservableCollection<RFSales>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-            AddOrder = new Command(OnAddOrderClicked);        
+            AddOrder = new Command(OnAddOrderClicked);
+            RFEdit = new Command<RFSales>(OnRFEdit);
+        }
+
+        private async void OnRFEdit(RFSales rf)
+        {
+            if (rf == null)
+                return;
+
+            // This will push the ItemDetailPage onto the navigation stack
+            await Shell.Current.GoToAsync($"{nameof(OrderDetailPage)}?{nameof(OrdersDetailViewModel.OrderOid)}={rf.Oid}");
         }
 
         private async Task ExecuteLoadItemsCommand()

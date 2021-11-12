@@ -53,28 +53,27 @@ namespace Smart_Orders_Project.Services
 
         public async Task<Customer> GetItemAsync(string id)
         {
-            return await Task.FromResult(CustomerList.FirstOrDefault(s => s.Oid == Guid.Parse(id)));
-            //return await Task.Run(() =>
-            //{
-            //    string queryString = "select Oid , Κωδικός ,Επωνυμία ,ΔιακριτικόςΤίτλος ,ΑΦΜ ,Email from Πελάτης where Oid ='" + id+ "' and  GCRecord is null";
-            //    using (SqlConnection connection = new SqlConnection(ConnectionString()))
-            //    {
-            //        connection.Open();
-            //        SqlCommand command = new SqlCommand(queryString, connection);
-            //        SqlDataReader reader = command.ExecuteReader();
-            //        reader.Read();
-            //        Customer customer = new Customer()
-            //        {
-            //            Oid = Guid.Parse(reader["Oid"].ToString()),
-            //            CodeNumber = reader["Κωδικός"] != null ? reader["Κωδικός"].ToString() : string.Empty,
-            //            Name = reader["Επωνυμία"].ToString(),
-            //            AFM = reader["ΑΦΜ"].ToString(),
-            //            Email = reader["Email"].ToString(),
-            //            AltName = reader["ΔιακριτικόςΤίτλος"].ToString()
-            //        };
-            //        return customer;
-            //    }
-            //});
+            return await Task.Run(() =>
+            {
+                string queryString = "select Oid , Κωδικός ,Επωνυμία ,ΔιακριτικόςΤίτλος ,ΑΦΜ ,Email from Πελάτης where Oid ='" + id + "' and  GCRecord is null";
+                using (SqlConnection connection = new SqlConnection(ConnectionString()))
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(queryString, connection);
+                    SqlDataReader reader = command.ExecuteReader();
+                    reader.Read();
+                    Customer customer = new Customer()
+                    {
+                        Oid = Guid.Parse(reader["Oid"].ToString()),
+                        CodeNumber = reader["Κωδικός"] != null ? reader["Κωδικός"].ToString() : string.Empty,
+                        Name = reader["Επωνυμία"].ToString(),
+                        AFM = reader["ΑΦΜ"].ToString(),
+                        Email = reader["Email"].ToString(),
+                        AltName = reader["ΔιακριτικόςΤίτλος"].ToString()
+                    };
+                    return customer;
+                }
+            });
         }
 
         public async Task<List<Customer>> GetItemsAsync(bool forceRefresh = false)
@@ -82,7 +81,7 @@ namespace Smart_Orders_Project.Services
             return await Task.Run(()=>
             {
                 CustomerList = new List<Customer>();
-                string queryString = "select Oid , Κωδικός ,Επωνυμία ,ΑΦΜ ,Email from Πελάτης where GCRecord is null";
+                string queryString = "select Oid , Κωδικός ,Επωνυμία ,ΑΦΜ, ΔιακριτικόςΤίτλος ,Email from Πελάτης where GCRecord is null";
                 using (SqlConnection connection = new SqlConnection(ConnectionString()))
                 {
                     connection.Open();
@@ -96,7 +95,8 @@ namespace Smart_Orders_Project.Services
                             CodeNumber = reader["Κωδικός"] != null ? reader["Κωδικός"].ToString() : string.Empty,
                             Name = reader["Επωνυμία"].ToString(),
                             AFM = reader["ΑΦΜ"].ToString(),
-                            Email = reader["Email"].ToString()
+                            Email = reader["Email"].ToString(),
+                            AltName = reader["ΔιακριτικόςΤίτλος"].ToString()
                         });
                     }
                     return CustomerList;

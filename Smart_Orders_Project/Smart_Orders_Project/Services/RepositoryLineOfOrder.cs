@@ -40,7 +40,10 @@ namespace Smart_Orders_Project.Services
         {
             return await Task.FromResult(LineList);
         }
-
+        public async Task<List<LineOfOrder>> GetItemsDBAsync(bool forceRefresh = false)
+        {
+            return await Task.FromResult(LineList);
+        }
         public async Task<bool> UpdateItemAsync(LineOfOrder item)
         {
             var oldItem = LineList.Where((LineOfOrder arg) => arg.Oid == item.Oid).FirstOrDefault();
@@ -64,7 +67,7 @@ namespace Smart_Orders_Project.Services
                     SqlCommand command = new SqlCommand(queryString, connection);
                     ok = command.ExecuteNonQuery();
                 }
-                return ok <= 1 ? true : false;
+                return ok >= 1 ? true : false;
             });
         }
         private string ConnectionString()
