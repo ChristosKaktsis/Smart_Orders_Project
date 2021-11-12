@@ -178,7 +178,7 @@ namespace Smart_Orders_Project.Services
             {
                 int ok = 0;
                 string queryString = @"UPDATE RFΠωλήσεις
-                                    SET Πελάτης = 'CEA01ABC-F96E-4ADB-B6C4-0130D9F641DE'
+                                    SET Πελάτης = '"+item.Customer.Oid+@"'
                                     WHERE Πελάτης = '9095A026-D442-4724-AD75-3824B836C83D' ";
                 using (SqlConnection connection = new SqlConnection(ConnectionString()))
                 {

@@ -53,6 +53,10 @@ namespace Smart_Orders_Project.ViewModels
         {  
             try
             {
+                if (RfSale != null)
+                {
+                    await RFSalesRepo.UpdateItemAsync(RfSale);
+                }
                 RFSales sale1 = new RFSales()
                 {
                     Oid = Guid.Parse(OrderOid),
@@ -156,11 +160,19 @@ namespace Smart_Orders_Project.ViewModels
 
         private async void GetOrder(string value)
         {
-            RfSale = await  RFSalesRepo.GetItemAsync(value); 
-            if(RfSale != null)
+            try
             {
-                ItemId = rfsale.Customer.Oid.ToString();
+                RfSale = await RFSalesRepo.GetItemAsync(value);
+                if (RfSale != null)
+                {
+                    ItemId = rfsale.Customer.Oid.ToString();
+                }
             }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            
                
         }
 
