@@ -5,12 +5,17 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 
 namespace Smart_Orders_Project.Services
 {
     class RepositoryRFSales : IDataStore<RFSales>
     {
         public List<RFSales> RFSalesList;
+        private string ConnectionString
+        {
+            get => Preferences.Get(nameof(ConnectionString), @"User Id=sa;password=1;Pooling=false;Data Source=192.168.3.44\SQLEXPRESS;Initial Catalog=maindemo");
+        }
         public RepositoryRFSales()
         {
             RFSalesList = new List<RFSales>();
@@ -41,7 +46,7 @@ namespace Smart_Orders_Project.Services
                 
                 RFSalesList.Clear();
                 string queryString = "select Oid , Πελάτης ,UpdSmart ,Ολοκληρώθηκε ,ΗμνίαΔημιουργίας from RFΠωλήσεις where UpdSmart = 'false' and GCRecord is null";
-                using (SqlConnection connection = new SqlConnection(ConnectionString()))
+                using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();
                     SqlCommand command = new SqlCommand(queryString, connection);
@@ -70,7 +75,7 @@ namespace Smart_Orders_Project.Services
             {
                 var LineList = new List<LineOfOrder>();
                 string queryString = "select Oid, RFΠωλήσεις , Είδος ,Ποσότητα ,BarCodeΕίδους ,ΠοσότηταΔιάστασης from RFΓραμμέςΠωλήσεων where RFΠωλήσεις ='"+id+"' and GCRecord is null";
-                using (SqlConnection connection = new SqlConnection(ConnectionString()))
+                using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();
                     SqlCommand command = new SqlCommand(queryString, connection);
@@ -113,7 +118,7 @@ namespace Smart_Orders_Project.Services
                                  
                               where Είδος.Oid = '" + id + "'";
 
-                using (SqlConnection connection = new SqlConnection(ConnectionString()))
+                using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();
                     SqlCommand command = new SqlCommand(queryString, connection);
@@ -147,7 +152,7 @@ namespace Smart_Orders_Project.Services
             {
                 string queryString = "select Oid , Κωδικός ,Επωνυμία ,ΑΦΜ ,Email from Πελάτης where Oid='"+Oid+"' and GCRecord is null";
 
-                using (SqlConnection connection = new SqlConnection(ConnectionString()))
+                using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();
                     SqlCommand command = new SqlCommand(queryString, connection);
@@ -179,11 +184,14 @@ namespace Smart_Orders_Project.Services
             {
                 int ok = 0;
                 string queryString = @"UPDATE RFΠωλήσεις
-                                    SET Πελάτης = '"+item.Customer.Oid+@"'
-                                    WHERE Πελάτης = '9095A026-D442-4724-AD75-3824B836C83D' ";
-                using (SqlConnection connection = new SqlConnection(ConnectionString()))
+                                    SET Πελάτης = '"+item.Customer.Oid+ @"'
+                                    WHERE Oid = '" + item.Oid+ "' ";
+                string queryDelete = "DELETE From RFΓραμμέςΠωλήσεων where RFΠωλήσεις = '" + item.Oid + "'";
+                using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();
+                    SqlCommand command1 = new SqlCommand(queryDelete, connection);
+                    var ex = command1.ExecuteNonQuery();
                     SqlCommand command = new SqlCommand(queryString, connection);
                     ok = command.ExecuteNonQuery();
                 }
@@ -198,7 +206,7 @@ namespace Smart_Orders_Project.Services
                 string queryString = @"INSERT INTO RFΠωλήσεις (Oid, ΑποθηκευτικόςΧώρος, Πελάτης, ΠαραστατικάΠωλήσεων, ΠαραστατικόΠελάτη, 
                     Διαχείριση, UpdSmart, Ολοκληρώθηκε, ΗμνίαΔημιουργίας, ΑυτόματηΔιαγραφήΠαραστατικών, OptimisticLockField, GCRecord)
                     VALUES((Convert(uniqueidentifier, N'"+item.Oid+ "')), null, (Convert(uniqueidentifier, N'" + item.Customer.Oid + "')), null, null, null, '0', '0', (Convert(date, '" + item.CreationDate.ToString("MM/dd/yyyy") + "')), '0', '1', null); ";
-                using (SqlConnection connection = new SqlConnection(ConnectionString()))
+                using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();
                     SqlCommand command = new SqlCommand(queryString, connection);
@@ -207,10 +215,7 @@ namespace Smart_Orders_Project.Services
                 return ok >= 1 ? true : false ;
             });
         }
-        private string ConnectionString()
-        {
-            return @"User Id=sa;password=1;Pooling=false;Data Source=192.168.3.44\SQLEXPRESS;Initial Catalog=maindemo";
-        }
+       
 
         public Task<List<RFSales>> GetItemsWithNameAsync(string name)
         {

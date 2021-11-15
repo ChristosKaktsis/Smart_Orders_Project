@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Smart_Orders_Project.Views.ConnectionPage"
+             Title="Connection String">
+    <ContentPage.Content>
+        <Grid>
+            <StackLayout Margin="0,120,0,0">
+                <Frame HorizontalOptions="FillAndExpand" VerticalOptions="Center" HasShadow="True"  Margin="10">
+                    <StackLayout>
+                        <Label Text="Connection String"/>
+                        <Entry Text="{Binding ConnectionString}" Placeholder="Connection String"/>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+            
+            
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -5,12 +5,17 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 
 namespace Smart_Orders_Project.Services
 {
     class RepositoryLineOfOrder : IDataStore<LineOfOrder>
     {
         public List<LineOfOrder> LineList;
+        private string ConnectionString
+        {
+            get => Preferences.Get(nameof(ConnectionString), @"User Id=sa;password=1;Pooling=false;Data Source=192.168.3.44\SQLEXPRESS;Initial Catalog=maindemo");
+        }
         public RepositoryLineOfOrder()
         {
             LineList = new List<LineOfOrder>();
@@ -67,7 +72,8 @@ namespace Smart_Orders_Project.Services
                 string queryString = @"INSERT INTO RFΓραμμέςΠωλήσεων (Oid, RFΠωλήσεις, Είδος, Ποσότητα, Θέση, 
                     OptimisticLockField, GCRecord, BarCodeΕίδους, ΠοσότηταΔιάστασης)
                     VALUES((Convert(uniqueidentifier, N'" + item.Oid + "')), (Convert(uniqueidentifier, N'" + item.RFSalesOid + "')), (Convert(uniqueidentifier, N'" + item.Product.Oid + "')), '"+item.Quantity+"', null, '1', null, '"+item.Product.BarCode+"', '" + item.Product.Price + "'); ";
-                using (SqlConnection connection = new SqlConnection(ConnectionString()))
+               
+                using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();
                     SqlCommand command = new SqlCommand(queryString, connection);
@@ -76,9 +82,6 @@ namespace Smart_Orders_Project.Services
                 return ok >= 1 ? true : false;
             });
         }
-        private string ConnectionString()
-        {
-            return @"User Id=sa;password=1;Pooling=false;Data Source=192.168.3.44\SQLEXPRESS;Initial Catalog=maindemo";
-        }
+        
     }
 }

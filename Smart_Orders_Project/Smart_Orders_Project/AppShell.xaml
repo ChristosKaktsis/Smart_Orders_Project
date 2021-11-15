@@ -82,8 +82,8 @@
     <FlyoutItem Title="Orders" Icon="icon_about.png">
         <ShellContent Route="OrdersPage" ContentTemplate="{DataTemplate local:OrdersPage}" />
     </FlyoutItem>
-    <FlyoutItem Title="Browse" Icon="icon_feed.png">
-        <ShellContent Route="ItemsPage" ContentTemplate="{DataTemplate local:ItemsPage}" />
+    <FlyoutItem Title="Conn" Icon="icon_feed.png">
+        <ShellContent Route="ConnectionPage" ContentTemplate="{DataTemplate local:ConnectionPage}" />
     </FlyoutItem>
     <TabBar>
         <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate local:LoginPage}" />

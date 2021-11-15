@@ -26,27 +26,36 @@
                 </Frame>
                 <StackLayout Margin="0,10,0,0">
                     
-                    <dxcv:DXCollectionView x:Name="OrdersList" SelectionMode="Single" ItemsSource="{Binding LinesList}">
+                    <dxcv:DXCollectionView x:Name="OrdersList" SelectionMode="None" ItemsSource="{Binding LinesList}">
                         <dxcv:DXCollectionView.ItemTemplate>
                             <DataTemplate>
-                                <Grid Padding="0">
-                                    <Frame BackgroundColor="white" BorderColor="LightGray" Padding="10" Margin="0,0,0,0" CornerRadius="0" HasShadow="True">
-                                        <StackLayout x:DataType="model:LineOfOrder" Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
-                                            <StackLayout>
-                                                <Label Text="{Binding Product.Name}" FontSize="16" FontAttributes="Bold"/>
-                                                <Label Text="{Binding Product.BarCode}"/>
-                                            </StackLayout>
-                                            <StackLayout HorizontalOptions="EndAndExpand">
-                                                <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
-                                                    <Label Text="Τιμή:" FontSize="16"/>
-                                                    <Label Text="{Binding Product.Price , StringFormat='{0} €'}" FontSize="16"/>
-                                                </StackLayout>
-                                                <Label Text="{Binding Quantity ,StringFormat='Ποσότητα: {0}'}" FontSize="16"/>
-                                            </StackLayout>
+                                <dxcv:SwipeContainer>
+                                    <dxcv:SwipeContainer.ItemView>
+                                        <Grid Padding="0">
+                                            <Frame BackgroundColor="white" BorderColor="LightGray" Padding="10" Margin="0,0,0,0" CornerRadius="0" HasShadow="True">
+                                                <StackLayout x:DataType="model:LineOfOrder" Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
+                                                    <StackLayout>
+                                                        <Label Text="{Binding Product.Name}" FontSize="16" FontAttributes="Bold"/>
+                                                        <Label Text="{Binding Product.BarCode}"/>
+                                                    </StackLayout>
+                                                    <StackLayout HorizontalOptions="EndAndExpand">
+                                                        <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                                                            <Label Text="Τιμή:" FontSize="16"/>
+                                                            <Label Text="{Binding Product.Price , StringFormat='{0} €'}" FontSize="16"/>
+                                                        </StackLayout>
+                                                        <Label Text="{Binding Quantity ,StringFormat='Ποσότητα: {0}'}" FontSize="16"/>
+                                                    </StackLayout>
 
-                                        </StackLayout>
-                                    </Frame>
-                                </Grid>
+                                                </StackLayout>
+                                            </Frame>
+                                        </Grid>
+                                    </dxcv:SwipeContainer.ItemView>
+                                    <dxcv:SwipeContainer.StartSwipeItems>
+                                        <dxcv:SwipeItem Caption="Διαγραφή"
+                                                    BackgroundColor="Red"
+                                                    Invoked="SwipeItem_Delete_Invoked" />
+                                    </dxcv:SwipeContainer.StartSwipeItems>
+                                </dxcv:SwipeContainer>
                             </DataTemplate>
                         </dxcv:DXCollectionView.ItemTemplate>
                         <dxcv:DXCollectionView.SelectedItemTemplate>

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Smart_Orders_Project.ViewModels
@@ -24,10 +25,20 @@ namespace Smart_Orders_Project.ViewModels
         }
 
         string title = string.Empty;
+       
         public string Title
         {
             get { return title; }
             set { SetProperty(ref title, value); }
+        }
+        public string ConnectionString
+        {
+            get => Preferences.Get(nameof(ConnectionString), @"User Id=sa;password=1;Pooling=false;Data Source=192.168.3.44\SQLEXPRESS;Initial Catalog=maindemo");
+            set
+            {
+                Preferences.Set(nameof(ConnectionString), value);
+                OnPropertyChanged(nameof(ConnectionString));
+            }
         }
 
         protected bool SetProperty<T>(ref T backingStore, T value,

@@ -25,6 +25,7 @@ namespace Smart_Orders_Project.ViewModels
         public Command LoadItemsCommand { get; }
         public Command SaveRFSalesCommand { get; }
         public Command BackCommand { get; }
+        public Command DeleteCommand { get; }
         public OrdersDetailViewModel()
         {
             AddLine = new Command(OnAddLineClicked);
@@ -36,6 +37,14 @@ namespace Smart_Orders_Project.ViewModels
             this.PropertyChanged +=
                 (_, __) => SaveRFSalesCommand.ChangeCanExecute();
             BackCommand = new Command(OnBackButtonPressed);
+            DeleteCommand = new Command<LineOfOrder>(OnDeletePressed);
+        }
+
+        private  void OnDeletePressed(LineOfOrder l)
+        {
+            if (l == null)
+                return;
+            LinesList.Remove(l);
         }
 
         private async void OnBackButtonPressed(object obj)
@@ -53,23 +62,34 @@ namespace Smart_Orders_Project.ViewModels
         {  
             try
             {
-                if (RfSale != null)
+                if (RfSale == null)//if is null means is not from edit 
                 {
-                    await RFSalesRepo.UpdateItemAsync(RfSale);
+                    RFSales sale1 = new RFSales()
+                    {
+                        Oid = Guid.Parse(OrderOid),
+                        Customer = await CustomerRepo.GetItemAsync(itemId),
+                        Lines = LinesList.ToList(),
+                        CreationDate = DateTime.Now
+                    };
+                    await RFSalesRepo.AddItemAsync(sale1);
+                    await RFSalesRepo.UploadItemAsync(sale1);
+                    foreach (var i in sale1.Lines)
+                    {
+                        await LinesRepo.UploadItemAsync(i);
+                        await LinesRepo.DeleteItemAsync(i.Oid.ToString());
+                    }
                 }
-                RFSales sale1 = new RFSales()
+                else
                 {
-                    Oid = Guid.Parse(OrderOid),
-                    Customer = await CustomerRepo.GetItemAsync(itemId),
-                    Lines = LinesList.ToList(),
-                    CreationDate = DateTime.Now
-                };
-                await RFSalesRepo.AddItemAsync(sale1);
-                await RFSalesRepo.UploadItemAsync(sale1);
-                foreach(var i in sale1.Lines)
-                {
-                    await LinesRepo.UploadItemAsync(i);
-                    await LinesRepo.DeleteItemAsync(i.Oid.ToString());
+                    RfSale.Customer = await CustomerRepo.GetItemAsync(itemId);
+                    await RFSalesRepo.UpdateItemAsync(RfSale);
+                    RfSale.Lines = LinesList.ToList();
+                    var items = RfSale.Lines;
+                    foreach (var i in items)
+                    {
+                        await LinesRepo.UploadItemAsync(i);
+                        await LinesRepo.DeleteItemAsync(i.Oid.ToString());
+                    }
                 }
                 await Shell.Current.GoToAsync("..");
             }
@@ -94,7 +114,7 @@ namespace Smart_Orders_Project.ViewModels
                 {
                     foreach (var line in RfSale.Lines)
                     {
-                        LinesList.Add(line);
+                        LinesList.Add(line); 
                     }
                 }
                 var items = await LinesRepo.GetItemsAsync(true);

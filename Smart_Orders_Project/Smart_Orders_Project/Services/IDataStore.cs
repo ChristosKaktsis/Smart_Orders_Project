@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+
 namespace Smart_Orders_Project.Services
 {
     public interface IDataStore<T>
@@ -13,5 +14,6 @@ namespace Smart_Orders_Project.Services
         Task<List<T>> GetItemsAsync(bool forceRefresh = false);
         Task<List<T>> GetItemsWithNameAsync(string name);
         Task<bool> UploadItemAsync(T item);
+        
     }
 }

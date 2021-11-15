@@ -5,13 +5,17 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 
 namespace Smart_Orders_Project.Services
 {
    public class RepositoryCustomers : IDataStore<Customer>
     {
         public List<Customer> CustomerList { get; set; }
-        
+        private string ConnectionString
+        {
+            get => Preferences.Get(nameof(ConnectionString), @"User Id=sa;password=1;Pooling=false;Data Source=192.168.3.44\SQLEXPRESS;Initial Catalog=maindemo");
+        }
         public RepositoryCustomers()
         {
             //CustomerList = new List<Customer>();
@@ -21,7 +25,7 @@ namespace Smart_Orders_Project.Services
         private  void GetItemsFromDB()
         {
             string queryString = "select Oid , Κωδικός ,Επωνυμία ,ΑΦΜ ,Email from Πελάτης where GCRecord is null";
-            using (SqlConnection connection = new SqlConnection(ConnectionString()))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
                 SqlCommand command = new SqlCommand(queryString, connection);
@@ -56,7 +60,7 @@ namespace Smart_Orders_Project.Services
             return await Task.Run(() =>
             {
                 string queryString = "select Oid , Κωδικός ,Επωνυμία ,ΔιακριτικόςΤίτλος ,ΑΦΜ ,Email from Πελάτης where Oid ='" + id + "' and  GCRecord is null";
-                using (SqlConnection connection = new SqlConnection(ConnectionString()))
+                using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();
                     SqlCommand command = new SqlCommand(queryString, connection);
@@ -82,7 +86,7 @@ namespace Smart_Orders_Project.Services
             {
                 CustomerList = new List<Customer>();
                 string queryString = "select Oid , Κωδικός ,Επωνυμία ,ΑΦΜ, ΔιακριτικόςΤίτλος ,Email from Πελάτης where GCRecord is null";
-                using (SqlConnection connection = new SqlConnection(ConnectionString()))
+                using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();
                     SqlCommand command = new SqlCommand(queryString, connection);
@@ -108,10 +112,7 @@ namespace Smart_Orders_Project.Services
         {
             throw new NotImplementedException();
         }
-        private string ConnectionString()
-        {
-            return @"User Id=sa;password=1;Pooling=false;Data Source=192.168.3.44\SQLEXPRESS;Initial Catalog=maindemo";
-        }
+        
 
         public Task<bool> UploadItemAsync(Customer item)
         {
@@ -125,7 +126,7 @@ namespace Smart_Orders_Project.Services
                 CustomerList = new List<Customer>();
                 //CustomerList.Clear();
                 string queryString = "select Oid , Κωδικός ,Επωνυμία ,ΑΦΜ, ΔιακριτικόςΤίτλος ,Email from Πελάτης where Κωδικός Like '%"+name+ "%' or Επωνυμία like '%" + name + "%' or ΑΦΜ like '%" + name + "%' and GCRecord is null";
-                using (SqlConnection connection = new SqlConnection(ConnectionString()))
+                using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();
                     SqlCommand command = new SqlCommand(queryString, connection);

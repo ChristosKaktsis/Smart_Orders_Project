@@ -4,11 +4,16 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 
 namespace Smart_Orders_Project.Services
 {
     public class RepositoryItems : IDataStore<Product>
     {
+        private string ConnectionString
+        {
+            get => Preferences.Get(nameof(ConnectionString), @"User Id=sa;password=1;Pooling=false;Data Source=192.168.3.44\SQLEXPRESS;Initial Catalog=maindemo");
+        }
         public RepositoryItems()
         {
             ProductsList = new List<Product>();
@@ -33,7 +38,7 @@ namespace Smart_Orders_Project.Services
                               left join Χρώματα on Χρώματα.Oid = BarCodeΕίδους.Χρώμα
                               left join ΜονάδεςΜέτρησης on ΜονάδεςΜέτρησης.Oid = BarCodeΕίδους.ΜονάδαΜέτρησης
                               left join Μεγέθη on Μεγέθη.Oid = BarCodeΕίδους.Μέγεθος";
-            using (SqlConnection connection = new SqlConnection(ConnectionString()))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
                 SqlCommand command = new SqlCommand(queryString, connection);
@@ -92,7 +97,7 @@ namespace Smart_Orders_Project.Services
                                  
                               where Είδος.Κωδικός = '"+id+ "' OR BarCode = '" + id + "' OR  Είδος.Περιγραφή = '" + id + "'";
 
-                using (SqlConnection connection = new SqlConnection(ConnectionString()))
+                using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();
                     SqlCommand command = new SqlCommand(queryString, connection);
@@ -129,10 +134,7 @@ namespace Smart_Orders_Project.Services
         {
             throw new NotImplementedException();
         }
-        private string ConnectionString()
-        {
-            return @"User Id=sa;password=1;Pooling=false;Data Source=192.168.3.44\SQLEXPRESS;Initial Catalog=maindemo";
-        }
+        
 
         public Task<bool> UploadItemAsync(Product item)
         {
@@ -161,16 +163,15 @@ namespace Smart_Orders_Project.Services
                                  
                               where Είδος.Κωδικός LIKE '%" + name + "%' OR BarCode LIKE '%" + name + "%' OR  Είδος.Περιγραφή LIKE '%" + name + "%'";
 
-                using (SqlConnection connection = new SqlConnection(ConnectionString()))
+                using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     /*ProductsList.Clear()*/
                     ProductsList = new List<Product>();
                     connection.Open();
                     SqlCommand command = new SqlCommand(queryString, connection);
                     SqlDataReader reader = command.ExecuteReader();
-                    if (!reader.HasRows)
-                        return null;
-                    reader.Read();
+                    
+                    
                     while (reader.Read())
                     {
                         ProductsList.Add(new Product()
