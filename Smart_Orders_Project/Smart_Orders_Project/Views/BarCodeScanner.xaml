@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:zxing1="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
+             x:Class="Smart_Orders_Project.Views.BarCodeScanner">
+    <ContentPage.Content>
+        <StackLayout>
+            <zxing1:ZXingScannerView IsScanning="True" OnScanResult="ZXingScannerView_OnScanResult"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
