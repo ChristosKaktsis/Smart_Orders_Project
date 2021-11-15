@@ -9,6 +9,7 @@ namespace Smart_Orders_Project.Models
         public Guid Oid { get; set; }
         public Customer Customer { get; set; }
         public DateTime CreationDate { get; set; }
+        public bool Complete { get; set; }
         public List<LineOfOrder> Lines { get; set; }
     }
 }

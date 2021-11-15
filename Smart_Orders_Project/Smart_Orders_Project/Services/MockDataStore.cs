@@ -61,5 +61,10 @@ namespace Smart_Orders_Project.Services
         {
             throw new NotImplementedException();
         }
+
+        public Task<List<Item>> GetItemsWithNameAsync(string name)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -18,18 +18,18 @@ namespace Smart_Orders_Project.ViewModels
         private string _searchText;
         private int _quantity = 1;
         private double _sum = 0;
-        //public ObservableCollection<Product> ProductList { get; }
+        public ObservableCollection<Product> ProductList { get; }
         //public ObservableCollection<Product> SelectedProductList { get; set; }
-        //public Command LoadItemsCommand { get; }
-        public Command LoadItemCommand { get; }
+        public Command LoadItemsCommand { get; }
+        //public Command LoadItemCommand { get; }
         public Command SaveCommand { get; }
         public LineOfOrdersViewModel()
         {
-            //ProductList = new ObservableCollection<Product>();
+            ProductList = new ObservableCollection<Product>();
             //SelectedProductList = new ObservableCollection<Product>();
             //SelectedProductList.CollectionChanged += SelectedProductList_CollectionChanged;
-            //LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-            LoadItemCommand = new Command(async () => await ExecuteLoadItemCommand());
+            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
+            //LoadItemCommand = new Command(async () => await ExecuteLoadItemCommand());
             SaveCommand = new Command(OnSave, ValidateSave);
             this.PropertyChanged +=
                 (_, __) => SaveCommand.ChangeCanExecute();
@@ -45,7 +45,7 @@ namespace Smart_Orders_Project.ViewModels
         //            newItem.Quantity = Quantity;
         //        }
         //    }
-             
+
         //    if (e.OldItems != null)
         //    {
         //        foreach (Product oldItem in e.OldItems)
@@ -54,31 +54,32 @@ namespace Smart_Orders_Project.ViewModels
         //        }
         //    }
         //}
-        //private async Task ExecuteLoadItemsCommand()
-        //{
-        //    IsBusy = true;
+        private async Task ExecuteLoadItemsCommand()
+        {
+            IsBusy = true;
 
-        //    try
-        //    {
-        //        ProductList.Clear();
-        //        var items = await ProductRepo.GetItemsAsync(true);
-        //        foreach (var item in items)
-        //        {
-        //            ProductList.Add(item);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Debug.WriteLine(ex);
-        //    }
-        //    finally
-        //    {
-        //        IsBusy = false;
-        //    }
-        //}
+            try
+            {
+                ProductList.Clear();
+                //var items = await ProductRepo.GetItemsAsync(true);
+                var items = await ProductRepo.GetItemsWithNameAsync(SearchText);
+                foreach (var item in items)
+                {
+                    ProductList.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
         public void OnAppearing()
         {
-           // IsBusy = true;
+            IsBusy = false;
 
         }
        
@@ -98,7 +99,7 @@ namespace Smart_Orders_Project.ViewModels
             {
                 SetProperty(ref _searchText, value);
                 if(!string.IsNullOrEmpty(value))
-                    LoadItemCommand.Execute(null);
+                    LoadItemsCommand.Execute(null);
 
             } 
         }

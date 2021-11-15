@@ -16,7 +16,7 @@ namespace Smart_Orders_Project.ViewModels
     class OrdersDetailViewModel : BaseViewModel
     {
         private string itemId;  
-        private string customerName;
+        private string customerName="Επιλογή Πελάτη";
         private string orderOid;
         private RFSales rfsale;
         public ObservableCollection<LineOfOrder> LinesList { get; set; }
@@ -115,7 +115,6 @@ namespace Smart_Orders_Project.ViewModels
         public void OnAppearing()
         {
             IsBusy = true;
-
         }
         public string CustomerName
         {
@@ -142,6 +141,8 @@ namespace Smart_Orders_Project.ViewModels
             }
             set
             {
+                if (value == null)
+                    return;
                 SetProperty(ref orderOid, value);
                 GetOrder(value);
             }

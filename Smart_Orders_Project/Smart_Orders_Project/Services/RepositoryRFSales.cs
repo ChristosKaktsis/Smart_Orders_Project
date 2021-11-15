@@ -55,6 +55,7 @@ namespace Smart_Orders_Project.Services
                             Oid = Guid.Parse(reader["Oid"].ToString()),
                             Customer =  await GetCustomer(reader["Πελάτης"].ToString()),
                             CreationDate = (DateTime)reader["ΗμνίαΔημιουργίας"],
+                            Complete = bool.Parse(reader["Ολοκληρώθηκε"].ToString()),
                             Lines = await GetLines(reader["Oid"].ToString())
                         });
                     }
@@ -209,6 +210,11 @@ namespace Smart_Orders_Project.Services
         private string ConnectionString()
         {
             return @"User Id=sa;password=1;Pooling=false;Data Source=192.168.3.44\SQLEXPRESS;Initial Catalog=maindemo";
+        }
+
+        public Task<List<RFSales>> GetItemsWithNameAsync(string name)
+        {
+            throw new NotImplementedException();
         }
     }
 }

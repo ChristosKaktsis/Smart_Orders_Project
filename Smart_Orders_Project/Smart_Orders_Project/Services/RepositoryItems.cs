@@ -138,5 +138,60 @@ namespace Smart_Orders_Project.Services
         {
             throw new NotImplementedException();
         }
+
+        public async Task<List<Product>> GetItemsWithNameAsync(string name)
+        {
+            return await Task.Run(() =>
+            {
+                string queryString = @"SELECT  BarCode
+                                  , BarCodeΕίδους.Περιγραφή as BarCodeDesc
+                                  ,Είδος.Oid
+	                              ,Είδος.Περιγραφή
+	                              ,Είδος.ΤιμήΧονδρικής
+	                              ,Είδος.Κωδικός
+	                              ,Είδος.ΦΠΑ
+	                              ,Χρώματα.Χρώματα
+	                              ,Μεγέθη.Μεγέθη
+	                              ,ΜονάδεςΜέτρησης.ΜονάδαΜέτρησης
+                              FROM BarCodeΕίδους
+                              join Είδος on BarCodeΕίδους.Είδος = Είδος.Oid
+                              left join Χρώματα on Χρώματα.Oid = BarCodeΕίδους.Χρώμα
+                              left join ΜονάδεςΜέτρησης on ΜονάδεςΜέτρησης.Oid = BarCodeΕίδους.ΜονάδαΜέτρησης
+                              left join Μεγέθη on Μεγέθη.Oid = BarCodeΕίδους.Μέγεθος
+                                 
+                              where Είδος.Κωδικός LIKE '%" + name + "%' OR BarCode LIKE '%" + name + "%' OR  Είδος.Περιγραφή LIKE '%" + name + "%'";
+
+                using (SqlConnection connection = new SqlConnection(ConnectionString()))
+                {
+                    /*ProductsList.Clear()*/
+                    ProductsList = new List<Product>();
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(queryString, connection);
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (!reader.HasRows)
+                        return null;
+                    reader.Read();
+                    while (reader.Read())
+                    {
+                        ProductsList.Add(new Product()
+                        {
+                            Oid = Guid.Parse(reader["Oid"].ToString()),
+                            ProductCode = reader["Κωδικός"] != null ? reader["Κωδικός"].ToString() : string.Empty,
+                            Name = reader["Περιγραφή"].ToString(),
+                            FPA = int.Parse(reader["ΦΠΑ"] != null ? reader["ΦΠΑ"].ToString() : "0"),
+                            Price = double.Parse(reader["ΤιμήΧονδρικής"].ToString()),
+                            BarCode = reader["BarCode"].ToString(),
+                            BarCodeDesc = reader["BarCodeDesc"].ToString(),
+                            Color = reader["Χρώματα"] != null ? reader["Χρώματα"].ToString() : string.Empty,
+                            Size = reader["Μεγέθη"] != null ? reader["Μεγέθη"].ToString() : string.Empty,
+                            UnitOfMeasure = string.IsNullOrEmpty(reader["ΜονάδαΜέτρησης"].ToString()) ? "Ποσότητα" : reader["ΜονάδαΜέτρησης"].ToString(),
+                        });
+                    }
+                    return ProductsList;
+
+                }
+            });
+
+        }
     }
 }

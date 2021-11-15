@@ -117,5 +117,34 @@ namespace Smart_Orders_Project.Services
         {
             throw new NotImplementedException();
         }
+
+        public async Task<List<Customer>> GetItemsWithNameAsync(string name)
+        {
+            return await Task.Run(() =>
+            {
+                CustomerList = new List<Customer>();
+                //CustomerList.Clear();
+                string queryString = "select Oid , Κωδικός ,Επωνυμία ,ΑΦΜ, ΔιακριτικόςΤίτλος ,Email from Πελάτης where Κωδικός Like '%"+name+ "%' or Επωνυμία like '%" + name + "%' or ΑΦΜ like '%" + name + "%' and GCRecord is null";
+                using (SqlConnection connection = new SqlConnection(ConnectionString()))
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(queryString, connection);
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        CustomerList.Add(new Customer
+                        {
+                            Oid = Guid.Parse(reader["Oid"].ToString()),
+                            CodeNumber = reader["Κωδικός"] != null ? reader["Κωδικός"].ToString() : string.Empty,
+                            Name = reader["Επωνυμία"].ToString(),
+                            AFM = reader["ΑΦΜ"].ToString(),
+                            Email = reader["Email"].ToString(),
+                            AltName = reader["ΔιακριτικόςΤίτλος"].ToString()
+                        });
+                    }
+                    return CustomerList;
+                }
+            });
+        }
     }
 }

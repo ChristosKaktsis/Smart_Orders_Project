@@ -10,7 +10,7 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Προσθηκη" Command="{Binding AddCustomerCommand}"/>
     </ContentPage.ToolbarItems>
-    <RefreshView x:DataType="vm:CustomerSelectionViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+    <RefreshView x:DataType="vm:CustomerSelectionViewModel"  IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
         <Grid>
             <StackLayout Padding="0" Margin="0">
                 <Frame BackgroundColor="{StaticResource Primary}" HeightRequest="10" >
@@ -26,7 +26,7 @@
                         <Frame BackgroundColor="white" CornerRadius="50" HeightRequest="35" WidthRequest="35" Padding="0" Margin="7">
                             <Image Source="search.png"/>
                         </Frame>
-                        <Entry TextChanged="Entry_TextChanged" Placeholder="Search" ClearButtonVisibility="WhileEditing"  TextColor="Black"  HorizontalOptions="FillAndExpand" Margin="0,0,15,0"/>
+                        <Entry Text="{Binding Search}" Placeholder="Search" ClearButtonVisibility="WhileEditing"  TextColor="Black"  HorizontalOptions="FillAndExpand" Margin="0,0,15,0"/>
                     </StackLayout>
                 </Frame>
                 <StackLayout Margin="10,10,10,0">

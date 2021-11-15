@@ -12,6 +12,8 @@ namespace Smart_Orders_Project.ViewModels
     class CustomerSelectionViewModel : BaseViewModel
     {
         private Customer _selectedCustomer;
+        private string _search;
+
         public ObservableCollection<Customer> CustomerList { get; }
         public Command LoadItemsCommand { get; }
         public Command AddCustomerCommand { get; }
@@ -36,7 +38,8 @@ namespace Smart_Orders_Project.ViewModels
             try
             {
                 CustomerList.Clear();
-                var items = await CustomerRepo.GetItemsAsync(true);
+                //var items = await CustomerRepo.GetItemsAsync(true);
+                var items = await CustomerRepo.GetItemsWithNameAsync(Search);
                 foreach (var item in items)
                 {
                     CustomerList.Add(item);
@@ -53,8 +56,17 @@ namespace Smart_Orders_Project.ViewModels
         }
         public void OnAppearing()
         {
-            IsBusy = true;
+            IsBusy = false;
             
+        }
+        public string Search
+        {
+            get => _search;
+            set
+            {
+                SetProperty(ref _search, value);
+                LoadItemsCommand.Execute(null);
+            }
         }
         public Customer SelectedCustomer
         {

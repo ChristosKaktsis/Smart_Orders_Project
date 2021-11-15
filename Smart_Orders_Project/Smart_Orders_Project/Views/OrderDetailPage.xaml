@@ -6,7 +6,7 @@
              xmlns:dxcv="http://schemas.devexpress.com/xamarin/2014/forms/collectionview" xmlns:model="clr-namespace:Smart_Orders_Project.Models"
              Shell.NavBarHasShadow="False"
              BackgroundColor="AliceBlue"
-             Title="Παραγγελία 00001">
+             Title="RF00001?">
     <Shell.BackButtonBehavior>
         <BackButtonBehavior Command="{Binding BackCommand}"/>
     </Shell.BackButtonBehavior>
@@ -38,13 +38,10 @@
                                             </StackLayout>
                                             <StackLayout HorizontalOptions="EndAndExpand">
                                                 <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
-                                                    <Label Text="Price:" FontSize="16"/>
-                                                    <Label Text="{Binding Sum , StringFormat='{0} €'}" FontSize="16"/>
+                                                    <Label Text="Τιμή:" FontSize="16"/>
+                                                    <Label Text="{Binding Product.Price , StringFormat='{0} €'}" FontSize="16"/>
                                                 </StackLayout>
-                                                <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
-                                                    <Label Text="Ποσότητα:" FontSize="16"/>
-                                                    <Label Text="{Binding Quantity}" FontSize="16"/>
-                                                </StackLayout>
+                                                <Label Text="{Binding Quantity ,StringFormat='Ποσότητα: {0}'}" FontSize="16"/>
                                             </StackLayout>
 
                                         </StackLayout>
@@ -63,13 +60,10 @@
                                             </StackLayout>
                                             <StackLayout HorizontalOptions="EndAndExpand">
                                                 <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
-                                                    <Label Text="Price:" FontSize="16"/>
-                                                    <Label Text="{Binding Sum , StringFormat='{0} €'}" FontSize="16"/>
+                                                    <Label Text="Τιμή:" FontSize="16"/>
+                                                    <Label Text="{Binding Product.Price , StringFormat='{0} €'}" FontSize="16"/>
                                                 </StackLayout>
-                                                <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
-                                                    <Label Text="Ποσότητα:" FontSize="16"/>
-                                                    <Label Text="{Binding Quantity}" FontSize="16"/>
-                                                </StackLayout>
+                                                <Label Text="{Binding Quantity ,StringFormat='Ποσότητα: {0}'}" FontSize="16"/>
                                             </StackLayout>
                                         </StackLayout>
                                     </Frame>

@@ -44,6 +44,12 @@ namespace Smart_Orders_Project.Services
         {
             return await Task.FromResult(LineList);
         }
+
+        public Task<List<LineOfOrder>> GetItemsWithNameAsync(string name)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<bool> UpdateItemAsync(LineOfOrder item)
         {
             var oldItem = LineList.Where((LineOfOrder arg) => arg.Oid == item.Oid).FirstOrDefault();
