@@ -45,7 +45,7 @@ namespace Smart_Orders_Project.Services
                 //RFSalesList = new List<RFSales>(); // αμα δεν τραβαμε τα δεδομενα 
                 
                 RFSalesList.Clear();
-                string queryString = "select Oid , Πελάτης ,UpdSmart ,Ολοκληρώθηκε ,ΗμνίαΔημιουργίας from RFΠωλήσεις where UpdSmart = 'false' and GCRecord is null";
+                string queryString = "select Oid , Πελάτης ,ΠαραστατικόΠελάτη ,UpdSmart ,Ολοκληρώθηκε ,ΗμνίαΔημιουργίας from RFΠωλήσεις where UpdSmart = 'false' and GCRecord is null";
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();
@@ -58,6 +58,7 @@ namespace Smart_Orders_Project.Services
                         RFSalesList.Add(new RFSales
                         {
                             Oid = Guid.Parse(reader["Oid"].ToString()),
+                            RFCount = reader["ΠαραστατικόΠελάτη"].ToString(),
                             Customer =  await GetCustomer(reader["Πελάτης"].ToString()),
                             CreationDate = (DateTime)reader["ΗμνίαΔημιουργίας"],
                             Complete = bool.Parse(reader["Ολοκληρώθηκε"].ToString()),
@@ -111,7 +112,7 @@ namespace Smart_Orders_Project.Services
 	                              ,Μεγέθη.Μεγέθη
 	                              ,ΜονάδεςΜέτρησης.ΜονάδαΜέτρησης
                               FROM BarCodeΕίδους
-                              join Είδος on BarCodeΕίδους.Είδος = Είδος.Oid
+                              right join Είδος on BarCodeΕίδους.Είδος = Είδος.Oid
                               left join Χρώματα on Χρώματα.Oid = BarCodeΕίδους.Χρώμα
                               left join ΜονάδεςΜέτρησης on ΜονάδεςΜέτρησης.Oid = BarCodeΕίδους.ΜονάδαΜέτρησης
                               left join Μεγέθη on Μεγέθη.Oid = BarCodeΕίδους.Μέγεθος
@@ -205,7 +206,7 @@ namespace Smart_Orders_Project.Services
                 int ok = 0;
                 string queryString = @"INSERT INTO RFΠωλήσεις (Oid, ΑποθηκευτικόςΧώρος, Πελάτης, ΠαραστατικάΠωλήσεων, ΠαραστατικόΠελάτη, 
                     Διαχείριση, UpdSmart, Ολοκληρώθηκε, ΗμνίαΔημιουργίας, ΑυτόματηΔιαγραφήΠαραστατικών, OptimisticLockField, GCRecord)
-                    VALUES((Convert(uniqueidentifier, N'"+item.Oid+ "')), null, (Convert(uniqueidentifier, N'" + item.Customer.Oid + "')), null, null, null, '0', '0', (Convert(date, '" + item.CreationDate.ToString("MM/dd/yyyy") + "')), '0', '1', null); ";
+                    VALUES((Convert(uniqueidentifier, N'"+item.Oid+ "')), null, (Convert(uniqueidentifier, N'" + item.Customer.Oid + "')), null, '"+item.RFCount+"', null, '0', '0', (Convert(date, '" + item.CreationDate.ToString("MM/dd/yyyy") + "')), '0', '1', null); ";
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();

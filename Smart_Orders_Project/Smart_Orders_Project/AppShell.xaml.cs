@@ -16,6 +16,7 @@ namespace Smart_Orders_Project
             Routing.RegisterRoute(nameof(OrderDetailPage), typeof(OrderDetailPage));
             Routing.RegisterRoute(nameof(CustomerSelectionPage), typeof(CustomerSelectionPage));
             Routing.RegisterRoute(nameof(LineOfOrdersSelectionPage), typeof(LineOfOrdersSelectionPage));
+            Routing.RegisterRoute(nameof(BarCodeScanner), typeof(BarCodeScanner));
         }
 
         private async void OnMenuItemClicked(object sender, EventArgs e)

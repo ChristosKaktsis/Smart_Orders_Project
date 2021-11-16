@@ -6,12 +6,12 @@
              xmlns:dxcv="http://schemas.devexpress.com/xamarin/2014/forms/collectionview" xmlns:model="clr-namespace:Smart_Orders_Project.Models"
              Shell.NavBarHasShadow="False"
              BackgroundColor="AliceBlue"
-             Title="RF00001?">
+             Title="{Binding Title}">
     <Shell.BackButtonBehavior>
         <BackButtonBehavior Command="{Binding BackCommand}"/>
     </Shell.BackButtonBehavior>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Ολοκήρωση" Command="{Binding SaveRFSalesCommand}"/>
+        <ToolbarItem Text="Αποθηκευση" Command="{Binding SaveRFSalesCommand}"/>
     </ContentPage.ToolbarItems>
     <RefreshView x:DataType="vm:OrdersDetailViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
         <Grid>

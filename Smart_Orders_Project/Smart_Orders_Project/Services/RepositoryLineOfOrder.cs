@@ -71,7 +71,7 @@ namespace Smart_Orders_Project.Services
                 int ok = 0;
                 string queryString = @"INSERT INTO RFΓραμμέςΠωλήσεων (Oid, RFΠωλήσεις, Είδος, Ποσότητα, Θέση, 
                     OptimisticLockField, GCRecord, BarCodeΕίδους, ΠοσότηταΔιάστασης)
-                    VALUES((Convert(uniqueidentifier, N'" + item.Oid + "')), (Convert(uniqueidentifier, N'" + item.RFSalesOid + "')), (Convert(uniqueidentifier, N'" + item.Product.Oid + "')), '"+item.Quantity+"', null, '1', null, '"+item.Product.BarCode+"', '" + item.Product.Price + "'); ";
+                    VALUES((Convert(uniqueidentifier, N'" + item.Oid + "')), (Convert(uniqueidentifier, N'" + item.RFSalesOid + "')), (Convert(uniqueidentifier, N'" + item.Product.Oid + "')), '"+item.Quantity+"', null, '1', null, "+(string.IsNullOrEmpty(item.Product.BarCode) ?"null":"'"+ item.Product.BarCode + "'")+", '" + item.Product.Price + "'); ";
                
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {

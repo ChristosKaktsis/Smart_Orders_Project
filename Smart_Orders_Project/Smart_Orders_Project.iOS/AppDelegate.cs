@@ -25,7 +25,7 @@ namespace Smart_Orders_Project.iOS
             global::Xamarin.Forms.Forms.Init();
             DevExpress.XamarinForms.CollectionView.iOS.Initializer.Init();
             DevExpress.XamarinForms.Editors.iOS.Initializer.Init();
-            //ZXing.Net.Mobile.Forms.iOS.Platform.Init();
+            ZXing.Net.Mobile.Forms.iOS.Platform.Init();
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);

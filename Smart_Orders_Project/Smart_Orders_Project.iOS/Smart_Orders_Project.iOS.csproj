@@ -138,8 +138,14 @@
     <PackageReference Include="DevExpress.XamarinForms.Editors">
       <Version>21.2.3</Version>
     </PackageReference>
+    <PackageReference Include="DevExpress.XamarinForms.Grid">
+      <Version>21.2.3</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />
     <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
+    <PackageReference Include="ZXing.Net.Mobile.Forms">
+      <Version>3.1.0-beta2</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>

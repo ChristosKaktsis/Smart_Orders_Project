@@ -34,7 +34,7 @@ namespace Smart_Orders_Project.Services
 	                              ,Μεγέθη.Μεγέθη
 	                              ,ΜονάδεςΜέτρησης.ΜονάδαΜέτρησης
                               FROM BarCodeΕίδους
-                              join Είδος on BarCodeΕίδους.Είδος = Είδος.Oid
+                              right join Είδος on BarCodeΕίδους.Είδος = Είδος.Oid
                               left join Χρώματα on Χρώματα.Oid = BarCodeΕίδους.Χρώμα
                               left join ΜονάδεςΜέτρησης on ΜονάδεςΜέτρησης.Oid = BarCodeΕίδους.ΜονάδαΜέτρησης
                               left join Μεγέθη on Μεγέθη.Oid = BarCodeΕίδους.Μέγεθος";
@@ -90,12 +90,12 @@ namespace Smart_Orders_Project.Services
 	                              ,Μεγέθη.Μεγέθη
 	                              ,ΜονάδεςΜέτρησης.ΜονάδαΜέτρησης
                               FROM BarCodeΕίδους
-                              join Είδος on BarCodeΕίδους.Είδος = Είδος.Oid
+                              right join Είδος on BarCodeΕίδους.Είδος = Είδος.Oid
                               left join Χρώματα on Χρώματα.Oid = BarCodeΕίδους.Χρώμα
                               left join ΜονάδεςΜέτρησης on ΜονάδεςΜέτρησης.Oid = BarCodeΕίδους.ΜονάδαΜέτρησης
                               left join Μεγέθη on Μεγέθη.Oid = BarCodeΕίδους.Μέγεθος
                                  
-                              where Είδος.Κωδικός = '"+id+ "' OR BarCode = '" + id + "' OR  Είδος.Περιγραφή = '" + id + "'";
+                              where Είδος.Κωδικός = '" + id+ "' OR BarCode = '" + id + "' OR  Είδος.Περιγραφή = '" + id + "'";
 
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
@@ -156,7 +156,7 @@ namespace Smart_Orders_Project.Services
 	                              ,Μεγέθη.Μεγέθη
 	                              ,ΜονάδεςΜέτρησης.ΜονάδαΜέτρησης
                               FROM BarCodeΕίδους
-                              join Είδος on BarCodeΕίδους.Είδος = Είδος.Oid
+                              right join Είδος on BarCodeΕίδους.Είδος = Είδος.Oid
                               left join Χρώματα on Χρώματα.Oid = BarCodeΕίδους.Χρώμα
                               left join ΜονάδεςΜέτρησης on ΜονάδεςΜέτρησης.Oid = BarCodeΕίδους.ΜονάδαΜέτρησης
                               left join Μεγέθη on Μεγέθη.Oid = BarCodeΕίδους.Μέγεθος

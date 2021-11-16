@@ -1,4 +1,5 @@
-﻿using Smart_Orders_Project.ViewModels;
+﻿using Smart_Orders_Project.Models;
+using Smart_Orders_Project.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,15 @@ namespace Smart_Orders_Project.Views
         private void Entry_TextChanged(object sender, TextChangedEventArgs e)
         {
             OrdersList.FilterString = "Contains([Name], '"+e.NewTextValue+"')";
+        }
+
+        private void OrdersList_Tap(object sender, DevExpress.XamarinForms.CollectionView.CollectionViewGestureEventArgs e)
+        {
+            if (e.Item != null)
+            {
+                _viewModel.SelectedCustomer = (Customer)e.Item;
+                _viewModel.AddCustomerCommand.Execute(null);
+            }
         }
     }
 }

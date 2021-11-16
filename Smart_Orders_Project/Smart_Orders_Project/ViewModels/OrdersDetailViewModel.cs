@@ -28,6 +28,7 @@ namespace Smart_Orders_Project.ViewModels
         public Command DeleteCommand { get; }
         public OrdersDetailViewModel()
         {
+            Title = "RF"+RFCounter.ToString().PadLeft(8, '0');
             AddLine = new Command(OnAddLineClicked);
             SelectCustomer = new Command(OnSelectCustomerClicked);
             LinesList = new ObservableCollection<LineOfOrder>();
@@ -45,6 +46,8 @@ namespace Smart_Orders_Project.ViewModels
             if (l == null)
                 return;
             LinesList.Remove(l);
+            if (RfSale != null)
+                RfSale.Lines.Remove(l);
         }
 
         private async void OnBackButtonPressed(object obj)
@@ -69,6 +72,7 @@ namespace Smart_Orders_Project.ViewModels
                         Oid = Guid.Parse(OrderOid),
                         Customer = await CustomerRepo.GetItemAsync(itemId),
                         Lines = LinesList.ToList(),
+                        RFCount =Title,
                         CreationDate = DateTime.Now
                     };
                     await RFSalesRepo.AddItemAsync(sale1);
@@ -78,6 +82,7 @@ namespace Smart_Orders_Project.ViewModels
                         await LinesRepo.UploadItemAsync(i);
                         await LinesRepo.DeleteItemAsync(i.Oid.ToString());
                     }
+                    RFCounter++;
                 }
                 else
                 {
@@ -91,6 +96,7 @@ namespace Smart_Orders_Project.ViewModels
                         await LinesRepo.DeleteItemAsync(i.Oid.ToString());
                     }
                 }
+                
                 await Shell.Current.GoToAsync("..");
             }
             catch (Exception ex)
@@ -175,7 +181,9 @@ namespace Smart_Orders_Project.ViewModels
             }
             set
             {
-                SetProperty(ref rfsale, value); 
+                SetProperty(ref rfsale, value);
+                if(value!=null)
+                    Title = value.RFCount;
             }
         }
 

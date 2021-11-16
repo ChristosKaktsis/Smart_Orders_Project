@@ -17,6 +17,7 @@ namespace Smart_Orders_Project.Views
         {
             base.OnAppearing();
             _viewModel.OnAppearing();
+            
         }
         //private void grid_SelectionChanged(object sender, DevExpress.XamarinForms.CollectionView.CollectionViewSelectionChangedEventArgs e)
         //{

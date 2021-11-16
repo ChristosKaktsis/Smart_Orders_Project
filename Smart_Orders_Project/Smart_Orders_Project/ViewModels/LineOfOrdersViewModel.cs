@@ -16,13 +16,16 @@ namespace Smart_Orders_Project.ViewModels
         private string itemId;
         private Product _selectedProduct;
         private string _searchText;
-        private int _quantity = 1;
+        private double _quantity = 1;
         private double _sum = 0;
+        private bool _isFocused=true;
+
         public ObservableCollection<Product> ProductList { get; }
         //public ObservableCollection<Product> SelectedProductList { get; set; }
         public Command LoadItemsCommand { get; }
         //public Command LoadItemCommand { get; }
         public Command SaveCommand { get; }
+        public Command ScannerCommand { get; }
         public LineOfOrdersViewModel()
         {
             ProductList = new ObservableCollection<Product>();
@@ -33,6 +36,13 @@ namespace Smart_Orders_Project.ViewModels
             SaveCommand = new Command(OnSave, ValidateSave);
             this.PropertyChanged +=
                 (_, __) => SaveCommand.ChangeCanExecute();
+
+            ScannerCommand = new Command(OnScannerClicked);
+        }
+
+        private async void OnScannerClicked(object obj)
+        {
+            await Shell.Current.GoToAsync("BarCodeScanner");
         }
 
         //private void SelectedProductList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -80,7 +90,7 @@ namespace Smart_Orders_Project.ViewModels
         public void OnAppearing()
         {
             IsBusy = false;
-
+            SearchText = BarCode;
         }
        
         public Product SelectedProduct
@@ -92,14 +102,33 @@ namespace Smart_Orders_Project.ViewModels
                 Quantity = 1; 
             }
         }
+        public bool IsFocused
+        {
+            get => _isFocused;
+            set
+            {
+                SetProperty(ref _isFocused, value);
+                if (!value)
+                {
+                    if (!string.IsNullOrEmpty(SearchText))
+                    {
+                        LoadItemsCommand.Execute(null);
+                    }
+                }
+               
+            }
+        }
         public string SearchText 
         {
             get => _searchText; 
             set
             {
                 SetProperty(ref _searchText, value);
-                if(!string.IsNullOrEmpty(value))
-                    LoadItemsCommand.Execute(null);
+                //if (!string.IsNullOrEmpty(value))
+                //{                   
+                //        LoadItemsCommand.Execute(null);
+                //}
+                    
 
             } 
         }
@@ -141,7 +170,7 @@ namespace Smart_Orders_Project.ViewModels
             // This will pop the current page off the navigation stack
             await Shell.Current.GoToAsync("..");
         }
-        public int Quantity 
+        public double Quantity 
         {
             get => _quantity;
             set 

@@ -40,6 +40,29 @@ namespace Smart_Orders_Project.ViewModels
                 OnPropertyChanged(nameof(ConnectionString));
             }
         }
+        public string BarCode
+        {
+            get => Preferences.Get(nameof(BarCode),"");
+            set
+            {
+                Preferences.Set(nameof(BarCode), value);
+                OnPropertyChanged(nameof(BarCode));
+                GoBack();
+            }
+        }
+        public int RFCounter
+        {
+            get => Preferences.Get(nameof(RFCounter), 1);
+            set
+            {
+                Preferences.Set(nameof(RFCounter), value);
+                OnPropertyChanged(nameof(RFCounter));
+            }
+        }
+        private async void GoBack()
+        {
+            await Shell.Current.GoToAsync("..");
+        }
 
         protected bool SetProperty<T>(ref T backingStore, T value,
             [CallerMemberName] string propertyName = "",

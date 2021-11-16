@@ -30,7 +30,7 @@
                     </StackLayout>
                 </Frame>
                 <StackLayout Margin="10,10,10,0">
-                    <dxcv:DXCollectionView x:Name="OrdersList" SelectionMode="Single" ItemsSource="{Binding CustomerList}" SelectedItem="{Binding SelectedCustomer,Mode=OneWayToSource}">
+                    <dxcv:DXCollectionView x:Name="OrdersList" Tap="OrdersList_Tap" SelectionMode="None"  ItemsSource="{Binding CustomerList}" SelectedItem="{Binding SelectedCustomer,Mode=OneWayToSource}">
                         <dxcv:DXCollectionView.ItemTemplate>
                             <DataTemplate>
                                 <Grid Padding="10">
