@@ -19,6 +19,10 @@ namespace Smart_Orders_Project.ViewModels
         private double _quantity = 1;
         private double _sum = 0;
         private bool _isFocused=true;
+        private double _height;
+        private double _width;
+        private double _length;
+        private bool _isWHEnabled = false;
 
         public ObservableCollection<Product> ProductList { get; }
         //public ObservableCollection<Product> SelectedProductList { get; set; }
@@ -67,16 +71,28 @@ namespace Smart_Orders_Project.ViewModels
         private async Task ExecuteLoadItemsCommand()
         {
             IsBusy = true;
-
             try
             {
                 ProductList.Clear();
                 //var items = await ProductRepo.GetItemsAsync(true);
-                var items = await ProductRepo.GetItemsWithNameAsync(SearchText);
-                foreach (var item in items)
+                if (SearchText.Length == 13)
                 {
-                    ProductList.Add(item);
+                    var it = await ProductRepo.GetItemAsync(SearchText);
+                    ProductList.Add(it);
                 }
+                else
+                {
+                    var items = await ProductRepo.GetItemsWithNameAsync(SearchText);
+
+                    foreach (var item in items)
+                    {
+                        ProductList.Add(item);
+                    }
+                }
+
+                //if its only one item in the list make it selected item
+                if (ProductList.Count == 1)
+                    SelectedProduct = ProductList[0];
             }
             catch (Exception ex)
             {
@@ -99,7 +115,10 @@ namespace Smart_Orders_Project.ViewModels
             set
             {
                 SetProperty(ref _selectedProduct, value);
-                Quantity = 1; 
+                Quantity = 1;
+                Width = value.Width;
+                Height = value.Height;
+                Length = value.Length;
             }
         }
         public bool IsFocused
@@ -116,6 +135,14 @@ namespace Smart_Orders_Project.ViewModels
                     }
                 }
                
+            }
+        }
+        public bool IsWHEnabled
+        {
+            get => _isWHEnabled;
+            set
+            {
+                SetProperty(ref _isWHEnabled, value);
             }
         }
         public string SearchText 
@@ -160,8 +187,11 @@ namespace Smart_Orders_Project.ViewModels
             {
                 Oid = Guid.NewGuid(),
                 Product = SelectedProduct,
-                Quantity = this.Quantity,
-                Sum = this.Sum,
+                Quantity = Quantity,
+                Width = Width,
+                Height = Height,
+                Length = Length,
+                Sum = Sum,
                 RFSalesOid = Guid.Parse(ItemId)
             };
 
@@ -176,19 +206,63 @@ namespace Smart_Orders_Project.ViewModels
             set 
             {
                 SetProperty(ref _quantity, value);
-                if (SelectedProduct != null)
-                {
-                    Sum = value * SelectedProduct.Price;
-                }
+                CheckSum();
+                //if (SelectedProduct != null)
+                //{
+                //    //Sum = value * SelectedProduct.Price;
+                   
+                //}
             } 
         }
+
+        private void CheckSum()
+        {
+            if (SelectedProduct == null)
+                return;
+
+            if(Width==0 && Length == 0)
+            {
+                Sum = Quantity * SelectedProduct.Price;
+            }
+            else
+            {
+                var athr = ((Width * Length) * SelectedProduct.Price) / (SelectedProduct.Width * SelectedProduct.Length);
+                Sum = Quantity * athr;
+            }
+        }
+
         public double Sum
         {
             get => _sum;
             set
             {
                 SetProperty(ref _sum, value);
-
+            }
+        }
+        public double Height
+        {
+            get => _height;
+            set
+            {
+                SetProperty(ref _height, value);
+            }
+        }
+        public double Width
+        {
+            get => _width;
+            set
+            {
+                SetProperty(ref _width, value);
+                CheckSum();
+            }
+        }
+        public double Length
+        {
+            get => _length;
+            set
+            {
+                SetProperty(ref _length, value);
+                CheckSum();
             }
         }
         public string ItemId

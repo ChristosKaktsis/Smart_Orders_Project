@@ -86,16 +86,21 @@ namespace Smart_Orders_Project.Services
 	                              ,Είδος.ΤιμήΧονδρικής
 	                              ,Είδος.Κωδικός
 	                              ,Είδος.ΦΠΑ
+                                  ,Είδος.Εκπτωση
 	                              ,Χρώματα.Χρώματα
 	                              ,Μεγέθη.Μεγέθη
+                                  ,BarCodeΕίδους.Πλάτος
+                                  ,BarCodeΕίδους.Μήκος
+                                  ,BarCodeΕίδους.Υψος
 	                              ,ΜονάδεςΜέτρησης.ΜονάδαΜέτρησης
+                                  ,ΜονάδεςΜέτρησης.ΤύποςΔιάστασης
                               FROM BarCodeΕίδους
                               right join Είδος on BarCodeΕίδους.Είδος = Είδος.Oid
                               left join Χρώματα on Χρώματα.Oid = BarCodeΕίδους.Χρώμα
                               left join ΜονάδεςΜέτρησης on ΜονάδεςΜέτρησης.Oid = BarCodeΕίδους.ΜονάδαΜέτρησης
                               left join Μεγέθη on Μεγέθη.Oid = BarCodeΕίδους.Μέγεθος
                                  
-                              where Είδος.Κωδικός = '" + id+ "' OR BarCode = '" + id + "' OR  Είδος.Περιγραφή = '" + id + "'";
+                              where Είδος.Κωδικός = '" + id+ "' OR BarCode = '" + id + "'";
 
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
@@ -112,10 +117,14 @@ namespace Smart_Orders_Project.Services
                         Name = reader["Περιγραφή"].ToString(),
                         FPA = int.Parse(reader["ΦΠΑ"] != null ? reader["ΦΠΑ"].ToString() : "0"),
                         Price = double.Parse(reader["ΤιμήΧονδρικής"].ToString()),
+                        Discount = int.Parse(reader["Εκπτωση"] != DBNull.Value ? reader["Εκπτωση"].ToString() : "0"),
                         BarCode = reader["BarCode"].ToString(),
                         BarCodeDesc = reader["BarCodeDesc"].ToString(),
                         Color = reader["Χρώματα"] != null ? reader["Χρώματα"].ToString() : string.Empty,
                         Size = reader["Μεγέθη"] != null ? reader["Μεγέθη"].ToString() : string.Empty,
+                        Width = reader["Πλάτος"] != DBNull.Value ? double.Parse(reader["Πλάτος"].ToString()) : 0.0,
+                        Length = reader["Μήκος"] != DBNull.Value ? double.Parse(reader["Μήκος"].ToString()) : 0.0,
+                        Height = reader["Υψος"] != DBNull.Value ? double.Parse(reader["Υψος"].ToString()) : 0.0,
                         UnitOfMeasure = string.IsNullOrEmpty(reader["ΜονάδαΜέτρησης"].ToString()) ? "Ποσότητα" : reader["ΜονάδαΜέτρησης"].ToString(),
                     };
 
@@ -152,9 +161,14 @@ namespace Smart_Orders_Project.Services
 	                              ,Είδος.ΤιμήΧονδρικής
 	                              ,Είδος.Κωδικός
 	                              ,Είδος.ΦΠΑ
+                                  ,Είδος.Εκπτωση
 	                              ,Χρώματα.Χρώματα
 	                              ,Μεγέθη.Μεγέθη
+                                  ,BarCodeΕίδους.Πλάτος
+                                  ,BarCodeΕίδους.Μήκος
+                                  ,BarCodeΕίδους.Υψος
 	                              ,ΜονάδεςΜέτρησης.ΜονάδαΜέτρησης
+                                  ,ΜονάδεςΜέτρησης.ΤύποςΔιάστασης
                               FROM BarCodeΕίδους
                               right join Είδος on BarCodeΕίδους.Είδος = Είδος.Oid
                               left join Χρώματα on Χρώματα.Oid = BarCodeΕίδους.Χρώμα
@@ -181,10 +195,14 @@ namespace Smart_Orders_Project.Services
                             Name = reader["Περιγραφή"].ToString(),
                             FPA = int.Parse(reader["ΦΠΑ"] != null ? reader["ΦΠΑ"].ToString() : "0"),
                             Price = double.Parse(reader["ΤιμήΧονδρικής"].ToString()),
+                            Discount = int.Parse(reader["Εκπτωση"] != DBNull.Value ? reader["Εκπτωση"].ToString() : "0"),
                             BarCode = reader["BarCode"].ToString(),
                             BarCodeDesc = reader["BarCodeDesc"].ToString(),
                             Color = reader["Χρώματα"] != null ? reader["Χρώματα"].ToString() : string.Empty,
                             Size = reader["Μεγέθη"] != null ? reader["Μεγέθη"].ToString() : string.Empty,
+                            Width = reader["Πλάτος"] != DBNull.Value ? double.Parse(reader["Πλάτος"].ToString()) : 0.0,
+                            Length = reader["Μήκος"] != DBNull.Value ? double.Parse(reader["Μήκος"].ToString()) : 0.0,
+                            Height = reader["Υψος"] != DBNull.Value ? double.Parse(reader["Υψος"].ToString()) : 0.0,
                             UnitOfMeasure = string.IsNullOrEmpty(reader["ΜονάδαΜέτρησης"].ToString()) ? "Ποσότητα" : reader["ΜονάδαΜέτρησης"].ToString(),
                         });
                     }

@@ -75,21 +75,25 @@ namespace Smart_Orders_Project.Services
             return await Task.Run(async () =>
             {
                 var LineList = new List<LineOfOrder>();
-                string queryString = "select Oid, RFΠωλήσεις , Είδος ,Ποσότητα ,BarCodeΕίδους ,ΠοσότηταΔιάστασης from RFΓραμμέςΠωλήσεων where RFΠωλήσεις ='"+id+"' and GCRecord is null";
+                string queryString = "select Oid, RFΠωλήσεις , Είδος ,Ποσότητα ,BarCodeΕίδους ,ΠοσότηταΔιάστασης ,Μήκος ,Πλάτος ,Υψος from RFΓραμμέςΠωλήσεων where RFΠωλήσεις ='" + id+"' and GCRecord is null";
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();
                     SqlCommand command = new SqlCommand(queryString, connection);
                     SqlDataReader reader = command.ExecuteReader();
+                    
                     while (reader.Read())
                     {
                         LineList.Add(new LineOfOrder
                         {
                             Oid = Guid.Parse(reader["Oid"].ToString()),
-                            Product = await GetProduct(reader["Είδος"].ToString()),
+                            Product = await GetProduct(reader["Είδος"].ToString(), reader["BarCodeΕίδους"].ToString()),
                             ProductBarCode = reader["BarCodeΕίδους"].ToString(),
                             Quantity = int.Parse(reader["Ποσότητα"].ToString()),
                             RFSalesOid = Guid.Parse(reader["RFΠωλήσεις"].ToString()),
+                            Width = reader["Πλάτος"] != DBNull.Value ? double.Parse(reader["Πλάτος"].ToString()) : 0.0,
+                            Length = reader["Μήκος"] != DBNull.Value ? double.Parse(reader["Μήκος"].ToString()) : 0.0,
+                            Height = reader["Υψος"] != DBNull.Value ? double.Parse(reader["Υψος"].ToString()) : 0.0,
                         });
                     }
                     return LineList;
@@ -97,7 +101,7 @@ namespace Smart_Orders_Project.Services
             });
         }
 
-        private async Task<Product> GetProduct(string id)
+        private async Task<Product> GetProduct(string id , string bar)
         {
             return await Task.Run(() =>
             {
@@ -108,16 +112,21 @@ namespace Smart_Orders_Project.Services
 	                              ,Είδος.ΤιμήΧονδρικής
 	                              ,Είδος.Κωδικός
 	                              ,Είδος.ΦΠΑ
+                                  ,Είδος.Εκπτωση
 	                              ,Χρώματα.Χρώματα
 	                              ,Μεγέθη.Μεγέθη
+                                  ,BarCodeΕίδους.Πλάτος
+                                  ,BarCodeΕίδους.Μήκος
+                                  ,BarCodeΕίδους.Υψος
 	                              ,ΜονάδεςΜέτρησης.ΜονάδαΜέτρησης
+                                  ,ΜονάδεςΜέτρησης.ΤύποςΔιάστασης
                               FROM BarCodeΕίδους
                               right join Είδος on BarCodeΕίδους.Είδος = Είδος.Oid
                               left join Χρώματα on Χρώματα.Oid = BarCodeΕίδους.Χρώμα
                               left join ΜονάδεςΜέτρησης on ΜονάδεςΜέτρησης.Oid = BarCodeΕίδους.ΜονάδαΜέτρησης
                               left join Μεγέθη on Μεγέθη.Oid = BarCodeΕίδους.Μέγεθος
                                  
-                              where Είδος.Oid = '" + id + "'";
+                              where Είδος.Oid = '" + id + "' and BarCode "+(string.IsNullOrEmpty(bar) ? "is null" : "= '"+bar+"'");
 
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
@@ -127,6 +136,7 @@ namespace Smart_Orders_Project.Services
                     if (!reader.HasRows)
                         return null;
                     reader.Read();
+                    
                     Product selectProduct = new Product()
                     {
                         Oid = Guid.Parse(reader["Oid"].ToString()),
@@ -134,10 +144,14 @@ namespace Smart_Orders_Project.Services
                         Name = reader["Περιγραφή"].ToString(),
                         FPA = int.Parse(reader["ΦΠΑ"] != null ? reader["ΦΠΑ"].ToString() : "0"),
                         Price = double.Parse(reader["ΤιμήΧονδρικής"].ToString()),
+                        Discount = int.Parse(reader["Εκπτωση"] != DBNull.Value ? reader["Εκπτωση"].ToString() : "0"),
                         BarCode = reader["BarCode"].ToString(),
                         BarCodeDesc = reader["BarCodeDesc"].ToString(),
                         Color = reader["Χρώματα"] != null ? reader["Χρώματα"].ToString() : string.Empty,
                         Size = reader["Μεγέθη"] != null ? reader["Μεγέθη"].ToString() : string.Empty,
+                        Width = reader["Πλάτος"] != DBNull.Value ? double.Parse(reader["Πλάτος"].ToString()) : 0.0,
+                        Length = reader["Μήκος"] != DBNull.Value ? double.Parse(reader["Μήκος"].ToString()) : 0.0,
+                        Height = reader["Υψος"] != DBNull.Value ? double.Parse(reader["Υψος"].ToString()) : 0.0,
                         UnitOfMeasure = string.IsNullOrEmpty(reader["ΜονάδαΜέτρησης"].ToString()) ? "Ποσότητα" : reader["ΜονάδαΜέτρησης"].ToString(),
                     };
 

@@ -1,4 +1,6 @@
 ﻿using Smart_Orders_Project.ViewModels;
+using System;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,13 +14,25 @@ namespace Smart_Orders_Project.Views
         {
             InitializeComponent();
             BindingContext = _viewModel = new LineOfOrdersViewModel();
+           
         }
         protected override void OnAppearing()
         {
             base.OnAppearing();
             _viewModel.OnAppearing();
-            
+            ChangeFocus();//open keyboard ready to write 
         }
+
+        private async void ChangeFocus()
+        {
+            await Task.Delay(100);//delay because you have to wait for the element to render!!!
+            await Task.Run(() =>
+            {
+                SearchText.Focus();
+            });
+        }
+
+
         //private void grid_SelectionChanged(object sender, DevExpress.XamarinForms.CollectionView.CollectionViewSelectionChangedEventArgs e)
         //{
         //    if (e.DeselectedItems.Count == 1)

@@ -41,11 +41,12 @@ namespace Smart_Orders_Project.ViewModels
             DeleteCommand = new Command<LineOfOrder>(OnDeletePressed);
         }
 
-        private  void OnDeletePressed(LineOfOrder l)
+        private async void OnDeletePressed(LineOfOrder l)
         {
             if (l == null)
                 return;
             LinesList.Remove(l);
+            await LinesRepo.DeleteItemAsync(l.Oid.ToString());
             if (RfSale != null)
                 RfSale.Lines.Remove(l);
         }

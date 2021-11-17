@@ -13,10 +13,14 @@ namespace Smart_Orders_Project.Models
         public string ProductCode { get; set; }
         public double Price { get; set; }
         public int FPA { get; set; }
+        public int Discount { get; set; }
         public string BarCode { get; set; }
         public string BarCodeDesc { get; set; }
         public string Color { get; set; }
         public string Size { get; set; }
+        public double Width { get; set; }
+        public double Length { get; set; }
+        public double Height { get; set; }
         public string UnitOfMeasure { get; set; }
         //nonPressistant
         int _quantity;

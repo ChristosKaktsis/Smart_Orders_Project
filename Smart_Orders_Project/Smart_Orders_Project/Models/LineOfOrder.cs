@@ -11,6 +11,9 @@ namespace Smart_Orders_Project.Models
         public Guid RFSalesOid { get; set; }
         public string ProductBarCode { get; set; }
         public double Quantity { get; set; }
+        public double Width { get; set; }
+        public double Length { get; set; }
+        public double Height { get; set; }
         public double Sum { get; set; }
     }
 }
