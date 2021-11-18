@@ -120,9 +120,9 @@ namespace Smart_Orders_Project.ViewModels
                 Quantity = 1;
                 if (value != null)
                 {
-                    Width = value.Width;
-                    Height = value.Height;
-                    Length = value.Length;
+                    Width = value.Width==0 ? 1: value.Width;
+                    Height = value.Height==0 ? 1: value.Height;
+                    Length = value.Length==0 ? 1 : value.Length;
                     switch (value.Type)
                     {
                         case 0:
@@ -270,7 +270,7 @@ namespace Smart_Orders_Project.ViewModels
             if (SelectedProduct == null)
                 return;
 
-            if(Width==0 && Length == 0)
+            if(Width==1 && Length == 1)
             {
                 Sum = Quantity * SelectedProduct.Price;
             }
