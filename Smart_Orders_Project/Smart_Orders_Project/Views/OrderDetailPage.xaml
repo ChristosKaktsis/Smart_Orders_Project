@@ -34,15 +34,12 @@
                                         <Grid Padding="0">
                                             <Frame BackgroundColor="white" BorderColor="LightGray" Padding="10" Margin="0,0,0,0" CornerRadius="0" HasShadow="True">
                                                 <StackLayout x:DataType="model:LineOfOrder" Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
-                                                    <StackLayout>
+                                                    <StackLayout WidthRequest="200">
                                                         <Label Text="{Binding Product.Name}" FontSize="16" FontAttributes="Bold"/>
                                                         <Label Text="{Binding Product.BarCode}"/>
                                                     </StackLayout>
                                                     <StackLayout HorizontalOptions="EndAndExpand">
-                                                        <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
-                                                            <Label Text="Τιμή:" FontSize="16"/>
-                                                            <Label Text="{Binding Product.Price , StringFormat='{0} €'}" FontSize="16"/>
-                                                        </StackLayout>
+                                                        <Label Text="{Binding Sum , StringFormat='Τιμή:{0} €'}" FontSize="16"/>
                                                         <Label Text="{Binding Quantity ,StringFormat='Ποσότητα: {0}'}" FontSize="16"/>
                                                     </StackLayout>
 
@@ -87,6 +84,7 @@
                     <Button Text="+"  FontSize="30" CornerRadius="30" Command="{Binding AddLine}"/>
                 </Frame>
             </StackLayout>
+            
         </Grid>
     </RefreshView>
 </ContentPage>

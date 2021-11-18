@@ -114,13 +114,13 @@
                         </dxcv:DXCollectionView.SelectedItemTemplate>
                     </dxcv:DXCollectionView>
                 </StackLayout>
-                <StackLayout Margin="10,0,10,10" Orientation="Horizontal" IsVisible="{Binding IsWHEnabled,Mode=OneWay}">
-                    <Frame BackgroundColor="{StaticResource SecondaryLight}" Padding="0" Margin="0,0,10,0" HeightRequest="70" HorizontalOptions="Start" CornerRadius="10" HasShadow="True">
+                <StackLayout Margin="10,0,10,10" Orientation="Horizontal" >
+                    <Frame BackgroundColor="{StaticResource SecondaryLight}" IsVisible="{Binding IsLEnabled,Mode=OneWay}" Padding="0" Margin="0,0,10,0" HeightRequest="70" HorizontalOptions="Start" CornerRadius="10" HasShadow="True">
                         <dxe:NumericEdit BackgroundColor="Transparent" TextColor="White" LabelColor="White" FocusedLabelColor="White" FocusedBorderColor="Transparent" 
                                      LabelFontSize="18" TextFontSize="24" BorderColor="Transparent" UpIconColor="White" DownIconColor="White" LabelText="Μήκος" IsLabelFloating="True" 
                                      IsUpDownIconVisible="True" Value="{Binding Length , Mode=TwoWay}" DisplayFormat="n2" MaxValue="1000000" MinValue="0" AllowLooping="False"/>
                     </Frame>
-                    <Frame BackgroundColor="{StaticResource SecondaryLight}" Padding="0" Margin="0,0,10,0" HeightRequest="70" HorizontalOptions="EndAndExpand" CornerRadius="10" HasShadow="True">
+                    <Frame BackgroundColor="{StaticResource SecondaryLight}" IsVisible="{Binding IsWEnabled,Mode=OneWay}" Padding="0" Margin="0,0,10,0" HeightRequest="70" HorizontalOptions="EndAndExpand" CornerRadius="10" HasShadow="True">
                         <dxe:NumericEdit BackgroundColor="Transparent" TextColor="White" LabelColor="White" FocusedLabelColor="White" FocusedBorderColor="Transparent" 
                                      LabelFontSize="18" TextFontSize="24" BorderColor="Transparent" UpIconColor="White" DownIconColor="White" LabelText="Πλάτος" IsLabelFloating="True" 
                                      IsUpDownIconVisible="True" Value="{Binding Width , Mode=TwoWay}" DisplayFormat="n2"  MaxValue="1000000" MinValue="0" AllowLooping="False"/>

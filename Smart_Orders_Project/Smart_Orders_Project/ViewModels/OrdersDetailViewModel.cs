@@ -76,6 +76,7 @@ namespace Smart_Orders_Project.ViewModels
                         RFCount =Title,
                         CreationDate = DateTime.Now
                     };
+                    RFCounter++;
                     await RFSalesRepo.AddItemAsync(sale1);
                     await RFSalesRepo.UploadItemAsync(sale1);
                     foreach (var i in sale1.Lines)
@@ -83,7 +84,7 @@ namespace Smart_Orders_Project.ViewModels
                         await LinesRepo.UploadItemAsync(i);
                         await LinesRepo.DeleteItemAsync(i.Oid.ToString());
                     }
-                    RFCounter++;
+                    //RFCounter++;
                 }
                 else
                 {

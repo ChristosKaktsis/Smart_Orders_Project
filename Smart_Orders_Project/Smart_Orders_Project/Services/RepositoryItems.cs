@@ -125,6 +125,7 @@ namespace Smart_Orders_Project.Services
                         Width = reader["Πλάτος"] != DBNull.Value ? double.Parse(reader["Πλάτος"].ToString()) : 0.0,
                         Length = reader["Μήκος"] != DBNull.Value ? double.Parse(reader["Μήκος"].ToString()) : 0.0,
                         Height = reader["Υψος"] != DBNull.Value ? double.Parse(reader["Υψος"].ToString()) : 0.0,
+                        Type = int.Parse(reader["ΤύποςΔιάστασης"] != DBNull.Value ? reader["ΤύποςΔιάστασης"].ToString() : "0"),
                         UnitOfMeasure = string.IsNullOrEmpty(reader["ΜονάδαΜέτρησης"].ToString()) ? "Ποσότητα" : reader["ΜονάδαΜέτρησης"].ToString(),
                     };
 
@@ -203,6 +204,7 @@ namespace Smart_Orders_Project.Services
                             Width = reader["Πλάτος"] != DBNull.Value ? double.Parse(reader["Πλάτος"].ToString()) : 0.0,
                             Length = reader["Μήκος"] != DBNull.Value ? double.Parse(reader["Μήκος"].ToString()) : 0.0,
                             Height = reader["Υψος"] != DBNull.Value ? double.Parse(reader["Υψος"].ToString()) : 0.0,
+                            Type = int.Parse(reader["ΤύποςΔιάστασης"] != DBNull.Value ? reader["ΤύποςΔιάστασης"].ToString() : "0"),
                             UnitOfMeasure = string.IsNullOrEmpty(reader["ΜονάδαΜέτρησης"].ToString()) ? "Ποσότητα" : reader["ΜονάδαΜέτρησης"].ToString(),
                         });
                     }

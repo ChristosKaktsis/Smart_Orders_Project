@@ -21,6 +21,7 @@ namespace Smart_Orders_Project.Models
         public double Width { get; set; }
         public double Length { get; set; }
         public double Height { get; set; }
+        public int Type { get; set; }
         public string UnitOfMeasure { get; set; }
         //nonPressistant
         int _quantity;

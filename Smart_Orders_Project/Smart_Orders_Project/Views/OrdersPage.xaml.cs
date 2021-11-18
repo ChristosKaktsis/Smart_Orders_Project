@@ -27,9 +27,12 @@ namespace Smart_Orders_Project.Views
             _viewModel.OnAppearing();
         }
         void SwipeItem_Edit_Invoked(System.Object sender, SwipeItemTapEventArgs e)
-        {
-            
+        {  
             _viewModel.RFEdit.Execute(e.Item);
+        }
+        void SwipeItem_Done_Invoked(System.Object sender, SwipeItemTapEventArgs e)
+        {
+            _viewModel.RFDone.Execute(e.Item);
         }
     }
 }

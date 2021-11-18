@@ -43,7 +43,7 @@ namespace Smart_Orders_Project.Services
             return await  Task.Run(async () =>
             {
                 //RFSalesList = new List<RFSales>(); // αμα δεν τραβαμε τα δεδομενα 
-                
+                GetRFCounter();
                 RFSalesList.Clear();
                 string queryString = "select Oid , Πελάτης ,ΠαραστατικόΠελάτη ,UpdSmart ,Ολοκληρώθηκε ,ΗμνίαΔημιουργίας from RFΠωλήσεις where UpdSmart = 'false' and GCRecord is null";
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
@@ -68,6 +68,22 @@ namespace Smart_Orders_Project.Services
                     return RFSalesList;
                 }
             });
+        }
+
+        private void GetRFCounter()
+        {
+            string queryString = "SELECT Τιμή FROM ΓενικόςΜετρητής where Μετρητής='ΜετρητήςRF' and GCRecord is null";
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(queryString, connection);
+                SqlDataReader reader = command.ExecuteReader();
+                if(reader.HasRows)
+                {
+                    reader.Read();
+                    Preferences.Set("RFCounter", int.Parse(reader["Τιμή"].ToString()));
+                }    
+            }
         }
 
         private async Task<List<LineOfOrder>> GetLines(string id)
@@ -152,6 +168,7 @@ namespace Smart_Orders_Project.Services
                         Width = reader["Πλάτος"] != DBNull.Value ? double.Parse(reader["Πλάτος"].ToString()) : 0.0,
                         Length = reader["Μήκος"] != DBNull.Value ? double.Parse(reader["Μήκος"].ToString()) : 0.0,
                         Height = reader["Υψος"] != DBNull.Value ? double.Parse(reader["Υψος"].ToString()) : 0.0,
+                        Type = int.Parse(reader["ΤύποςΔιάστασης"] != DBNull.Value ? reader["ΤύποςΔιάστασης"].ToString() : "0"),
                         UnitOfMeasure = string.IsNullOrEmpty(reader["ΜονάδαΜέτρησης"].ToString()) ? "Ποσότητα" : reader["ΜονάδαΜέτρησης"].ToString(),
                     };
 
@@ -199,14 +216,17 @@ namespace Smart_Orders_Project.Services
             {
                 int ok = 0;
                 string queryString = @"UPDATE RFΠωλήσεις
-                                    SET Πελάτης = '"+item.Customer.Oid+ @"'
+                                    SET Πελάτης = '"+item.Customer.Oid+ "' , Ολοκληρώθηκε = '"+item.Complete+ "' , UpdSmart = '"+ item.Complete + @"'
                                     WHERE Oid = '" + item.Oid+ "' ";
                 string queryDelete = "DELETE From RFΓραμμέςΠωλήσεων where RFΠωλήσεις = '" + item.Oid + "'";
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();
-                    SqlCommand command1 = new SqlCommand(queryDelete, connection);
-                    var ex = command1.ExecuteNonQuery();
+                    if (!item.Complete)
+                    {
+                        SqlCommand command1 = new SqlCommand(queryDelete, connection);
+                        var ex = command1.ExecuteNonQuery();
+                    }
                     SqlCommand command = new SqlCommand(queryString, connection);
                     ok = command.ExecuteNonQuery();
                 }
@@ -218,6 +238,7 @@ namespace Smart_Orders_Project.Services
             return await Task.Run(() =>
             {
                 int ok = 0;
+                UpdateRFCounter();
                 string queryString = @"INSERT INTO RFΠωλήσεις (Oid, ΑποθηκευτικόςΧώρος, Πελάτης, ΠαραστατικάΠωλήσεων, ΠαραστατικόΠελάτη, 
                     Διαχείριση, UpdSmart, Ολοκληρώθηκε, ΗμνίαΔημιουργίας, ΑυτόματηΔιαγραφήΠαραστατικών, OptimisticLockField, GCRecord)
                     VALUES((Convert(uniqueidentifier, N'"+item.Oid+ "')), null, (Convert(uniqueidentifier, N'" + item.Customer.Oid + "')), null, '"+item.RFCount+"', null, '0', '0', (Convert(date, '" + item.CreationDate.ToString("MM/dd/yyyy") + "')), '0', '1', null); ";
@@ -230,7 +251,19 @@ namespace Smart_Orders_Project.Services
                 return ok >= 1 ? true : false ;
             });
         }
-       
+
+        private void UpdateRFCounter()
+        {
+            string queryString = @"UPDATE ΓενικόςΜετρητής 
+                                SET Τιμή = '"+ Preferences.Get("RFCounter", 1) + @"'
+                                WHERE Μετρητής = 'ΜετρητήςRF'";
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.ExecuteNonQuery();
+            }
+        }
 
         public Task<List<RFSales>> GetItemsWithNameAsync(string name)
         {

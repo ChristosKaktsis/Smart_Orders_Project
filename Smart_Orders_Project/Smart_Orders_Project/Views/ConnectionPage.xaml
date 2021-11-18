@@ -9,7 +9,8 @@
                 <Frame HorizontalOptions="FillAndExpand" VerticalOptions="Center" HasShadow="True"  Margin="10">
                     <StackLayout>
                         <Label Text="Connection String"/>
-                        <Entry Text="{Binding ConnectionString}" Placeholder="Connection String"/>
+                        <Entry Text="{Binding ConString}" Placeholder="Connection String" ClearButtonVisibility="WhileEditing"/>
+                        <Button Text="Αποθήκευση" CornerRadius="10" Command="{Binding SaveCommand}" HorizontalOptions="Center"/>
                     </StackLayout>
                 </Frame>
             </StackLayout>

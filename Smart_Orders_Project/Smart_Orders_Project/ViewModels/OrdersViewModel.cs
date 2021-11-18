@@ -1,4 +1,5 @@
 ﻿using Smart_Orders_Project.Models;
+using Smart_Orders_Project.Services;
 using Smart_Orders_Project.Views;
 using System;
 using System.Collections.Generic;
@@ -16,12 +17,36 @@ namespace Smart_Orders_Project.ViewModels
         public ObservableCollection<RFSales> RFSalesList { get; set; }
         public Command LoadItemsCommand { get; }
         public Command<RFSales> RFEdit { get; }
+        public Command<RFSales> RFDone { get; }
         public OrdersViewModel()
         {
             RFSalesList = new ObservableCollection<RFSales>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             AddOrder = new Command(OnAddOrderClicked);
             RFEdit = new Command<RFSales>(OnRFEdit);
+            RFDone = new Command<RFSales>(OnRFDone);
+        }
+
+        private async void OnRFDone(RFSales rfsale)
+        {
+            bool answer = await App.Current.MainPage.DisplayAlert("Ολοκλήρωση?", "Θέλετε να ολοκληρωθεί η Παραγγελία ;", "Ναι", "Οχι");
+            if(answer)
+            {        
+                try
+                {
+                    rfsale.Complete = true;
+                    await RFSalesRepo.UpdateItemAsync(rfsale);
+                    var r = await RepositoryPrint.GetPrinters();
+                    string action = await App.Current.MainPage.DisplayActionSheet("Θέλετε να γίνει Εκτύπωση ?", "Άκυρο", null, r.ToArray());
+                    if(action!= "Άκυρο")
+                        RepositoryPrint.SendPrint(action, rfsale.RFCount);
+                }
+                catch(Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                }
+                IsBusy = true;
+            }          
         }
 
         private async void OnRFEdit(RFSales rf)

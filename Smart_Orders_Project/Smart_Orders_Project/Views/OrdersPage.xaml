@@ -30,15 +30,20 @@
                                                 <Label Text="{Binding Customer.Name}" FontSize="16" FontAttributes="Bold"/>
                                                 <StackLayout Orientation="Horizontal">
                                                     <Label Text="{Binding CreationDate}" FontSize="16"/>
-                                                    <StackLayout HorizontalOptions="EndAndExpand" Orientation="Horizontal">
+                                                    <!--<StackLayout HorizontalOptions="EndAndExpand" Orientation="Horizontal">
                                                         <Label Text="ολοκληρώθηκε" FontSize="16"/>
                                                         <CheckBox IsChecked="{Binding Complete}" />
-                                                    </StackLayout>
+                                                    </StackLayout>-->
                                                 </StackLayout>
                                             </StackLayout>
                                         </Frame>
                                     </Grid>
                                 </dxcv:SwipeContainer.ItemView>
+                                <dxcv:SwipeContainer.StartSwipeItems>
+                                    <dxcv:SwipeItem Caption="Ολοκλήρωση"
+                                                    BackgroundColor="{StaticResource PrimaryLight}"
+                                                    Invoked="SwipeItem_Done_Invoked"/>
+                                </dxcv:SwipeContainer.StartSwipeItems>
                                 <dxcv:SwipeContainer.EndSwipeItems>
                                     <dxcv:SwipeItem Caption="Επεξεργασία"
                                                     BackgroundColor="{StaticResource ComplementaryLight}"

@@ -19,10 +19,12 @@ namespace Smart_Orders_Project.ViewModels
         private double _quantity = 1;
         private double _sum = 0;
         private bool _isFocused=true;
-        private double _height;
-        private double _width;
-        private double _length;
-        private bool _isWHEnabled = false;
+        private double _height = 0;
+        private double _width = 0;
+        private double _length = 0;
+        private bool _isWEnabled;
+        private bool _isLEnabled;
+        private bool _isHEnabled;
 
         public ObservableCollection<Product> ProductList { get; }
         //public ObservableCollection<Product> SelectedProductList { get; set; }
@@ -116,9 +118,41 @@ namespace Smart_Orders_Project.ViewModels
             {
                 SetProperty(ref _selectedProduct, value);
                 Quantity = 1;
-                Width = value.Width;
-                Height = value.Height;
-                Length = value.Length;
+                if (value != null)
+                {
+                    Width = value.Width;
+                    Height = value.Height;
+                    Length = value.Length;
+                    switch (value.Type)
+                    {
+                        case 0:
+                            IsWEnabled = false;
+                            IsLEnabled = false;
+                            IsHEnabled = false;
+                            break;
+                        case 1:
+                            IsWEnabled = false;
+                            IsLEnabled = true;
+                            IsHEnabled = false;
+                            break;
+                        case 2:
+                            IsWEnabled = true;
+                            IsLEnabled = true;
+                            IsHEnabled = false;
+                            break;
+                        case 3:
+                            IsWEnabled = true;
+                            IsLEnabled = true;
+                            IsHEnabled = true;
+                            break;
+                    }
+                }
+                else
+                {
+                    IsWEnabled = false;
+                    IsLEnabled = false;
+                    IsHEnabled = false;
+                }
             }
         }
         public bool IsFocused
@@ -137,12 +171,28 @@ namespace Smart_Orders_Project.ViewModels
                
             }
         }
-        public bool IsWHEnabled
+        public bool IsWEnabled
         {
-            get => _isWHEnabled;
+            get => _isWEnabled;
             set
             {
-                SetProperty(ref _isWHEnabled, value);
+                SetProperty(ref _isWEnabled, value);
+            }
+        }
+        public bool IsLEnabled
+        {
+            get => _isLEnabled;
+            set
+            {
+                SetProperty(ref _isLEnabled, value);
+            }
+        }
+        public bool IsHEnabled
+        {
+            get => _isHEnabled;
+            set
+            {
+                SetProperty(ref _isHEnabled, value);
             }
         }
         public string SearchText 
