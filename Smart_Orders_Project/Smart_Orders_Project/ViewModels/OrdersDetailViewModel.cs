@@ -128,7 +128,16 @@ namespace Smart_Orders_Project.ViewModels
                         }
                         else
                         {
-                            line.Sum = ((double)line.Width * (double)line.Length * line.Product.Price) / (line.Product.Width * line.Product.Length) * (double)line.Quantity;
+                            var y = (line.Product.Width * line.Product.Length) ;
+                            if (y != 0) 
+                            { 
+                                line.Sum = (((double)line.Width * (double)line.Length * line.Product.Price) / y) * (double)line.Quantity;
+                            }
+                            else
+                            {
+                                line.Sum = 0;
+                            }
+                            
                         }
                        
                         LinesList.Add(line); 

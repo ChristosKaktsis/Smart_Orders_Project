@@ -31,7 +31,23 @@ namespace Smart_Orders_Project.Views
                 SearchText.Focus();
             });
         }
-
+        private void Entry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            OrdersList.FilterString = "";
+            string[] subs = e.NewTextValue.Split(' ');
+            switch (subs.Length)
+            {
+                case 1:
+                    break;
+                case 2:
+                    OrdersList.FilterString = "Contains([Name], '" + subs[1] + "')";
+                    break;
+                default:      
+                    break;
+            }
+            
+            
+        }
 
         //private void grid_SelectionChanged(object sender, DevExpress.XamarinForms.CollectionView.CollectionViewSelectionChangedEventArgs e)
         //{

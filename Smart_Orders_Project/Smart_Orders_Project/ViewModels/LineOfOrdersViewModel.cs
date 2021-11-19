@@ -25,6 +25,7 @@ namespace Smart_Orders_Project.ViewModels
         private bool _isWEnabled;
         private bool _isLEnabled;
         private bool _isHEnabled;
+        private bool _isWHLEnabled;
 
         public ObservableCollection<Product> ProductList { get; }
         //public ObservableCollection<Product> SelectedProductList { get; set; }
@@ -120,9 +121,10 @@ namespace Smart_Orders_Project.ViewModels
                 Quantity = 1;
                 if (value != null)
                 {
-                    Width = (value.Width==0 ? 1: value.Width);
-                    Height = (value.Height==0 ? 1: value.Height);
-                    Length = (value.Length==0 ? 1 : value.Length);
+                    IsWHLEnabled = true;
+                    Width = value.Width==0 ? 1: value.Width;
+                    Height = value.Height==0 ? 1: value.Height;
+                    Length = value.Length==0 ? 1 : value.Length;
                     switch (value.Type)
                     {
                         case 0:
@@ -152,6 +154,7 @@ namespace Smart_Orders_Project.ViewModels
                     IsWEnabled = false;
                     IsLEnabled = false;
                     IsHEnabled = false;
+                    IsWHLEnabled = false;
                 }
             }
         }
@@ -165,6 +168,12 @@ namespace Smart_Orders_Project.ViewModels
                 {
                     if (!string.IsNullOrEmpty(SearchText))
                     {
+                        //να μην εκτελεστει γιατι γινεται φιλτραρισμα στο UI 
+                        //οταν εχει δυο και παραπανω λεξεις αναλαμβανει το UI
+                        string[] subs = SearchText.Split(' ');
+                        if (subs.Length > 1)
+                            return;
+                        //
                         LoadItemsCommand.Execute(null);
                     }
                 }
@@ -193,6 +202,14 @@ namespace Smart_Orders_Project.ViewModels
             set
             {
                 SetProperty(ref _isHEnabled, value);
+            }
+        }
+        public bool IsWHLEnabled
+        {
+            get => _isWHLEnabled;
+            set
+            {
+                SetProperty(ref _isWHLEnabled, value);
             }
         }
         public string SearchText 
@@ -270,14 +287,23 @@ namespace Smart_Orders_Project.ViewModels
             if (SelectedProduct == null)
                 return;
 
-            if(Width==1 && Length == 1)
+            if(SelectedProduct.Width == 0 && SelectedProduct.Length == 0)
             {
                 Sum = Quantity * SelectedProduct.Price;
             }
             else
             {
-                var athr = ((Width * Length) * SelectedProduct.Price) / (SelectedProduct.Width * SelectedProduct.Length);
-                Sum = Quantity * athr;
+                var y = (SelectedProduct.Width * SelectedProduct.Length);
+                if (y == 0)
+                {
+                    Sum = 0;
+                }
+                else
+                {
+                    var athr = ((Width * Length) * SelectedProduct.Price) / y;
+                    Sum = Quantity * athr;
+                } 
+                
             }
         }
 
