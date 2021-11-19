@@ -68,10 +68,15 @@ namespace Smart_Orders_Project.Services
         {
             return await Task.Run(() =>
             {
+                string q = item.Quantity.ToString().Replace(',', '.');
+                string h = item.Height.ToString().Replace(',', '.');
+                string l = item.Length.ToString().Replace(',', '.');
+                string w = item.Width.ToString().Replace(',', '.');
+                
                 int ok = 0;
                 string queryString = @"INSERT INTO RFΓραμμέςΠωλήσεων (Oid, RFΠωλήσεις, Είδος, Ποσότητα, Θέση, 
                     OptimisticLockField, GCRecord, BarCodeΕίδους, ΠοσότηταΔιάστασης, Μήκος, Πλάτος, Υψος)
-                    VALUES((Convert(uniqueidentifier, N'" + item.Oid + "')), (Convert(uniqueidentifier, N'" + item.RFSalesOid + "')), (Convert(uniqueidentifier, N'" + item.Product.Oid + "')), '"+item.Quantity+"', null, '1', null, "+(string.IsNullOrEmpty(item.Product.BarCode) ?"null":"'"+ item.Product.BarCode + "'")+", '" + item.Quantity + "', '" + item.Length + "', '" + item.Width + "', '" + item.Height + "'); ";
+                    VALUES((Convert(uniqueidentifier, N'" + item.Oid + "')), (Convert(uniqueidentifier, N'" + item.RFSalesOid + "')), (Convert(uniqueidentifier, N'" + item.Product.Oid + "')), Convert(float,'"+q+"'), null, '1', null, "+(string.IsNullOrEmpty(item.Product.BarCode) ?"null":"'"+ item.Product.BarCode + "'")+", Convert(float,'" + q + "'), Convert(float,'" + l + "'), Convert(float,'" + w + "'), Convert(float,'" + h + "')); ";
                
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {

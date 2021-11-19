@@ -122,6 +122,15 @@ namespace Smart_Orders_Project.ViewModels
                 {
                     foreach (var line in RfSale.Lines)
                     {
+                        if(line.Product.Width==0 || line.Product.Length == 0)
+                        {
+                            line.Sum = line.Product.Price * (double)line.Quantity;
+                        }
+                        else
+                        {
+                            line.Sum = ((double)line.Width * (double)line.Length * line.Product.Price) / (line.Product.Width * line.Product.Length) * (double)line.Quantity;
+                        }
+                       
                         LinesList.Add(line); 
                     }
                 }

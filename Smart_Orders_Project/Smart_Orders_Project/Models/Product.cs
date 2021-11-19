@@ -18,9 +18,9 @@ namespace Smart_Orders_Project.Models
         public string BarCodeDesc { get; set; }
         public string Color { get; set; }
         public string Size { get; set; }
-        public double Width { get; set; }
-        public double Length { get; set; }
-        public double Height { get; set; }
+        public float Width { get; set; }
+        public float Length { get; set; }
+        public float Height { get; set; }
         public int Type { get; set; }
         public string UnitOfMeasure { get; set; }
         //nonPressistant

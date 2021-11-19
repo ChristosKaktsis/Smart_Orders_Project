@@ -105,11 +105,11 @@ namespace Smart_Orders_Project.Services
                             Oid = Guid.Parse(reader["Oid"].ToString()),
                             Product = await GetProduct(reader["Είδος"].ToString(), reader["BarCodeΕίδους"].ToString()),
                             ProductBarCode = reader["BarCodeΕίδους"].ToString(),
-                            Quantity = int.Parse(reader["Ποσότητα"].ToString()),
+                            Quantity = decimal.Parse(reader["Ποσότητα"].ToString()),
                             RFSalesOid = Guid.Parse(reader["RFΠωλήσεις"].ToString()),
-                            Width = reader["Πλάτος"] != DBNull.Value ? double.Parse(reader["Πλάτος"].ToString()) : 0.0,
-                            Length = reader["Μήκος"] != DBNull.Value ? double.Parse(reader["Μήκος"].ToString()) : 0.0,
-                            Height = reader["Υψος"] != DBNull.Value ? double.Parse(reader["Υψος"].ToString()) : 0.0,
+                            Width = reader["Πλάτος"] != DBNull.Value ? decimal.Parse(reader["Πλάτος"].ToString()) : 0,
+                            Length = reader["Μήκος"] != DBNull.Value ? decimal.Parse(reader["Μήκος"].ToString()) : 0,
+                            Height = reader["Υψος"] != DBNull.Value ? decimal.Parse(reader["Υψος"].ToString()) : 0,
                         });
                     }
                     return LineList;
@@ -165,9 +165,9 @@ namespace Smart_Orders_Project.Services
                         BarCodeDesc = reader["BarCodeDesc"].ToString(),
                         Color = reader["Χρώματα"] != null ? reader["Χρώματα"].ToString() : string.Empty,
                         Size = reader["Μεγέθη"] != null ? reader["Μεγέθη"].ToString() : string.Empty,
-                        Width = reader["Πλάτος"] != DBNull.Value ? double.Parse(reader["Πλάτος"].ToString()) : 0.0,
-                        Length = reader["Μήκος"] != DBNull.Value ? double.Parse(reader["Μήκος"].ToString()) : 0.0,
-                        Height = reader["Υψος"] != DBNull.Value ? double.Parse(reader["Υψος"].ToString()) : 0.0,
+                        Width = reader["Πλάτος"] != DBNull.Value ? float.Parse(reader["Πλάτος"].ToString()) : 0,
+                        Length = reader["Μήκος"] != DBNull.Value ? float.Parse(reader["Μήκος"].ToString()) : 0,
+                        Height = reader["Υψος"] != DBNull.Value ? float.Parse(reader["Υψος"].ToString()) : 0,
                         Type = int.Parse(reader["ΤύποςΔιάστασης"] != DBNull.Value ? reader["ΤύποςΔιάστασης"].ToString() : "0"),
                         UnitOfMeasure = string.IsNullOrEmpty(reader["ΜονάδαΜέτρησης"].ToString()) ? "Ποσότητα" : reader["ΜονάδαΜέτρησης"].ToString(),
                     };

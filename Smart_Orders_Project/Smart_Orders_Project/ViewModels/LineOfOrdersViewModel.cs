@@ -16,12 +16,12 @@ namespace Smart_Orders_Project.ViewModels
         private string itemId;
         private Product _selectedProduct;
         private string _searchText;
-        private double _quantity = 1;
+        private float _quantity = 1;
         private double _sum = 0;
         private bool _isFocused=true;
-        private double _height = 0;
-        private double _width = 0;
-        private double _length = 0;
+        private float _height = 0;
+        private float _width = 0;
+        private float _length = 0;
         private bool _isWEnabled;
         private bool _isLEnabled;
         private bool _isHEnabled;
@@ -120,9 +120,9 @@ namespace Smart_Orders_Project.ViewModels
                 Quantity = 1;
                 if (value != null)
                 {
-                    Width = value.Width==0 ? 1: value.Width;
-                    Height = value.Height==0 ? 1: value.Height;
-                    Length = value.Length==0 ? 1 : value.Length;
+                    Width = (value.Width==0 ? 1: value.Width);
+                    Height = (value.Height==0 ? 1: value.Height);
+                    Length = (value.Length==0 ? 1 : value.Length);
                     switch (value.Type)
                     {
                         case 0:
@@ -237,10 +237,10 @@ namespace Smart_Orders_Project.ViewModels
             {
                 Oid = Guid.NewGuid(),
                 Product = SelectedProduct,
-                Quantity = Quantity,
-                Width = Width,
-                Height = Height,
-                Length = Length,
+                Quantity = (decimal)Quantity,
+                Width = (decimal)Width,
+                Height = (decimal)Height,
+                Length = (decimal)Length,
                 Sum = Sum,
                 RFSalesOid = Guid.Parse(ItemId)
             };
@@ -250,7 +250,7 @@ namespace Smart_Orders_Project.ViewModels
             // This will pop the current page off the navigation stack
             await Shell.Current.GoToAsync("..");
         }
-        public double Quantity 
+        public float Quantity 
         {
             get => _quantity;
             set 
@@ -289,7 +289,7 @@ namespace Smart_Orders_Project.ViewModels
                 SetProperty(ref _sum, value);
             }
         }
-        public double Height
+        public float Height
         {
             get => _height;
             set
@@ -297,7 +297,7 @@ namespace Smart_Orders_Project.ViewModels
                 SetProperty(ref _height, value);
             }
         }
-        public double Width
+        public float Width
         {
             get => _width;
             set
@@ -306,7 +306,7 @@ namespace Smart_Orders_Project.ViewModels
                 CheckSum();
             }
         }
-        public double Length
+        public float Length
         {
             get => _length;
             set
