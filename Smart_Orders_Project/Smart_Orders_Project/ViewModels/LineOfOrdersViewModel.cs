@@ -46,12 +46,10 @@ namespace Smart_Orders_Project.ViewModels
 
             ScannerCommand = new Command(OnScannerClicked);
         }
-
         private async void OnScannerClicked(object obj)
         {
             await Shell.Current.GoToAsync("BarCodeScanner");
         }
-
         //private void SelectedProductList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         //{
 
@@ -95,7 +93,12 @@ namespace Smart_Orders_Project.ViewModels
 
                 //if its only one item in the list make it selected item
                 if (ProductList.Count == 1)
+                {
                     SelectedProduct = ProductList[0];
+                    if (IsQuickOn)
+                        SaveCommand.Execute(null);
+                }
+                    
             }
             catch (Exception ex)
             {
@@ -110,8 +113,7 @@ namespace Smart_Orders_Project.ViewModels
         {
             IsBusy = false;
             SearchText = BarCode;
-        }
-       
+        }      
         public Product SelectedProduct
         {
             get => _selectedProduct;
@@ -281,7 +283,6 @@ namespace Smart_Orders_Project.ViewModels
                 //}
             } 
         }
-
         private void CheckSum()
         {
             if (SelectedProduct == null)
@@ -306,7 +307,6 @@ namespace Smart_Orders_Project.ViewModels
                 
             }
         }
-
         public double Sum
         {
             get => _sum;

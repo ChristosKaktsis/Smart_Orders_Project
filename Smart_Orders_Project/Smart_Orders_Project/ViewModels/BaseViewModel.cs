@@ -31,6 +31,15 @@ namespace Smart_Orders_Project.ViewModels
             get { return title; }
             set { SetProperty(ref title, value); }
         }
+        public bool IsQuickOn
+        {
+            get => Preferences.Get(nameof(IsQuickOn), false);
+            set 
+            {
+                Preferences.Set(nameof(IsQuickOn), value);
+                OnPropertyChanged(nameof(IsQuickOn));
+            }
+        }
         public string ConnectionString
         {
             get => Preferences.Get(nameof(ConnectionString), @"User Id=sa;password=1;Pooling=false;Data Source=192.168.3.44\SQLEXPRESS;Initial Catalog=maindemo");
