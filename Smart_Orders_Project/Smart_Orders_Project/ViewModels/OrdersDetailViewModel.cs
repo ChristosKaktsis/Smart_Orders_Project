@@ -19,11 +19,24 @@ namespace Smart_Orders_Project.ViewModels
         private string customerName="Επιλογή Πελάτη";
         private string orderOid;
         private RFSales rfsale;
+        private double _sum;
+        private float _length;
+        private float _width;
+        private float _height;
+        private float _quantity;
+        private LineOfOrder _line;
+        private bool _isWEnabled;
+        private bool _isLEnabled;
+        private bool _isWHLEnabled;
+        private bool _isHEnabled;
+        private bool _isAddEnabled = true;
+
         public ObservableCollection<LineOfOrder> LinesList { get; set; }
         public Command AddLine { get; }
         public Command SelectCustomer { get; }
         public Command LoadItemsCommand { get; }
         public Command SaveRFSalesCommand { get; }
+        public Command SaveCommand { get; }
         public Command BackCommand { get; }
         public Command DeleteCommand { get; }
         public OrdersDetailViewModel()
@@ -39,8 +52,18 @@ namespace Smart_Orders_Project.ViewModels
                 (_, __) => SaveRFSalesCommand.ChangeCanExecute();
             BackCommand = new Command(OnBackButtonPressed);
             DeleteCommand = new Command<LineOfOrder>(OnDeletePressed);
+            SaveCommand = new Command(OnLineSave);
         }
 
+        private void OnLineSave(object obj)
+        {    
+            SelectedLine.Quantity = (decimal)Quantity;
+            SelectedLine.Width = (decimal)Width;
+            SelectedLine.Height = (decimal)Height;
+            SelectedLine.Length = (decimal)Length;
+            SelectedLine.Sum = Sum;
+            SelectedLine = null;
+        }
         private async void OnDeletePressed(LineOfOrder l)
         {
             if (l == null)
@@ -53,15 +76,18 @@ namespace Smart_Orders_Project.ViewModels
 
         private async void OnBackButtonPressed(object obj)
         {
-            //remove the items from the cart before going back
-            foreach (var i in LinesList)
+            var answer = await Shell.Current.DisplayAlert("Ερώτηση;", "Θέλετε να αποχορήσετε", "Ναί", "Όχι");
+            if (answer)
             {
-                await LinesRepo.DeleteItemAsync(i.Oid.ToString());
-            }
-            // This will pop the current page off the navigation stack
-            await Shell.Current.GoToAsync("..");
+                //remove the items from the cart before going back
+                foreach (var i in LinesList)
+                {
+                    await LinesRepo.DeleteItemAsync(i.Oid.ToString());
+                }
+                // This will pop the current page off the navigation stack
+                GoBack();
+            }      
         }
-
         private async void ExecuteSaveRFSalesCommand()
         {  
             try
@@ -224,7 +250,166 @@ namespace Smart_Orders_Project.ViewModels
             
                
         }
+        public LineOfOrder SelectedLine
+        {
+            get => _line;
+            set
+            {
+                SetProperty(ref _line, value);
+                if (value != null)
+                {
+                    Width = (float)value.Width;
+                    Height = (float)value.Height;
+                    Length = (float)value.Length;
+                    Quantity = (float)value.Quantity;
+                    IsWHLEnabled = true;
+                    IsAddEnabled = false;
+                    switch (value.Product.Type)
+                    {
+                        case 0:
+                            IsWEnabled = false;
+                            IsLEnabled = false;
+                            IsHEnabled = false;
+                            break;
+                        case 1:
+                            IsWEnabled = false;
+                            IsLEnabled = true;
+                            IsHEnabled = false;
+                            break;
+                        case 2:
+                            IsWEnabled = true;
+                            IsLEnabled = true;
+                            IsHEnabled = false;
+                            break;
+                        case 3:
+                            IsWEnabled = true;
+                            IsLEnabled = true;
+                            IsHEnabled = true;
+                            break;
+                    }
+                }
+                else
+                {
+                    IsWEnabled = false;
+                    IsLEnabled = false;
+                    IsHEnabled = false;
+                    IsWHLEnabled = false;
+                    IsAddEnabled = true;
+                }
+            }
+        }
+        public double Sum
+        {
+            get => _sum;
+            set
+            {
+                SetProperty(ref _sum, value);
+            }
+        }
+        public float Quantity
+        {
+            get => _quantity;
+            set
+            {
+                SetProperty(ref _quantity, value);
+                CheckSum();
+                //if (SelectedProduct != null)
+                //{
+                //    //Sum = value * SelectedProduct.Price;
 
+                //}
+            }
+        }
+        public float Height
+        {
+            get => _height;
+            set
+            {
+                SetProperty(ref _height, value);
+            }
+        }
+        public float Width
+        {
+            get => _width;
+            set
+            {
+                SetProperty(ref _width, value);
+                CheckSum();
+            }
+        }
+        public float Length
+        {
+            get => _length;
+            set
+            {
+                SetProperty(ref _length, value);
+                CheckSum();
+            }
+        }
+        private void CheckSum()
+        {
+            if (SelectedLine == null)
+                return;
+
+            if (SelectedLine.Product.Width == 0 && SelectedLine.Product.Length == 0)
+            {
+                Sum = Quantity * SelectedLine.Product.Price;
+            }
+            else
+            {
+                var y = (SelectedLine.Product.Width * SelectedLine.Product.Length);
+                if (y == 0)
+                {
+                    Sum = 0;
+                }
+                else
+                {
+                    var athr = ((Width * Length) * SelectedLine.Product.Price) / y;
+                    Sum = Quantity * athr;
+                }
+
+            }
+        }
+        public bool IsWEnabled
+        {
+            get => _isWEnabled;
+            set
+            {
+                SetProperty(ref _isWEnabled, value);
+            }
+        }
+        public bool IsLEnabled
+        {
+            get => _isLEnabled;
+            set
+            {
+                SetProperty(ref _isLEnabled, value);
+            }
+        }
+        public bool IsHEnabled
+        {
+            get => _isHEnabled;
+            set
+            {
+                SetProperty(ref _isHEnabled, value);
+            }
+        }
+        public bool IsWHLEnabled
+        {
+            get => _isWHLEnabled;
+            set
+            {
+                SetProperty(ref _isWHLEnabled, value);
+            }
+        }
+        public bool IsAddEnabled
+        {
+            get => _isAddEnabled;
+            set
+            {
+                SetProperty(ref _isAddEnabled, value);
+            }
+        }
         public async void LoadItemId(string itemId)
         {
             try
@@ -243,6 +428,7 @@ namespace Smart_Orders_Project.ViewModels
             //await Shell.Current.GoToAsync(nameof(LineOfOrdersSelectionPage));
             await Shell.Current.GoToAsync($"{nameof(LineOfOrdersSelectionPage)}?{nameof(LineOfOrdersViewModel.ItemId)}={OrderOid}");
         }
+
         private async void OnSelectCustomerClicked(object obj)
         {
             // Prefixing with `//` switches to a different navigation stack instead of pushing to the active one

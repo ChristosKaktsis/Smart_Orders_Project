@@ -59,11 +59,16 @@ namespace Smart_Orders_Project.ViewModels
                 OnPropertyChanged(nameof(RFCounter));
             }
         }
-        private async void GoBack()
+        public async void GoBack()
         {
             await Shell.Current.GoToAsync("..");
         }
-
+        private async void OnBackButtonPressed()
+        {
+            var answer = await Shell.Current.DisplayAlert("Ερώτηση;", "Θέλετε να αποχορήσετε", "Ναί", "Όχι");
+            if (answer)
+                GoBack();
+        }
         protected bool SetProperty<T>(ref T backingStore, T value,
             [CallerMemberName] string propertyName = "",
             Action onChanged = null)

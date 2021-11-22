@@ -139,7 +139,7 @@
                             <StackLayout Orientation ="Horizontal">
                                 <Label Text="Σύνολο" TextColor="White" FontSize="20"/>
                                 <Line Stroke="white"/>
-                                <Label Text="{Binding Sum ,StringFormat='{0} €'}" TextColor="White" FontSize="20"/>
+                                <Label Text="{Binding Sum ,StringFormat='{0:0.##} €'}" TextColor="White" FontSize="20"/>
                             </StackLayout>
                         </Frame>
                     </StackLayout>
