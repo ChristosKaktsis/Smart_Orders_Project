@@ -18,8 +18,7 @@ namespace Smart_Orders_Project.Services
         }
         public RepositoryCustomers()
         {
-            //CustomerList = new List<Customer>();
-            //GetItemsFromDB();
+            
         }
 
         private  void GetItemsFromDB()
@@ -41,7 +40,7 @@ namespace Smart_Orders_Project.Services
                         Email = reader["Email"].ToString()
                     });
                 }
-                //return CustomerList;
+               
             }
         }
 

@@ -1,20 +1,23 @@
 ﻿using Smart_Orders_Project.ViewModels;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Smart_Orders_Project.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class LineOfOrdersSelectionPage : ContentPage
+    public partial class RFCensusProductSelectionPage : ContentPage
     {
-        LineOfOrdersViewModel _viewModel;
-        public LineOfOrdersSelectionPage()
+        RFCensusProductSelectionPage _viewModel;
+        public RFCensusProductSelectionPage()
         {
             InitializeComponent();
-            BindingContext = _viewModel = new LineOfOrdersViewModel();
-           
+            BindingContext = _viewModel = new RFCensusProductSelectionPage();
         }
         protected override void OnAppearing()
         {
@@ -33,21 +36,21 @@ namespace Smart_Orders_Project.Views
         }
         private void Entry_TextChanged(object sender, TextChangedEventArgs e)
         {
-            OrdersList.FilterString = "";
-            string[] subs = e.NewTextValue.Split(' ');
-            switch (subs.Length)
-            {
-                case 1:
-                    break;
-                case 2:
-                    OrdersList.FilterString = "Contains([Name], '" + subs[1] + "')";
-                    break;
-                default:      
-                    break;
-            }
-            
-            
+            //OrdersList.FilterString = "";
+            //string[] subs = e.NewTextValue.Split(' ');
+            //switch (subs.Length)
+            //{
+            //    case 1:
+            //        break;
+            //    case 2:
+            //        OrdersList.FilterString = "Contains([Name], '" + subs[1] + "')";
+            //        break;
+            //    default:
+            //        break;
+            //}
+
+
         }
-      
+
     }
 }

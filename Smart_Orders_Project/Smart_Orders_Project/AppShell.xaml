@@ -82,7 +82,13 @@
     <FlyoutItem Title="Orders" Icon="icon_about.png">
         <ShellContent Route="OrdersPage" ContentTemplate="{DataTemplate local:OrdersPage}" />
     </FlyoutItem>
-    <FlyoutItem Title="Conn" Icon="icon_feed.png">
+    <FlyoutItem Title="RFΑπογραφή" Icon="icon_feed.png">
+        <ShellContent Route="RFCensusDetailPage" ContentTemplate="{DataTemplate local:RFCensusDetailPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="TestEmptyPage" Icon="icon_feed.png">
+        <ShellContent Route="RFCensusProductSelectionPage" ContentTemplate="{DataTemplate local:RFCensusProductSelectionPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="Σύνδεση" Icon="icon_feed.png">
         <ShellContent Route="ConnectionPage" ContentTemplate="{DataTemplate local:ConnectionPage}" />
     </FlyoutItem>
     <TabBar>

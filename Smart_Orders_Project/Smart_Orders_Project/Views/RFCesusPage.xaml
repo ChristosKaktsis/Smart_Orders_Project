@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:vm="clr-namespace:Smart_Orders_Project.ViewModels" 
+             xmlns:dxcv="http://schemas.devexpress.com/xamarin/2014/forms/collectionview" 
+             xmlns:model="clr-namespace:Smart_Orders_Project.Models"
+             x:Class="Smart_Orders_Project.Views.RFCesusPage">
+    <RefreshView  >
+        <Grid>
+            <StackLayout Padding="0" Margin="0" >
+                <Frame BackgroundColor="{StaticResource Primary}" HeightRequest="10">
+                </Frame>
+            </StackLayout>
+            <StackLayout Margin="0,20,0,0">
+                
+            </StackLayout>
+            <StackLayout HorizontalOptions="End" VerticalOptions="End" Margin="20">
+                <Frame Margin="0" Padding="0" CornerRadius="30" WidthRequest="60" HasShadow="True">
+                    <Button Text="+"  FontSize="30" CornerRadius="30" Command="{Binding }"/>
+                </Frame>
+            </StackLayout>
+        </Grid>
+    </RefreshView>
+</ContentPage>

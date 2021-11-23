@@ -16,6 +16,9 @@ namespace Smart_Orders_Project.ViewModels
         public IDataStore<Product> ProductRepo => DependencyService.Get<IDataStore<Product>>();
         public IDataStore<LineOfOrder> LinesRepo => DependencyService.Get<IDataStore<LineOfOrder>>();
         public IDataStore<RFSales> RFSalesRepo => DependencyService.Get<IDataStore<RFSales>>();
+        public IDataStore<Storage> RFStorageRepo => DependencyService.Get<IDataStore<Storage>>();
+        public IDataStore<Position> RFPositionRepo => DependencyService.Get<IDataStore<Position>>();
+        public IDataStore<RFCensus> RFCensusRepo => DependencyService.Get<IDataStore<RFCensus>>();
 
         bool isBusy = false;
         public bool IsBusy
