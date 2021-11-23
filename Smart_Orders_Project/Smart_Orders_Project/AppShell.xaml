@@ -85,9 +85,7 @@
     <FlyoutItem Title="RFΑπογραφή" Icon="icon_feed.png">
         <ShellContent Route="RFCensusDetailPage" ContentTemplate="{DataTemplate local:RFCensusDetailPage}" />
     </FlyoutItem>
-    <FlyoutItem Title="TestEmptyPage" Icon="icon_feed.png">
-        <ShellContent Route="RFCensusProductSelectionPage" ContentTemplate="{DataTemplate local:RFCensusProductSelectionPage}" />
-    </FlyoutItem>
+    
     <FlyoutItem Title="Σύνδεση" Icon="icon_feed.png">
         <ShellContent Route="ConnectionPage" ContentTemplate="{DataTemplate local:ConnectionPage}" />
     </FlyoutItem>

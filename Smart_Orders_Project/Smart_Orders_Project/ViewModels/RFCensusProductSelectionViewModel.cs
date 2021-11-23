@@ -9,14 +9,12 @@ using Xamarin.Forms;
 
 namespace Smart_Orders_Project.ViewModels
 {
-    
     class RFCensusProductSelectionViewModel : BaseViewModel
     {
-        private string itemId;
+        private bool _isFocused;
         private Product _selectedProduct;
         private string _searchText;
-        private float _quantity = 1;
-        private bool _isFocused=true;
+        private float _quantity;
         private bool _isWHLEnabled;
 
         public ObservableCollection<Product> ProductList { get; }
@@ -42,12 +40,14 @@ namespace Smart_Orders_Project.ViewModels
         {
             await Shell.Current.GoToAsync("BarCodeScanner");
         }
+       
         private async Task ExecuteLoadItemsCommand()
         {
             IsBusy = true;
             try
             {
-                ProductList.Clear();               
+                ProductList.Clear();
+                //var items = await ProductRepo.GetItemsAsync(true);
                 if (SearchText.Length == 13)
                 {
                     var it = await ProductRepo.GetItemAsync(SearchText);
@@ -62,6 +62,7 @@ namespace Smart_Orders_Project.ViewModels
                         ProductList.Add(item);
                     }
                 }
+
                 //if its only one item in the list make it selected item
                 if (ProductList.Count == 1)
                 {
@@ -69,6 +70,7 @@ namespace Smart_Orders_Project.ViewModels
                     if (IsQuickOn)
                         SaveCommand.Execute(null);
                 }
+
             }
             catch (Exception ex)
             {
@@ -83,7 +85,15 @@ namespace Smart_Orders_Project.ViewModels
         {
             IsBusy = false;
             SearchText = BarCode;
-        }      
+        }
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                SetProperty(ref _searchText, value);
+            }
+        }
         public Product SelectedProduct
         {
             get => _selectedProduct;
@@ -93,12 +103,20 @@ namespace Smart_Orders_Project.ViewModels
                 Quantity = 1;
                 if (value != null)
                 {
-                    IsWHLEnabled = true;   
+                    IsWHLEnabled = true;
                 }
                 else
                 {
                     IsWHLEnabled = false;
                 }
+            }
+        }
+        public bool IsWHLEnabled
+        {
+            get => _isWHLEnabled;
+            set
+            {
+                SetProperty(ref _isWHLEnabled, value);
             }
         }
         public bool IsFocused
@@ -120,23 +138,8 @@ namespace Smart_Orders_Project.ViewModels
                         LoadItemsCommand.Execute(null);
                     }
                 }
+
             }
-        }    
-        public bool IsWHLEnabled
-        {
-            get => _isWHLEnabled;
-            set
-            {
-                SetProperty(ref _isWHLEnabled, value);
-            }
-        }
-        public string SearchText 
-        {
-            get => _searchText; 
-            set
-            {
-                SetProperty(ref _searchText, value);         
-            } 
         }
         private bool ValidateSave()
         {
@@ -156,23 +159,12 @@ namespace Smart_Orders_Project.ViewModels
             // This will pop the current page off the navigation stack
             await Shell.Current.GoToAsync("..");
         }
-        public float Quantity 
+        public float Quantity
         {
             get => _quantity;
-            set 
-            {
-                SetProperty(ref _quantity, value);
-            } 
-        }
-        public string ItemId
-        {
-            get
-            {
-                return itemId;
-            }
             set
             {
-                itemId = value;
+                SetProperty(ref _quantity, value);
             }
         }
     }

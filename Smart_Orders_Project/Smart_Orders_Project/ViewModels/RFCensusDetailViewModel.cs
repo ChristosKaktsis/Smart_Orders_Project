@@ -19,18 +19,21 @@ namespace Smart_Orders_Project.ViewModels
         private bool _isFocused;
         private bool _isRunning;
 
-        public ObservableCollection<Storage> StorageList { get; set; }     
+        public ObservableCollection<Storage> StorageList { get; set; }
+        public ObservableCollection<RFCensus> RFCensusList { get; set; }
         public Command LoadItemsCommand { get; }
         public Command LoadRFPositionCommand { get; }
         public Command AddLine { get; }
         public Command SaveCommand { get; }
+        public Command DeleteCommand { get; }
         public RFCensusDetailViewModel()
         {
             StorageList = new ObservableCollection<Storage>();
-           
+            RFCensusList = new ObservableCollection<RFCensus>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             LoadRFPositionCommand = new Command(async () => await ExecuteLoadRFPositionCommand());
             AddLine = new Command(OnAddLineClicked);
+            DeleteCommand = new Command<RFCensus>(OnDeletePressed);
         }
         public string SearchPositionText
         {
@@ -95,6 +98,12 @@ namespace Smart_Orders_Project.ViewModels
                 {
                     StorageList.Add(item);
                 }
+                //not sure about that
+                var items2 = await RFCensusRepo.GetItemsAsync(true);
+                foreach (var item in items2)
+                {
+                    RFCensusList.Add(item);
+                }
             }
             catch (Exception ex)
             {
@@ -136,6 +145,13 @@ namespace Smart_Orders_Project.ViewModels
         private async void OnAddLineClicked(object obj)
         {
             await Shell.Current.GoToAsync(nameof(RFCensusProductSelectionPage));  
+        }
+        private async void OnDeletePressed(RFCensus l)
+        {
+            if (l == null)
+                return;
+            RFCensusList.Remove(l);
+            await RFCensusRepo.DeleteItemAsync(l.Oid.ToString());
         }
     }
 }

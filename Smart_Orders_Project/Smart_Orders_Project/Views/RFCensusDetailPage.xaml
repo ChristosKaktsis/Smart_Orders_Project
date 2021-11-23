@@ -37,16 +37,16 @@
                     <Switch IsToggled="{Binding }"/>
                 </StackLayout>
                 
-                <!--<StackLayout Margin="0,10,0,0">
+                <StackLayout Margin="0,10,0,0">
 
-                    <dxcv:DXCollectionView x:Name="RFCensusList" SelectionMode="Single" SelectedItem="{Binding ,Mode=OneWayToSource}" ItemsSource="{Binding }">
+                    <dxcv:DXCollectionView x:Name="RFCensusList" SelectionMode="Single"  ItemsSource="{Binding  RFCensusList}">
                         <dxcv:DXCollectionView.ItemTemplate>
                             <DataTemplate>
                                 <dxcv:SwipeContainer>
                                     <dxcv:SwipeContainer.ItemView>
                                         <Grid Padding="0">
                                             <Frame BackgroundColor="white" BorderColor="LightGray" Padding="10" Margin="0,0,0,0" CornerRadius="0" HasShadow="True">
-                                                <StackLayout x:DataType="model:" Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
+                                                <StackLayout x:DataType="model:RFCensus" Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
                                                     <StackLayout WidthRequest="200">
                                                         <Label Text="{Binding Product.Name}" FontSize="16" FontAttributes="Bold"/>
                                                         <Label Text="{Binding Product.BarCode}"/>
@@ -71,7 +71,7 @@
                             <DataTemplate>
                                 <Grid Padding="0">
                                     <Frame BackgroundColor="{StaticResource Complementary}" BorderColor="LightGray" Padding="10" Margin="0,0,0,0" CornerRadius="0" HasShadow="True">
-                                        <StackLayout x:DataType="model:" Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
+                                        <StackLayout x:DataType="model:RFCensus" Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
                                             <StackLayout WidthRequest="200">
                                                 <Label Text="{Binding Product.Name}" FontSize="16" FontAttributes="Bold"/>
                                                 <Label Text="{Binding Product.BarCode}"/>
@@ -86,7 +86,7 @@
                             </DataTemplate>
                         </dxcv:DXCollectionView.SelectedItemTemplate>
                     </dxcv:DXCollectionView>
-                </StackLayout>-->
+                </StackLayout>
                 <StackLayout>
                     
                     <StackLayout Margin="10,0,0,10" Orientation="Horizontal" VerticalOptions="StartAndExpand" IsVisible="false">

@@ -13,11 +13,11 @@ namespace Smart_Orders_Project.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RFCensusProductSelectionPage : ContentPage
     {
-        RFCensusProductSelectionPage _viewModel;
+        RFCensusProductSelectionViewModel _viewModel;
         public RFCensusProductSelectionPage()
         {
             InitializeComponent();
-            BindingContext = _viewModel = new RFCensusProductSelectionPage();
+            BindingContext = _viewModel = new RFCensusProductSelectionViewModel();
         }
         protected override void OnAppearing()
         {
@@ -36,20 +36,18 @@ namespace Smart_Orders_Project.Views
         }
         private void Entry_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //OrdersList.FilterString = "";
-            //string[] subs = e.NewTextValue.Split(' ');
-            //switch (subs.Length)
-            //{
-            //    case 1:
-            //        break;
-            //    case 2:
-            //        OrdersList.FilterString = "Contains([Name], '" + subs[1] + "')";
-            //        break;
-            //    default:
-            //        break;
-            //}
-
-
+            OrdersList.FilterString = "";
+            string[] subs = e.NewTextValue.Split(' ');
+            switch (subs.Length)
+            {
+                case 1:
+                    break;
+                case 2:
+                    OrdersList.FilterString = "Contains([Name], '" + subs[1] + "')";
+                    break;
+                default:
+                    break;
+            }
         }
 
     }
