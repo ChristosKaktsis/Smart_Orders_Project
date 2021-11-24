@@ -18,18 +18,15 @@ namespace Smart_Orders_Project.ViewModels
         private bool _isWHLEnabled;
 
         public ObservableCollection<Product> ProductList { get; }
-        //public ObservableCollection<Product> SelectedProductList { get; set; }
+        
         public Command LoadItemsCommand { get; }
-        //public Command LoadItemCommand { get; }
+        
         public Command SaveCommand { get; }
         public Command ScannerCommand { get; }
         public RFCensusProductSelectionViewModel()
         {
             ProductList = new ObservableCollection<Product>();
-            //SelectedProductList = new ObservableCollection<Product>();
-            //SelectedProductList.CollectionChanged += SelectedProductList_CollectionChanged;
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-            //LoadItemCommand = new Command(async () => await ExecuteLoadItemCommand());
             SaveCommand = new Command(OnSave, ValidateSave);
             this.PropertyChanged +=
                 (_, __) => SaveCommand.ChangeCanExecute();

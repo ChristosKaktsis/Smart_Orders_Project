@@ -83,6 +83,9 @@
         <ShellContent Route="OrdersPage" ContentTemplate="{DataTemplate local:OrdersPage}" />
     </FlyoutItem>
     <FlyoutItem Title="RFΑπογραφή" Icon="icon_feed.png">
+        <ShellContent Route="RFCesusPage" ContentTemplate="{DataTemplate local:RFCesusPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="RFΑπογραφή" Icon="icon_feed.png">
         <ShellContent Route="RFCensusDetailPage" ContentTemplate="{DataTemplate local:RFCensusDetailPage}" />
     </FlyoutItem>
     
