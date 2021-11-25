@@ -33,7 +33,7 @@ namespace Smart_Orders_Project.Services
         {
             return await Task.Run(() => {
                 
-                string queryString = $"SELECT  Oid, Κωδικός, Περιγραφή FROM Θέση where Κωδικός = '{id}' or Περιγραφή = '{id}' and GCRecord is null";
+                string queryString = $"SELECT  Oid, Κωδικός, Περιγραφή FROM Θέση where (Κωδικός = '{id}' or Περιγραφή = '{id}') and GCRecord is null";
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();
