@@ -37,11 +37,15 @@
                             </dxcv:SwipeContainer>
                         </DataTemplate>
                     </dxcv:DXCollectionView.ItemTemplate>
+                    <!--Sort items.-->
+                    <dxcv:DXCollectionView.SortDescriptions>
+                        <dxcv:SortDescription FieldName="CreationDate" SortOrder="Descending"/>
+                    </dxcv:DXCollectionView.SortDescriptions>
                 </dxcv:DXCollectionView>
             </StackLayout>
             <StackLayout HorizontalOptions="End" VerticalOptions="End" Margin="20">
                 <Frame Margin="0" Padding="0" CornerRadius="30" WidthRequest="60" HasShadow="True">
-                    <Button Text="+"  FontSize="30" CornerRadius="30" Command="{Binding }"/>
+                    <Button Text="+"  FontSize="30" CornerRadius="30" Command="{Binding AddRFCensusCommand}"/>
                 </Frame>
             </StackLayout>
         </Grid>

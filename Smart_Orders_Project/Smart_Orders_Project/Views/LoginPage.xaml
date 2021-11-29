@@ -25,7 +25,7 @@
                                     <StackLayout Orientation="Horizontal">
                                         <Frame BackgroundColor="AliceBlue" CornerRadius="50" HeightRequest="35" WidthRequest="35" Padding="0" Margin="7">
                                         </Frame>
-                                        <Entry Placeholder="User" TextColor="#008bff"  HorizontalOptions="FillAndExpand" Margin="0,0,15,0"/>
+                                        <Entry Placeholder="User" Text="{Binding UserName}" TextColor="#008bff"  HorizontalOptions="FillAndExpand" Margin="0,0,15,0"/>
                                     </StackLayout>
                                 </Frame>
                             </StackLayout>
@@ -34,7 +34,7 @@
                                     <StackLayout Orientation="Horizontal">
                                         <Frame BackgroundColor="AliceBlue" CornerRadius="50" HeightRequest="35" WidthRequest="35" Padding="0" Margin="7">
                                         </Frame>
-                                        <Entry Placeholder="Password" TextColor="#008bff"  HorizontalOptions="FillAndExpand" Margin="0,0,15,0"/>
+                                        <Entry Placeholder="Password" IsPassword="True" Text="{Binding Password}" TextColor="#008bff"  HorizontalOptions="FillAndExpand" Margin="0,0,15,0"/>
                                     </StackLayout>
                                 </Frame>
                             </StackLayout>

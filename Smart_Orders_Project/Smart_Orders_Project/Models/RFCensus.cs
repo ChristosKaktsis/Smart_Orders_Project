@@ -25,6 +25,7 @@ namespace Smart_Orders_Project.Models
         }
         public DateTime CreationDate { get; set; }
         public Position Position { get; set; }
+        public User UserCreator { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

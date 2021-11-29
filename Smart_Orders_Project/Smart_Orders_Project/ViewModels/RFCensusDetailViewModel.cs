@@ -182,6 +182,7 @@ namespace Smart_Orders_Project.ViewModels
             {
                 item.Storage = SelectedStorage;
                 item.Position = SelectedPosition;
+                item.UserCreator = await UserRepo.GetUser();
                 await RFCensusRepo.UploadItemAsync(item);
             }
             catch(Exception ex)

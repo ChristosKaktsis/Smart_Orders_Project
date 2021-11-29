@@ -19,6 +19,7 @@ namespace Smart_Orders_Project.ViewModels
         public IDataStore<Storage> RFStorageRepo => DependencyService.Get<IDataStore<Storage>>();
         public IDataStore<Position> RFPositionRepo => DependencyService.Get<IDataStore<Position>>();
         public IDataStore<RFCensus> RFCensusRepo => DependencyService.Get<IDataStore<RFCensus>>();
+        public IUser<User> UserRepo => DependencyService.Get<IUser<User>>();
 
         bool isBusy = false;
         public bool IsBusy
@@ -69,6 +70,15 @@ namespace Smart_Orders_Project.ViewModels
             {
                 Preferences.Set(nameof(RFCounter), value);
                 OnPropertyChanged(nameof(RFCounter));
+            }
+        }
+        public string UserString
+        {
+            get => Preferences.Get(nameof(UserString), "");
+            set
+            {
+                Preferences.Set(nameof(UserString), value);
+                OnPropertyChanged(nameof(UserString));
             }
         }
         public async void GoBack()

@@ -50,10 +50,10 @@ namespace Smart_Orders_Project.Services
            return await Task.Run(async () =>
             {
                 List<RFCensus> newlist = new List<RFCensus>();
-                string queryString = @"select Oid ,ΑποθηκευτικόςΧώρος ,Είδος ,Ποσότητα 
+                string queryString = $@"select Oid ,ΑποθηκευτικόςΧώρος ,Είδος ,Ποσότητα 
                                             ,ΗμνίαΔημιουργίας ,Θέση ,BarCodeΕίδους ,Ράφι 
                                        from RFΑπογραφή 
-                                       where UpdSmart = 'false' and UpdWMS = 'false'  and GCRecord is null";
+                                       where ΧρήστηςΔημιουργίας ='{name}' and UpdSmart = 'false' and UpdWMS = 'false'  and GCRecord is null";
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();
@@ -208,11 +208,12 @@ namespace Smart_Orders_Project.Services
             return await Task.Run(() =>
             {
                 int ok = 0;
-                string queryString = $@"INSERT INTO RFΑπογραφή (Oid, ΑποθηκευτικόςΧώρος, Είδος, Ποσότητα, ΗμνίαΔημιουργίας, 
+                string queryString = $@"INSERT INTO RFΑπογραφή (Oid, ΑποθηκευτικόςΧώρος, Είδος, ΧρήστηςΔημιουργίας, Ποσότητα, ΗμνίαΔημιουργίας, 
                                     Θέση, BarCodeΕίδους ,UpdSmart ,UpdWMS)
                                     VALUES((Convert(uniqueidentifier, N'{item.Oid}')), 
                                            (Convert(uniqueidentifier, N'{item.Storage.Oid}')),
                                            (Convert(uniqueidentifier, N'{item.Product.Oid}')),
+                                           (Convert(uniqueidentifier, N'{item.UserCreator.UserID}')),
                                         '{item.Quantity}', GETDATE(),(Convert(uniqueidentifier, N'{item.Position.Oid}')),
                                         "+(string.IsNullOrEmpty(item.Product.BarCode)?"null":$"'{item.Product.BarCode}'")+",0,0)";
 
