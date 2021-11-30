@@ -1,7 +1,7 @@
 ﻿using Smart_Orders_Project.Models;
 using Smart_Orders_Project.Views;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
@@ -23,6 +23,8 @@ namespace Smart_Orders_Project.ViewModels
         private Storage _selectedStorage;
         private ImageSource _doneImageSource ;
         private Color _searchTextColor ;
+        private string censusOid;
+        private RFCensus rfcensus;
 
         public ObservableCollection<Storage> StorageList { get; set; }
         public ObservableCollection<RFCensus> RFCensusList { get; set; }
@@ -55,15 +57,15 @@ namespace Smart_Orders_Project.ViewModels
         {
             return SelectedPosition != null && SelectedStorage != null;
         }
-        public string SearchPositionText
-        {
-            get => _searchText;
-            set
-            {
-                SetProperty(ref _searchText, value);
+        //public string SearchPositionText
+        //{
+        //    get => _searchText;
+        //    set
+        //    {
+        //        SetProperty(ref _searchText, value);
                 
-            }
-        }
+        //    }
+        //}
         public Position SelectedPosition
         {
             get => _selectedPosition;
@@ -78,6 +80,8 @@ namespace Smart_Orders_Project.ViewModels
             set
             {
                 SetProperty(ref _selectedStorage, value);
+                if(value!=null)
+                    StorageID = value.Oid.ToString();
             } 
         }
         public RFCensus SelectedRFCensus
@@ -155,9 +159,12 @@ namespace Smart_Orders_Project.ViewModels
                 foreach (var item in items)
                 {
                     StorageList.Add(item);
-                }        
+                }              
+                SelectedStorage = StorageList.Single(x => x.Oid.ToString() == StorageID);
                 //second list
                 var items2 = await RFCensusRepo.GetItemsAsync(true);
+                var user = await UserRepo.GetUser();
+               
                 foreach (var item in items2)
                 {
                     if(!RFCensusList.Contains(item))
@@ -165,7 +172,8 @@ namespace Smart_Orders_Project.ViewModels
                         RFCensusList.Add(item);
                         AddRFCensusToDB(item);
                     }    
-                }
+                }               
+                
             }
             catch (Exception ex)
             {
@@ -203,6 +211,17 @@ namespace Smart_Orders_Project.ViewModels
         {
             IsBusy = true;
         }
+        public RFCensus RFCensus
+        {
+            get
+            {
+                return rfcensus;
+            }
+            set
+            {
+                SetProperty(ref rfcensus, value);
+            }
+        }      
         public float Quantity
         {
             get => _quantity;
@@ -254,5 +273,6 @@ namespace Smart_Orders_Project.ViewModels
             RFCensusList.Remove(l);
             await RFCensusRepo.DeleteItemAsync(l.Oid.ToString());
         }
+        
     }
 }

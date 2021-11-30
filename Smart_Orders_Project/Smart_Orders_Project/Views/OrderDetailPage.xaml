@@ -36,7 +36,8 @@
                                               BorderColor="{StaticResource Tradic}" CornerRadius="20"
                                               ItemsSource="{Binding RecieverList}"
                                               SelectedItem="{Binding Reciever,Mode=TwoWay}"
-                                              DisplayMember="RecieverName"/>
+                                              DisplayMember="RecieverName"
+                                              FilterMode="Contains"/>
                         </StackLayout>
                     </Frame>
                     <StackLayout  Orientation="Horizontal" WidthRequest="120" HorizontalOptions="End">

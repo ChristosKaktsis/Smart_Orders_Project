@@ -82,6 +82,26 @@ namespace Smart_Orders_Project.ViewModels
                 OnPropertyChanged(nameof(UserString));
             }
         }
+        public string SearchPositionText
+        {
+            get => Preferences.Get(nameof(SearchPositionText), "");
+            set
+            {
+                Preferences.Set(nameof(SearchPositionText), value);
+                OnPropertyChanged(nameof(SearchPositionText));
+
+            }
+        }
+        public string StorageID
+        {
+            get => Preferences.Get(nameof(StorageID), "");
+            set
+            {
+                Preferences.Set(nameof(StorageID), value);
+                OnPropertyChanged(nameof(StorageID));
+
+            }
+        }
         public async void GoBack()
         {
             await Shell.Current.GoToAsync("..");

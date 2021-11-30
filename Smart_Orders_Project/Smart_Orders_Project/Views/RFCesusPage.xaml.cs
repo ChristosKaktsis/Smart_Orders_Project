@@ -25,5 +25,10 @@ namespace Smart_Orders_Project.Views
             base.OnAppearing();
             _viewModel.OnAppearing();
         }
+
+        private void SwipeItem_Invoked(object sender, DevExpress.XamarinForms.CollectionView.SwipeItemTapEventArgs e)
+        {
+            _viewModel.DeleteCommand.Execute(e.Item);
+        }
     }
 }

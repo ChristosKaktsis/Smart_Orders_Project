@@ -32,7 +32,19 @@ namespace Smart_Orders_Project.Services
             var oldItem = RFCensusList.Where((RFCensus arg) => arg.Oid.ToString() == id).FirstOrDefault();
             RFCensusList.Remove(oldItem);
 
-            return await Task.FromResult(true);
+            return await Task.Run(() =>
+            {
+                int ok = 0;
+                string queryString = $@"DELETE FROM RFΑπογραφή WHERE Oid ='{id}'";
+
+                using (SqlConnection connection = new SqlConnection(ConnectionString))
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(queryString, connection);
+                    ok = command.ExecuteNonQuery();
+                }
+                return ok >= 1 ? true : false;
+            });
         }
 
         public async Task<RFCensus> GetItemAsync(string id)

@@ -155,6 +155,10 @@ namespace Smart_Orders_Project.ViewModels
 
             // This will pop the current page off the navigation stack
             await Shell.Current.GoToAsync("..");
+            if (IsQuickOn)
+            {
+                await Shell.Current.GoToAsync(nameof(Views.RFCensusProductSelectionPage)); 
+            }
         }
         public float Quantity
         {

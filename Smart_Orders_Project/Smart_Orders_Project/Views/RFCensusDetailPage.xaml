@@ -25,12 +25,12 @@
                                       IsFilterEnabled="True"
                                       FilterMode="Contains"
                                       DisplayMember="Description"
-                                      SelectedItem="{Binding SelectedStorage}"
+                                      SelectedItem="{Binding SelectedStorage,Mode=Default}"
                                       ItemsSource="{Binding StorageList}"/>
                 <Frame Margin="10,10,10,0" Padding="0" BackgroundColor="white" CornerRadius="30">
                     <StackLayout Orientation="Horizontal" Margin="10,5,0,5">
                         
-                        <Entry x:Name="positionSearch" IsFocused="{Binding IsFocused,Mode=OneWayToSource}"  Text="{Binding SearchPositionText , Mode=OneWayToSource}"  Placeholder="Θέση" ClearButtonVisibility="WhileEditing"  TextColor="{Binding SearchTextColor}" HorizontalOptions="FillAndExpand" Margin="0,0,0,0"/>
+                        <Entry x:Name="positionSearch" IsFocused="{Binding IsFocused,Mode=OneWayToSource}"  Text="{Binding SearchPositionText , Mode=TwoWay}"  Placeholder="Θέση" ClearButtonVisibility="WhileEditing"  TextColor="{Binding SearchTextColor}" HorizontalOptions="FillAndExpand" Margin="0,0,0,0"/>
                         <Image Source="{Binding DoneImageSource}" Margin="10,0,15,0"/>
                         <ActivityIndicator IsVisible="{Binding IsRunning}" IsRunning="{Binding IsRunning}"/>
                         

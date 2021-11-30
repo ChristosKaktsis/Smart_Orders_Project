@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Text;
+
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -15,11 +15,13 @@ namespace Smart_Orders_Project.ViewModels
         public ObservableCollection<RFCensus> RFCensusList { get; set; }
         public Command LoadItemsCommand { get; }
         public Command AddRFCensusCommand { get; }
+        public Command DeleteCommand { get; }
         public RFCensusViewModel()
         {
             RFCensusList = new ObservableCollection<RFCensus>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-            AddRFCensusCommand = new Command(OnAddRFCensusClicked);  
+            AddRFCensusCommand = new Command(OnAddRFCensusClicked);
+            DeleteCommand = new Command<RFCensus>(OnDeletePressed);
         }
 
         private async void OnAddRFCensusClicked(object obj)
@@ -52,6 +54,13 @@ namespace Smart_Orders_Project.ViewModels
         public void OnAppearing()
         {
             IsBusy = true;
+        }
+        private async void OnDeletePressed(RFCensus l)
+        {
+            if (l == null)
+                return;
+            RFCensusList.Remove(l);
+            await RFCensusRepo.DeleteItemAsync(l.Oid.ToString());
         }
     }
 }
