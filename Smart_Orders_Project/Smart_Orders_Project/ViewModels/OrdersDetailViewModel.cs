@@ -30,8 +30,10 @@ namespace Smart_Orders_Project.ViewModels
         private bool _isWHLEnabled;
         private bool _isHEnabled;
         private bool _isAddEnabled = true;
+        private Reciever _reciever;
 
         public ObservableCollection<LineOfOrder> LinesList { get; set; }
+        public ObservableCollection<Reciever> RecieverList { get; set; }
         public Command AddLine { get; }
         public Command SelectCustomer { get; }
         public Command LoadItemsCommand { get; }
@@ -45,6 +47,7 @@ namespace Smart_Orders_Project.ViewModels
             AddLine = new Command(OnAddLineClicked);
             SelectCustomer = new Command(OnSelectCustomerClicked);
             LinesList = new ObservableCollection<LineOfOrder>();
+            RecieverList = new ObservableCollection<Reciever>();
             OrderOid = Guid.NewGuid().ToString(); // παντα το βάζει αμα ειναι καινουρια πώληση αλλα αμα ερθεις απο edit εκτελείτε μετα και το Oid που ερχεται
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             SaveRFSalesCommand = new Command(ExecuteSaveRFSalesCommand, ValidateSave);
@@ -73,7 +76,6 @@ namespace Smart_Orders_Project.ViewModels
             if (RfSale != null)
                 RfSale.Lines.Remove(l);
         }
-
         private async void OnBackButtonPressed(object obj)
         {
             var answer = await Shell.Current.DisplayAlert("Ερώτηση;", "Θέλετε να αποχορήσετε", "Ναί", "Όχι");
@@ -100,7 +102,8 @@ namespace Smart_Orders_Project.ViewModels
                         Customer = await CustomerRepo.GetItemAsync(itemId),
                         Lines = LinesList.ToList(),
                         RFCount =Title,
-                        CreationDate = DateTime.Now
+                        CreationDate = DateTime.Now,
+                        Reciever = Reciever 
                     };
                     RFCounter++;
                     await RFSalesRepo.AddItemAsync(sale1);
@@ -115,6 +118,7 @@ namespace Smart_Orders_Project.ViewModels
                 else
                 {
                     RfSale.Customer = await CustomerRepo.GetItemAsync(itemId);
+                    RfSale.Reciever = Reciever;
                     await RFSalesRepo.UpdateItemAsync(RfSale);
                     RfSale.Lines = LinesList.ToList();
                     var items = RfSale.Lines;
@@ -144,6 +148,7 @@ namespace Smart_Orders_Project.ViewModels
             try
             {
                 LinesList.Clear();
+                RecieverList.Clear();
                 if (RfSale != null)
                 {
                     foreach (var line in RfSale.Lines)
@@ -166,13 +171,20 @@ namespace Smart_Orders_Project.ViewModels
                             
                         }
                        
-                        LinesList.Add(line); 
+                        LinesList.Add(line);
+                        Reciever = RfSale.Reciever;
                     }
                 }
                 var items = await LinesRepo.GetItemsAsync(true);
                 foreach (var item in items)
                 {
                     LinesList.Add(item);
+                }
+                //reciever list add
+                var recieveritems = await RecieverRepo.GetItemsAsync(true);
+                foreach (var item in recieveritems)
+                {
+                    RecieverList.Add(item);
                 }
             }
             catch (Exception ex)
@@ -232,7 +244,17 @@ namespace Smart_Orders_Project.ViewModels
                     Title = value.RFCount;
             }
         }
-
+        public Reciever Reciever
+        {
+            get
+            {
+                return _reciever;
+            }
+            set
+            {
+                SetProperty(ref _reciever, value);
+            }
+        }
         private async void GetOrder(string value)
         {
             try

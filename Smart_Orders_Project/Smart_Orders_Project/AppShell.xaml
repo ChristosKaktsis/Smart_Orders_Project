@@ -84,13 +84,13 @@
     <TabBar>
         <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate local:LoginPage}" />
     </TabBar>
-    <FlyoutItem Title="Orders" Icon="icon_about.png">
+    <FlyoutItem Title="RFΠωλήσεις" Icon="icon_feed.png">
         <ShellContent Route="OrdersPage" ContentTemplate="{DataTemplate local:OrdersPage}" />
     </FlyoutItem>
     <FlyoutItem Title="RFΑπογραφή" Icon="icon_feed.png">
         <ShellContent Route="RFCesusPage" ContentTemplate="{DataTemplate local:RFCesusPage}" />
     </FlyoutItem>
-    <FlyoutItem Title="Σύνδεση" Icon="icon_feed.png">
+    <FlyoutItem Title="Σύνδεση" Icon="icon_about.png">
         <ShellContent Route="ConnectionPage" ContentTemplate="{DataTemplate local:ConnectionPage}" />
     </FlyoutItem>
     

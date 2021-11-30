@@ -12,5 +12,6 @@ namespace Smart_Orders_Project.Models
         public DateTime CreationDate { get; set; }
         public bool Complete { get; set; }
         public List<LineOfOrder> Lines { get; set; }
+        public Reciever Reciever { get; set; }
     }
 }

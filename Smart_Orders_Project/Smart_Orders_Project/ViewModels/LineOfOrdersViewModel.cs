@@ -220,12 +220,6 @@ namespace Smart_Orders_Project.ViewModels
             set
             {
                 SetProperty(ref _searchText, value);
-                //if (!string.IsNullOrEmpty(value))
-                //{                   
-                //        LoadItemsCommand.Execute(null);
-                //}
-                    
-
             } 
         }
         private async Task ExecuteLoadItemCommand()
@@ -266,8 +260,14 @@ namespace Smart_Orders_Project.ViewModels
 
             await LinesRepo.AddItemAsync(newItem);
 
-            // This will pop the current page off the navigation stack
             await Shell.Current.GoToAsync("..");
+            if (IsQuickOn)
+            {
+                await Shell.Current.GoToAsync($"{nameof(Views.LineOfOrdersSelectionPage)}?{nameof(LineOfOrdersViewModel.ItemId)}={ItemId}");
+            }
+
+            // This will pop the current page off the navigation stack
+            //await Shell.Current.GoToAsync("..");
         }
         public float Quantity 
         {

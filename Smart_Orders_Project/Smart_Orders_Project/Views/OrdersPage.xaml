@@ -52,20 +52,11 @@
                             </dxcv:SwipeContainer>
                         </DataTemplate>
                     </dxcv:DXCollectionView.ItemTemplate>
-                    <!--<dxcv:DXCollectionView.SelectedItemTemplate>
-                        <DataTemplate>
-                            <Grid Padding="10">
-                                <Frame BackgroundColor="white"  Padding="10" Margin="0,0,0,0" CornerRadius="7" HasShadow="True">
-                                    <StackLayout x:DataType="model:RFSales" Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
-                                        <StackLayout>
-                                            <Label Text="{Binding Customer.Name}" FontSize="16" FontAttributes="Bold"/>
-                                            <Label Text="{Binding CreationDate}" FontSize="16"/>
-                                        </StackLayout>
-                                    </StackLayout>
-                                </Frame>
-                            </Grid>
-                        </DataTemplate>
-                    </dxcv:DXCollectionView.SelectedItemTemplate>-->
+                   
+                    <!--Sort items.-->
+                    <dxcv:DXCollectionView.SortDescriptions>
+                        <dxcv:SortDescription FieldName="CreationDate" SortOrder="Descending"/>
+                    </dxcv:DXCollectionView.SortDescriptions>
                 </dxcv:DXCollectionView>
             </StackLayout>
             <StackLayout HorizontalOptions="End" VerticalOptions="End" Margin="20">

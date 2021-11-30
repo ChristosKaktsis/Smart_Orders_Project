@@ -45,7 +45,8 @@ namespace Smart_Orders_Project.Services
                 //RFSalesList = new List<RFSales>(); // αμα δεν τραβαμε τα δεδομενα 
                 GetRFCounter();
                 RFSalesList.Clear();
-                string queryString = "select Oid , Πελάτης ,ΠαραστατικόΠελάτη ,UpdSmart ,Ολοκληρώθηκε ,ΗμνίαΔημιουργίας from RFΠωλήσεις where UpdSmart = 'false' and GCRecord is null";
+                string queryString = @"select Oid , Πελάτης ,ΠαραστατικόΠελάτη ,UpdSmart ,Ολοκληρώθηκε ,ΗμνίαΔημιουργίας ,Παραλαβών 
+                                       from RFΠωλήσεις where UpdSmart = 'false' and GCRecord is null";
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();
@@ -62,10 +63,36 @@ namespace Smart_Orders_Project.Services
                             Customer =  await GetCustomer(reader["Πελάτης"].ToString()),
                             CreationDate = (DateTime)reader["ΗμνίαΔημιουργίας"],
                             Complete = bool.Parse(reader["Ολοκληρώθηκε"].ToString()),
-                            Lines = await GetLines(reader["Oid"].ToString())
+                            Lines = await GetLines(reader["Oid"].ToString()),
+                            Reciever = await GetReciever(reader["Παραλαβών"].ToString())
                         });
                     }
                     return RFSalesList;
+                }
+            });
+        }
+
+        private async Task<Reciever> GetReciever(string id)
+        {
+            return await Task.Run(() =>
+            {
+                string queryString = $@"select Oid ,Επωνυμία 
+                                      from Παραλαβών where Oid = '{id}' and GCRecord is null";
+                using (SqlConnection connection = new SqlConnection(ConnectionString))
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(queryString, connection);
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (!reader.HasRows)
+                        return null;
+                    reader.Read();
+                    Reciever reciever = new Reciever()
+                    {
+                        Oid = Guid.Parse(reader["Oid"].ToString()),
+                        RecieverName = reader["Επωνυμία"] != DBNull.Value ? reader["Επωνυμία"].ToString() : string.Empty   
+                    };
+
+                    return reciever;
                 }
             });
         }
@@ -208,17 +235,16 @@ namespace Smart_Orders_Project.Services
 
         public async Task<bool> UpdateItemAsync(RFSales item)
         {
-            //var oldItem = RFSalesList.Where((RFSales arg) => arg.Oid == item.Oid).FirstOrDefault();
-            //RFSalesList.Remove(oldItem);
-            //RFSalesList.Add(item);
-            //return await Task.FromResult(true);
             return await Task.Run(() =>
             {
                 int ok = 0;
-                string queryString = @"UPDATE RFΠωλήσεις
-                                    SET Πελάτης = '"+item.Customer.Oid+ "' , Ολοκληρώθηκε = '"+item.Complete+ "' , UpdSmart = '"+ item.Complete + @"'
-                                    WHERE Oid = '" + item.Oid+ "' ";
-                string queryDelete = "DELETE From RFΓραμμέςΠωλήσεων where RFΠωλήσεις = '" + item.Oid + "'";
+                string queryString = $@"UPDATE RFΠωλήσεις
+                                    SET Πελάτης = '{item.Customer.Oid}' ,
+                                        Ολοκληρώθηκε = '{item.Complete}' , 
+                                        UpdSmart = '{item.Complete}' ,
+                                        Παραλαβών = '{item.Reciever.Oid}'
+                                    WHERE Oid = '{item.Oid}' ";
+                string queryDelete = $"DELETE From RFΓραμμέςΠωλήσεων where RFΠωλήσεις = '{item.Oid}'";
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();
@@ -239,9 +265,11 @@ namespace Smart_Orders_Project.Services
             {
                 int ok = 0;
                 UpdateRFCounter();
-                string queryString = @"INSERT INTO RFΠωλήσεις (Oid, ΑποθηκευτικόςΧώρος, Πελάτης, ΠαραστατικάΠωλήσεων, ΠαραστατικόΠελάτη, 
-                    Διαχείριση, UpdSmart, Ολοκληρώθηκε, ΗμνίαΔημιουργίας, ΑυτόματηΔιαγραφήΠαραστατικών, OptimisticLockField, GCRecord)
-                    VALUES((Convert(uniqueidentifier, N'"+item.Oid+ "')), null, (Convert(uniqueidentifier, N'" + item.Customer.Oid + "')), null, '"+item.RFCount+"', null, '0', '0', (Convert(date, '" + item.CreationDate.ToString("MM/dd/yyyy") + "')), '0', '1', null); ";
+                string queryString = $@"INSERT INTO RFΠωλήσεις (Oid, ΑποθηκευτικόςΧώρος, Πελάτης, ΠαραστατικάΠωλήσεων, ΠαραστατικόΠελάτη, 
+                    Διαχείριση, UpdSmart, Ολοκληρώθηκε, ΗμνίαΔημιουργίας, ΑυτόματηΔιαγραφήΠαραστατικών, OptimisticLockField, GCRecord, Παραλαβών)
+                    VALUES((Convert(uniqueidentifier, N'{item.Oid}')), null, (Convert(uniqueidentifier, N'{item.Customer.Oid}'))
+                    , null, '{item.RFCount}', null, '0', '0', GETDATE(), '0', '1', null, 
+                    {(item.Reciever==null?"null":$"'{item.Reciever.Oid}'")}); ";
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();

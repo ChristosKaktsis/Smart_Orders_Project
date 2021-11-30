@@ -20,6 +20,7 @@ namespace Smart_Orders_Project.ViewModels
         public IDataStore<Position> RFPositionRepo => DependencyService.Get<IDataStore<Position>>();
         public IDataStore<RFCensus> RFCensusRepo => DependencyService.Get<IDataStore<RFCensus>>();
         public IUser<User> UserRepo => DependencyService.Get<IUser<User>>();
+        public IDataStore<Reciever> RecieverRepo => DependencyService.Get<IDataStore<Reciever>>();
 
         bool isBusy = false;
         public bool IsBusy
