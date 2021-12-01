@@ -206,13 +206,13 @@ namespace Smart_Orders_Project.Services
             {
                 int ok = 0;
                 string queryString = $@"INSERT INTO RFΑπογραφή (Oid, ΑποθηκευτικόςΧώρος, Είδος, ΧρήστηςΔημιουργίας, Ποσότητα, ΗμνίαΔημιουργίας, 
-                                    Θέση, BarCodeΕίδους ,UpdSmart ,UpdWMS)
+                                    Θέση, BarCodeΕίδους ,UpdSmart ,UpdWMS ,Ολοκληρώθηκε)
                                     VALUES((Convert(uniqueidentifier, N'{item.Oid}')), 
                                            (Convert(uniqueidentifier, N'{item.Storage.Oid}')),
                                            (Convert(uniqueidentifier, N'{item.Product.Oid}')),
                                            (Convert(uniqueidentifier, N'{item.UserCreator.UserID}')),
                                         '{item.Quantity}', GETDATE(),(Convert(uniqueidentifier, N'{item.Position.Oid}')),
-                                        "+(string.IsNullOrEmpty(item.Product.BarCode)?"null":$"'{item.Product.BarCode}'")+",0,0)";
+                                        "+(string.IsNullOrEmpty(item.Product.BarCode)?"null":$"'{item.Product.BarCode}'")+",0,0,1)";
 
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
