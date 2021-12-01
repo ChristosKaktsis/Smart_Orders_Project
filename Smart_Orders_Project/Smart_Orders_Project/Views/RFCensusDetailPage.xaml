@@ -8,6 +8,9 @@
              x:Class="Smart_Orders_Project.Views.RFCensusDetailPage"
              Shell.NavBarHasShadow="False"
              Title="RFΑπογραφή">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding BackCommand}"/>
+    </Shell.BackButtonBehavior>
     <RefreshView x:DataType="vm:RFCensusDetailViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
         <Grid>
             <StackLayout Padding="0" Margin="0">
@@ -25,7 +28,7 @@
                                       IsFilterEnabled="True"
                                       FilterMode="Contains"
                                       DisplayMember="Description"
-                                      SelectedItem="{Binding SelectedStorage,Mode=Default}"
+                                      SelectedItem="{Binding SelectedStorage,Mode=TwoWay}"
                                       ItemsSource="{Binding StorageList}"/>
                 <Frame Margin="10,10,10,0" Padding="0" BackgroundColor="white" CornerRadius="30">
                     <StackLayout Orientation="Horizontal" Margin="10,5,0,5">
@@ -51,16 +54,22 @@
                                     <dxcv:SwipeContainer.ItemView>
                                         <Grid Padding="0">
                                             <Frame BackgroundColor="white" BorderColor="LightGray" Padding="10" Margin="0,0,0,0" CornerRadius="0" HasShadow="True">
-                                                <StackLayout x:DataType="model:RFCensus" Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
-                                                    <StackLayout WidthRequest="200">
-                                                        <Label Text="{Binding Product.Name}" FontSize="16" FontAttributes="Bold"/>
-                                                        <Label Text="{Binding Product.BarCode}"/>
+                                                <StackLayout x:DataType="model:RFCensus">
+                                                    <StackLayout  Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
+                                                        <StackLayout WidthRequest="200">
+                                                            <Label Text="{Binding Product.Name}" FontSize="16" FontAttributes="Bold"/>
+                                                            <Label Text="{Binding Product.BarCode}"/>
+                                                        </StackLayout>
+                                                        <StackLayout HorizontalOptions="EndAndExpand">
+                                                            <Label Text="{Binding Quantity ,StringFormat='Ποσότητα: {0}'}" FontSize="16"/>
+                                                        </StackLayout>
                                                     </StackLayout>
-                                                    <StackLayout HorizontalOptions="EndAndExpand">
-                                                        <Label Text="{Binding Quantity ,StringFormat='Ποσότητα: {0}'}" FontSize="16"/>
+                                                    <StackLayout Orientation="Horizontal">
+                                                        <Label Text="{Binding Storage.Description}"/>
+                                                        <Label Text="{Binding Position.Description}"/>
                                                     </StackLayout>
-
                                                 </StackLayout>
+                                                
                                             </Frame>
                                         </Grid>
                                     </dxcv:SwipeContainer.ItemView>
@@ -76,15 +85,20 @@
                             <DataTemplate>
                                 <Grid Padding="0">
                                     <Frame BackgroundColor="{StaticResource Complementary}" BorderColor="LightGray" Padding="10" Margin="0,0,0,0" CornerRadius="0" HasShadow="True">
-                                        <StackLayout x:DataType="model:RFCensus" Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
-                                            <StackLayout WidthRequest="200">
-                                                <Label Text="{Binding Product.Name}" FontSize="16" FontAttributes="Bold"/>
-                                                <Label Text="{Binding Product.BarCode}"/>
+                                        <StackLayout x:DataType="model:RFCensus">
+                                            <StackLayout  Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
+                                                <StackLayout WidthRequest="200">
+                                                    <Label Text="{Binding Product.Name}" FontSize="16" FontAttributes="Bold"/>
+                                                    <Label Text="{Binding Product.BarCode}"/>
+                                                </StackLayout>
+                                                <StackLayout HorizontalOptions="EndAndExpand">
+                                                    <Label Text="{Binding Quantity ,StringFormat='Ποσότητα: {0}'}" FontSize="16"/>
+                                                </StackLayout>
                                             </StackLayout>
-                                            <StackLayout HorizontalOptions="EndAndExpand">                                               
-                                                <Label Text="{Binding Quantity ,StringFormat='Ποσότητα: {0}'}" FontSize="16"/>
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label Text="{Binding Storage.Description}"/>
+                                                <Label Text="{Binding Position.Description}"/>
                                             </StackLayout>
-
                                         </StackLayout>
                                     </Frame>
                                 </Grid>

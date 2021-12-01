@@ -9,13 +9,10 @@ using Xamarin.Essentials;
 
 namespace Smart_Orders_Project.Services
 {
-    class RepositoryRFSales : IDataStore<RFSales>
+    class RepositoryRFSales : RepositoryService, IDataStore<RFSales>
     {
         public List<RFSales> RFSalesList;
-        private string ConnectionString
-        {
-            get => Preferences.Get(nameof(ConnectionString), @"User Id=sa;password=1;Pooling=false;Data Source=192.168.3.44\SQLEXPRESS;Initial Catalog=maindemo");
-        }
+        
         public RepositoryRFSales()
         {
             RFSalesList = new List<RFSales>();
@@ -294,6 +291,11 @@ namespace Smart_Orders_Project.Services
         }
 
         public Task<List<RFSales>> GetItemsWithNameAsync(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteItemFromDBAsync(string id)
         {
             throw new NotImplementedException();
         }

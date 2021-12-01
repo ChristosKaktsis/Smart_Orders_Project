@@ -9,13 +9,10 @@ using Xamarin.Essentials;
 
 namespace Smart_Orders_Project.Services
 {
-    class RepositoryLineOfOrder : IDataStore<LineOfOrder>
+    class RepositoryLineOfOrder : RepositoryService, IDataStore<LineOfOrder>
     {
         public List<LineOfOrder> LineList;
-        private string ConnectionString
-        {
-            get => Preferences.Get(nameof(ConnectionString), @"User Id=sa;password=1;Pooling=false;Data Source=192.168.3.44\SQLEXPRESS;Initial Catalog=maindemo");
-        }
+       
         public RepositoryLineOfOrder()
         {
             LineList = new List<LineOfOrder>();
@@ -87,6 +84,10 @@ namespace Smart_Orders_Project.Services
                 return ok >= 1 ? true : false;
             });
         }
-        
+
+        public Task<bool> DeleteItemFromDBAsync(string id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

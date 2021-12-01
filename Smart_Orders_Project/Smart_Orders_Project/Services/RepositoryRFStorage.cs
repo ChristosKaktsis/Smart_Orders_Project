@@ -9,20 +9,19 @@ using Xamarin.Essentials;
 
 namespace Smart_Orders_Project.Services
 {
-    public class RepositoryRFStorage : IDataStore<Storage>
+    public class RepositoryRFStorage : RepositoryService, IDataStore<Storage>
     {
-        private string ConnectionString
-        {
-            get => Preferences.Get(nameof(ConnectionString), @"User Id=sa;password=1;Pooling=false;Data Source=192.168.3.44\SQLEXPRESS;Initial Catalog=maindemo");
-        }
+        
         public List<Storage> StorageList { get; set; }
         public RepositoryRFStorage()
         {
             StorageList = new List<Storage>();
         }
-        public Task<bool> AddItemAsync(Storage item)
+        public async Task<bool> AddItemAsync(Storage item)
         {
-            throw new NotImplementedException();
+            StorageList.Add(item);
+
+            return await Task.FromResult(true);
         }
 
         public Task<bool> DeleteItemAsync(string id)
@@ -69,6 +68,11 @@ namespace Smart_Orders_Project.Services
         }
 
         public Task<bool> UploadItemAsync(Storage item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteItemFromDBAsync(string id)
         {
             throw new NotImplementedException();
         }

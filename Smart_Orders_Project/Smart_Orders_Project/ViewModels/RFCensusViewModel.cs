@@ -60,7 +60,7 @@ namespace Smart_Orders_Project.ViewModels
             if (l == null)
                 return;
             RFCensusList.Remove(l);
-            await RFCensusRepo.DeleteItemAsync(l.Oid.ToString());
+            await RFCensusRepo.DeleteItemFromDBAsync(l.Oid.ToString());
         }
     }
 }

@@ -9,12 +9,9 @@ using Xamarin.Essentials;
 
 namespace Smart_Orders_Project.Services
 {
-    public class RepositoryRFCensus : IDataStore<RFCensus>
+    public class RepositoryRFCensus : RepositoryService, IDataStore<RFCensus>
     {
-        private string ConnectionString
-        {
-            get => Preferences.Get(nameof(ConnectionString), @"User Id=sa;password=1;Pooling=false;Data Source=192.168.3.44\SQLEXPRESS;Initial Catalog=maindemo");
-        }
+        
         List<RFCensus> RFCensusList;
         public RepositoryRFCensus()
         {
@@ -32,19 +29,7 @@ namespace Smart_Orders_Project.Services
             var oldItem = RFCensusList.Where((RFCensus arg) => arg.Oid.ToString() == id).FirstOrDefault();
             RFCensusList.Remove(oldItem);
 
-            return await Task.Run(() =>
-            {
-                int ok = 0;
-                string queryString = $@"DELETE FROM RFΑπογραφή WHERE Oid ='{id}'";
-
-                using (SqlConnection connection = new SqlConnection(ConnectionString))
-                {
-                    connection.Open();
-                    SqlCommand command = new SqlCommand(queryString, connection);
-                    ok = command.ExecuteNonQuery();
-                }
-                return ok >= 1 ? true : false;
-            });
+            return await Task.FromResult(true);
         }
 
         public async Task<RFCensus> GetItemAsync(string id)
@@ -228,6 +213,26 @@ namespace Smart_Orders_Project.Services
                                            (Convert(uniqueidentifier, N'{item.UserCreator.UserID}')),
                                         '{item.Quantity}', GETDATE(),(Convert(uniqueidentifier, N'{item.Position.Oid}')),
                                         "+(string.IsNullOrEmpty(item.Product.BarCode)?"null":$"'{item.Product.BarCode}'")+",0,0)";
+
+                using (SqlConnection connection = new SqlConnection(ConnectionString))
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(queryString, connection);
+                    ok = command.ExecuteNonQuery();
+                }
+                return ok >= 1 ? true : false;
+            });
+        }
+
+        public async Task<bool> DeleteItemFromDBAsync(string id)
+        {
+            var oldItem = RFCensusList.Where((RFCensus arg) => arg.Oid.ToString() == id).FirstOrDefault();
+            RFCensusList.Remove(oldItem);
+
+            return await Task.Run(() =>
+            {
+                int ok = 0;
+                string queryString = $@"DELETE FROM RFΑπογραφή WHERE Oid ='{id}'";
 
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {

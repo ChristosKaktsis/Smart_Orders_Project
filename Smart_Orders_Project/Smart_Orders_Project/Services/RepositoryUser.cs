@@ -8,7 +8,7 @@ using Xamarin.Essentials;
 
 namespace Smart_Orders_Project.Services
 {
-   public class RepositoryUser : IUser<User>
+   public class RepositoryUser : RepositoryService,IUser<User>
     {
         User LoggedUser;
 
@@ -46,13 +46,6 @@ namespace Smart_Orders_Project.Services
                     return user;
                 }
             });
-        }
-
-       
-
-        private string ConnectionString
-        {
-            get => Preferences.Get(nameof(ConnectionString), @"User Id=sa;password=1;Pooling=false;Data Source=192.168.3.44\SQLEXPRESS;Initial Catalog=maindemo");
         }
     }
 }

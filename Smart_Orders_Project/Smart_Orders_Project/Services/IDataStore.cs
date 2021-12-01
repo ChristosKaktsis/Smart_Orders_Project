@@ -10,6 +10,7 @@ namespace Smart_Orders_Project.Services
         Task<bool> AddItemAsync(T item);
         Task<bool> UpdateItemAsync(T item);
         Task<bool> DeleteItemAsync(string id);
+        Task<bool> DeleteItemFromDBAsync(string id);
         Task<T> GetItemAsync(string id);
         Task<List<T>> GetItemsAsync(bool forceRefresh = false);
         Task<List<T>> GetItemsWithNameAsync(string name);

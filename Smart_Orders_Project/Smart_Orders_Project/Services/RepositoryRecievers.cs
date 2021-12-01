@@ -8,19 +8,21 @@ using Xamarin.Essentials;
 
 namespace Smart_Orders_Project.Services
 {
-    public class RepositoryRecievers : IDataStore<Reciever>
+    public class RepositoryRecievers : RepositoryService, IDataStore<Reciever>
     {
         public List<Reciever> RecieverList { get; set; }
-        private string ConnectionString
-        {
-            get => Preferences.Get(nameof(ConnectionString), @"User Id=sa;password=1;Pooling=false;Data Source=192.168.3.44\SQLEXPRESS;Initial Catalog=maindemo");
-        }
+        
         public Task<bool> AddItemAsync(Reciever item)
         {
             throw new NotImplementedException();
         }
 
         public Task<bool> DeleteItemAsync(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteItemFromDBAsync(string id)
         {
             throw new NotImplementedException();
         }
@@ -65,9 +67,23 @@ namespace Smart_Orders_Project.Services
             throw new NotImplementedException();
         }
 
-        public Task<bool> UploadItemAsync(Reciever item)
+        public async Task<bool> UploadItemAsync(Reciever item)
         {
-            throw new NotImplementedException();
+            return await Task.Run(() =>
+            {
+                int ok = 0;
+                string queryString = $@"INSERT INTO [Παραλαβών] (Oid, Επωνυμία)
+                                    VALUES((Convert(uniqueidentifier, N'{item.Oid}')), 
+                                           '{item.RecieverName}')";
+
+                using (SqlConnection connection = new SqlConnection(ConnectionString))
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(queryString, connection);
+                    ok = command.ExecuteNonQuery();
+                }
+                return ok >= 1 ? true : false;
+            });
         }
     }
 }

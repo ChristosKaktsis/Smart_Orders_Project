@@ -33,6 +33,7 @@ namespace Smart_Orders_Project.ViewModels
         public Command AddLine { get; }
         public Command SaveUpdatedRFCensusCommand { get; }
         public Command DeleteCommand { get; }
+        public Command BackCommand { get; }
         public RFCensusDetailViewModel()
         {
             StorageList = new ObservableCollection<Storage>();
@@ -44,6 +45,7 @@ namespace Smart_Orders_Project.ViewModels
                (_, __) => AddLine.ChangeCanExecute();
             DeleteCommand = new Command<RFCensus>(OnDeletePressed);
             SaveUpdatedRFCensusCommand = new Command(OnUpdateRFCensus);
+            BackCommand = new Command(OnBackButtonPressed);
         }
         private async void OnUpdateRFCensus(object obj)
         {
@@ -80,9 +82,16 @@ namespace Smart_Orders_Project.ViewModels
             set
             {
                 SetProperty(ref _selectedStorage, value);
-                if(value!=null)
-                    StorageID = value.Oid.ToString();
+                SetStorageToRepository(value);   
             } 
+        }
+        private async void SetStorageToRepository(Storage value)
+        {
+            if (value != null)
+            {
+                StorageID = value.Oid.ToString();
+                await RFStorageRepo.AddItemAsync(value);
+            }
         }
         public RFCensus SelectedRFCensus
         {
@@ -154,12 +163,13 @@ namespace Smart_Orders_Project.ViewModels
             try
             {
                 //first list
+                SelectedStorage = await RFStorageRepo.GetItemAsync(StorageID);
                 StorageList.Clear();
                 var items = await RFStorageRepo.GetItemsAsync(true);
                 foreach (var item in items)
                 {
                     StorageList.Add(item);
-                }              
+                }
                 SelectedStorage = StorageList.Single(x => x.Oid.ToString() == StorageID);
                 //second list
                 var items2 = await RFCensusRepo.GetItemsAsync(true);
@@ -271,8 +281,21 @@ namespace Smart_Orders_Project.ViewModels
             if (l == null)
                 return;
             RFCensusList.Remove(l);
-            await RFCensusRepo.DeleteItemAsync(l.Oid.ToString());
+            await RFCensusRepo.DeleteItemFromDBAsync(l.Oid.ToString());
         }
-        
+        private async void OnBackButtonPressed(object obj)
+        {
+            var answer = await Shell.Current.DisplayAlert("Ερώτηση;", "Θέλετε να αποχορήσετε", "Ναί", "Όχι");
+            if (answer)
+            {
+                //remove the items from the cart before going back
+                foreach (var i in RFCensusList)
+                {
+                    await RFCensusRepo.DeleteItemAsync(i.Oid.ToString());
+                }
+                // This will pop the current page off the navigation stack
+                GoBack();
+            }
+        }
     }
 }

@@ -29,7 +29,11 @@
                                                     <Label Text="{Binding Storage.Description}" FontSize="16" FontAttributes="Bold"/>
                                                     <Label Text="{Binding Position.Description}" FontSize="16" FontAttributes="Bold" HorizontalOptions="EndAndExpand"/>
                                                 </StackLayout>
-                                                <Label Text="{Binding Product.Name}" FontSize="16" FontAttributes="Bold"/>
+                                                <StackLayout Orientation="Horizontal">
+                                                    <Label Text="{Binding Product.Name}" FontSize="16" FontAttributes="Bold"/>
+                                                    
+                                                </StackLayout>
+                                                <Label Text="{Binding Quantity,StringFormat='Ποσότητα:{0}'}" FontSize="16" FontAttributes="Bold" HorizontalOptions="End"/>
                                                 <StackLayout Orientation="Horizontal">
                                                     <Label Text="{Binding CreationDate}" FontSize="16"/>
                                                 </StackLayout>

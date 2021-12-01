@@ -13,11 +13,19 @@ namespace Smart_Orders_Project.ViewModels
         private string _password;
 
         public Command LoginCommand { get; }
+        public Command ConnectionCommand { get; }
 
         public LoginViewModel()
         {
             LoginCommand = new Command(OnLoginClicked);
+            ConnectionCommand = new Command(OnConnectionClicked);
         }
+
+        private async void OnConnectionClicked(object obj)
+        {
+            await Shell.Current.Navigation.PushAsync(new ConnectionPage());
+        }
+
         public string UserName
         {
             get => _userName;
@@ -37,6 +45,7 @@ namespace Smart_Orders_Project.ViewModels
                 var user = await UserRepo.GetUser();
                 if (user == null)
                 {
+                    await Shell.Current.DisplayAlert("Προσοχή!","Λάθος όνομα χρήστη", "Οκ");
                     Debug.WriteLine("Wrong Log In");
                     return;
                 }

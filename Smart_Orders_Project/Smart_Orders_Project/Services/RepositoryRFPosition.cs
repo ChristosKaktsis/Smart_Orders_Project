@@ -8,12 +8,9 @@ using Xamarin.Essentials;
 
 namespace Smart_Orders_Project.Services
 {
-    public class RepositoryRFPosition : IDataStore<Position>
+    public class RepositoryRFPosition : RepositoryService, IDataStore<Position>
     {
-        private string ConnectionString
-        {
-            get => Preferences.Get(nameof(ConnectionString), @"User Id=sa;password=1;Pooling=false;Data Source=192.168.3.44\SQLEXPRESS;Initial Catalog=maindemo");
-        }
+        
         public List<Position> PositionList;
         public RepositoryRFPosition()
         {
@@ -88,6 +85,11 @@ namespace Smart_Orders_Project.Services
         }
 
         public Task<bool> UploadItemAsync(Position item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteItemFromDBAsync(string id)
         {
             throw new NotImplementedException();
         }

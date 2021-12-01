@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Smart_Orders_Project.Views.NewRecieverPage" Title="Νέος Παραλαβών">
+    <ContentPage.Content>
+        <Grid>
+            <StackLayout>
+                <Frame  Margin="10,100,10,10">
+                    <StackLayout>
+                        <Label Text="Παραλαβών" FontSize="20" HorizontalOptions="Center"/>
+                        <Frame CornerRadius="40">
+                            <StackLayout>
+                                <Entry Placeholder="Επωνυμία" Text="{Binding RecieverName}"/>
+                            </StackLayout>
+                        </Frame>
+                        <Button Text="Αποθήκευση" CornerRadius="30" HorizontalOptions="Center" Margin="10,20,10,0" 
+                                FontAttributes="Bold" TextTransform="None" FontSize="17"
+                                Command="{Binding SaveCommand}"/>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

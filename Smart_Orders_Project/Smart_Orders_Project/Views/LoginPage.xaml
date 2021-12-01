@@ -38,8 +38,11 @@
                                     </StackLayout>
                                 </Frame>
                             </StackLayout>
-                            <StackLayout Margin="0,15,0,0">
+                            <StackLayout Margin="0,15,0,10">
                                 <Button Text="SING IN" BackgroundColor="#7802ee" TextColor="White" FontAttributes="Bold" CornerRadius="30" Command="{Binding LoginCommand}"/>
+                            </StackLayout>
+                            <StackLayout HorizontalOptions="Center">
+                                <Button Text="Σύνδεση" TextTransform="None" BackgroundColor="White" CornerRadius="30" TextColor="{StaticResource  SecondaryLight}" Command="{Binding ConnectionCommand}"/>
                             </StackLayout>
                         </StackLayout>
                     </Frame>

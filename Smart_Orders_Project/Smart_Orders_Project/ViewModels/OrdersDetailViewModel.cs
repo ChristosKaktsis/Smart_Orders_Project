@@ -139,7 +139,7 @@ namespace Smart_Orders_Project.ViewModels
         }
         private bool ValidateSave()
         {
-            return !string.IsNullOrEmpty(CustomerName);
+            return CustomerName != "Επιλογή Πελάτη" && LinesList.Any();
         }
         private async Task ExecuteLoadItemsCommand()
         {
@@ -186,6 +186,7 @@ namespace Smart_Orders_Project.ViewModels
                 {
                     RecieverList.Add(item);
                 }
+                RecieverList.Add(new Reciever { RecieverName="Νέος Παραλαβών"});
             }
             catch (Exception ex)
             {
@@ -253,7 +254,18 @@ namespace Smart_Orders_Project.ViewModels
             set
             {
                 SetProperty(ref _reciever, value);
+                if (value == null)
+                    return;
+                if (value.RecieverName == "Νέος Παραλαβών")
+                {
+                    GoToNewReciever();
+                }
             }
+        }
+
+        private async void GoToNewReciever()
+        {
+            await Shell.Current.GoToAsync(nameof(NewRecieverPage));
         }
         private async void GetOrder(string value)
         {
@@ -334,12 +346,7 @@ namespace Smart_Orders_Project.ViewModels
             set
             {
                 SetProperty(ref _quantity, value);
-                CheckSum();
-                //if (SelectedProduct != null)
-                //{
-                //    //Sum = value * SelectedProduct.Price;
-
-                //}
+                CheckSum(); 
             }
         }
         public float Height

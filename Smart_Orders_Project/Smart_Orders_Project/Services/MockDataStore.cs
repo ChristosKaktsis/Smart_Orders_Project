@@ -66,5 +66,10 @@ namespace Smart_Orders_Project.Services
         {
             throw new NotImplementedException();
         }
+
+        public Task<bool> DeleteItemFromDBAsync(string id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
