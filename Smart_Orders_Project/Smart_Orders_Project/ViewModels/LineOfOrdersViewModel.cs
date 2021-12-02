@@ -79,7 +79,8 @@ namespace Smart_Orders_Project.ViewModels
                 if (SearchText.Length == 13)
                 {
                     var it = await ProductRepo.GetItemAsync(SearchText);
-                    ProductList.Add(it);
+                    if(it!=null)
+                        ProductList.Add(it);  
                 }
                 else
                 {

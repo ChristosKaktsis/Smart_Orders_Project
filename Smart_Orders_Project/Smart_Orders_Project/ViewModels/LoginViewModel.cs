@@ -55,6 +55,7 @@ namespace Smart_Orders_Project.ViewModels
             catch (Exception Ex)
             {
                 Debug.WriteLine(Ex);
+                await Shell.Current.DisplayAlert("Προσοχή!", "Κάτι πήγε λάθος στην σύδεση", "Οκ");
             }
 
         }

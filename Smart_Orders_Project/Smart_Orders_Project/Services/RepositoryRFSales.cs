@@ -235,11 +235,12 @@ namespace Smart_Orders_Project.Services
             return await Task.Run(() =>
             {
                 int ok = 0;
+
                 string queryString = $@"UPDATE RFΠωλήσεις
                                     SET Πελάτης = '{item.Customer.Oid}' ,
                                         Ολοκληρώθηκε = '{item.Complete}' , 
                                         UpdSmart = '{item.Complete}' ,
-                                        Παραλαβών = '{item.Reciever.Oid}'
+                                        Παραλαβών = {(item.Reciever == null ? "null" : $"'{item.Reciever.Oid}'")}
                                     WHERE Oid = '{item.Oid}' ";
                 string queryDelete = $"DELETE From RFΓραμμέςΠωλήσεων where RFΠωλήσεις = '{item.Oid}'";
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
