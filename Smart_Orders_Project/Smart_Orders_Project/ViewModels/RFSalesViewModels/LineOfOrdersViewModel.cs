@@ -26,6 +26,7 @@ namespace Smart_Orders_Project.ViewModels
         private bool _isLEnabled;
         private bool _isHEnabled;
         private bool _isWHLEnabled;
+        private float _unit;
 
         public ObservableCollection<Product> ProductList { get; }
         //public ObservableCollection<Product> SelectedProductList { get; set; }
@@ -262,12 +263,7 @@ namespace Smart_Orders_Project.ViewModels
             set 
             {
                 SetProperty(ref _quantity, value);
-                CheckSum();
-                //if (SelectedProduct != null)
-                //{
-                //    //Sum = value * SelectedProduct.Price;
-                   
-                //}
+                CheckSum(); 
             } 
         }
         private void CheckSum()
@@ -281,7 +277,8 @@ namespace Smart_Orders_Project.ViewModels
             }
             else
             {
-                var y = (SelectedProduct.Width * SelectedProduct.Length);
+                var y = (Width * Length);
+                Unit = y * Quantity;
                 if (y == 0)
                 {
                     Sum = 0;
@@ -326,6 +323,14 @@ namespace Smart_Orders_Project.ViewModels
             {
                 SetProperty(ref _length, value);
                 CheckSum();
+            }
+        }
+        public float Unit
+        {
+            get => _unit;
+            set
+            {
+                SetProperty(ref _unit, value);            
             }
         }
         public string ItemId
