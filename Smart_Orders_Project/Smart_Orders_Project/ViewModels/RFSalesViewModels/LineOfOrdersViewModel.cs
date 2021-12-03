@@ -50,25 +50,7 @@ namespace Smart_Orders_Project.ViewModels
         {
             await Shell.Current.GoToAsync("BarCodeScanner");
         }
-        //private void SelectedProductList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        //{
-
-        //    if (e.NewItems != null)
-        //    {
-        //        foreach (Product newItem in e.NewItems)
-        //        {
-        //            newItem.Quantity = Quantity;
-        //        }
-        //    }
-
-        //    if (e.OldItems != null)
-        //    {
-        //        foreach (Product oldItem in e.OldItems)
-        //        {
-        //            oldItem.Quantity = 0;          
-        //        }
-        //    }
-        //}
+       
         private async Task ExecuteLoadItemsCommand()
         {
             IsBusy = true;
@@ -80,7 +62,9 @@ namespace Smart_Orders_Project.ViewModels
                 {
                     var it = await ProductRepo.GetItemAsync(SearchText);
                     if(it!=null)
-                        ProductList.Add(it);  
+                        ProductList.Add(it);
+                    else
+                        await Shell.Current.DisplayAlert("Barcode!", "το είδος δεν βρέθηκε", "Οκ");
                 }
                 else
                 {
@@ -104,6 +88,7 @@ namespace Smart_Orders_Project.ViewModels
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
+                await Shell.Current.DisplayAlert("Σφάλμα!", "ExecuteLoadItemsCommand \n" + ex.Message, "Οκ");
             }
             finally
             {
@@ -235,6 +220,7 @@ namespace Smart_Orders_Project.ViewModels
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
+                await Shell.Current.DisplayAlert("Σφάλμα!", "ExecuteLoadItemCommand \n" + ex.Message, "Οκ");
             }
             finally
             {

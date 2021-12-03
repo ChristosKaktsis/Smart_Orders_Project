@@ -48,7 +48,10 @@ namespace Smart_Orders_Project.ViewModels
                 if (SearchText.Length == 13)
                 {
                     var it = await ProductRepo.GetItemAsync(SearchText);
-                    ProductList.Add(it);
+                    if (it != null)
+                        ProductList.Add(it);
+                    else
+                        await Shell.Current.DisplayAlert("Barcode!", "το είδος δεν βρέθηκε", "Οκ");
                 }
                 else
                 {
@@ -72,6 +75,7 @@ namespace Smart_Orders_Project.ViewModels
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
+                await Shell.Current.DisplayAlert("Σφάλμα!", "ExecuteLoadItemsCommand \n" + ex.Message, "Οκ");
             }
             finally
             {

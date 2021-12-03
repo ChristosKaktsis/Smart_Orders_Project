@@ -42,6 +42,7 @@ namespace Smart_Orders_Project.ViewModels
             catch(Exception ex)
             {
                 Debug.WriteLine(ex);
+                await Shell.Current.DisplayAlert("Σφάλμα!", "OnSave \n" + ex.Message, "Οκ");
             }
            
 

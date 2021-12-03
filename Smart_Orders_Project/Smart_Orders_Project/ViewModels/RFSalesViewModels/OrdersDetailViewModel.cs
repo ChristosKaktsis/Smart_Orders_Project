@@ -134,6 +134,7 @@ namespace Smart_Orders_Project.ViewModels
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
+                await Shell.Current.DisplayAlert("Σφάλμα!", "ExecuteSaveRFSalesCommand \n" + ex.Message, "Οκ");
             }
             
         }
@@ -191,6 +192,7 @@ namespace Smart_Orders_Project.ViewModels
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
+                await Shell.Current.DisplayAlert("Σφάλμα!", "ExecuteLoadItemsCommand \n" + ex.Message, "Οκ");
             }
             finally
             {
@@ -280,6 +282,7 @@ namespace Smart_Orders_Project.ViewModels
             catch(Exception ex)
             {
                 Debug.WriteLine(ex);
+                await Shell.Current.DisplayAlert("Σφάλμα!", "GetOrder \n" + ex.Message, "Οκ");
             }
             
                
@@ -446,9 +449,10 @@ namespace Smart_Orders_Project.ViewModels
                 var item = await CustomerRepo.GetItemAsync(itemId);
                 CustomerName = string.IsNullOrEmpty(item.AltName) ? item.Name : item.AltName;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Debug.WriteLine("Failed to Load Item");
+                await Shell.Current.DisplayAlert("Σφάλμα!", "LoadItemId \n" + ex.Message, "Οκ");
             }
         }
         private async void OnAddLineClicked(object obj)

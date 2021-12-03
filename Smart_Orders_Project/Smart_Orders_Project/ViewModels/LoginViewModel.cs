@@ -40,6 +40,7 @@ namespace Smart_Orders_Project.ViewModels
         {
             try
             {
+                IsBusy = true;
                 // Prefixing with `//` switches to a different navigation stack instead of pushing to the active one
                 var u = await UserRepo.GetUserFromDB(UserName, Password);
                 var user = await UserRepo.GetUser();
@@ -55,7 +56,11 @@ namespace Smart_Orders_Project.ViewModels
             catch (Exception Ex)
             {
                 Debug.WriteLine(Ex);
-                await Shell.Current.DisplayAlert("Προσοχή!", "Κάτι πήγε λάθος στην σύδεση", "Οκ");
+                await Shell.Current.DisplayAlert("Προσοχή!", "Κάτι πήγε λάθος στην σύδεση \n"+Ex.Message, "Οκ");
+            }
+            finally
+            {
+                IsBusy = false;
             }
 
         }

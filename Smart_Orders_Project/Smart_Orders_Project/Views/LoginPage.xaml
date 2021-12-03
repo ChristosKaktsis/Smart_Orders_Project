@@ -47,6 +47,11 @@
                         </StackLayout>
                     </Frame>
                 </StackLayout>
+                <StackLayout IsVisible="{Binding IsBusy}">
+                    <StackLayout VerticalOptions="CenterAndExpand" >
+                        <ActivityIndicator IsRunning="True"/>
+                    </StackLayout>
+                </StackLayout>
             </Grid>
         </StackLayout>
     </ContentPage.Content>

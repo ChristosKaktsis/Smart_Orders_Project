@@ -59,15 +59,7 @@ namespace Smart_Orders_Project.ViewModels
         {
             return SelectedPosition != null && SelectedStorage != null;
         }
-        //public string SearchPositionText
-        //{
-        //    get => _searchText;
-        //    set
-        //    {
-        //        SetProperty(ref _searchText, value);
-                
-        //    }
-        //}
+        
         public Position SelectedPosition
         {
             get => _selectedPosition;
@@ -132,6 +124,7 @@ namespace Smart_Orders_Project.ViewModels
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
+                await Shell.Current.DisplayAlert("Σφάλμα!", "ExecuteLoadRFPositionCommand \n" + ex.Message, "Οκ");
             }
             finally
             {
@@ -170,7 +163,9 @@ namespace Smart_Orders_Project.ViewModels
                 {
                     StorageList.Add(item);
                 }
-                SelectedStorage = StorageList.Single(x => x.Oid.ToString() == StorageID);
+                if(!string.IsNullOrWhiteSpace(StorageID))
+                    SelectedStorage = StorageList.Single(x => x.Oid.ToString() == StorageID);
+
                 //second list
                 var items2 = await RFCensusRepo.GetItemsAsync(true);
                 var user = await UserRepo.GetUser();
@@ -188,6 +183,7 @@ namespace Smart_Orders_Project.ViewModels
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
+                await Shell.Current.DisplayAlert("Σφάλμα!", "ExecuteLoadItemsCommand \n" + ex.Message, "Οκ");
             }
             finally
             {
