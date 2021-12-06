@@ -31,6 +31,8 @@ namespace Smart_Orders_Project.ViewModels
         private bool _isHEnabled;
         private bool _isAddEnabled = true;
         private Reciever _reciever;
+        private float _unit;
+        private string _thisisa;
 
         public ObservableCollection<LineOfOrder> LinesList { get; set; }
         public ObservableCollection<Reciever> RecieverList { get; set; }
@@ -154,24 +156,7 @@ namespace Smart_Orders_Project.ViewModels
                 {
                     foreach (var line in RfSale.Lines)
                     {
-                        if(line.Product.Width==0 || line.Product.Length == 0)
-                        {
-                            line.Sum = line.Product.Price * (double)line.Quantity;
-                        }
-                        else
-                        {
-                            var y = (line.Product.Width * line.Product.Length) ;
-                            if (y != 0) 
-                            { 
-                                line.Sum = (((double)line.Width * (double)line.Length * line.Product.Price) / y) * (double)line.Quantity;
-                            }
-                            else
-                            {
-                                line.Sum = 0;
-                            }
-                            
-                        }
-                       
+                        line.Sum = CheckSumInLoadItems(line);
                         LinesList.Add(line);
                         Reciever = RfSale.Reciever;
                     }
@@ -199,6 +184,51 @@ namespace Smart_Orders_Project.ViewModels
                 IsBusy = false;
             }
         }
+
+        private double CheckSumInLoadItems(LineOfOrder line)
+        {
+            if (line == null)
+                return 0;
+
+            float oldwidth = line.Product.Width == 0 ? 1 : line.Product.Width;
+            float oldlength = line.Product.Length == 0 ? 1 : line.Product.Length;
+            float oldheight = line.Product.Height == 0 ? 1 : line.Product.Height;
+            double sumin = 0;
+            switch (line.Product.Type)
+            {
+                case 1:
+                    oldwidth = 1;
+                    oldheight = 1;
+                    line.Width = 1;
+                    line.Height = 1;
+                    break;
+                case 2:
+                    oldheight = 1;
+                    line.Height = 1;
+                    break;
+            }
+            float oldunit = (oldwidth * oldlength) * oldheight;
+            float newunit = (float)((line.Width * line.Length) * line.Height);
+
+            if (line.Product.Length == 0)
+            {
+                sumin = (double)line.Quantity * line.Product.Price;
+            }
+            else
+            {
+                if (oldunit == 0)
+                {
+                    sumin = 0;
+                }
+                else
+                {
+                    var athr = (newunit * line.Product.Price) / oldunit;
+                    sumin = (double)line.Quantity * athr;
+                }
+            }
+            return sumin;
+        }
+
         public void OnAppearing()
         {
             IsBusy = true;
@@ -317,11 +347,13 @@ namespace Smart_Orders_Project.ViewModels
                             IsWEnabled = true;
                             IsLEnabled = true;
                             IsHEnabled = false;
+                            ThisIsA = "Τετρ.Μέτρα";
                             break;
                         case 3:
                             IsWEnabled = true;
                             IsLEnabled = true;
                             IsHEnabled = true;
+                            ThisIsA = "Κυβ.Μέτρα";
                             break;
                     }
                 }
@@ -358,6 +390,7 @@ namespace Smart_Orders_Project.ViewModels
             set
             {
                 SetProperty(ref _height, value);
+                CheckSum();
             }
         }
         public float Width
@@ -383,23 +416,54 @@ namespace Smart_Orders_Project.ViewModels
             if (SelectedLine == null)
                 return;
 
-            if (SelectedLine.Product.Width == 0 && SelectedLine.Product.Length == 0)
+            float oldwidth = SelectedLine.Product.Width == 0 ? 1 : SelectedLine.Product.Width;
+            float oldlength = SelectedLine.Product.Length == 0 ? 1 : SelectedLine.Product.Length;
+            float oldheight = SelectedLine.Product.Height == 0 ? 1 : SelectedLine.Product.Height;
+            switch (SelectedLine.Product.Type)
+            {
+                case 1:
+                    oldwidth = 1;
+                    oldheight = 1;
+                    break;
+                case 2: 
+                    oldheight = 1;
+                    break;
+            }
+            float oldunit = (oldwidth * oldlength) * oldheight;
+            float newunit = (Width * Length) * Height;
+
+            if (SelectedLine.Product.Length == 0)
             {
                 Sum = Quantity * SelectedLine.Product.Price;
             }
             else
             {
-                var y = (SelectedLine.Product.Width * SelectedLine.Product.Length);
-                if (y == 0)
+                Unit = newunit * Quantity;
+                if (oldunit == 0)
                 {
                     Sum = 0;
                 }
                 else
                 {
-                    var athr = ((Width * Length) * SelectedLine.Product.Price) / y;
+                    var athr = (newunit * SelectedLine.Product.Price) / oldunit;
                     Sum = Quantity * athr;
                 }
-
+            }
+        }
+        public string ThisIsA
+        {
+            get => _thisisa;
+            set
+            {
+                SetProperty(ref _thisisa, value);
+            }
+        }
+        public float Unit
+        {
+            get => _unit;
+            set
+            {
+                SetProperty(ref _unit, value);
             }
         }
         public bool IsWEnabled

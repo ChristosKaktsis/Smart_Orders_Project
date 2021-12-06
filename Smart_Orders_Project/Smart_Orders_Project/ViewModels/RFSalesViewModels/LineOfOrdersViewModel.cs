@@ -27,6 +27,7 @@ namespace Smart_Orders_Project.ViewModels
         private bool _isHEnabled;
         private bool _isWHLEnabled;
         private float _unit;
+        private string _thisisa;
 
         public ObservableCollection<Product> ProductList { get; }
         //public ObservableCollection<Product> SelectedProductList { get; set; }
@@ -130,11 +131,14 @@ namespace Smart_Orders_Project.ViewModels
                             IsWEnabled = true;
                             IsLEnabled = true;
                             IsHEnabled = false;
+                            Height = 1;
+                            ThisIsA = "Τετρ.Μέτρα";
                             break;
                         case 3:
                             IsWEnabled = true;
                             IsLEnabled = true;
                             IsHEnabled = true;
+                            ThisIsA = "Κυβ.Μέτρα";
                             break;
                     }
                 }
@@ -271,25 +275,41 @@ namespace Smart_Orders_Project.ViewModels
             if (SelectedProduct == null)
                 return;
 
-            if(SelectedProduct.Width == 0 && SelectedProduct.Length == 0)
+            float oldwidth = SelectedProduct.Width == 0 ? 1 : SelectedProduct.Width;
+            float oldlength = SelectedProduct.Length == 0 ? 1 : SelectedProduct.Length;
+            float oldheight = SelectedProduct.Height == 0 ? 1 : SelectedProduct.Height;
+
+            switch (SelectedProduct.Type)
+            {
+                case 1:
+                    oldwidth = 1;
+                    oldheight = 1;
+                    break;
+                case 2:
+                    oldheight = 1;
+                    break;
+            }
+            float oldunit = (oldwidth * oldlength) * oldheight;
+            float newunit = (Width * Length) * Height;
+
+            if (SelectedProduct.Length == 0)
             {
                 Sum = Quantity * SelectedProduct.Price;
             }
             else
             {
-                var y = (Width * Length);
-                Unit = y * Quantity;
-                if (y == 0)
+                Unit = newunit * Quantity;
+                if (oldunit == 0)
                 {
                     Sum = 0;
                 }
                 else
                 {
-                    var athr = ((Width * Length) * SelectedProduct.Price) / y;
+                    var athr = (newunit * SelectedProduct.Price) / oldunit;
                     Sum = Quantity * athr;
-                } 
-                
+                }
             }
+            
         }
         public double Sum
         {
@@ -305,6 +325,7 @@ namespace Smart_Orders_Project.ViewModels
             set
             {
                 SetProperty(ref _height, value);
+                CheckSum();
             }
         }
         public float Width
@@ -323,6 +344,14 @@ namespace Smart_Orders_Project.ViewModels
             {
                 SetProperty(ref _length, value);
                 CheckSum();
+            }
+        }
+        public string ThisIsA
+        {
+            get => _thisisa;
+            set
+            {
+                SetProperty(ref _thisisa, value);
             }
         }
         public float Unit
