@@ -11,11 +11,10 @@ namespace Smart_Orders_Project.Models
         public Guid Oid { get; set; }
         public string Name { get; set; }
         public string ProductCode { get; set; }
+        public string ProductCode2 { get; set; }
         public double Price { get; set; }
-        public int FPA { get; set; }
-        public int Discount { get; set; }
+        public int FPA { get; set; } 
         public string BarCode { get; set; }
-        public string BarCodeDesc { get; set; }
         public string Color { get; set; }
         public string Size { get; set; }
         public float Width { get; set; }

@@ -47,7 +47,7 @@
                                                 </StackLayout>
                                                 <StackLayout  Orientation="Horizontal" >
                                                     <Label Text="{Binding UnitOfMeasure ,StringFormat='{0}'}" FontSize="16"/>
-                                                    <Label Text="{Binding Discount ,StringFormat='Εκπτωση {0}%'}" FontSize="16" HorizontalOptions="CenterAndExpand"/>
+                                                    
                                                     <Label Text="{Binding Price,StringFormat='{0} €'}" HorizontalOptions="EndAndExpand" FontSize="16"/>
                                                 </StackLayout>
                                             </StackLayout>
@@ -74,7 +74,7 @@
                                                 </StackLayout>
                                                 <StackLayout  Orientation="Horizontal" >
                                                     <Label Text="{Binding UnitOfMeasure ,StringFormat='{0}'}" FontSize="16"/>
-                                                    <Label Text="{Binding Discount ,StringFormat='Εκπτωση {0}%'}" FontSize="16" HorizontalOptions="CenterAndExpand"/>
+                                                    
                                                     <Label Text="{Binding Price,StringFormat='{0} €'}" HorizontalOptions="EndAndExpand" FontSize="16"/>
                                                 </StackLayout>
                                             </StackLayout>

@@ -34,29 +34,7 @@
                     </StackLayout>
                 </Frame>
                 <StackLayout Margin="0,10,0,0" >
-                    <!--<Frame BackgroundColor="White"  Padding="10" Margin="0,15,0,0" CornerRadius="7" HasShadow="True">
-                        <StackLayout  Orientation="Horizontal" >
-                            <StackLayout HorizontalOptions="FillAndExpand">
-                                <Label Text="{Binding SelectedProduct.Name}" FontSize="20" FontAttributes="Bold"  HorizontalOptions="StartAndExpand"/>
-                                <StackLayout Orientation="Horizontal" >
-                                    <Label Text="{Binding SelectedProduct.BarCodeDesc}" FontSize="18" />
-                                </StackLayout>
-                                <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
-                                    <Label Text="{Binding SelectedProduct.ProductCode ,StringFormat='Κωδικός : {0}'}" FontSize="16"/>
-                                    <Label Text="{Binding SelectedProduct.BarCode ,StringFormat='BarCode : {0}'}" FontSize="16" HorizontalOptions="CenterAndExpand"/>
-                                </StackLayout>
-                                <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
-                                    <Label Text="{Binding SelectedProduct.Color ,StringFormat='Χρώμα :{0}'}" FontSize="16"/>
-                                    <Label Text="{Binding SelectedProduct.Size ,StringFormat='Μέγεθος :{0}'}" FontSize="16" HorizontalOptions="CenterAndExpand"/>
-                                </StackLayout>
-
-                                <StackLayout  Orientation="Horizontal" Margin="0,10,0,0">
-                                    <Label Text="{Binding SelectedProduct.UnitOfMeasure ,StringFormat='{0}'}" FontSize="16"/>
-                                    <Label Text="{Binding SelectedProduct.Price,StringFormat='{0} €'}" FontSize="16" HorizontalOptions="EndAndExpand"/>
-                                </StackLayout>
-                            </StackLayout>
-                        </StackLayout>
-                    </Frame>-->
+                    
                     <dxcv:DXCollectionView x:Name="OrdersList" SelectionMode="Single" ItemsSource="{Binding ProductList}" SelectedItem="{Binding SelectedProduct,Mode=TwoWay}">
                         <dxcv:DXCollectionView.ItemTemplate>
                             <DataTemplate>
@@ -72,11 +50,11 @@
                                               
                                                 <StackLayout  Orientation="Horizontal" >
                                                     <Label Text="{Binding ProductCode }" FontSize="16"/>
-                                                    <Label Text="{Binding BarCode }" FontSize="16"/>
+                                                    
                                                 </StackLayout>
                                                 <StackLayout  Orientation="Horizontal" >
                                                     <Label Text="{Binding UnitOfMeasure ,StringFormat='{0}'}" FontSize="16"/>
-                                                    <Label Text="{Binding Discount ,StringFormat='Εκπτωση {0}%'}" FontSize="16" HorizontalOptions="CenterAndExpand"/>
+                                                    
                                                     <Label Text="{Binding Price,StringFormat='{0} €'}" HorizontalOptions="EndAndExpand" FontSize="16"/>
                                                 </StackLayout>
                                             </StackLayout>
@@ -99,11 +77,10 @@
                                                 
                                                 <StackLayout  Orientation="Horizontal" >
                                                     <Label Text="{Binding ProductCode }" FontSize="16"/>
-                                                    <Label Text="{Binding BarCode }" FontSize="16"/>
                                                 </StackLayout>
                                                 <StackLayout  Orientation="Horizontal" >
                                                     <Label Text="{Binding UnitOfMeasure ,StringFormat='{0}'}" FontSize="16"/>
-                                                    <Label Text="{Binding Discount ,StringFormat='Εκπτωση {0}%'}" FontSize="16" HorizontalOptions="CenterAndExpand"/>
+                                                    
                                                     <Label Text="{Binding Price,StringFormat='{0} €'}" HorizontalOptions="EndAndExpand" FontSize="16"/>
                                                 </StackLayout>
                                             </StackLayout>

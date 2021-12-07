@@ -58,7 +58,7 @@
                                                 <StackLayout x:DataType="model:LineOfOrder" Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
                                                     <StackLayout WidthRequest="200">
                                                         <Label Text="{Binding Product.Name}" FontSize="16" FontAttributes="Bold"/>
-                                                        <Label Text="{Binding Product.BarCode}"/>
+                                                        <Label Text="{Binding Product.ProductCode}"/>
                                                     </StackLayout>
                                                     <StackLayout HorizontalOptions="EndAndExpand">
                                                         <Label Text="{Binding Sum , StringFormat='Τιμή:{0:0.##} €'}" FontSize="16"/>
@@ -84,7 +84,7 @@
                                         <StackLayout x:DataType="model:LineOfOrder" Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
                                             <StackLayout WidthRequest="200">
                                                 <Label Text="{Binding Product.Name}" FontSize="16" FontAttributes="Bold"/>
-                                                <Label Text="{Binding Product.BarCode}"/>
+                                                <Label Text="{Binding Product.ProductCode}"/>
                                             </StackLayout>
                                             <StackLayout HorizontalOptions="EndAndExpand">
                                                 <Label Text="{Binding Sum , StringFormat='Τιμή:{0:0.##} €'}" FontSize="16"/>

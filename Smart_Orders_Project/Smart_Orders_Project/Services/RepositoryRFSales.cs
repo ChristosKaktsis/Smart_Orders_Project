@@ -145,28 +145,44 @@ namespace Smart_Orders_Project.Services
         {
             return await Task.Run(() =>
             {
-                string queryString = @"SELECT  BarCode
-                                  , BarCodeΕίδους.Περιγραφή as BarCodeDesc
-                                  ,Είδος.Oid
-	                              ,Είδος.Περιγραφή
-	                              ,Είδος.ΤιμήΧονδρικής
-	                              ,Είδος.Κωδικός
-	                              ,Είδος.ΦΠΑ
-                                  ,Είδος.Εκπτωση
-	                              ,Χρώματα.Χρώματα
-	                              ,Μεγέθη.Μεγέθη
-                                  ,BarCodeΕίδους.Πλάτος
-                                  ,BarCodeΕίδους.Μήκος
-                                  ,BarCodeΕίδους.Υψος
-	                              ,ΜονάδεςΜέτρησης.ΜονάδαΜέτρησης
-                                  ,ΜονάδεςΜέτρησης.ΤύποςΔιάστασης
-                              FROM BarCodeΕίδους
-                              right join Είδος on BarCodeΕίδους.Είδος = Είδος.Oid
-                              left join Χρώματα on Χρώματα.Oid = BarCodeΕίδους.Χρώμα
-                              left join ΜονάδεςΜέτρησης on ΜονάδεςΜέτρησης.Oid = BarCodeΕίδους.ΜονάδαΜέτρησης
-                              left join Μεγέθη on Μεγέθη.Oid = BarCodeΕίδους.Μέγεθος
-                                 
-                              where Είδος.Oid = '" + id + "' and BarCode "+(string.IsNullOrEmpty(bar) ? "is null" : "= '"+bar+"'");
+                string queryString = $@"select * from (SELECT  Είδος.Oid     
+                                      ,Κωδικός
+                                      ,Περιγραφή
+	                                  ,BarCode = null
+                                      ,ΦΠΑ 
+                                      ,ΜονάδεςΜέτρησης.ΜονάδαΜέτρησης
+	                                  ,ΜονάδεςΜέτρησης.ΤύποςΔιάστασης
+                                      ,Πλάτος
+                                      ,Μήκος
+                                      ,Υψος
+                                      ,Κείμενο2 as ProductCode2
+	                                  ,ΤιμήΧονδρικής
+	                                  ,Χρώματα = null 
+	                                  ,Μεγέθη = null
+                                  FROM Είδος left join ΜονάδεςΜέτρησης on ΜονάδεςΜέτρησης.Oid = Είδος.ΜονάδαΜέτρησης
+                                  where  Είδος.GCRecord is null
+
+                                  UNION
+
+                                  SELECT Είδος as Oid
+	                                  ,BarCode as Κωδικός
+                                      ,Περιγραφή
+	                                  ,BarCode
+	                                  ,ΦΠΑ
+	                                  ,ΜονάδεςΜέτρησης.ΜονάδαΜέτρησης
+	                                  ,ΜονάδεςΜέτρησης.ΤύποςΔιάστασης
+	                                  ,Πλάτος
+                                      ,Μήκος
+                                      ,Υψος
+	                                  ,Κείμενο2 as ProductCode2
+                                      ,ΤιμήΧονδρικής
+                                      ,Χρώματα.Χρώματα
+                                      ,Μεγέθη.Μεγέθη
+                                  FROM BarCodeΕίδους
+                                  left join Χρώματα on Χρώματα.Oid = BarCodeΕίδους.Χρώμα
+                                  left join ΜονάδεςΜέτρησης on ΜονάδεςΜέτρησης.Oid = BarCodeΕίδους.ΜονάδαΜέτρησης
+                                  left join Μεγέθη on Μεγέθη.Oid = BarCodeΕίδους.Μέγεθος
+                                   where BarCodeΕίδους.GCRecord is null) as U where U.Oid = '{id}' and U.BarCode {(string.IsNullOrEmpty(bar)?"is null":$"='{bar}'")}";
 
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
@@ -181,12 +197,10 @@ namespace Smart_Orders_Project.Services
                     {
                         Oid = Guid.Parse(reader["Oid"].ToString()),
                         ProductCode = reader["Κωδικός"] != null ? reader["Κωδικός"].ToString() : string.Empty,
+                        BarCode = reader["BarCode"] != DBNull.Value ? reader["BarCode"].ToString() : string.Empty,
                         Name = reader["Περιγραφή"].ToString(),
                         FPA = int.Parse(reader["ΦΠΑ"] != null ? reader["ΦΠΑ"].ToString() : "0"),
                         Price = double.Parse(reader["ΤιμήΧονδρικής"].ToString()),
-                        Discount = int.Parse(reader["Εκπτωση"] != DBNull.Value ? reader["Εκπτωση"].ToString() : "0"),
-                        BarCode = reader["BarCode"].ToString(),
-                        BarCodeDesc = reader["BarCodeDesc"].ToString(),
                         Color = reader["Χρώματα"] != null ? reader["Χρώματα"].ToString() : string.Empty,
                         Size = reader["Μεγέθη"] != null ? reader["Μεγέθη"].ToString() : string.Empty,
                         Width = reader["Πλάτος"] != DBNull.Value ? float.Parse(reader["Πλάτος"].ToString()) : 0,
