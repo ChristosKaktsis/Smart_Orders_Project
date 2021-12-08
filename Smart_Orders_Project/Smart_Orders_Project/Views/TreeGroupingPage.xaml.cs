@@ -24,6 +24,7 @@ namespace Smart_Orders_Project.Views
         {
             base.OnAppearing();
             await _view.LoadGroupingItems();
+            
         }
     }
 }

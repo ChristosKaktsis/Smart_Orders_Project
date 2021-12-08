@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,10 +26,12 @@ namespace Smart_Orders_Project.Services
             return await Task.Run( () =>
             {
                 GroupingList.Clear();
-                string queryString = $@"select ΔενδρικήΟμαδοποιησηΕιδών.Oid, HCategory.Name, HCategory.Parent, ΔενδρικήΟμαδοποιησηΕιδών.ID
-                                        from ΔενδρικήΟμαδοποιησηΕιδών
-                                        inner join HCategory on ΔενδρικήΟμαδοποιησηΕιδών.Oid = HCategory.Oid
-                                        where HCategory.GCRecord is null";
+                string queryString = $@"SELECT a.Oid
+                                      ,a.Parent
+                                      ,a.Name as NameChild
+	                                  ,ΔενδρικήΟμαδοποιησηΕιδών.ID   
+  FROM HCategory a   inner join ΔενδρικήΟμαδοποιησηΕιδών on ΔενδρικήΟμαδοποιησηΕιδών.Oid = a.Oid
+";
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();
@@ -37,18 +40,24 @@ namespace Smart_Orders_Project.Services
 
                     while (reader.Read())
                     {
-
+                       
                         GroupingList.Add(new Grouping
                         {
                             Oid = Guid.Parse(reader["Oid"].ToString()),
-                            Name = reader["Name"] == DBNull.Value ? "" : reader["Name"].ToString(),
+                            Name = reader["NameChild"] == DBNull.Value ? "" : reader["NameChild"].ToString(),
                             ID = reader["ID"] == DBNull.Value ? "" : reader["ID"].ToString(),
+                            ParentOid = reader["Parent"] == DBNull.Value ? string.Empty : reader["Parent"].ToString(),
                         });
                     }
-                    
+
                     return GroupingList;
                 }
             });
+        }
+
+        public async Task<List<Grouping>> GetItemChildrenAsync(string id)
+        {
+            return await Task.FromResult(GroupingList.Where(x => x.ParentOid == id).ToList());
         }
     }
 }

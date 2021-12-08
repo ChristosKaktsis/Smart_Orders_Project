@@ -9,6 +9,7 @@ namespace Smart_Orders_Project.Models.SparePartModels
         public Guid Oid { get; set; }
         public string Name { get; set; }
         public string ID { get; set; }
+        public string ParentOid { get; set; }
         public Grouping Parent { get; set; }
     }
 }

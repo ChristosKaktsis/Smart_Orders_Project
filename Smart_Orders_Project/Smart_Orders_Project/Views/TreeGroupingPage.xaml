@@ -1,12 +1,55 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:dxcv="http://schemas.devexpress.com/xamarin/2014/forms/collectionview" 
+             xmlns:model="clr-namespace:Smart_Orders_Project.Models.SparePartModels" 
+             xmlns:vm="clr-namespace:Smart_Orders_Project.ViewModels"
              x:Class="Smart_Orders_Project.Views.TreeGroupingPage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+    <RefreshView x:DataType="vm:TreeGroupingViewModel" IsRefreshing="{Binding IsBusy, Mode=TwoWay}" >
+        <Grid>
+            <StackLayout>
+                <StackLayout>
+                    <Frame BackgroundColor="{StaticResource Complementary}" BorderColor="LightGray" Padding="10" Margin="0,0,0,0" CornerRadius="0" HasShadow="True">
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
+                            <StackLayout WidthRequest="200">
+                                <Label Text="{Binding SelectedGroup.Name}" FontSize="16" FontAttributes="Bold"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+                <dxcv:DXCollectionView x:Name="OrdersList" SelectionMode="Single" ItemsSource="{Binding GroupinglistFirstLayer}" SelectedItem="{Binding SelectedGroup,Mode=OneWayToSource}">
+                    <dxcv:DXCollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <dxcv:SwipeContainer>
+                                <dxcv:SwipeContainer.ItemView>
+                                    <Grid Padding="0">
+                                        <Frame BackgroundColor="white" BorderColor="LightGray" Padding="10" Margin="0,0,0,0" CornerRadius="0" HasShadow="True">
+                                            <StackLayout x:DataType="model:Grouping" Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
+                                                <StackLayout WidthRequest="200">
+                                                    <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold"/>
+                                                </StackLayout>
+                                            </StackLayout>
+                                        </Frame>
+                                    </Grid>
+                                </dxcv:SwipeContainer.ItemView>
+                            </dxcv:SwipeContainer>
+                        </DataTemplate>
+                    </dxcv:DXCollectionView.ItemTemplate>
+                    <dxcv:DXCollectionView.SelectedItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="0">
+                                <Frame BackgroundColor="{StaticResource Complementary}" BorderColor="LightGray" Padding="10" Margin="0,0,0,0" CornerRadius="0" HasShadow="True">
+                                    <StackLayout x:DataType="model:Grouping" Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
+                                        <StackLayout WidthRequest="200">
+                                            <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold"/>
+                                        </StackLayout>
+                                    </StackLayout>
+                                </Frame>
+                            </Grid>
+                        </DataTemplate>
+                    </dxcv:DXCollectionView.SelectedItemTemplate>
+                </dxcv:DXCollectionView>
+            </StackLayout>
+        </Grid>
+    </RefreshView>
 </ContentPage>
