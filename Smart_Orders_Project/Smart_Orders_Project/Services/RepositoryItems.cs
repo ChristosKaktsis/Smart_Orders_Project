@@ -89,7 +89,7 @@ namespace Smart_Orders_Project.Services
 	                                  ,Χρώματα = null 
 	                                  ,Μεγέθη = null
                                   FROM Είδος left join ΜονάδεςΜέτρησης on ΜονάδεςΜέτρησης.Oid = Είδος.ΜονάδαΜέτρησης
-                                  where Είδος.Κωδικός = '{id}' or Είδος.Κείμενο2 ='{id}'  and ΥποχρεωτικήΔιαχείρησηSN ='false' and Είδος.GCRecord is null
+                                  where ((Είδος.Κωδικός = '{id}' or Είδος.Κείμενο2 ='{id}')  and (ΥποχρεωτικήΔιαχείρησηSN ='false' or ΥποχρεωτικήΔιαχείρησηSN is null)) and Είδος.GCRecord is null
 
                                   UNION
 
@@ -111,7 +111,7 @@ namespace Smart_Orders_Project.Services
                                   left join Χρώματα on Χρώματα.Oid = BarCodeΕίδους.Χρώμα
                                   left join ΜονάδεςΜέτρησης on ΜονάδεςΜέτρησης.Oid = BarCodeΕίδους.ΜονάδαΜέτρησης
                                   left join Μεγέθη on Μεγέθη.Oid = BarCodeΕίδους.Μέγεθος
-                                   where  BarCode = '{id}' or BarCodeΕίδους.Κείμενο2 ='{id}' and BarCodeΕίδους.GCRecord is null";
+                                   where  (BarCode = '{id}' or BarCodeΕίδους.Κείμενο2 ='{id}') and BarCodeΕίδους.GCRecord is null";
 
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
@@ -180,7 +180,7 @@ namespace Smart_Orders_Project.Services
 	                                  ,Χρώματα = null
 	                                  ,Μεγέθη = null
                                   FROM Είδος left join ΜονάδεςΜέτρησης on ΜονάδεςΜέτρησης.Oid = Είδος.ΜονάδαΜέτρησης
-                                  where Είδος.Κωδικός LIKE '%{name}%' OR  Είδος.Περιγραφή LIKE '%{name}%' or Είδος.Κείμενο2 LIKE '%{name}%' and ΥποχρεωτικήΔιαχείρησηSN ='false' and Είδος.GCRecord is null
+                                  where ((Είδος.Κωδικός LIKE '%{name}%' OR  Είδος.Περιγραφή LIKE '%{name}%' or Είδος.Κείμενο2 LIKE '%{name}%') and (ΥποχρεωτικήΔιαχείρησηSN ='false' or ΥποχρεωτικήΔιαχείρησηSN is null)) and Είδος.GCRecord is null
 
                                   UNION
 
@@ -202,7 +202,7 @@ namespace Smart_Orders_Project.Services
                                   left join Χρώματα on Χρώματα.Oid = BarCodeΕίδους.Χρώμα
                                   left join ΜονάδεςΜέτρησης on ΜονάδεςΜέτρησης.Oid = BarCodeΕίδους.ΜονάδαΜέτρησης
                                   left join Μεγέθη on Μεγέθη.Oid = BarCodeΕίδους.Μέγεθος
-                                   where  BarCode LIKE '%{name}%' OR  Περιγραφή LIKE '%{name}%'  or BarCodeΕίδους.Κείμενο2 LIKE '%{name}%' and BarCodeΕίδους.GCRecord is null";
+                                   where  (BarCode LIKE '%{name}%' OR  Περιγραφή LIKE '%{name}%'  or BarCodeΕίδους.Κείμενο2 LIKE '%{name}%') and BarCodeΕίδους.GCRecord is null";
 
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
