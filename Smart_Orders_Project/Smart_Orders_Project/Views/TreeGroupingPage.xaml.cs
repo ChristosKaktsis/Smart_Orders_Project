@@ -13,18 +13,24 @@ namespace Smart_Orders_Project.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TreeGroupingPage : ContentPage
     {
-        private TreeGroupingViewModel _view;
+        private TreeGroupingViewModel _viewModel;
 
         public TreeGroupingPage()
         {
             InitializeComponent();
-            BindingContext = _view = new TreeGroupingViewModel();
+            BindingContext = _viewModel = new TreeGroupingViewModel();
         }
-        protected override async void OnAppearing()
+        protected override void OnAppearing()
         {
             base.OnAppearing();
-            await _view.LoadGroupingItems();
+            _viewModel.OnAppearing();
+        }
+
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            var parent = ((Button)sender);
             
+            _viewModel.DeleteSelectedCommand.Execute(null);
         }
     }
 }

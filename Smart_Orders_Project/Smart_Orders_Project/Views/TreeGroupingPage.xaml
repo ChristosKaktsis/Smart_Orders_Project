@@ -5,19 +5,32 @@
              xmlns:model="clr-namespace:Smart_Orders_Project.Models.SparePartModels" 
              xmlns:vm="clr-namespace:Smart_Orders_Project.ViewModels"
              x:Class="Smart_Orders_Project.Views.TreeGroupingPage">
-    <RefreshView x:DataType="vm:TreeGroupingViewModel" IsRefreshing="{Binding IsBusy, Mode=TwoWay}" >
+    <RefreshView x:DataType="vm:TreeGroupingViewModel" x:Name="page" IsRefreshing="{Binding IsBusy, Mode=TwoWay}" >
         <Grid>
             <StackLayout>
-                <StackLayout>
-                    <Frame BackgroundColor="{StaticResource Complementary}" BorderColor="LightGray" Padding="10" Margin="0,0,0,0" CornerRadius="0" HasShadow="True">
-                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
-                            <StackLayout WidthRequest="200">
-                                <Label Text="{Binding SelectedGroup.Name}" FontSize="16" FontAttributes="Bold"/>
-                            </StackLayout>
-                        </StackLayout>
-                    </Frame>
+                <StackLayout x:Name="SelectedGroupsStack" HeightRequest="{Binding Height}">
+                    <CollectionView ItemsSource="{Binding SelectedGrouping}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Frame  BackgroundColor="{StaticResource Complementary}" BorderColor="LightGray" Padding="0" Margin="0,0,0,0" HeightRequest="60" CornerRadius="0" HasShadow="True">
+                                        <Grid x:DataType="model:Grouping" >
+                                            <StackLayout  Margin="10">
+                                                <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold" />
+                                            </StackLayout>
+                                            <Button Text="X" Margin="7"  BackgroundColor="{StaticResource Complementary}"
+                                                    
+                                                    Command="{Binding BindingContext.DeleteSelectedCommand, Source={x:Reference page}}"
+                                                    CommandParameter="{Binding Oid}"
+                                                    HorizontalOptions="End" CornerRadius="10"/>
+                                        </Grid>
+                                    </Frame>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
                 </StackLayout>
-                <dxcv:DXCollectionView x:Name="OrdersList" SelectionMode="Single" ItemsSource="{Binding GroupinglistFirstLayer}" SelectedItem="{Binding SelectedGroup,Mode=OneWayToSource}">
+                <dxcv:DXCollectionView x:Name="OrdersList" SelectionMode="Single" ItemsSource="{Binding GroupinglistFirstLayer}" SelectedItem="{Binding SelectedGroup,Mode=TwoWay}" >
                     <dxcv:DXCollectionView.ItemTemplate>
                         <DataTemplate>
                             <dxcv:SwipeContainer>
@@ -26,7 +39,8 @@
                                         <Frame BackgroundColor="white" BorderColor="LightGray" Padding="10" Margin="0,0,0,0" CornerRadius="0" HasShadow="True">
                                             <StackLayout x:DataType="model:Grouping" Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
                                                 <StackLayout WidthRequest="200">
-                                                    <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold"/>
+                                                    <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold">
+                                                    </Label>
                                                 </StackLayout>
                                             </StackLayout>
                                         </Frame>
