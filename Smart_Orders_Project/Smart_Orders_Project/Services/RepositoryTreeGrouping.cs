@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Smart_Orders_Project.Services
 {
-    class RepositoryTreeGrouping 
+    public class RepositoryTreeGrouping :RepositoryService,IDataGet<Grouping>
     {
         List<Grouping> GroupingList;
 
@@ -16,12 +16,7 @@ namespace Smart_Orders_Project.Services
         {
             GroupingList = new List<Grouping>();
         }
-        public string ConnectionString
-        {
-            get =>  @"User ID=sa;Password=1;Pooling=false;Data Source=192.168.3.99\SQLEXPRESS;Initial Catalog=SmartClearAntallaktiko";
-           
-        }
-        public async Task<List<Grouping>> GetItemsWithNameAsync(string name)
+        public async Task<List<Grouping>> GetItemsWithNameAsync()
         {
             return await Task.Run( () =>
             {
@@ -58,6 +53,18 @@ namespace Smart_Orders_Project.Services
         public async Task<List<Grouping>> GetItemChildrenAsync(string id)
         {
             return await Task.FromResult(GroupingList.Where(x => x.ParentOid == id).ToList());
+        }
+        public async Task<Grouping> GetItemAsync(string id)
+        {
+            return await Task.FromResult(GroupingList.FirstOrDefault(s => s.Oid.ToString() == id));
+        }
+
+        public async Task<List<Grouping>> GetItemsAsync(bool forceRefresh = false)
+        {
+            if (!GroupingList.Any())
+                await GetItemsWithNameAsync();
+
+            return await Task.FromResult(GroupingList);
         }
     }
 }

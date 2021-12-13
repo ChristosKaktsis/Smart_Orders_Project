@@ -21,7 +21,8 @@ namespace Smart_Orders_Project
             Routing.RegisterRoute(nameof(RFCensusProductSelectionPage), typeof(RFCensusProductSelectionPage));
             Routing.RegisterRoute(nameof(TestEmptyPage), typeof(TestEmptyPage));
             Routing.RegisterRoute(nameof(NewRecieverPage), typeof(NewRecieverPage));
-            
+            Routing.RegisterRoute(nameof(TreeGroupingPage), typeof(TreeGroupingPage));
+            Routing.RegisterRoute(nameof(NewSparePartPage), typeof(NewSparePartPage));
         }
 
         private async void OnMenuItemClicked(object sender, EventArgs e)

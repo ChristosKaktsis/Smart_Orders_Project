@@ -4,11 +4,10 @@ using System.Text;
 
 namespace Smart_Orders_Project.Models.SparePartModels
 {
-    public class Model
+   public  class Brand
     {
         public Guid Oid { get; set; }
-        public string ModelCode { get; set; }
+        public string BrandCode { get; set; }
         public string Description { get; set; }
-        public string Brand { get; set; }
     }
 }

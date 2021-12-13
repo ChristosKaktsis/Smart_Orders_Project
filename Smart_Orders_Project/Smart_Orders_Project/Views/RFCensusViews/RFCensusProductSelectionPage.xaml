@@ -5,7 +5,8 @@
              xmlns:vm="clr-namespace:Smart_Orders_Project.ViewModels" 
              xmlns:dxcv="http://schemas.devexpress.com/xamarin/2014/forms/collectionview" 
              xmlns:model="clr-namespace:Smart_Orders_Project.Models"
-             x:Class="Smart_Orders_Project.Views.RFCensusProductSelectionPage">
+             x:Class="Smart_Orders_Project.Views.RFCensusProductSelectionPage"
+             Title="Επιλογή Είδους">
     <RefreshView x:DataType="vm:RFCensusProductSelectionViewModel" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
         <Grid>
             <StackLayout Padding="0" Margin="0">

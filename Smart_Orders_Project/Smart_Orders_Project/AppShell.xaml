@@ -81,11 +81,8 @@
     <Shell.FlyoutHeader>
         <local:FlyoutHeader />
     </Shell.FlyoutHeader>
-    <!--<FlyoutItem Title="Ανταλλακτικό" Icon="icon_feed.png">
+    <FlyoutItem Title="Ανταλλακτικό" Icon="icon_feed.png">
         <ShellContent Route="SparePartPage" ContentTemplate="{DataTemplate local:SparePartPage}" />
-    </FlyoutItem>-->
-    <FlyoutItem Title="RFTreeGrouping" Icon="icon_feed.png">
-        <ShellContent Route="TreeGroupingPage" ContentTemplate="{DataTemplate local:TreeGroupingPage}" />
     </FlyoutItem>
     <TabBar>
         <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate local:LoginPage}" />

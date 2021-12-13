@@ -1,5 +1,6 @@
 ﻿using Smart_Orders_Project.Models.SparePartModels;
 using Smart_Orders_Project.Services;
+using Smart_Orders_Project.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,11 +15,12 @@ namespace Smart_Orders_Project.ViewModels
 {
     class TreeGroupingViewModel : BaseViewModel
     {
-        RepositoryTreeGrouping repotree;
+       
         List<Grouping> Groupinglist;
         public ObservableCollection<Grouping> SelectedGrouping { get; set; }
         public ObservableCollection<Grouping> GroupinglistFirstLayer { get; set; }
         public Command LoadItemsCommand { get; }
+        public Command GoToDetailSparePartCommand { get; }
         public Command<Guid> DeleteSelectedCommand { get; }
         private string _time;
         private Grouping _selectedGroup;
@@ -28,12 +30,12 @@ namespace Smart_Orders_Project.ViewModels
 
         public TreeGroupingViewModel()
         {
-            repotree = new RepositoryTreeGrouping();
             Groupinglist = new List<Grouping>();
             GroupinglistFirstLayer = new ObservableCollection<Grouping>();
             SelectedGrouping = new ObservableCollection<Grouping>();
             LoadItemsCommand = new Command(async () => await LoadGroupingItems());
             DeleteSelectedCommand = new Command<Guid>(OnDeleteSelectedClicked);
+            GoToDetailSparePartCommand = new Command(OnGoToDetaiSparePart);
         }
 
         private void OnDeleteSelectedClicked(Guid id)
@@ -80,7 +82,7 @@ namespace Smart_Orders_Project.ViewModels
                 Groupinglist.Clear();
                 SelectedGrouping.Clear();
                 GroupinglistFirstLayer.Clear();
-               var list = await repotree.GetItemsWithNameAsync("");
+               var list = await GroupingRepo.GetItemsAsync();
                 foreach(var item in list)
                 {
                     Groupinglist.Add(item);
@@ -124,7 +126,7 @@ namespace Smart_Orders_Project.ViewModels
                     SetChildrenList(value.Oid.ToString());
                     SelectedGrouping.Add(value);
                     SetHeight();
-                    SelectedGroup = null;
+                   // SelectedGroup = null;
                 }               
             } 
         }
@@ -146,7 +148,7 @@ namespace Smart_Orders_Project.ViewModels
                     return;
                 IsBusy = true;
                 GroupinglistFirstLayer.Clear();
-                var list = await repotree.GetItemChildrenAsync(id);
+                var list = await GroupingRepo.GetItemChildrenAsync(id);
                 foreach (var item in list)
                     GroupinglistFirstLayer.Add(item);
             }
@@ -164,6 +166,10 @@ namespace Smart_Orders_Project.ViewModels
             IsBusy = true;
             LoadItemsCommand.Execute(null);
            
+        }
+        private async void OnGoToDetaiSparePart()
+        {
+            await Shell.Current.GoToAsync($"{nameof(NewSparePartPage)}?{nameof(NewSparePartViewModel.GroupId)}={SelectedGroup.Oid}");
         }
     }
 }

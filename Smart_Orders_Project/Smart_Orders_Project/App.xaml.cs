@@ -23,7 +23,9 @@ namespace Smart_Orders_Project
             DependencyService.Register<RepositoryRFCensus>();
             DependencyService.Register<RepositoryUser>();
             DependencyService.Register<RepositoryRecievers>();
-
+            DependencyService.Register<RepositoryBrand>();
+            DependencyService.Register<RepositoryManufacturer>();
+            DependencyService.Register<RepositoryTreeGrouping>();
             MainPage = new AppShell();
         }
 

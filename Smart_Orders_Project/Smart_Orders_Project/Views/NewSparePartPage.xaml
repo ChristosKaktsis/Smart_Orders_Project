@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:editors="http://schemas.devexpress.com/xamarin/2014/forms/editors" 
+             xmlns:local="clr-namespace:Smart_Orders_Project.ViewModels"
+             x:Class="Smart_Orders_Project.Views.NewSparePartPage"
+             Title="Ανταλλακτικό">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="editors:TextEdit">
+                <Setter Property="FocusedBorderColor" Value="{StaticResource Secondary}"/>
+                <Setter Property="FocusedLabelColor" Value="{StaticResource SecondaryLight}"/>
+                <Setter Property="LabelFontSize" Value="15"/>
+            </Style>
+            <Style TargetType="editors:ComboBoxEdit">
+                <Setter Property="FocusedBorderColor" Value="{StaticResource Secondary}"/>
+                <Setter Property="FocusedLabelColor" Value="{StaticResource SecondaryLight}"/>
+                <Setter Property="LabelFontSize" Value="15"/>
+            </Style>
+            <Style TargetType="editors:NumericEdit">
+                <Setter Property="FocusedBorderColor" Value="{StaticResource Secondary}"/>
+                <Setter Property="FocusedLabelColor" Value="{StaticResource SecondaryLight}"/>
+                <Setter Property="LabelFontSize" Value="15"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Αποθήκευση" Command="{Binding SaveSparePartCommand}"/>
+    </ContentPage.ToolbarItems>
+    <RefreshView x:DataType="local:NewSparePartViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <ScrollView>
+            <Grid>
+                <StackLayout>
+                    <Frame>
+                        <StackLayout>
+                            <editors:TextEdit LabelText="Κωδικός" Text="{Binding Code}"/>
+                            <editors:TextEdit LabelText="Περιγραφή" Text="{Binding Description}"/>
+                            <editors:ComboBoxEdit LabelText="Μάρκα" 
+                                                  ItemsSource="{Binding BrandList}"                                                  
+                                                  SelectedItem="{Binding SelectedBrand}"
+                                                  DisplayMember="Description"
+                                                  IsFilterEnabled="True"
+                                                  FilterMode="Contains"/>
+                            <editors:ComboBoxEdit LabelText="Μοντέλο" 
+                                                  ItemsSource="{Binding ModelList}"
+                                                  DisplayMember="Description"
+                                                  IsFilterEnabled="True"
+                                                  FilterMode="Contains"/>
+                            <StackLayout Orientation="Horizontal">
+                                <StackLayout HorizontalOptions="FillAndExpand" >
+                                    <editors:NumericEdit LabelText="Έτος Από" Value="{Binding FromDate}" />
+                                </StackLayout>
+                                <StackLayout HorizontalOptions="FillAndExpand">
+                                    <editors:NumericEdit LabelText="Έτος Έως" Value="{Binding ToDate}" />
+                                </StackLayout>
+                            </StackLayout>
+                            <editors:TextEdit LabelText="Κωδικός Κατασκευαστή" Text="{Binding ManufacturerCode}"/>
+                            <editors:TextEdit LabelText="Κωδικός After Market" Text="{Binding AfterMarketCode}"/>
+                            <editors:ComboBoxEdit LabelText="Κατασκευαστής Είδους, Ανταλλακτικού"
+                                                  ItemsSource="{Binding ManufacturerList}"
+                                                  DisplayMember="Description" 
+                                                  SelectedItem="{Binding SelectedManufacturer}"/>
+                            <editors:ComboBoxEdit LabelText="Κατάσταση" SelectedItem="{Binding Condition}">
+                                <editors:ComboBoxEdit.ItemsSource>
+                                    <x:Array Type="{x:Type x:String}">
+                                        <x:String>Καινούριο</x:String>
+                                        <x:String>Μεταχειρισμένο</x:String>
+                                        <x:String>Ανακατασκευασμένο</x:String>
+                                        <x:String>Imitation</x:String>
+                                    </x:Array>
+                                </editors:ComboBoxEdit.ItemsSource>
+                            </editors:ComboBoxEdit>
+                        </StackLayout>
+                    </Frame>
+
+                </StackLayout>
+            </Grid>
+        </ScrollView>
+
+
+    </RefreshView>
+</ContentPage>

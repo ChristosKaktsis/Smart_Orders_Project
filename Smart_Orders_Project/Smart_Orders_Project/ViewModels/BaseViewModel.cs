@@ -1,4 +1,5 @@
 ﻿using Smart_Orders_Project.Models;
+using Smart_Orders_Project.Models.SparePartModels;
 using Smart_Orders_Project.Services;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,12 @@ namespace Smart_Orders_Project.ViewModels
         public IDataStore<RFCensus> RFCensusRepo => DependencyService.Get<IDataStore<RFCensus>>();
         public IUser<User> UserRepo => DependencyService.Get<IUser<User>>();
         public IDataStore<Reciever> RecieverRepo => DependencyService.Get<IDataStore<Reciever>>();
+        public IDataStore<Brand> BrandRepo => DependencyService.Get<IDataStore<Brand>>();
+        public IDataStore<Manufacturer> ManufacturerRepo => DependencyService.Get<IDataStore<Manufacturer>>();
+        public IDataGet<Grouping> GroupingRepo => DependencyService.Get<IDataGet<Grouping>>();
+        //
+        public RepositoryModel ModelRepo = new RepositoryModel();
+        
 
         bool isBusy = false;
         public bool IsBusy

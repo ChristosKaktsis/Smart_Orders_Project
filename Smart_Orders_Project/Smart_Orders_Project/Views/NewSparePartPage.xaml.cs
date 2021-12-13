@@ -11,20 +11,18 @@ using Xamarin.Forms.Xaml;
 namespace Smart_Orders_Project.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class SparePartPage : ContentPage
+    public partial class NewSparePartPage : ContentPage
     {
-        private SparePartViewModel _viewModel;
-
-        public SparePartPage()
+        private NewSparePartViewModel _viewModel;
+        public NewSparePartPage()
         {
             InitializeComponent();
-            BindingContext = _viewModel = new SparePartViewModel();
-            
+            BindingContext = _viewModel = new NewSparePartViewModel();
         }
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            
+            _viewModel.OnAppearing();
         }
     }
 }
