@@ -9,7 +9,7 @@ namespace Smart_Orders_Project.Models.SparePartModels
         public Guid Oid { get; set; }
         public string SparePartCode { get; set; }
         public string Description { get; set; }
-        public string Grouping { get; set; }
+        public Grouping Grouping { get; set; }
         public Brand Brand { get; set; }
         public Model Model { get; set; }
         public int YearFrom { get; set; }

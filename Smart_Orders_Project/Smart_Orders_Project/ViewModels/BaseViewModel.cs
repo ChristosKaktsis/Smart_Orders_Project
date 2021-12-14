@@ -27,7 +27,7 @@ namespace Smart_Orders_Project.ViewModels
         public IDataGet<Grouping> GroupingRepo => DependencyService.Get<IDataGet<Grouping>>();
         //
         public RepositoryModel ModelRepo = new RepositoryModel();
-        
+        public RepositorySparePart SparePartRepo = new RepositorySparePart();
 
         bool isBusy = false;
         public bool IsBusy

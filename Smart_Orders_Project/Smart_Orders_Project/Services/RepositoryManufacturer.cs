@@ -16,9 +16,27 @@ namespace Smart_Orders_Project.Services
             ManufacturerList = new List<Manufacturer>();
         }
 
-        public Task<bool> AddItemAsync(Manufacturer item)
+        public async Task<bool> AddItemAsync(Manufacturer item)
         {
-            throw new NotImplementedException();
+            ManufacturerList.Add(item);
+            var s = await AddToDB(item);
+            return await Task.FromResult(s);
+        }
+
+        private async Task<bool> AddToDB(Manufacturer item)
+        {
+            int ok = 0;
+            string queryString = $@"INSERT INTO [Κατασκευαστής] (Oid, Κωδικός, Περιγραφή)
+                                    VALUES((Convert(uniqueidentifier, N'{item.Oid}')), 
+                                           '{item.ManufacturerCode}','{item.Description}')";
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(queryString, connection);
+                ok = command.ExecuteNonQuery();
+            }
+            return await Task.FromResult(ok!=0);
         }
 
         public Task<bool> DeleteItemAsync(string id)

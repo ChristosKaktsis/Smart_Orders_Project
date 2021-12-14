@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:local="clr-namespace:Smart_Orders_Project.ViewModels"
+             xmlns:editors="http://schemas.devexpress.com/xamarin/2014/forms/editors"
+             x:Class="Smart_Orders_Project.Views.NewManufacturerPage"
+             Title="Νέος Κατασκευαστής">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="editors:TextEdit">
+                <Setter Property="FocusedBorderColor" Value="{StaticResource Secondary}"/>
+                <Setter Property="FocusedLabelColor" Value="{StaticResource SecondaryLight}"/>
+                <Setter Property="BackgroundColor" Value="White"/>
+                <Setter Property="LabelFontSize" Value="15"/>
+                <Setter Property="BorderColor" Value="black"/>
+            </Style>
+            <Style TargetType="editors:ComboBoxEdit">
+                <Setter Property="FocusedBorderColor" Value="{StaticResource Secondary}"/>
+                <Setter Property="FocusedLabelColor" Value="{StaticResource SecondaryLight}"/>
+                <Setter Property="LabelFontSize" Value="15"/>
+                <Setter Property="BorderColor" Value="black"/>
+                <Setter Property="DropDownBackgroundColor" Value="#f5f5f5"/>
+            </Style>
+            <Style TargetType="editors:NumericEdit">
+                <Setter Property="FocusedBorderColor" Value="{StaticResource Secondary}"/>
+                <Setter Property="FocusedLabelColor" Value="{StaticResource SecondaryLight}"/>
+                <Setter Property="LabelFontSize" Value="15"/>
+                <Setter Property="BorderColor" Value="black"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid >
+            <StackLayout>
+                <Frame Margin="10" Padding="0" HasShadow="False">
+                    <StackLayout Spacing="10">
+                        <Frame BackgroundColor="{StaticResource Primary}" Padding="0" HasShadow="False">
+                            <Label Text="Στοιχεία Κατασκευαστή" TextColor="White" FontSize="18" Margin="10"/>
+                        </Frame>
+                        <editors:TextEdit LabelText="Κωδικός" Text="{Binding Code}"/>
+                        <editors:TextEdit LabelText="Περιγραφή" Text="{Binding Description}"/>
+                        <Button Text="Αποθήκευση" TextTransform="None" FontSize="18" Command="{Binding SaveCommand}" CornerRadius="10"/>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

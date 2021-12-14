@@ -1,4 +1,5 @@
 ﻿using Smart_Orders_Project.Models.SparePartModels;
+using Smart_Orders_Project.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,6 +25,7 @@ namespace Smart_Orders_Project.ViewModels
         private Manufacturer _selectedManufacturer;
         private string _condition;
         private string groupid;
+        private string _categoryPath;
 
         public ObservableCollection<Brand> BrandList { get; }
         public ObservableCollection<Model> ModelList { get; }
@@ -67,10 +69,12 @@ namespace Smart_Orders_Project.ViewModels
                 {
                     ManufacturerList.Add(item);
                 }
+                ManufacturerList.Add(new Manufacturer {  Description="Νέος Κατασκευαστής" });
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
+                await Shell.Current.DisplayAlert("Σφάλμα!", "ExecuteLoadItemsCommand \n" + ex.Message, "Οκ");
             }
             finally
             {
@@ -109,7 +113,14 @@ namespace Smart_Orders_Project.ViewModels
                 Debug.WriteLine("Failed to Load Item "+ex);
             }
         }
-
+        public string CategoryPath
+        {
+            get => _categoryPath;
+            set
+            {
+                SetProperty(ref _categoryPath, value);
+            }
+        }
         public string Code
         {
             get => _code;
@@ -132,8 +143,21 @@ namespace Smart_Orders_Project.ViewModels
             set
             {
                 SetProperty(ref _selectedGroup, value);
+                if (string.IsNullOrEmpty(CategoryPath))//else it will write it agen after newManufacturer
+                    SetPath(value);
             }
         }
+
+        private async void SetPath(Grouping value)
+        {
+            if (value == null)
+                return;
+           
+            CategoryPath = value.Name +" > "+CategoryPath;
+            var item = await GroupingRepo.GetItemAsync(value.ParentOid);
+            SetPath(item);
+        }
+
         public Brand SelectedBrand
         {
             get => _selectedBrand;
@@ -189,8 +213,21 @@ namespace Smart_Orders_Project.ViewModels
             set
             {
                 SetProperty(ref _selectedManufacturer, value);
+                CreateNewManufacturer(value);
             }
         }
+
+        private async void CreateNewManufacturer(Manufacturer value)
+        {
+            if (value == null)
+                return;
+            if (value.Description != "Νέος Κατασκευαστής")
+                return;
+
+            await Shell.Current.GoToAsync(nameof(NewManufacturerPage));
+            SelectedManufacturer = null;
+        }
+
         public string Condition
         {
             get => _condition;
@@ -205,7 +242,6 @@ namespace Smart_Orders_Project.ViewModels
                 return;
            await LoadModelsFromSelectedBrand(item);
         }
-
         private async Task LoadModelsFromSelectedBrand(Brand branditem)
         {
             try
@@ -220,6 +256,7 @@ namespace Smart_Orders_Project.ViewModels
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
+                await Shell.Current.DisplayAlert("Σφάλμα!", "LoadModelsFromSelectedBrand \n" + ex.Message, "Οκ");
             }
             finally
             {
@@ -228,21 +265,30 @@ namespace Smart_Orders_Project.ViewModels
         }
         private async void SaveSparePartClicked()
         {
-            SparePart sparePart = new SparePart
+            try
             {
-                 SparePartCode = Code,
-                 Description = Description,
-                 Grouping = GroupId,
-                 Brand = SelectedBrand,
-                 Model = SelectedModel,
-                 YearFrom = FromDate,
-                 YearTo =  ToDate,
-                 ManufacturerCode = ManufacturerCode,
-                 AfterMarketCode = AfterMarketCode,
-                 Manufacturer = SelectedManufacturer,
-                 Condition = Condition
-            };
-            await Shell.Current.GoToAsync("../..");
+                SparePart sparePart = new SparePart
+                {
+                    SparePartCode = Code,
+                    Description = Description,
+                    Grouping = SelectedGroup,
+                    Brand = SelectedBrand,
+                    Model = SelectedModel,
+                    YearFrom = FromDate,
+                    YearTo = ToDate,
+                    ManufacturerCode = ManufacturerCode,
+                    AfterMarketCode = AfterMarketCode,
+                    Manufacturer = SelectedManufacturer,
+                    Condition = Condition
+                };
+                SparePartRepo.SendJSON(sparePart);
+                await Shell.Current.GoToAsync("../..");
+            }
+            catch(Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Σφάλμα!", "SaveSparePartClicked \n" + ex.Message, "Οκ");
+            }
+            
         }
     }
 }

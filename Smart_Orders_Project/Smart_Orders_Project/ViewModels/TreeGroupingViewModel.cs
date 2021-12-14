@@ -27,6 +27,7 @@ namespace Smart_Orders_Project.ViewModels
         private float _height = 0;
         private float _helpCount = 60;
         private float _heightChildrenList;
+        private bool _lastChoice;
 
         public TreeGroupingViewModel()
         {
@@ -77,6 +78,7 @@ namespace Smart_Orders_Project.ViewModels
             try
             {
                 IsBusy = true;
+                LastChoice = false; //disable the button
                 Height = 0;
                 _helpCount = 60;
                 Groupinglist.Clear();
@@ -93,6 +95,7 @@ namespace Smart_Orders_Project.ViewModels
             catch(Exception ex)
             {
                 Debug.WriteLine(ex);
+                await Shell.Current.DisplayAlert("Σφάλμα!", "LoadGroupingItems \n" + ex.Message, "Οκ");
             }
             finally
             {
@@ -130,7 +133,11 @@ namespace Smart_Orders_Project.ViewModels
                 }               
             } 
         }
-
+        public bool LastChoice
+        {
+            get => _lastChoice;
+            set => SetProperty(ref _lastChoice, value);
+        }
         private void SetHeight()
         {
             Height = 40;
@@ -149,8 +156,10 @@ namespace Smart_Orders_Project.ViewModels
                 IsBusy = true;
                 GroupinglistFirstLayer.Clear();
                 var list = await GroupingRepo.GetItemChildrenAsync(id);
+                LastChoice = !list.Any(); //set the button visible if is last item on list 
                 foreach (var item in list)
                     GroupinglistFirstLayer.Add(item);
+
             }
             catch (Exception ex)
             {

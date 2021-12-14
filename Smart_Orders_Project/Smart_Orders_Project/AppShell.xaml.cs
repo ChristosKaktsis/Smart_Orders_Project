@@ -23,6 +23,7 @@ namespace Smart_Orders_Project
             Routing.RegisterRoute(nameof(NewRecieverPage), typeof(NewRecieverPage));
             Routing.RegisterRoute(nameof(TreeGroupingPage), typeof(TreeGroupingPage));
             Routing.RegisterRoute(nameof(NewSparePartPage), typeof(NewSparePartPage));
+            Routing.RegisterRoute(nameof(NewManufacturerPage), typeof(NewManufacturerPage));
         }
 
         private async void OnMenuItemClicked(object sender, EventArgs e)
