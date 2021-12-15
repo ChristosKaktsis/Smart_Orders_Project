@@ -77,10 +77,10 @@
                                                   FilterMode="Contains"/>
                                 <StackLayout Orientation="Horizontal">
                                     <StackLayout HorizontalOptions="FillAndExpand" >
-                                        <editors:NumericEdit LabelText="Έτος Από" Value="{Binding FromDate}" />
+                                        <editors:NumericEdit LabelText="Έτος Από" Value="{Binding FromDate}" SelectValueOnFocus="True"/>
                                     </StackLayout>
                                     <StackLayout HorizontalOptions="FillAndExpand">
-                                        <editors:NumericEdit LabelText="Έτος Έως" Value="{Binding ToDate}" />
+                                        <editors:NumericEdit LabelText="Έτος Έως" Value="{Binding ToDate}" SelectValueOnFocus="True"/>
                                     </StackLayout>
                                 </StackLayout>
                                 <editors:TextEdit LabelText="Κωδικός Κατασκευαστή" Text="{Binding ManufacturerCode}"/>
@@ -100,6 +100,14 @@
                                         </x:Array>
                                     </editors:ComboBoxEdit.ItemsSource>
                                 </editors:ComboBoxEdit>
+                                <StackLayout Orientation="Horizontal">
+                                    <StackLayout HorizontalOptions="FillAndExpand" >
+                                        <editors:NumericEdit LabelText="Τιμή Χονδρικής" Value="{Binding PriceWholesale}" SelectValueOnFocus="True"/>
+                                    </StackLayout>
+                                    <StackLayout HorizontalOptions="FillAndExpand">
+                                        <editors:NumericEdit LabelText="Τιμή Λιανικής" Value="{Binding PriceRetail}" SelectValueOnFocus="True"/>
+                                    </StackLayout>
+                                </StackLayout>
                             </StackLayout>
                             
                         </StackLayout>

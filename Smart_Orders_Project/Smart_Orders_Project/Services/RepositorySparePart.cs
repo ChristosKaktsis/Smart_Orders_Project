@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -58,12 +59,15 @@ namespace Smart_Orders_Project.Services
                 json += "\"Κωδικος Κατασκευαστη\":\"" + item.ManufacturerCode + "\",";
                 json += "\"Κωδικος After Market\":\"" + item.AfterMarketCode + "\",";
                 json += "\"Κατασκευαστης Ειδους\":\"" + manufacturer + "\",";
-                json += "\"Κατασταση\":\"" + item.Condition + "\"";
+                json += "\"Κατασταση\":\"" + item.Condition + "\",";
+                json += "\"Τιμή Χονδρικής\":\"" + item.PriceWholesale + "\",";
+                json += "\"Τιμή Λιανικής\":\"" + item.PriceRetail + "\"";
                 json += "}";
                 return json;
             }
             catch(Exception ex)
             {
+                Debug.WriteLine(ex);
                 return string.Empty;
             }
             

@@ -18,5 +18,7 @@ namespace Smart_Orders_Project.Models.SparePartModels
         public string AfterMarketCode { get; set; }
         public Manufacturer Manufacturer { get; set; }
         public string Condition { get; set; }
+        public decimal PriceWholesale { get; set; }
+        public decimal PriceRetail { get; set; }
     }
 }

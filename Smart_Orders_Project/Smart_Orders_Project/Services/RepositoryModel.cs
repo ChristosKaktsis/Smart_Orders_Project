@@ -38,7 +38,7 @@ namespace Smart_Orders_Project.Services
 
         public async Task<List<Model>> GetItemsAsync(bool forceRefresh = false)
         {
-            return await Task.FromResult(ModelList);
+            return await Task.FromResult(ModelList.OrderBy(x => x.Description).ToList());
         }
 
         public async Task<List<Model>> GetItemsWithNameAsync(string name)
@@ -69,7 +69,7 @@ namespace Smart_Orders_Project.Services
                             Brand = reader["ΙεραρχικόΖοομ1"] != DBNull.Value ? reader["ΙεραρχικόΖοομ1"].ToString() : string.Empty,
                         });
                     }
-                    return ModelList;
+                    return ModelList.OrderBy(x => x.Description).ToList();
                 }
             });
         }

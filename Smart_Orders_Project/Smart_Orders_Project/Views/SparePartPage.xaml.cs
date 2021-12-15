@@ -24,7 +24,23 @@ namespace Smart_Orders_Project.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            
+            _viewModel.OnAppearing();
+
+        }
+        private void Entry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            OrdersList.FilterString = "";
+            string[] subs = e.NewTextValue.Split(' ');
+            switch (subs.Length)
+            {
+                case 1:
+                    break;
+                case 2:
+                    OrdersList.FilterString = "Contains([Name], '" + subs[1] + "')";
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

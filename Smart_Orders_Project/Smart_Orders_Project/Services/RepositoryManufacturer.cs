@@ -59,7 +59,7 @@ namespace Smart_Orders_Project.Services
             if (!ManufacturerList.Any())
                 await GetItemsFromDBAsync();
 
-            return await Task.FromResult(ManufacturerList);
+            return await Task.FromResult(ManufacturerList.OrderBy(x => x.Description).ToList());
         }
 
         private async Task<List<Manufacturer>> GetItemsFromDBAsync()

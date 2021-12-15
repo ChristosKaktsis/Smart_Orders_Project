@@ -25,7 +25,7 @@ namespace Smart_Orders_Project.Services
             if (!BrandList.Any())
                 await GetItemsFromDBAsync();
 
-            return await Task.FromResult(BrandList);
+            return await Task.FromResult(BrandList.OrderBy(x => x.Description).ToList());
         }
 
         public async Task<List<Brand>> GetItemsFromDBAsync()

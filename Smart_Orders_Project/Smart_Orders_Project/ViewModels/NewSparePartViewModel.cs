@@ -26,6 +26,8 @@ namespace Smart_Orders_Project.ViewModels
         private string _condition;
         private string groupid;
         private string _categoryPath;
+        private decimal _priceWholesale;
+        private decimal _priceRetail;
 
         public ObservableCollection<Brand> BrandList { get; }
         public ObservableCollection<Model> ModelList { get; }
@@ -191,6 +193,22 @@ namespace Smart_Orders_Project.ViewModels
                 SetProperty(ref _toDate, value);
             }
         }
+        public decimal PriceWholesale
+        {
+            get => _priceWholesale;
+            set
+            {
+                SetProperty(ref _priceWholesale, value);
+            }
+        }
+        public decimal PriceRetail
+        {
+            get => _priceRetail;
+            set
+            {
+                SetProperty(ref _priceRetail, value);
+            }
+        }
         public string ManufacturerCode
         {
             get => _manufacturerCode;
@@ -279,7 +297,9 @@ namespace Smart_Orders_Project.ViewModels
                     ManufacturerCode = ManufacturerCode,
                     AfterMarketCode = AfterMarketCode,
                     Manufacturer = SelectedManufacturer,
-                    Condition = Condition
+                    Condition = Condition,
+                    PriceWholesale =PriceWholesale,
+                    PriceRetail = PriceRetail                
                 };
                 SparePartRepo.SendJSON(sparePart);
                 await Shell.Current.GoToAsync("../..");

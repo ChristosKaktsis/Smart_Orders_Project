@@ -52,7 +52,7 @@ namespace Smart_Orders_Project.Services
 
         public async Task<List<Grouping>> GetItemChildrenAsync(string id)
         {
-            return await Task.FromResult(GroupingList.Where(x => x.ParentOid == id).ToList());
+            return await Task.FromResult(GroupingList.Where(x => x.ParentOid == id).OrderBy(x => x.Name).ToList());
         }
         public async Task<Grouping> GetItemAsync(string id)
         {

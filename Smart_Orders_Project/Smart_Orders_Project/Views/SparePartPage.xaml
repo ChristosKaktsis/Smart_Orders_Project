@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:editors="http://schemas.devexpress.com/xamarin/2014/forms/editors" 
              xmlns:local="clr-namespace:Smart_Orders_Project.ViewModels" 
-             xmlns:dxcv="http://schemas.devexpress.com/xamarin/2014/forms/collectionview" xmlns:model="clr-namespace:Smart_Orders_Project.Models.SparePartModels"
+             xmlns:dxcv="http://schemas.devexpress.com/xamarin/2014/forms/collectionview" xmlns:model="clr-namespace:Smart_Orders_Project.Models.SparePartModels" xmlns:model1="clr-namespace:Smart_Orders_Project.Models"
              x:Class="Smart_Orders_Project.Views.SparePartPage" 
              Shell.NavBarHasShadow="False"
              BackgroundColor="AliceBlue"
@@ -27,23 +27,23 @@
                         <Frame BackgroundColor="white" CornerRadius="50" HeightRequest="35" WidthRequest="35" Padding="0" Margin="7" HasShadow="False">
                             <Image Source="search.png"/>
                         </Frame>
-                        <Entry x:Name="SearchText" Placeholder="Search" ClearButtonVisibility="WhileEditing"  TextColor="Black"  HorizontalOptions="FillAndExpand" Margin="0,0,15,0"/>
+                        <Entry x:Name="SearchText" IsFocused="{Binding IsFocused,Mode=OneWayToSource}"  Text="{Binding SearchText , Mode=OneWayToSource}" TextChanged="Entry_TextChanged" Placeholder="Search" ClearButtonVisibility="WhileEditing"  TextColor="Black"  HorizontalOptions="FillAndExpand" Margin="0,0,15,0"/>
                     </StackLayout>
                 </Frame>
                 <StackLayout Margin="0,10,0,0" >
-                    <!--<dxcv:DXCollectionView x:Name="OrdersList" SelectionMode="Single" ItemsSource="{Binding ProductList}" SelectedItem="{Binding SelectedProduct,Mode=TwoWay}">
+                    <dxcv:DXCollectionView x:Name="OrdersList" SelectionMode="Single" ItemsSource="{Binding ProductList}">
                         <dxcv:DXCollectionView.ItemTemplate>
                             <DataTemplate>
                                 <Grid Padding="0" BackgroundColor="AliceBlue">
                                     <Frame BackgroundColor="White" BorderColor="LightGray" Padding="10" Margin="0,0,0,0" CornerRadius="0" HasShadow="False">
-                                        <StackLayout x:DataType="model:SparePart"  Orientation="Horizontal"  >
+                                        <StackLayout x:DataType="model1:Product"  Orientation="Horizontal"  >
                                             <StackLayout  HorizontalOptions="FillAndExpand">
-                                                <Label  Text="{Binding Description}" FontSize="16" FontAttributes="Bold" HorizontalOptions="StartAndExpand"/>
+                                                <Label  Text="{Binding Name}" FontSize="16" FontAttributes="Bold" HorizontalOptions="StartAndExpand"/>
                                                 <StackLayout  Orientation="Horizontal" >
-                                                    <Label Text="{Binding SparePartCode }" FontSize="16"/>
+                                                    
                                                 </StackLayout>
                                                 <StackLayout  Orientation="Horizontal" >
-                                                    <Label Text="{Binding Condition}" FontSize="16"/>
+                                                    
                                                 </StackLayout>
                                             </StackLayout>
                                         </StackLayout>
@@ -51,26 +51,7 @@
                                 </Grid>
                             </DataTemplate>
                         </dxcv:DXCollectionView.ItemTemplate>
-                        <dxcv:DXCollectionView.SelectedItemTemplate>
-                            <DataTemplate>
-                                <Grid Padding="0" BackgroundColor="AliceBlue">
-                                    <Frame BackgroundColor="{StaticResource Complementary}" BorderColor="LightGray" Padding="10" Margin="0,0,0,0" CornerRadius="0" HasShadow="False">
-                                        <StackLayout x:DataType="model:SparePart"  Orientation="Horizontal">
-                                            <StackLayout  HorizontalOptions="FillAndExpand">
-                                                <Label  Text="{Binding Description}" FontSize="16" FontAttributes="Bold" HorizontalOptions="StartAndExpand"/>
-                                                <StackLayout  Orientation="Horizontal" >
-                                                    <Label Text="{Binding SparePartCode }" FontSize="16"/>
-                                                </StackLayout>
-                                                <StackLayout  Orientation="Horizontal" >
-                                                    <Label Text="{Binding Condition}" FontSize="16"/>
-                                                </StackLayout>
-                                            </StackLayout>
-                                        </StackLayout>
-                                    </Frame>
-                                </Grid>
-                            </DataTemplate>
-                        </dxcv:DXCollectionView.SelectedItemTemplate>
-                    </dxcv:DXCollectionView>-->
+                    </dxcv:DXCollectionView>
                 </StackLayout>
             </StackLayout>
             <StackLayout HorizontalOptions="End" VerticalOptions="End" Margin="20">
