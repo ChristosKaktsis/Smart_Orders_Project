@@ -62,6 +62,7 @@ namespace Smart_Orders_Project.Services
                 json += "\"Κατασταση\":\"" + item.Condition + "\",";
                 json += "\"Τιμή Χονδρικής\":\"" + item.PriceWholesale + "\",";
                 json += "\"Τιμή Λιανικής\":\"" + item.PriceRetail + "\"";
+                json += "\"Image\":\"" + Convert.ToBase64String(item.ImageBytes) + "\"";
                 json += "}";
                 return json;
             }

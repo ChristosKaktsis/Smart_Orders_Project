@@ -20,5 +20,6 @@ namespace Smart_Orders_Project.Models.SparePartModels
         public string Condition { get; set; }
         public decimal PriceWholesale { get; set; }
         public decimal PriceRetail { get; set; }
+        public byte[] ImageBytes { get; set; }
     }
 }

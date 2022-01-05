@@ -62,7 +62,7 @@
                             </StackLayout>
                             <StackLayout Margin="10,0,10,20">
                                 <editors:TextEdit LabelText="Κωδικός" Text="{Binding Code}"/>
-                                <editors:TextEdit LabelText="Περιγραφή" Text="{Binding Description}"/>
+                                <editors:MultilineEdit LabelText="Περιγραφή" Text="{Binding Description}"/>
                                 <editors:ComboBoxEdit LabelText="Μάρκα" 
                                                   ItemsSource="{Binding BrandList}"                                                  
                                                   SelectedItem="{Binding SelectedBrand}"
@@ -77,10 +77,10 @@
                                                   FilterMode="Contains"/>
                                 <StackLayout Orientation="Horizontal">
                                     <StackLayout HorizontalOptions="FillAndExpand" >
-                                        <editors:NumericEdit LabelText="Έτος Από" Value="{Binding FromDate}" SelectValueOnFocus="True"/>
+                                        <editors:TextEdit LabelText="Έτος Από" Text="{Binding FromDate,Mode=OneWayToSource}" Keyboard="Numeric"/>
                                     </StackLayout>
                                     <StackLayout HorizontalOptions="FillAndExpand">
-                                        <editors:NumericEdit LabelText="Έτος Έως" Value="{Binding ToDate}" SelectValueOnFocus="True"/>
+                                        <editors:TextEdit LabelText="Έτος Έως" Text="{Binding ToDate,Mode=OneWayToSource}" Keyboard="Numeric"/>
                                     </StackLayout>
                                 </StackLayout>
                                 <editors:TextEdit LabelText="Κωδικός Κατασκευαστή" Text="{Binding ManufacturerCode}"/>
@@ -109,6 +109,10 @@
                                     </StackLayout>
                                 </StackLayout>
                             </StackLayout>
+                            <Frame Padding="0" CornerRadius="20"  HorizontalOptions="Center">
+                                <Image Source="{Binding  ImageSource}"/>
+                            </Frame>
+                            <Button Text="Φωτογραφία" TextTransform="None" Command="{Binding TakePhotoCommand}"/>
                             
                         </StackLayout>
                     </Frame>
