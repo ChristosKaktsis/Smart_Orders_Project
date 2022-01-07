@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Smart_Orders_Project.Views.BarCodeValuesPage"
+             xmlns:editors="http://schemas.devexpress.com/xamarin/2014/forms/editors"
+             BackgroundColor="LightGray" 
+             Title="Settings">
+    <ContentPage.Content>
+        <Grid>
+            <StackLayout> 
+                <Frame Padding="0" Margin="20">
+                    <StackLayout>
+                        <Frame Padding="0" BackgroundColor="{StaticResource Primary}">
+                            <Label Text="Παράμετροι BarCode" FontSize="20" TextColor="white" Margin="10"/>
+                        </Frame>
+                        <StackLayout Orientation="Horizontal" Margin="10" >
+                            <Label Text="ArticleFrom" VerticalOptions="Center" FontSize="18" TextColor="Black" Margin="10,0,0,0"/>
+                            <editors:TextEdit HorizontalOptions="EndAndExpand" WidthRequest="150" Text="{Binding ArticleFromTextEdit}"/>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal" Margin="10" >
+                            <Label Text="ArticleTo" VerticalOptions="Center" FontSize="18" TextColor="Black" Margin="10,0,0,0"/>
+                            <editors:TextEdit HorizontalOptions="EndAndExpand" WidthRequest="150" Text="{Binding ArticleToTextEdit}"/>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal" Margin="10" >
+                            <Label Text="GTIN" VerticalOptions="Center" FontSize="18" TextColor="Black" Margin="10,0,0,0"/>
+                            <editors:TextEdit HorizontalOptions="EndAndExpand" WidthRequest="150" Text="{Binding GTINTextEdit}"/>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal" Margin="10" >
+                            <Label Text="Produser" VerticalOptions="Center" FontSize="18" TextColor="Black" Margin="10,0,0,0"/>
+                            <editors:TextEdit HorizontalOptions="EndAndExpand" WidthRequest="150" Text="{Binding ProduserTextEdit}"/>
+                        </StackLayout>
+                        <Button Text="Αποθήκευση" Command="{Binding SaveValuesCommand}" FontSize="20" TextTransform="None" CornerRadius="3" Margin="0,10,0,0"/>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+            
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

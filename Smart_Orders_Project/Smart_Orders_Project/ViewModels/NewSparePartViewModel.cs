@@ -1,4 +1,5 @@
 ﻿using Smart_Orders_Project.Models.SparePartModels;
+using Smart_Orders_Project.Services;
 using Smart_Orders_Project.Views;
 using System;
 using System.Collections.Generic;
@@ -39,6 +40,7 @@ namespace Smart_Orders_Project.ViewModels
         public Command LoadItemsCommand { get; }
         public Command TakePhotoCommand { get; }
         public Command SaveSparePartCommand { get; }
+        public Command GenerateBarCodeCommand { get; }
         public NewSparePartViewModel()
         {
             BrandList = new ObservableCollection<Brand>();
@@ -50,8 +52,62 @@ namespace Smart_Orders_Project.ViewModels
                 (_, __) => SaveSparePartCommand.ChangeCanExecute();
 
             TakePhotoCommand = new Command(TakePhotoClicked);
+            GenerateBarCodeCommand = new Command(OnGenerateBarCodeClicked);
         }
 
+        private async void OnGenerateBarCodeClicked(object obj)
+        {
+            try
+            {
+                IsBusy = true;
+                if (!string.IsNullOrWhiteSpace(Code))
+                    return;
+
+                RepositoryBarCodeCounter counterRepo = new RepositoryBarCodeCounter();
+                
+                int counter = await counterRepo.GetCounterFromDB();               
+                var digits = GTIN.ToString() + Produser.ToString() + counter.ToString("0####");
+                var calculatedDigit = await CalculateChecksumDigit(digits);
+                var barcode = digits + calculatedDigit;
+                var ok = await counterRepo.SetCounterToDB();
+                if(!ok)
+                    await Shell.Current.DisplayAlert("Προσοχή!", "Ο μετρητής στην βάση δεν ενημερώθηκε", "Οκ");
+                Code = barcode;
+            }
+            catch(Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Σφάλμα!", "GenerateBarCodeClicked \n" + ex.Message, "Οκ");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+            
+        }
+        public async Task<string> CalculateChecksumDigit(string Barcode12)
+        {
+            
+            string sTemp = Barcode12;
+            int iSum = 0;
+            int iDigit = 0;
+
+            // Calculate the checksum digit here.
+            for (int i = sTemp.Length; i >= 1; i += -1)
+            {
+                iDigit = Convert.ToInt32(sTemp.Substring(i - 1, 1));
+                // This appears to be backwards but the 
+                // EAN-13 checksum must be calculated
+                // this way to be compatible with UPC-A.
+                if (i % 2 == 0)
+                    // odd  
+                    iSum += iDigit * 3;
+                else
+                    // even
+                    iSum += iDigit * 1;
+            }
+            int iCheckSum = (10 - (iSum % 10)) % 10;
+            return await Task.FromResult(iCheckSum.ToString());
+        }
         private async void TakePhotoClicked(object obj)
         {
             try
@@ -150,7 +206,7 @@ namespace Smart_Orders_Project.ViewModels
 
         public void OnAppearing()
         {
-            IsBusy = true;
+            LoadItemsCommand.Execute(null);
         }
         public string GroupId
         {

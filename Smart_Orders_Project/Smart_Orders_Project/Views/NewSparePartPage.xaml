@@ -6,36 +6,13 @@
              x:Class="Smart_Orders_Project.Views.NewSparePartPage"
              BackgroundColor="LightGray"
              Title="Ανταλλακτικό">
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <Style TargetType="editors:TextEdit">
-                <Setter Property="FocusedBorderColor" Value="{StaticResource Secondary}"/>
-                <Setter Property="FocusedLabelColor" Value="{StaticResource SecondaryLight}"/>
-                <Setter Property="BackgroundColor" Value="White"/>
-                <Setter Property="LabelFontSize" Value="15"/>
-                <Setter Property="BorderColor" Value="black"/>
-            </Style>
-            <Style TargetType="editors:ComboBoxEdit">
-                <Setter Property="FocusedBorderColor" Value="{StaticResource Secondary}"/>
-                <Setter Property="FocusedLabelColor" Value="{StaticResource SecondaryLight}"/>
-                <Setter Property="LabelFontSize" Value="15"/>
-                <Setter Property="BorderColor" Value="black"/>
-                <Setter Property="DropDownBackgroundColor" Value="#f5f5f5"/>
-            </Style>
-            <Style TargetType="editors:NumericEdit">
-                <Setter Property="FocusedBorderColor" Value="{StaticResource Secondary}"/>
-                <Setter Property="FocusedLabelColor" Value="{StaticResource SecondaryLight}"/>
-                <Setter Property="LabelFontSize" Value="15"/>
-                <Setter Property="BorderColor" Value="black"/>
-            </Style>
-        </ResourceDictionary>
-    </ContentPage.Resources>
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Αποθήκευση" Command="{Binding SaveSparePartCommand}"/>
     </ContentPage.ToolbarItems>
-    <RefreshView x:DataType="local:NewSparePartViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+    <ContentPage.Content >
         <ScrollView>
-            <Grid>
+            <Grid x:DataType="local:NewSparePartViewModel">
+                
                 <StackLayout>
                     <Frame BackgroundColor="White" Padding="0" Margin="10">
                         <StackLayout>
@@ -62,6 +39,7 @@
                             </StackLayout>
                             <StackLayout Margin="10,0,10,20">
                                 <editors:TextEdit LabelText="Κωδικός" Text="{Binding Code}"/>
+                                <Button Text="Αυτόματη Δημιουργία BarCode" TextTransform="None" HeightRequest="40" Margin="0,0,0,10" Command="{Binding GenerateBarCodeCommand}"/>
                                 <editors:MultilineEdit LabelText="Περιγραφή" Text="{Binding Description}"/>
                                 <editors:ComboBoxEdit LabelText="Μάρκα" 
                                                   ItemsSource="{Binding BrandList}"                                                  
@@ -118,9 +96,13 @@
                     </Frame>
 
                 </StackLayout>
+                <Frame VerticalOptions="Start" HorizontalOptions="Center" Padding="2" CornerRadius="30" IsVisible="{Binding IsBusy}">
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" />
+                </Frame>
+                
             </Grid>
         </ScrollView>
 
 
-    </RefreshView>
+    </ContentPage.Content>
 </ContentPage>

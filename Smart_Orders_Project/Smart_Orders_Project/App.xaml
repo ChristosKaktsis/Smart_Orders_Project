@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:editors="http://schemas.devexpress.com/xamarin/2014/forms/editors"
              x:Class="Smart_Orders_Project.App">
     <!--
         Define global resources and styles here, that apply to all pages in your app.
@@ -35,6 +36,26 @@
                         </VisualStateGroup>
                     </VisualStateGroupList>
                 </Setter>
+            </Style>
+            <Style TargetType="editors:TextEdit">
+                <Setter Property="FocusedBorderColor" Value="{StaticResource Secondary}"/>
+                <Setter Property="FocusedLabelColor" Value="{StaticResource SecondaryLight}"/>
+                <Setter Property="BackgroundColor" Value="White"/>
+                <Setter Property="LabelFontSize" Value="15"/>
+                <Setter Property="BorderColor" Value="black"/>
+            </Style>
+            <Style TargetType="editors:ComboBoxEdit">
+                <Setter Property="FocusedBorderColor" Value="{StaticResource Secondary}"/>
+                <Setter Property="FocusedLabelColor" Value="{StaticResource SecondaryLight}"/>
+                <Setter Property="LabelFontSize" Value="15"/>
+                <Setter Property="BorderColor" Value="black"/>
+                <Setter Property="DropDownBackgroundColor" Value="#f5f5f5"/>
+            </Style>
+            <Style TargetType="editors:NumericEdit">
+                <Setter Property="FocusedBorderColor" Value="{StaticResource Secondary}"/>
+                <Setter Property="FocusedLabelColor" Value="{StaticResource SecondaryLight}"/>
+                <Setter Property="LabelFontSize" Value="15"/>
+                <Setter Property="BorderColor" Value="black"/>
             </Style>
             <!--<Style TargetType="Grid">
                 <Setter Property="VisualStateManager.VisualStateGroups">

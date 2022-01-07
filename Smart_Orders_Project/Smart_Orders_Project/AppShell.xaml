@@ -81,7 +81,6 @@
     <Shell.FlyoutHeader>
         <local:FlyoutHeader />
     </Shell.FlyoutHeader>
-    
     <TabBar>
         <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate local:LoginPage}" />
     </TabBar>
@@ -94,10 +93,13 @@
     <FlyoutItem Title="Ανταλλακτικό" Icon="icon_feed.png">
         <ShellContent Route="SparePartPage" ContentTemplate="{DataTemplate local:SparePartPage}" />
     </FlyoutItem>
+    <FlyoutItem Title="Settings" Icon="icon_about.png">
+        <ShellContent Route="BarCodeValuesPage" ContentTemplate="{DataTemplate local:BarCodeValuesPage}" />
+    </FlyoutItem>
     <FlyoutItem Title="Σύνδεση" Icon="icon_about.png">
         <ShellContent Route="ConnectionPage" ContentTemplate="{DataTemplate local:ConnectionPage}" />
     </FlyoutItem>
-   
+    
     <!-- When the Flyout is visible this will be a menu item you can tie a click behavior to  -->
     <MenuItem Text="Logout" StyleClass="MenuItemLayoutStyle" Clicked="OnMenuItemClicked">
     </MenuItem>

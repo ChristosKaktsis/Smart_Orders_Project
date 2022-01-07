@@ -28,7 +28,7 @@ namespace Smart_Orders_Project.ViewModels
         //
         public RepositoryModel ModelRepo = new RepositoryModel();
         public RepositorySparePart SparePartRepo = new RepositorySparePart();
-
+        
         bool isBusy = false;
         public bool IsBusy
         {
@@ -107,6 +107,42 @@ namespace Smart_Orders_Project.ViewModels
                 Preferences.Set(nameof(StorageID), value);
                 OnPropertyChanged(nameof(StorageID));
 
+            }
+        }
+        public int GTIN
+        {
+            get => Preferences.Get(nameof(GTIN), 52);
+            set
+            {
+                Preferences.Set(nameof(GTIN), value);
+                
+            }
+        }
+        public int Produser
+        {
+            get => Preferences.Get(nameof(Produser), 99999);
+            set
+            {
+                Preferences.Set(nameof(Produser), value);
+                
+            }
+        }
+        public int ArticleFrom
+        {
+            get => Preferences.Get(nameof(ArticleFrom), 00000);
+            set
+            {
+                Preferences.Set(nameof(ArticleFrom), value);
+                
+            }
+        }
+        public int ArticleTo
+        {
+            get => Preferences.Get(nameof(ArticleTo), 99999);
+            set
+            {
+                Preferences.Set(nameof(ArticleTo), value);
+                
             }
         }
         public async void GoBack()
