@@ -52,10 +52,10 @@ namespace Smart_Orders_Project.ViewModels
                 (_, __) => SaveSparePartCommand.ChangeCanExecute();
 
             TakePhotoCommand = new Command(TakePhotoClicked);
-            GenerateBarCodeCommand = new Command(OnGenerateBarCodeClicked);
+            GenerateBarCodeCommand = new Command(async () => await OnGenerateBarCodeClicked());
         }
 
-        private async void OnGenerateBarCodeClicked(object obj)
+        private async Task OnGenerateBarCodeClicked()
         {
             try
             {
@@ -64,13 +64,13 @@ namespace Smart_Orders_Project.ViewModels
                     return;
 
                 RepositoryBarCodeCounter counterRepo = new RepositoryBarCodeCounter();
-                
-                int counter = await counterRepo.GetCounterFromDB();               
+
+                int counter = await counterRepo.GetCounterFromDB();
                 var digits = GTIN.ToString() + Produser.ToString() + counter.ToString("0####");
                 var calculatedDigit = await CalculateChecksumDigit(digits);
                 var barcode = digits + calculatedDigit;
                 var ok = await counterRepo.SetCounterToDB();
-                if(!ok)
+                if (!ok)
                     await Shell.Current.DisplayAlert("Προσοχή!", "Ο μετρητής στην βάση δεν ενημερώθηκε", "Οκ");
                 Code = barcode;
             }
