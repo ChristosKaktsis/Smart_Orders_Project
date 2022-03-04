@@ -28,6 +28,9 @@ namespace Smart_Orders_Project.ViewModels
         //
         public RepositoryModel ModelRepo = new RepositoryModel();
         public RepositorySparePart SparePartRepo = new RepositorySparePart();
+        public RepositoryRFPurchase RFPurchaseRepo = new RepositoryRFPurchase();
+        public RepositoryProvider ProviderRepo = new RepositoryProvider();
+        public RepositoryRFPurchaseLine RFPurchaseLineRepo = new RepositoryRFPurchaseLine();
         
         bool isBusy = false;
         public bool IsBusy

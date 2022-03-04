@@ -2,26 +2,22 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace Smart_Orders_Project.ViewModels
 {
     [QueryProperty(nameof(ItemId), nameof(ItemId))]
-    class LineOfOrdersViewModel : BaseLineViewModel
+    class RFPurchaseLinesViewModel : BaseLineViewModel
     {
-
         private string itemId;
 
-        public LineOfOrdersViewModel()
+        public RFPurchaseLinesViewModel()
         {
             ProductList = new ObservableCollection<Product>();
-            //SelectedProductList = new ObservableCollection<Product>();
-            //SelectedProductList.CollectionChanged += SelectedProductList_CollectionChanged;
+            
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-            //LoadItemCommand = new Command(async () => await ExecuteLoadItemCommand());
+            
             SaveCommand = new Command(OnSave, ValidateSave);
             this.PropertyChanged +=
                 (_, __) => SaveCommand.ChangeCanExecute();
@@ -30,7 +26,7 @@ namespace Smart_Orders_Project.ViewModels
         }
         private async void OnSave()
         {
-            LineOfOrder newItem = new LineOfOrder()
+            RFPurchaseLine newItem = new RFPurchaseLine()
             {
                 Oid = Guid.NewGuid(),
                 Product = SelectedProduct,
@@ -42,12 +38,12 @@ namespace Smart_Orders_Project.ViewModels
                 RFSalesOid = Guid.Parse(ItemId)
             };
 
-            await LinesRepo.AddItemAsync(newItem);
+            await App.Database.AddPurchaseLineAsync(newItem);
 
             await Shell.Current.GoToAsync("..");
             if (IsQuickOn)
             {
-                await Shell.Current.GoToAsync($"{nameof(Views.LineOfOrdersSelectionPage)}?{nameof(LineOfOrdersViewModel.ItemId)}={ItemId}");
+                await Shell.Current.GoToAsync($"{nameof(Views.RFPurchaseLineSelectionPage)}?{nameof(RFPurchaseLinesViewModel.ItemId)}={ItemId}");
             }
 
             // This will pop the current page off the navigation stack

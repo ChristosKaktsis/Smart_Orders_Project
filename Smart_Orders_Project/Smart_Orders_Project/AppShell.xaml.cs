@@ -19,6 +19,8 @@ namespace Smart_Orders_Project
             Routing.RegisterRoute(nameof(BarCodeScanner), typeof(BarCodeScanner));
             Routing.RegisterRoute(nameof(RFCensusDetailPage), typeof(RFCensusDetailPage));
             Routing.RegisterRoute(nameof(RFCensusProductSelectionPage), typeof(RFCensusProductSelectionPage));
+            Routing.RegisterRoute(nameof(RFPurchaseDetailPage), typeof(RFPurchaseDetailPage));
+            Routing.RegisterRoute(nameof(ProviderSelectionPage), typeof(ProviderSelectionPage));
             Routing.RegisterRoute(nameof(TestEmptyPage), typeof(TestEmptyPage));
             Routing.RegisterRoute(nameof(NewRecieverPage), typeof(NewRecieverPage));
             Routing.RegisterRoute(nameof(TreeGroupingPage), typeof(TreeGroupingPage));

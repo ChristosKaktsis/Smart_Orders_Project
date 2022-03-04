@@ -87,6 +87,9 @@
     <FlyoutItem Title="RFΠωλήσεις" Icon="icon_feed.png">
         <ShellContent Route="OrdersPage" ContentTemplate="{DataTemplate local:OrdersPage}" />
     </FlyoutItem>
+    <FlyoutItem Title="RFΑγορές" Icon="icon_feed.png">
+        <ShellContent Route="RFPurchasePage" ContentTemplate="{DataTemplate local:RFPurchasePage}" />
+    </FlyoutItem>
     <FlyoutItem Title="RFΑπογραφή" Icon="icon_feed.png">
         <ShellContent Route="RFCesusPage" ContentTemplate="{DataTemplate local:RFCesusPage}" />
     </FlyoutItem>

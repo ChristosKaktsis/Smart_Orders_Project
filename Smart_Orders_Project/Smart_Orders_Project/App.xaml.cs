@@ -1,11 +1,25 @@
-﻿using Smart_Orders_Project.Services;
+﻿using Smart_Orders_Project.Data;
+using Smart_Orders_Project.Services;
 using Xamarin.Forms;
 
 namespace Smart_Orders_Project
 {
     public partial class App : Application
     {
+        static FakeData database;
 
+        // Create the database connection as a singleton.
+        public static FakeData Database
+        {
+            get
+            {
+                if (database == null)
+                {
+                    database = new FakeData();
+                }
+                return database;
+            }
+        }
         public App()
         {
             DevExpress.XamarinForms.CollectionView.Initializer.Init();
