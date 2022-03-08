@@ -20,6 +20,7 @@ namespace Smart_Orders_Project
             Routing.RegisterRoute(nameof(RFCensusDetailPage), typeof(RFCensusDetailPage));
             Routing.RegisterRoute(nameof(RFCensusProductSelectionPage), typeof(RFCensusProductSelectionPage));
             Routing.RegisterRoute(nameof(RFPurchaseDetailPage), typeof(RFPurchaseDetailPage));
+            Routing.RegisterRoute(nameof(RFPurchaseLineSelectionPage), typeof(RFPurchaseLineSelectionPage));
             Routing.RegisterRoute(nameof(ProviderSelectionPage), typeof(ProviderSelectionPage));
             Routing.RegisterRoute(nameof(TestEmptyPage), typeof(TestEmptyPage));
             Routing.RegisterRoute(nameof(NewRecieverPage), typeof(NewRecieverPage));

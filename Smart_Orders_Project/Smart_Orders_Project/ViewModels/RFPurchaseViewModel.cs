@@ -48,7 +48,7 @@ namespace Smart_Orders_Project.ViewModels
                 return;
 
             // This will push the ItemDetailPage onto the navigation stack
-            //await Shell.Current.GoToAsync($"{nameof(RFPurchaseDetailPage)}?{nameof(RFPurchaseDetailViewModel.PurchaseOid)}={rf.Oid}");
+            await Shell.Current.GoToAsync($"{nameof(RFPurchaseDetailPage)}?{nameof(RFPurchaseDetailViewModel.RFPurchaseID)}={rf.Oid}");
         }
 
         private async Task ExecuteLoadItemsCommand()
@@ -58,7 +58,8 @@ namespace Smart_Orders_Project.ViewModels
             try
             {
                 RFPurchaseList.Clear();
-                var items = await RFPurchaseRepo.GetItemsAsync();
+                //var items = await RFPurchaseRepo.GetItemsAsync();
+                var items = await App.Database.GetPurchasesAsync();
                 foreach (var item in items)
                 {
                     RFPurchaseList.Add(item);
@@ -77,8 +78,14 @@ namespace Smart_Orders_Project.ViewModels
         public void OnAppearing()
         {
             IsBusy = true;
-
+            ClearData();//clear cart
         }
+
+        private async void ClearData()
+        {
+            await App.Database.DeletePurchaseLinesAsync();
+        }
+
         private async void OnAddOrderClicked(object obj)
         {
             await Shell.Current.GoToAsync(nameof(RFPurchaseDetailPage));

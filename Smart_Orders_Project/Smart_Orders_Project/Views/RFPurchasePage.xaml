@@ -22,7 +22,7 @@
                                     <Grid Padding="0">
                                         <Frame BackgroundColor="white" BorderColor="LightGray" Padding="10" Margin="0,0,0,0" CornerRadius="0" HasShadow="True">
                                             <StackLayout x:DataType="model:RFPurchase" HorizontalOptions="FillAndExpand" >
-                                                <Label Text="{Binding RFCount}" FontSize="16" FontAttributes="Bold"/>
+                                                <Label Text="{Binding ProviderDoc}" FontSize="16" FontAttributes="Bold"/>
                                                 <Label Text="{Binding Provider.Name}" FontSize="16" FontAttributes="Bold"/>
                                                 <StackLayout Orientation="Horizontal">
                                                     <Label Text="{Binding CreationDate}" FontSize="16"/>

@@ -35,7 +35,7 @@ namespace Smart_Orders_Project.Data
         public async Task<List<RFPurchase>> GetPurchasesAsync()
         {
             //get items from db 
-            await Task.Delay(5000);//work sim
+            await Task.Delay(2000);//work sim
             return await Task.FromResult(RFPurchaseList);
         }
         public async Task<RFPurchase> GetPurchaseAsync(string id)
@@ -69,6 +69,12 @@ namespace Smart_Orders_Project.Data
         {
             //get items from db 
             return await Task.FromResult(RFPurchaseLines);
+        }
+        public async Task<bool> DeletePurchaseLinesAsync()
+        {
+            RFPurchaseLines.Clear();
+
+            return await Task.FromResult(true);
         }
     }
 }

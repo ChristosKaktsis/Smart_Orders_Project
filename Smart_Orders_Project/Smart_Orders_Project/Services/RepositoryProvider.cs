@@ -19,7 +19,7 @@ namespace Smart_Orders_Project.Services
         public async Task<List<Provider>> GetItemsAsync()
         {
             //get items from db 
-            await Task.Delay(5000);//work sim
+            await Task.Delay(500);//work sim
             var list = await App.Database.GetProvidersAsync();
             foreach (var item in list)
                 ProviderList.Add(item);
@@ -29,7 +29,7 @@ namespace Smart_Orders_Project.Services
         public async Task<Provider> GetItemAsync(string id)
         {
             //get item from DB
-            await Task.Delay(2000);//work sim
+            await Task.Delay(200);//work sim
             var pro = await App.Database.GetProviderAsync(id);
 
             return await Task.FromResult(pro);
