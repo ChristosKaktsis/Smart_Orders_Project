@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:vm="clr-namespace:Smart_Orders_Project.ViewModels" xmlns:dxcv="http://schemas.devexpress.com/xamarin/2014/forms/collectionview" xmlns:model="clr-namespace:Smart_Orders_Project.Models"
+             x:Class="Smart_Orders_Project.Views.ProviderSelectionPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Προσθηκη" Command="{Binding AddCustomerCommand}"/>
+    </ContentPage.ToolbarItems>
+    <RefreshView x:DataType="vm:ProviderSelectionViewModel"  IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <Grid>
+            <StackLayout Padding="0" Margin="0">
+                <Frame BackgroundColor="{StaticResource Primary}" HeightRequest="10" >
+                </Frame>
+            </StackLayout>
+            <StackLayout Padding="0" Margin="0">
+                <Frame BackgroundColor="{StaticResource Primary}" HeightRequest="30" CornerRadius="30" HasShadow="True">
+                </Frame>
+            </StackLayout>
+            <StackLayout>
+                <Frame BackgroundColor="White" Padding="0" Margin="10,10,10,0" CornerRadius="30" HasShadow="True">
+                    <StackLayout Orientation="Horizontal" >
+                        <Frame BackgroundColor="white" CornerRadius="50" HeightRequest="35" WidthRequest="35" Padding="0" Margin="7">
+                            <Image Source="search.png"/>
+                        </Frame>
+                        <Entry Text="{Binding Search,Mode=OneWayToSource}" Placeholder="Search" ClearButtonVisibility="WhileEditing"  TextColor="Black"  HorizontalOptions="FillAndExpand" Margin="0,0,15,0"/>
+                    </StackLayout>
+                </Frame>
+                <StackLayout Margin="10,10,10,0">
+                    <dxcv:DXCollectionView x:Name="ProviderCollection" Tap="ProviderCollection_Tap" SelectionMode="None"  ItemsSource="{Binding ProviderList}">
+                        <dxcv:DXCollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="10">
+                                    <Frame BackgroundColor="white"  Padding="10" Margin="0,0,0,0" CornerRadius="7" HasShadow="True">
+                                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
+                                            <StackLayout x:DataType="model:Provider">
+                                                <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold"  VerticalOptions="Start" HorizontalOptions="Start"/>
+                                                <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
+                                                    <Label Text="ΑΦΜ:" FontSize="16"/>
+                                                    <Label Text="{Binding AFM}" FontSize="16"/>
+                                                </StackLayout>
+                                                <StackLayout Orientation="Horizontal" >
+                                                    <Label Text="Κωδικός:" FontSize="16"/>
+                                                    <Label Text="{Binding CodeNumber}" FontSize="16"/>
+                                                </StackLayout>
+                                            </StackLayout>
+                                        </StackLayout>
+                                    </Frame>
+                                </Grid>
+                            </DataTemplate>
+                        </dxcv:DXCollectionView.ItemTemplate>
+                        <dxcv:DXCollectionView.SelectedItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="10">
+                                    <Frame BackgroundColor="{StaticResource Complementary}"  Padding="10" Margin="0,0,0,0" CornerRadius="7" HasShadow="True">
+                                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
+                                            <StackLayout x:DataType="model:Provider">
+                                                <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold"  VerticalOptions="Start" HorizontalOptions="Start"/>
+                                                <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
+                                                    <Label Text="ΑΦΜ:" FontSize="16"/>
+                                                    <Label Text="{Binding AFM}" FontSize="16"/>
+                                                </StackLayout>
+                                                <StackLayout Orientation="Horizontal" >
+                                                    <Label Text="Κωδικός:" FontSize="16"/>
+                                                    <Label Text="{Binding CodeNumber}" FontSize="16"/>
+                                                </StackLayout>
+                                            </StackLayout>
+                                        </StackLayout>
+                                    </Frame>
+                                </Grid>
+                            </DataTemplate>
+                        </dxcv:DXCollectionView.SelectedItemTemplate>
+                    </dxcv:DXCollectionView>
+                </StackLayout>
+            </StackLayout>
+
+        </Grid>
+    </RefreshView>
+</ContentPage>

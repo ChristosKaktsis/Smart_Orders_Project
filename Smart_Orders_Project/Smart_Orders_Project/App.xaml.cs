@@ -22,8 +22,9 @@ namespace Smart_Orders_Project
         }
         public App()
         {
-            DevExpress.XamarinForms.CollectionView.Initializer.Init();
             DevExpress.XamarinForms.Editors.Initializer.Init();
+            DevExpress.XamarinForms.CollectionView.Initializer.Init();
+            DevExpress.XamarinForms.Popup.Initializer.Init();
             InitializeComponent();
             
 

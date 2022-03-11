@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:dxcv="http://schemas.devexpress.com/xamarin/2014/forms/collectionview" 
+             xmlns:model="clr-namespace:Smart_Orders_Project.Models.SparePartModels" 
+             xmlns:vm="clr-namespace:Smart_Orders_Project.ViewModels"
+             x:Class="Smart_Orders_Project.Views.TreeGroupingPage"
+             Title="Επιλογή Ομαδοποίηση car.gr">
+    <RefreshView x:DataType="vm:TreeGroupingViewModel" x:Name="page" IsRefreshing="{Binding IsBusy, Mode=TwoWay}" >
+        <Grid>
+            <StackLayout>
+                <StackLayout x:Name="SelectedGroupsStack" HeightRequest="{Binding Height}">
+                    <CollectionView ItemsSource="{Binding SelectedGrouping}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Frame  BackgroundColor="{StaticResource Complementary}" BorderColor="LightGray" Padding="0" Margin="0,0,0,0" HeightRequest="60" CornerRadius="0" HasShadow="True">
+                                        <Grid x:DataType="model:Grouping" >
+                                            <StackLayout  Margin="10">
+                                                <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold" />
+                                            </StackLayout>
+                                            <Button Text="X" Margin="7"  BackgroundColor="{StaticResource Complementary}"
+                                                    
+                                                    Command="{Binding BindingContext.DeleteSelectedCommand, Source={x:Reference page}}"
+                                                    CommandParameter="{Binding Oid}"
+                                                    HorizontalOptions="End" CornerRadius="10"/>
+                                        </Grid>
+                                    </Frame>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
+                <dxcv:DXCollectionView x:Name="OrdersList" SelectionMode="Single" ItemsSource="{Binding GroupinglistFirstLayer}" SelectedItem="{Binding SelectedGroup,Mode=TwoWay}" >
+                    <dxcv:DXCollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <dxcv:SwipeContainer>
+                                <dxcv:SwipeContainer.ItemView>
+                                    <Grid Padding="0">
+                                        <Frame BackgroundColor="white" BorderColor="LightGray" Padding="10" Margin="0,0,0,0" CornerRadius="0" HasShadow="True">
+                                            <StackLayout x:DataType="model:Grouping" Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
+                                                <StackLayout WidthRequest="200">
+                                                    <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold">
+                                                    </Label>
+                                                </StackLayout>
+                                            </StackLayout>
+                                        </Frame>
+                                    </Grid>
+                                </dxcv:SwipeContainer.ItemView>
+                            </dxcv:SwipeContainer>
+                        </DataTemplate>
+                    </dxcv:DXCollectionView.ItemTemplate>
+                </dxcv:DXCollectionView>
+            </StackLayout>
+            <StackLayout HorizontalOptions="End" VerticalOptions="End" Margin="20">
+                <Frame Margin="0" Padding="0" CornerRadius="30" WidthRequest="100" HasShadow="True" IsVisible="{Binding LastChoice}">
+                    <Button Text="Επιλογή" TextTransform="None" BackgroundColor="{StaticResource Tradic}"  FontSize="16" CornerRadius="30" Command="{Binding GoToDetailSparePartCommand}"/>
+                </Frame>
+            </StackLayout>
+        </Grid>
+    </RefreshView>
+</ContentPage>

@@ -6,12 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DevExpress.XamarinForms.CollectionView" Version="21.2.3" />
-    <PackageReference Include="DevExpress.XamarinForms.Editors" Version="21.2.3" />
-    <PackageReference Include="DevExpress.XamarinForms.Grid" Version="21.2.3" />
+    <PackageReference Include="DevExpress.XamarinForms.CollectionView" Version="21.2.6" />
+    <PackageReference Include="DevExpress.XamarinForms.Editors" Version="21.2.6" />
+    <PackageReference Include="DevExpress.XamarinForms.Grid" Version="21.2.6" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />  
-    <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />  
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2337" />  
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.1" />  
     <PackageReference Include="ZXing.Net.Mobile.Forms" Version="3.1.0-beta2" />
   </ItemGroup>
 
@@ -19,22 +19,25 @@
     <EmbeddedResource Update="Views\BarCodeValuesPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\NewManufacturerPage.xaml">
+    <EmbeddedResource Update="Views\PositionImportPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\NewSparePartPage.xaml">
+    <EmbeddedResource Update="Views\SparePartViews\NewManufacturerPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\ProviderSelectionPage.xaml">
+    <EmbeddedResource Update="Views\SparePartViews\NewSparePartPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\RFPurchaseDetailPage.xaml">
+    <EmbeddedResource Update="Views\RFPurchaseViews\ProviderSelectionPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\RFPurchaseLineSelectionPage.xaml">
+    <EmbeddedResource Update="Views\RFPurchaseViews\RFPurchaseDetailPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\RFPurchasePage.xaml">
+    <EmbeddedResource Update="Views\RFPurchaseViews\RFPurchaseLineSelectionPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\RFPurchaseViews\RFPurchasePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\RFSalesViews\BarCodeScanner.xaml">
@@ -70,18 +73,14 @@
     <EmbeddedResource Update="Views\RFCensusViews\RFCesusPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\SparePartPage.xaml">
+    <EmbeddedResource Update="Views\SparePartViews\SparePartPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\TestEmptyPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\TreeGroupingPage.xaml">
+    <EmbeddedResource Update="Views\SparePartViews\TreeGroupingPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\RFPurchaseViews\" />
   </ItemGroup>
 </Project>

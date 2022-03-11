@@ -81,9 +81,12 @@
     <Shell.FlyoutHeader>
         <local:FlyoutHeader />
     </Shell.FlyoutHeader>
-    <!--<TabBar>
+    <TabBar>
         <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate local:LoginPage}" />
-    </TabBar>-->
+    </TabBar>
+    <FlyoutItem Title="RFPositionImport" Icon="icon_feed.png">
+        <ShellContent Route="PositionImportPage" ContentTemplate="{DataTemplate local:PositionImportPage}" />
+    </FlyoutItem>
     <FlyoutItem Title="RFΠωλήσεις" Icon="icon_feed.png">
         <ShellContent Route="OrdersPage" ContentTemplate="{DataTemplate local:OrdersPage}" />
     </FlyoutItem>

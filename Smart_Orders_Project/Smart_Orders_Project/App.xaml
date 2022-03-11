@@ -18,6 +18,7 @@
             <Color x:Key="AnalogousLight">#d7fbfa</Color>
             <Color x:Key="Tradic">#ee0278</Color>
             <Color x:Key="TradicLight">#f8b5d0</Color>
+            <Color x:Key="BackGroundDarkTranc">#b3a0a0a0</Color>
             <Style TargetType="Button">
                 <Setter Property="TextColor" Value="White"></Setter>
                 <Setter Property="VisualStateManager.VisualStateGroups">

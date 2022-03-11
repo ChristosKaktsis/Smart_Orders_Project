@@ -73,16 +73,16 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="DevExpress.XamarinForms.CollectionView">
-      <Version>21.2.3</Version>
+      <Version>21.2.6</Version>
     </PackageReference>
     <PackageReference Include="DevExpress.XamarinForms.Editors">
-      <Version>21.2.3</Version>
+      <Version>21.2.6</Version>
     </PackageReference>
     <PackageReference Include="DevExpress.XamarinForms.Grid">
-      <Version>21.2.3</Version>
+      <Version>21.2.6</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2337" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.1" />
     <PackageReference Include="ZXing.Net.Mobile.Forms">
       <Version>3.1.0-beta2</Version>
     </PackageReference>
@@ -133,6 +133,27 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ok.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\position.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\C3X5J34B1L.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\multibox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\item.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\rack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\warehouse.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\user_icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
