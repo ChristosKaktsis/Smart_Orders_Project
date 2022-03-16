@@ -1,4 +1,5 @@
 ﻿using Smart_Orders_Project.Models;
+using Smart_Orders_Project.Services;
 using Smart_Orders_Project.Views;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,8 @@ namespace Smart_Orders_Project.ViewModels
         private float _quantity, _height, _unit, _length, _width;
         private string _thisisa;
         private double _sum;
+
+        
 
         public ObservableCollection<RFPurchaseLine> LinesList { get; set; }
         public Command LoadItemsCommand { get; set; }
@@ -53,12 +56,16 @@ namespace Smart_Orders_Project.ViewModels
                 var exist = await App.Database.GetPurchaseAsync(rFPurchase.Oid.ToString());
                 if (exist == null)
                 {
-                    await App.Database.AddPurchaseAsync(rFPurchase);
+                  var result =  await RFPurchaseRepo.AddItemAsync(rFPurchase);
+                    Console.WriteLine(result);
+                    if (result)
+                       await SaveRFPurchaseLines();
                 }
                 else
-                    //update
-                    await RFPurchaseRepo.UpdateItemAsync(rFPurchase);
-
+                {
+                     await UpdateRFPurchase(rFPurchase);
+                }
+                   
             }
             catch(Exception ex)
             {
@@ -68,10 +75,37 @@ namespace Smart_Orders_Project.ViewModels
             await Shell.Current.GoToAsync("..");
         }
 
+        private async Task UpdateRFPurchase(RFPurchase rFPurchase)
+        {
+            var result = await RFPurchaseRepo.UpdateItemAsync(rFPurchase);
+            if (result)
+            {
+                await DeleteRFPurchaseLines();
+                await SaveRFPurchaseLines();
+            }
+                
+
+        }
+
+        private async Task DeleteRFPurchaseLines()
+        {
+            var result = await RFPurchaseLineRepo.DeleteItemsAsync(rFPurchase.Oid.ToString());
+            Console.WriteLine($"RFPLine deleted :{result}");
+        }
+
+        private async Task SaveRFPurchaseLines()
+        {
+            foreach(var item in rFPurchase.Lines)
+            {
+                var result = await RFPurchaseLineRepo.AddItemAsync(item);
+                Console.WriteLine($"RFPLine added :{result}");
+            }    
+        }
+
         private void AddLinesToPurchase()
         {
+            rFPurchase.Lines.Clear();
             foreach (var item in LinesList)
-                if(!rFPurchase.Lines.Contains(item))
                     rFPurchase.Lines.Add(item);
         }
 
@@ -80,13 +114,13 @@ namespace Smart_Orders_Project.ViewModels
             //view model lives after going to the next page
             //
             LinesList = new ObservableCollection<RFPurchaseLine>();
-
+            
         }
         public RFPurchase rFPurchase 
         { 
             get 
             { 
-                if(rfPurchase== null)
+                if(rfPurchase == null)
                 {
                     rfPurchase = new RFPurchase
                     {
@@ -100,18 +134,17 @@ namespace Smart_Orders_Project.ViewModels
             set
             {
                 rfPurchase = value;
-                AddLinesToData(value);
                 ProviderDoc = value.ProviderDoc;
                 ProviderName = value.Provider.Name;
             } 
         }
 
-        private  void AddLinesToData(RFPurchase value)
+        private async Task AddLinesToData()
         {
-            if (value == null)
-                return;
-            foreach (var item in value.Lines)
-                if (!LinesList.Contains(item))
+            rFPurchase.Lines = await RFPurchaseLineRepo.GetItemsAsync(rFPurchase.Oid.ToString());
+
+            foreach (var item in rFPurchase.Lines)
+                if (LinesList.All(l => l.Oid != item.Oid))
                     LinesList.Add(item);
         }
 
@@ -175,6 +208,7 @@ namespace Smart_Orders_Project.ViewModels
             try
             {
                 rFPurchase = await App.Database.GetPurchaseAsync(value);
+                await AddLinesToData();
             }
             catch (Exception ex)
             {
@@ -212,7 +246,7 @@ namespace Smart_Orders_Project.ViewModels
                 return;
             try
             {
-                var provider = await ProviderRepo.GetItemAsync(value);
+                var provider = await App.Database.GetProviderAsync(value);
                 ProviderName = provider.Name;
                 AddProviderToPurchase(provider);
             }

@@ -44,15 +44,19 @@ namespace Smart_Orders_Project.Services
         public async Task<List<Model>> GetItemsWithNameAsync(string name)
         {
             ModelList.Clear();
-            return await Task.Run(() =>
+            return await Task.Run(async() =>
             {
-                string queryString = $@"SELECT Oid
+                string oldqueryString = $@"SELECT Oid
                                         ,ΙεραρχικόΖοομ1
                                         ,Κωδικός
                                         ,Περιγραφή 
                                         FROM ΙεραρχικόΖοομ2
                                         where ΙεραρχικόΖοομ1 ='{name}' and GCRecord is null
                                     ";
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat(await GetParamAsync("getModelsByBrand"), name);
+                string queryString = sb.ToString();
+
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();

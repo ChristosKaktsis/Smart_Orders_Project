@@ -23,10 +23,12 @@ namespace Smart_Orders_Project.Services
         }
         public async Task<User> GetUserFromDB(string username, string password)
         {
-            return await Task.Run(() =>
+            return await Task.Run( async() =>
             {
-                string queryString = $"select Oid, UserName from [User] where UserName ='{username}'";
-
+                
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat(await GetParamAsync("getUserWithID"), username);
+                string queryString = sb.ToString();
 
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {

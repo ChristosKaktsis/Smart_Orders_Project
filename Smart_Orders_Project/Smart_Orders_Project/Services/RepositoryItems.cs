@@ -72,47 +72,12 @@ namespace Smart_Orders_Project.Services
 
         public async Task<Product> GetItemAsync(string id)
         {
-            return await Task.Run(() =>
+            return await Task.Run(async() =>
             {
-                string queryString = $@"SELECT  Είδος.Oid     
-                                      ,Κωδικός
-                                      ,Περιγραφή
-                                      ,barcode = null
-                                      ,ΦΠΑ 
-                                      ,ΜονάδεςΜέτρησης.ΜονάδαΜέτρησης
-	                                  ,ΜονάδεςΜέτρησης.ΤύποςΔιάστασης
-                                      ,Πλάτος
-                                      ,Μήκος
-                                      ,Υψος
-                                      ,Κείμενο2 as ProductCode2
-	                                  ,ΤιμήΧονδρικής
-	                                  ,Χρώματα = null 
-	                                  ,Μεγέθη = null
-                                  FROM Είδος left join ΜονάδεςΜέτρησης on ΜονάδεςΜέτρησης.Oid = Είδος.ΜονάδαΜέτρησης
-                                  where ((Είδος.Κωδικός = '{id}' or Είδος.Κείμενο2 ='{id}')  and (ΥποχρεωτικήΔιαχείρησηSN ='false' or ΥποχρεωτικήΔιαχείρησηSN is null)) and Είδος.GCRecord is null
-
-                                  UNION
-
-                                  SELECT Είδος as Oid
-	                                  ,BarCode as Κωδικός
-                                      ,Περιγραφή
-                                      ,BarCode
-	                                  ,ΦΠΑ
-	                                  ,ΜονάδεςΜέτρησης.ΜονάδαΜέτρησης
-	                                  ,ΜονάδεςΜέτρησης.ΤύποςΔιάστασης
-	                                  ,Πλάτος
-                                      ,Μήκος
-                                      ,Υψος
-	                                  ,Κείμενο2 as ProductCode2
-                                      ,ΤιμήΧονδρικής
-                                      ,Χρώματα.Χρώματα
-                                      ,Μεγέθη.Μεγέθη
-                                  FROM BarCodeΕίδους
-                                  left join Χρώματα on Χρώματα.Oid = BarCodeΕίδους.Χρώμα
-                                  left join ΜονάδεςΜέτρησης on ΜονάδεςΜέτρησης.Oid = BarCodeΕίδους.ΜονάδαΜέτρησης
-                                  left join Μεγέθη on Μεγέθη.Oid = BarCodeΕίδους.Μέγεθος
-                                   where  (BarCode = '{id}' or BarCodeΕίδους.Κείμενο2 ='{id}') and BarCodeΕίδους.GCRecord is null";
-
+                
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat(await GetParamAsync("getProductWithID"), id);
+                string queryString = sb.ToString();
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();
@@ -163,47 +128,11 @@ namespace Smart_Orders_Project.Services
 
         public async Task<List<Product>> GetItemsWithNameAsync(string name)
         {
-            return await Task.Run(() =>
+            return await Task.Run(async() =>
             {
-                string queryString = $@"SELECT Είδος.Oid     
-                                      ,Κωδικός
-                                      ,Περιγραφή
-                                      ,BarCode = null
-                                      ,ΦΠΑ 
-                                      ,ΜονάδεςΜέτρησης.ΜονάδαΜέτρησης
-	                                  ,ΜονάδεςΜέτρησης.ΤύποςΔιάστασης
-                                      ,Πλάτος
-                                      ,Μήκος
-                                      ,Υψος
-                                      ,Κείμενο2 as ProductCode2
-	                                  ,ΤιμήΧονδρικής
-	                                  ,Χρώματα = null
-	                                  ,Μεγέθη = null
-                                  FROM Είδος left join ΜονάδεςΜέτρησης on ΜονάδεςΜέτρησης.Oid = Είδος.ΜονάδαΜέτρησης
-                                  where ((Είδος.Κωδικός LIKE '%{name}%' OR  Είδος.Περιγραφή LIKE '%{name}%' or Είδος.Κείμενο2 LIKE '%{name}%') and (ΥποχρεωτικήΔιαχείρησηSN ='false' or ΥποχρεωτικήΔιαχείρησηSN is null)) and Είδος.GCRecord is null
-
-                                  UNION
-
-                                  SELECT Είδος as Oid
-	                                  ,BarCode as Κωδικός
-                                      ,Περιγραφή
-                                      ,BarCode
-	                                  ,ΦΠΑ
-	                                  ,ΜονάδεςΜέτρησης.ΜονάδαΜέτρησης
-	                                  ,ΜονάδεςΜέτρησης.ΤύποςΔιάστασης
-	                                  ,Πλάτος
-                                      ,Μήκος
-                                      ,Υψος
-	                                  ,Κείμενο2 as ProductCode2
-                                      ,ΤιμήΧονδρικής
-                                      ,Χρώματα.Χρώματα
-                                      ,Μεγέθη.Μεγέθη
-                                  FROM BarCodeΕίδους
-                                  left join Χρώματα on Χρώματα.Oid = BarCodeΕίδους.Χρώμα
-                                  left join ΜονάδεςΜέτρησης on ΜονάδεςΜέτρησης.Oid = BarCodeΕίδους.ΜονάδαΜέτρησης
-                                  left join Μεγέθη on Μεγέθη.Oid = BarCodeΕίδους.Μέγεθος
-                                   where  (BarCode LIKE '%{name}%' OR  Περιγραφή LIKE '%{name}%'  or BarCodeΕίδους.Κείμενο2 LIKE '%{name}%') and BarCodeΕίδους.GCRecord is null";
-
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat(await GetParamAsync("getProductWithName"), name);
+                string queryString = sb.ToString();
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     /*ProductsList.Clear()*/

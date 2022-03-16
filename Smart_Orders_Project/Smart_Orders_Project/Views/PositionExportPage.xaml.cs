@@ -11,14 +11,14 @@ using Xamarin.Forms.Xaml;
 namespace Smart_Orders_Project.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PositionImportPage : ContentPage
+    public partial class PositionExportPage : ContentPage
     {
-        private PositionImportViewModel _viewModel;
+        private PositionExportViewModel _viewModel;
 
-        public PositionImportPage()
+        public PositionExportPage()
         {
             InitializeComponent();
-            BindingContext = _viewModel = new PositionImportViewModel();
+            BindingContext = _viewModel = new PositionExportViewModel();
             OpenPopUp();
         }
 
@@ -58,7 +58,7 @@ namespace Smart_Orders_Project.Views
         }
         private void Done_button_Clicked(object sender, EventArgs e)
         {
-            _viewModel.SavePositionCommand.Execute(0);
+            _viewModel.SavePositionCommand.Execute(1);
             Reset();
         }
 

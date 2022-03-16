@@ -64,13 +64,12 @@ namespace Smart_Orders_Project.Services
 
         private async Task<List<Manufacturer>> GetItemsFromDBAsync()
         {
-            return await Task.Run(() =>
+            return await Task.Run(async() =>
             {
-                string queryString = $@"Select Oid
-                                       ,Κωδικός
-                                       ,Περιγραφή
-                                       FROM Κατασκευαστής
-                                       where GCRecord is null";
+                
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat(await GetParamAsync("getManufacturers"));
+                string queryString = sb.ToString();
 
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {

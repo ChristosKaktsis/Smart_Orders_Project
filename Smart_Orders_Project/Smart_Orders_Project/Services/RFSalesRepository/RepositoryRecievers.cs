@@ -34,11 +34,13 @@ namespace Smart_Orders_Project.Services
 
         public async Task<List<Reciever>> GetItemsAsync(bool forceRefresh = false)
         {
-            return await Task.Run(() =>
+            return await Task.Run(async() =>
             {
                 RecieverList = new List<Reciever>();
-                string queryString = @"select Oid ,Επωνυμία 
-                                      from Παραλαβών where GCRecord is null";
+        
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat(await GetParamAsync("getRecievers"));
+                string queryString = sb.ToString();
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();
@@ -69,13 +71,15 @@ namespace Smart_Orders_Project.Services
 
         public async Task<bool> UploadItemAsync(Reciever item)
         {
-            return await Task.Run(() =>
+            return await Task.Run(async() =>
             {
                 int ok = 0;
-                string queryString = $@"INSERT INTO [Παραλαβών] (Oid, Επωνυμία)
+                string oldqueryString = $@"INSERT INTO [Παραλαβών] (Oid, Επωνυμία)
                                     VALUES((Convert(uniqueidentifier, N'{item.Oid}')), 
                                            '{item.RecieverName}')";
-
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat(await GetParamAsync("postReciever"), item.Oid, item.RecieverName);
+                string queryString = sb.ToString();
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();

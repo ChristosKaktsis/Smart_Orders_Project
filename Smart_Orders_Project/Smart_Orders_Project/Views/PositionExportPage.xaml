@@ -1,11 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             xmlns:dxp="http://schemas.devexpress.com/xamarin/2014/forms/popup" xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors" xmlns:dxcv="http://schemas.devexpress.com/xamarin/2014/forms/collectionview" xmlns:vm="clr-namespace:Smart_Orders_Project.ViewModels" xmlns:model="clr-namespace:Smart_Orders_Project.Models"
-             x:Class="Smart_Orders_Project.Views.PositionImportPage"
-             Title="Παραλαβή σε Θέση">
+             xmlns:dxp="http://schemas.devexpress.com/xamarin/2014/forms/popup" 
+             xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors" 
+             xmlns:dxcv="http://schemas.devexpress.com/xamarin/2014/forms/collectionview" 
+             xmlns:vm="clr-namespace:Smart_Orders_Project.ViewModels" 
+             xmlns:model="clr-namespace:Smart_Orders_Project.Models"
+             x:Class="Smart_Orders_Project.Views.PositionExportPage"
+             Title="Εξαγωγή απο Θέση">
     <ContentPage.Content>
-        <StackLayout x:DataType="vm:PositionImportViewModel" Margin="11" Spacing="30" >
+        <StackLayout x:DataType="vm:PositionExportViewModel" Margin="11" Spacing="30" >
             
             <dxp:DXPopup x:Name="SpacePopUp"
                          AllowScrim="True"

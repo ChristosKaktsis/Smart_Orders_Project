@@ -14,18 +14,15 @@ namespace Smart_Orders_Project.Data
         private List<RFPurchase> RFPurchaseList;
         public FakeData()
         {
-            ProviderList = new List<Provider>()
-            {
-                new Provider{ Oid = Guid.NewGuid(), AFM = "123123123", Name = "George", Email = "email@gmail.com", CodeNumber="33333"},
-                new Provider{ Oid = Guid.NewGuid(), AFM = "34522222", Name = "John", Email = "email@gmail.com", CodeNumber="2"},
-                new Provider{ Oid = Guid.NewGuid(), AFM = "5435345", Name = "Nick", Email = "email@gmail.com", CodeNumber="3"},
-            };
+            ProviderList = new List<Provider>();
             RFPurchaseLines = new List<RFPurchaseLine>();
             RFPurchaseList = new List<RFPurchase>();
         }
-        public async Task<List<Provider>> GetProvidersAsync()
+        public async Task<bool> AddProvidersAsync(Provider item)
         {
-            return await Task.FromResult(ProviderList);
+            if (ProviderList.All(p => p.Oid != item.Oid))
+                ProviderList.Add(item);
+            return await Task.FromResult(true);
         }
         public async Task<Provider> GetProviderAsync(string id)
         {
@@ -35,7 +32,7 @@ namespace Smart_Orders_Project.Data
         public async Task<List<RFPurchase>> GetPurchasesAsync()
         {
             //get items from db 
-            await Task.Delay(2000);//work sim
+            
             return await Task.FromResult(RFPurchaseList);
         }
         public async Task<RFPurchase> GetPurchaseAsync(string id)
@@ -45,17 +42,10 @@ namespace Smart_Orders_Project.Data
         }
         public async Task<bool> AddPurchaseAsync(RFPurchase item)
         {
-            //add item to DB
-            var purchase = new RFPurchase
-            {
-                Oid = item.Oid,
-                Provider = item.Provider,
-                ProviderDoc = item.ProviderDoc,
-                Lines = item.Lines,
-                Storage = item.Storage,
-                CreationDate = item.CreationDate
-            };
-            RFPurchaseList.Add(purchase);
+            //add item 
+            if(RFPurchaseList.All(p => p.Oid != item.Oid))
+                RFPurchaseList.Add(item);
+
             return await Task.FromResult(true);
         }
         public async Task<bool> AddPurchaseLineAsync(RFPurchaseLine item)

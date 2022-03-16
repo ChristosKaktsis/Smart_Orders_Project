@@ -53,9 +53,13 @@ namespace Smart_Orders_Project.Services
 
         public async Task<Customer> GetItemAsync(string id)
         {
-            return await Task.Run(() =>
+            return await Task.Run(async() =>
             {
-                string queryString = "select Oid , Κωδικός ,Επωνυμία ,ΔιακριτικόςΤίτλος ,ΑΦΜ ,Email from Πελάτης where Oid ='" + id + "' and  GCRecord is null";
+                string oldqueryString = "select Oid , Κωδικός ,Επωνυμία ,ΔιακριτικόςΤίτλος ,ΑΦΜ ,Email from Πελάτης where Oid ='" + id + "' and  GCRecord is null";
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat(await GetParamAsync("getCustomerWithID"), id);
+                string queryString = sb.ToString();
+
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();
@@ -78,10 +82,15 @@ namespace Smart_Orders_Project.Services
 
         public async Task<List<Customer>> GetItemsAsync(bool forceRefresh = false)
         { 
-            return await Task.Run(()=>
+            return await Task.Run(async()=>
             {
                 CustomerList = new List<Customer>();
-                string queryString = "select Oid , Κωδικός ,Επωνυμία ,ΑΦΜ, ΔιακριτικόςΤίτλος ,Email from Πελάτης where GCRecord is null";
+                string oldqueryString = "select Oid , Κωδικός ,Επωνυμία ,ΑΦΜ, ΔιακριτικόςΤίτλος ,Email from Πελάτης where GCRecord is null";
+                
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat(await GetParamAsync("getCustomers"));
+                string queryString = sb.ToString();
+
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();
@@ -117,11 +126,16 @@ namespace Smart_Orders_Project.Services
 
         public async Task<List<Customer>> GetItemsWithNameAsync(string name)
         {
-            return await Task.Run(() =>
+            return await Task.Run(async() =>
             {
                 CustomerList = new List<Customer>();
                 //CustomerList.Clear();
-                string queryString = "select Oid , Κωδικός ,Επωνυμία ,ΑΦΜ, ΔιακριτικόςΤίτλος ,Email from Πελάτης where Κωδικός Like '%"+name+ "%' or Επωνυμία like '%" + name + "%' or ΑΦΜ like '%" + name + "%' and GCRecord is null";
+                string oldqueryString = "select Oid , Κωδικός ,Επωνυμία ,ΑΦΜ, ΔιακριτικόςΤίτλος ,Email from Πελάτης where Κωδικός Like '%"+name+ "%' or Επωνυμία like '%" + name + "%' or ΑΦΜ like '%" + name + "%' and GCRecord is null";
+
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat(await GetParamAsync("getCustomersWithName"),name);
+                string queryString = sb.ToString();
+
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();

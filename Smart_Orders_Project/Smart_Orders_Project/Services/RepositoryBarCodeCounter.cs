@@ -12,10 +12,11 @@ namespace Smart_Orders_Project.Services
         public int Value { get; set; }
         public async Task<int> GetCounterFromDB()
         {
-            return await Task.Run(() =>
+            return await Task.Run(async() =>
             {
-                string queryString = "SELECT Μετρητής ,Τιμή FROM ΓενικόςΜετρητής where Μετρητής = 'Barcode' and GCRecord is null";
-
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat(await GetParamAsync("getBarCodeCounter"));
+                string queryString = sb.ToString();
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();
@@ -33,9 +34,11 @@ namespace Smart_Orders_Project.Services
         }
         public async Task<bool> SetCounterToDB()
         {
-            return await Task.Run(() =>
+            return await Task.Run(async() =>
             {
-                string queryString = $"UPDATE ΓενικόςΜετρητής SET Τιμή = {Value} WHERE Μετρητής = 'Barcode'";
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat(await GetParamAsync("putBarCodeCounter"),Value);
+                string queryString = sb.ToString();
 
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {

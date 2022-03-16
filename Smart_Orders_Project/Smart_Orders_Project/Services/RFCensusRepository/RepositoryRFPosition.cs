@@ -28,9 +28,13 @@ namespace Smart_Orders_Project.Services
 
         public async Task<Position> GetItemAsync(string id)
         {
-            return await Task.Run(() => {
+            return await Task.Run(async() => {
                 
-                string queryString = $"SELECT  Oid, Κωδικός, Περιγραφή FROM Θέση where (Κωδικός = '{id}' or Περιγραφή = '{id}') and GCRecord is null";
+                string oldqueryString = $"SELECT  Oid, Κωδικός, Περιγραφή FROM Θέση where (Κωδικός = '{id}' or Περιγραφή = '{id}') and GCRecord is null";
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat(await GetParamAsync("getRFPositionWithID"),id);
+                string queryString = sb.ToString();
+
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();
@@ -57,9 +61,12 @@ namespace Smart_Orders_Project.Services
 
         public async Task<List<Position>> GetItemsWithNameAsync(string name)
         {
-            return await Task.Run(() => {
+            return await Task.Run(async() => {
                 PositionList.Clear();
-                string queryString = "SELECT  Oid, Κωδικός, Περιγραφή FROM Θέση where GCRecord is null";
+                
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat(await GetParamAsync("getRFPositions"));
+                string queryString = sb.ToString();
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();

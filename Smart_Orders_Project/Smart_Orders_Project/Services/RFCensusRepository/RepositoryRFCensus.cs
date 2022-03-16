@@ -47,10 +47,14 @@ namespace Smart_Orders_Project.Services
            return await Task.Run(async () =>
             {
                 List<RFCensus> newlist = new List<RFCensus>();
-                string queryString = $@"select Oid ,ΑποθηκευτικόςΧώρος ,Είδος ,Ποσότητα 
+                string oldqueryString = $@"select Oid ,ΑποθηκευτικόςΧώρος ,Είδος ,Ποσότητα 
                                             ,ΗμνίαΔημιουργίας ,Θέση ,BarCodeΕίδους ,Ράφι 
                                        from RFΑπογραφή 
                                        where ΧρήστηςΔημιουργίας ='{name}' and UpdSmart = 'false' and UpdWMS = 'false'  and GCRecord is null";
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat(await GetParamAsync("getRFCensusWithUser"), name);
+                string queryString = sb.ToString();
+
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();
@@ -77,9 +81,11 @@ namespace Smart_Orders_Project.Services
 
         private async Task<Product> GetProduct(string id, string bar)
         {
-            return await Task.Run(() =>
+            return await Task.Run(async() =>
             {
-                string queryString = $@"select * from (SELECT  Είδος.Oid     
+                var lip = (string.IsNullOrEmpty(bar) ? "is null" : $"='{bar}'");
+
+                string oldqueryString = $@"select * from (SELECT  Είδος.Oid     
                                       ,Κωδικός
                                       ,Περιγραφή
 	                                  ,BarCode = null
@@ -118,6 +124,10 @@ namespace Smart_Orders_Project.Services
                                   left join Μεγέθη on Μεγέθη.Oid = BarCodeΕίδους.Μέγεθος
                                    where BarCodeΕίδους.GCRecord is null) as U where U.Oid = '{id}' and U.BarCode {(string.IsNullOrEmpty(bar) ? "is null" : $"='{bar}'")}";
 
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat(await GetParamAsync("getProductWithID_Barcode"), id, lip);
+                string queryString = sb.ToString();
+
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();
@@ -152,9 +162,14 @@ namespace Smart_Orders_Project.Services
 
         private async Task<Position> GetPositionDB(string id)
         {
-            return await Task.Run(() => {
+            return await Task.Run(async() => {
 
-                string queryString = $"SELECT  Oid, Κωδικός, Περιγραφή FROM Θέση where Oid = '{id}' and GCRecord is null";
+                string oldqueryString = $"SELECT  Oid, Κωδικός, Περιγραφή FROM Θέση where Oid = '{id}' and GCRecord is null";
+
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat(await GetParamAsync("getRFPositionWithID"), id);
+                string queryString = sb.ToString();
+
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();
@@ -176,9 +191,14 @@ namespace Smart_Orders_Project.Services
 
         private async Task<Storage> GetStorageDB(string id)
         {
-            return await Task.Run(() => {
+            return await Task.Run(async() => {
 
-                string queryString = $"SELECT Oid, Περιγραφή FROM ΑποθηκευτικόςΧώρος where Oid ='{id}' and GCRecord is null";
+                string oldqueryString = $"SELECT Oid, Περιγραφή FROM ΑποθηκευτικόςΧώρος where Oid ='{id}' and GCRecord is null";
+
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat(await GetParamAsync("getStorageWithID"), id);
+                string queryString = sb.ToString();
+
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();
@@ -199,12 +219,17 @@ namespace Smart_Orders_Project.Services
 
         public async Task<bool> UpdateItemAsync(RFCensus item)
         {
-            return await Task.Run(() =>
+            return await Task.Run(async() =>
             {
                 int ok = 0;
-                string queryString = $@"UPDATE RFΑπογραφή
+                string oldqueryString = $@"UPDATE RFΑπογραφή
                                     SET Ποσότητα = '{item.Quantity}'
                                     WHERE Oid = '{item.Oid}' ";
+
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat(await GetParamAsync("putRFCensus"), item.Quantity, item.Oid);
+                string queryString = sb.ToString();
+
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();
@@ -217,17 +242,23 @@ namespace Smart_Orders_Project.Services
 
         public async Task<bool> UploadItemAsync(RFCensus item)
         {
-            return await Task.Run(() =>
+            return await Task.Run(async() =>
             {
                 int ok = 0;
-                string queryString = $@"INSERT INTO RFΑπογραφή (Oid, ΑποθηκευτικόςΧώρος, Είδος, ΧρήστηςΔημιουργίας, Ποσότητα, ΗμνίαΔημιουργίας, 
+                var lip = string.IsNullOrEmpty(item.Product.BarCode) ? "null" : $"'{item.Product.BarCode}'";
+
+                string oldqueryString = $@"INSERT INTO RFΑπογραφή (Oid, ΑποθηκευτικόςΧώρος, Είδος, ΧρήστηςΔημιουργίας, Ποσότητα, ΗμνίαΔημιουργίας, 
                                     Θέση, BarCodeΕίδους ,UpdSmart ,UpdWMS ,Ολοκληρώθηκε)
                                     VALUES((Convert(uniqueidentifier, N'{item.Oid}')), 
                                            (Convert(uniqueidentifier, N'{item.Storage.Oid}')),
                                            (Convert(uniqueidentifier, N'{item.Product.Oid}')),
                                            (Convert(uniqueidentifier, N'{item.UserCreator.UserID}')),
                                         '{item.Quantity}', GETDATE(),(Convert(uniqueidentifier, N'{item.Position.Oid}')),
-                                        "+(string.IsNullOrEmpty(item.Product.BarCode)?"null":$"'{item.Product.BarCode}'")+",0,0,1)";
+                                        "+lip+",0,0,1)";
+
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat(await GetParamAsync("postRFCensus"), item.Oid, item.Storage.Oid, item.Product.Oid, item.UserCreator.UserID, item.Quantity, item.Position.Oid, lip);
+                string queryString = sb.ToString();
 
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
@@ -244,10 +275,14 @@ namespace Smart_Orders_Project.Services
             var oldItem = RFCensusList.Where((RFCensus arg) => arg.Oid.ToString() == id).FirstOrDefault();
             RFCensusList.Remove(oldItem);
 
-            return await Task.Run(() =>
+            return await Task.Run(async() =>
             {
                 int ok = 0;
-                string queryString = $@"DELETE FROM RFΑπογραφή WHERE Oid ='{id}'";
+                string oldqueryString = $@"DELETE FROM RFΑπογραφή WHERE Oid ='{id}'";
+
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat(await GetParamAsync("deleteRFCensusWithID"),id);
+                string queryString = sb.ToString();
 
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {

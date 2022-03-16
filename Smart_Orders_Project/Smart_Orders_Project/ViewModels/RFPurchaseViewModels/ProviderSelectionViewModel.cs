@@ -39,7 +39,7 @@ namespace Smart_Orders_Project.ViewModels
 
                 ProviderList.Clear();
 
-                var items = await ProviderRepo.GetItemsAsync();
+                var items = await ProviderRepo.GetItemsAsync(search);
                 foreach (var item in items)
                 {
                     ProviderList.Add(item);
@@ -58,6 +58,7 @@ namespace Smart_Orders_Project.ViewModels
         private async void ExecuteAddProvider(Provider obj)
         {
             //null check on page Model
+            await App.Database.AddProvidersAsync(obj);//add to static datalist
             await Shell.Current.GoToAsync($"..?{nameof(RFPurchaseDetailViewModel.ProviderID)}={obj.Oid}");
         }
 

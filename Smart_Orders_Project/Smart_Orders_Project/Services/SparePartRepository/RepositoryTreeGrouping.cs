@@ -18,15 +18,14 @@ namespace Smart_Orders_Project.Services
         }
         public async Task<List<Grouping>> GetItemsWithNameAsync()
         {
-            return await Task.Run( () =>
+            return await Task.Run(async () =>
             {
                 GroupingList.Clear();
-                string queryString = $@"SELECT a.Oid
-                                      ,a.Parent
-                                      ,a.Name as NameChild
-	                                  ,ΔενδρικήΟμαδοποιησηΕιδών.ID   
-  FROM HCategory a   inner join ΔενδρικήΟμαδοποιησηΕιδών on ΔενδρικήΟμαδοποιησηΕιδών.Oid = a.Oid
-";
+                
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat(await GetParamAsync("getTreeGrouping"));
+                string queryString = sb.ToString();
+
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();

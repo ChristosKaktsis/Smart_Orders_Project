@@ -36,10 +36,13 @@ namespace Smart_Orders_Project.Services
 
         public async Task<List<Storage>> GetItemsAsync(bool forceRefresh = false)
         {
-           return await Task.Run(() => {
+           return await Task.Run(async() => {
                 StorageList.Clear();
-                string queryString = "SELECT Oid, Περιγραφή FROM ΑποθηκευτικόςΧώρος where GCRecord is null";
-                using (SqlConnection connection = new SqlConnection(ConnectionString))
+                string oldqueryString = "SELECT Oid, Περιγραφή FROM ΑποθηκευτικόςΧώρος where GCRecord is null";
+               StringBuilder sb = new StringBuilder();
+               sb.AppendFormat(await GetParamAsync("getRFStorage") );
+               string queryString = sb.ToString();
+               using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();
                     SqlCommand command = new SqlCommand(queryString, connection);

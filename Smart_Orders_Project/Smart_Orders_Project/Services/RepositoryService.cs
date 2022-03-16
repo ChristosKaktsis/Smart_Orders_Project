@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Text;
+using System.Threading.Tasks;
 using Xamarin.Essentials;
 
 namespace Smart_Orders_Project.Services
@@ -14,6 +16,24 @@ namespace Smart_Orders_Project.Services
             {
                 Preferences.Set(nameof(ConnectionString), value);
             }
+        }
+        public async Task<string> GetParamAsync(string parName)
+        {
+            string queryString = $@"SELECT ParamName, Parameter
+                From XamarinMobWMSParameters where ParamName='{parName}'";
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(queryString, connection);
+                SqlDataReader reader = command.ExecuteReader();
+                if (!reader.HasRows)
+                    return null;
+                reader.Read();
+
+                return await Task.FromResult(reader["Parameter"].ToString());
+            }
+
         }
     }
 }

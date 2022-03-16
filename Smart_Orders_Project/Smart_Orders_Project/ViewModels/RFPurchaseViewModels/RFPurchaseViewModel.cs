@@ -32,6 +32,9 @@ namespace Smart_Orders_Project.ViewModels
                 try
                 {
                     //complete the Rfpurchase
+                    purchase.Complete = true;
+                    var result = await RFPurchaseRepo.UpdateItemAsync(purchase);
+                    Console.WriteLine($"Complete ?{result}");
                 }
                 catch (Exception ex)
                 {
@@ -47,6 +50,7 @@ namespace Smart_Orders_Project.ViewModels
             if (rf == null)
                 return;
 
+            await App.Database.AddPurchaseAsync(rf);
             // This will push the ItemDetailPage onto the navigation stack
             await Shell.Current.GoToAsync($"{nameof(RFPurchaseDetailPage)}?{nameof(RFPurchaseDetailViewModel.RFPurchaseID)}={rf.Oid}");
         }
@@ -58,8 +62,8 @@ namespace Smart_Orders_Project.ViewModels
             try
             {
                 RFPurchaseList.Clear();
-                //var items = await RFPurchaseRepo.GetItemsAsync();
-                var items = await App.Database.GetPurchasesAsync();
+                
+                var items = await RFPurchaseRepo.GetItemsAsync();
                 foreach (var item in items)
                 {
                     RFPurchaseList.Add(item);
