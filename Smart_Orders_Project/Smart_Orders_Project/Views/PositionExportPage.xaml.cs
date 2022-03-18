@@ -47,6 +47,7 @@ namespace Smart_Orders_Project.Views
         }
         private async void Product_text_Unfocused(object sender, FocusEventArgs e)
         {
+            await _viewModel.SetProduct(_viewModel.ProductID);
             if (_viewModel.IsQuickOn)
                 Reset();
             else if (!string.IsNullOrWhiteSpace(Product_text.Text))
@@ -58,14 +59,13 @@ namespace Smart_Orders_Project.Views
         }
         private void Done_button_Clicked(object sender, EventArgs e)
         {
-            _viewModel.SavePositionCommand.Execute(1);
             Reset();
         }
 
-        private void Reset()
+        private async void Reset()
         {
             //Done
-            
+            await _viewModel.ExecuteSavePosition(1);
             Product_text.Focus();
             Product_text.Text = string.Empty;
         }

@@ -5,11 +5,11 @@ using Xamarin.Forms;
 
 namespace Smart_Orders_Project.ViewModels
 {
-    public class PositionImportViewModel : PositionBaseViewModel
+    public class PositionImportViewModel : PositionImportExportViewModel
     {
         public PositionImportViewModel()
         {
-            SavePositionCommand = new Command<int>(ExecuteSavePosition);
+            //SavePositionCommand = new Command<int>(ExecuteSavePosition);
             im_ex = 0;
         }
         

@@ -21,11 +21,11 @@ namespace Smart_Orders_Project.Services
         {
             ProviderList.Clear();
             //get items from db 
-            string queryString = $"select Oid , Κωδικός ,Επωνυμία ,ΑΦΜ, Email from [Προμηθευτής] where (Επωνυμία like '%{name}%' or ΑΦΜ like '%{name}%') and GCRecord is null";
+            //string queryString = $"select Oid , Κωδικός ,Επωνυμία ,ΑΦΜ, Email from [Προμηθευτής] where (Επωνυμία like '%{name}%' or ΑΦΜ like '%{name}%') and GCRecord is null";
 
-            //StringBuilder sb = new StringBuilder();
-            //sb.AppendFormat(await GetParamAsync("getCustomers"));
-            //string queryString = sb.ToString();
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat(await GetParamAsync("getProviderWithName"),name);
+            string queryString = sb.ToString();
 
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
@@ -52,10 +52,10 @@ namespace Smart_Orders_Project.Services
         {
             if (string.IsNullOrEmpty(id))
                 return null;
-            //StringBuilder sb = new StringBuilder();
-            //sb.AppendFormat(await GetParamAsync("getUserWithID"), username);
-            //string queryString = sb.ToString();
-            string queryString = $"select Oid , Κωδικός ,Επωνυμία ,ΑΦΜ, Email from [Προμηθευτής] where Oid = '{id}'";
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat(await GetParamAsync("getProviderWithID"), id);
+            string queryString = sb.ToString();
+            //string queryString = $"select Oid , Κωδικός ,Επωνυμία ,ΑΦΜ, Email from [Προμηθευτής] where Oid = '{id}'";
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();

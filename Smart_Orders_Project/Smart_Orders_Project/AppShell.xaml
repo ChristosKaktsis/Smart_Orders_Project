@@ -85,9 +85,12 @@
         <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate local:LoginPage}" />
     </TabBar>-->
     
-    <!--<FlyoutItem Title="RFΠωλήσεις" Icon="icon_feed.png">
+    <FlyoutItem Title="RFΠωλήσεις" Icon="icon_feed.png">
         <ShellContent Route="OrdersPage" ContentTemplate="{DataTemplate local:OrdersPage}" />
-    </FlyoutItem>-->
+    </FlyoutItem>
+    <FlyoutItem Title="Μετακίνηση σε θέση" Icon="icon_feed.png">
+        <ShellContent Route="MoveToPositionPage" ContentTemplate="{DataTemplate local:MoveToPositionPage}" />
+    </FlyoutItem>
     <FlyoutItem Title="RFΑγορές" Icon="icon_feed.png">
         <ShellContent Route="RFPurchasePage" ContentTemplate="{DataTemplate local:RFPurchasePage}" />
     </FlyoutItem>

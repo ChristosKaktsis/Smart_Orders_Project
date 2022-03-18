@@ -28,9 +28,7 @@ namespace Smart_Orders_Project.Views
         }
         void SwipeItem_Delete_Invoked(System.Object sender, SwipeItemTapEventArgs e)
         {
-
-            
-            //_viewModel.DeleteCommand.Execute(e.Item);
+            _viewModel.DeleteCommand.Execute(e.Item);
         }
        
         void SwipeItem_Edit_Invoked(System.Object sender, SwipeItemTapEventArgs e)

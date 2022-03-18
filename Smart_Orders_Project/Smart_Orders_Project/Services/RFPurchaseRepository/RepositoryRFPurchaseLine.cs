@@ -22,11 +22,11 @@ namespace Smart_Orders_Project.Services
             //get items from db 
             RFPurchaseLines.Clear();
 
-            //StringBuilder sb = new StringBuilder();
-            //sb.AppendFormat(await GetParamAsync("getRFLinesWithRFSaleID"), id);
-            //string queryString = sb.ToString();
-            string queryString = $@"SELECT Oid,RFΠωλήσεις,Είδος,Ποσότητα,BarCodeΕίδους,ΠοσότηταΔιάστασης,Μήκος,Πλάτος,Υψος
-FROM RFΓραμμέςΑγορών where RFΠωλήσεις = '{id}' and GCRecord is null";
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat(await GetParamAsync("getPurchaseLines"), id);
+            string queryString = sb.ToString();
+//            string queryString = $@"SELECT Oid,RFΠωλήσεις,Είδος,Ποσότητα,BarCodeΕίδους,ΠοσότηταΔιάστασης,Μήκος,Πλάτος,Υψος
+//FROM RFΓραμμέςΑγορών where RFΠωλήσεις = '{id}' and GCRecord is null";
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
@@ -145,11 +145,11 @@ FROM RFΓραμμέςΑγορών where RFΠωλήσεις = '{id}' and GCRecord
             var lip = string.IsNullOrEmpty(item.Product.BarCode) ? "null" : "'" + item.Product.BarCode + "'";
 
 
-            string queryString = $@"INSERT INTO RFΓραμμέςΑγορών (Oid, RFΠωλήσεις, Είδος, Ποσότητα, BarCodeΕίδους, ΠοσότηταΔιάστασης, Μήκος, Πλάτος, Υψος)
- VALUES((Convert(uniqueidentifier, N'{ item.Oid }')),(Convert(uniqueidentifier, N'{ item.RFSalesOid }')),(Convert(uniqueidentifier, N'{ item.Product.Oid }')), Convert(float,'{q}'), { lip }, Convert(float,'{ q }'), Convert(float,'{ l }'), Convert(float,'{ w }'), Convert(float,'{ h }')); ";
-            //StringBuilder sb = new StringBuilder();
-            //sb.AppendFormat(await GetParamAsync("postRFLine"), item.Oid, item.RFSalesOid, item.Product.Oid, q, lip, q, l, w, h);
-            //string queryString = sb.ToString();
+ //           string queryString = $@"INSERT INTO RFΓραμμέςΑγορών (Oid, RFΠωλήσεις, Είδος, Ποσότητα, BarCodeΕίδους, ΠοσότηταΔιάστασης, Μήκος, Πλάτος, Υψος)
+ //VALUES((Convert(uniqueidentifier, N'{ item.Oid }')),(Convert(uniqueidentifier, N'{ item.RFSalesOid }')),(Convert(uniqueidentifier, N'{ item.Product.Oid }')), Convert(float,'{q}'), { lip }, Convert(float,'{ q }'), Convert(float,'{ l }'), Convert(float,'{ w }'), Convert(float,'{ h }')); ";
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat(await GetParamAsync("postPurchaseLine"), item.Oid, item.RFSalesOid, item.Product.Oid, q, lip, q, l, w, h);
+            string queryString = sb.ToString();
 
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
@@ -170,11 +170,11 @@ FROM RFΓραμμέςΑγορών where RFΠωλήσεις = '{id}' and GCRecord
         public async Task<bool> DeleteItemsAsync(string id)
         {
             //delete item from db
-            string queryDelete = $"DELETE From RFΓραμμέςΑγορών where RFΠωλήσεις = '{id}'";
+            //string queryDelete = $"DELETE From RFΓραμμέςΑγορών where RFΠωλήσεις = '{id}'";
 
-            //StringBuilder sb2 = new StringBuilder();
-            //sb2.AppendFormat(await GetParamAsync("deleteRFLineWithID"), item.Oid);
-            //string queryDelete = sb2.ToString();
+            StringBuilder sb2 = new StringBuilder();
+            sb2.AppendFormat(await GetParamAsync("deletePurchaseLine"), id);
+            string queryDelete = sb2.ToString();
 
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {

@@ -11,9 +11,17 @@ namespace Smart_Orders_Project.ViewModels
 {
     public class PositionBaseViewModel : BaseViewModel
     {
+        private Storage selectedStorage;
+        private string positionid, productID, errorMessage;
+        private Position position;
+        protected Product product;
+        protected bool _IsPositionFocused, _IsProductFocused, productHasError, positionHasError;
+        private int _Quantity;
+        
+
         public ObservableCollection<Storage> StorageList { get; set; }
         public Command LoadStorageCommand { get; set; }
-        public Command<int> SavePositionCommand { get; set; }
+        
         protected RepositoryPositionChange positionChange;
         public PositionBaseViewModel()
         {
@@ -27,20 +35,7 @@ namespace Smart_Orders_Project.ViewModels
             StorageList = new ObservableCollection<Storage>();
             positionChange = new RepositoryPositionChange();
         }
-        protected async void ExecuteSavePosition(int type)
-        {
-            try
-            {
-                var result = await positionChange.PositionChange(Position, Product, Quantity, type);
-                Console.WriteLine($"Saved? {result}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-                await Shell.Current.DisplayAlert("Προσοχή!", $"Κάτι πήγε στραβά :{ex}", "Ok");
-            }
-
-        }
+       
 
         public void OnAppearing()
         {
@@ -65,19 +60,6 @@ namespace Smart_Orders_Project.ViewModels
                 IsBusy = false;
             }
         }
-        private Storage selectedStorage;
-        private string positionid;
-        private Position position;
-        private string productID;
-        private Product product;
-        private bool _IsPositionFocused;
-        private bool _IsProductFocused;
-        private int _Quantity;
-        private bool productHasError;
-        private string errorMessage;
-        private bool positionHasError;
-        protected int im_ex;
-
         public Storage SelectedStorage
         {
             get { return selectedStorage; }
@@ -88,8 +70,7 @@ namespace Smart_Orders_Project.ViewModels
             get { return positionid; }
             set 
             { 
-                SetProperty(ref positionid, value);
-                
+                positionid = value; 
             }
         }
         public string ProductID
@@ -97,7 +78,7 @@ namespace Smart_Orders_Project.ViewModels
             get { return productID; }
             set
             {
-                SetProperty(ref productID, value);
+                productID=value;
                 
             }
         }
@@ -107,9 +88,42 @@ namespace Smart_Orders_Project.ViewModels
             set
             {
                 SetProperty(ref _IsProductFocused, value);
-                
-                if (!value)
-                    SetProduct(ProductID);
+
+                //if (!value)
+                //    SetProduct(ProductID);
+            }
+        }
+        public Product Product
+        {
+            get { return product; }
+            set
+            {
+                SetProperty(ref product, value);
+            }
+        }
+        public async Task SetProduct(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                Product = null;
+                return;
+            }
+
+            IsBusy = true;
+            try
+            {
+                var item = await ProductRepo.GetItemAsync(value);
+                Product = item;
+
+                ProductHasError = Product == null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            finally
+            {
+                IsBusy = false;
             }
         }
         public bool ProductHasError
@@ -131,41 +145,8 @@ namespace Smart_Orders_Project.ViewModels
 
             }
         }
-        public Product Product
-        {
-            get { return product; }
-            set
-            {
-                SetProperty(ref product, value);
-                if (value != null && IsQuickOn)
-                    SavePositionCommand.Execute(im_ex);
-            }
-        }
-        private async void SetProduct(string value)
-        {
-            if (string.IsNullOrWhiteSpace(value))
-            {
-                Product = null;
-                return;
-            }
-                
-            IsBusy = true;
-            try
-            {
-                var item = await ProductRepo.GetItemAsync(value);
-                Product = item;
-                
-                ProductHasError = Product == null;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-            finally
-            {
-                IsBusy = false;
-            }
-        }
+       
+        
         public bool IsPositionFocused
         {
             get { return _IsPositionFocused; }

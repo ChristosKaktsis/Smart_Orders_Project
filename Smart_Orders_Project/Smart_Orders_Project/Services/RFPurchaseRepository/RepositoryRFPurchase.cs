@@ -22,10 +22,10 @@ namespace Smart_Orders_Project.Services
             //get items from db 
             RepositoryProvider repository = new RepositoryProvider();
             RFPurchaseList.Clear();
-            string queryString = "SELECT Oid,Προμηθευτής,ΠαραστατικόΠρομηθευτή,Ολοκληρώθηκε,ΗμνίαΔημιουργίας FROM RFΑγορές where Ολοκληρώθηκε = 0 or Ολοκληρώθηκε is null and GCRecord is null";
-            //StringBuilder sb = new StringBuilder();
-            //sb.AppendFormat(await GetParamAsync("getRFSales"));
-            //string queryString = sb.ToString();
+            //string queryString = "SELECT Oid,Προμηθευτής,ΠαραστατικόΠρομηθευτή,Ολοκληρώθηκε,ΗμνίαΔημιουργίας FROM RFΑγορές where Ολοκληρώθηκε = 0 or Ολοκληρώθηκε is null and GCRecord is null";
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat(await GetParamAsync("getPurchases"));
+            string queryString = sb.ToString();
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
@@ -57,11 +57,11 @@ namespace Smart_Orders_Project.Services
             //add item to DB
             
 
-            string queryString = $@"INSERT INTO RFΑγορές (Oid, Προμηθευτής, ΠαραστατικόΠρομηθευτή, ΗμνίαΔημιουργίας)
-                    VALUES((Convert(uniqueidentifier, N'{item.Oid}')), (Convert(uniqueidentifier, N'{item.Provider.Oid}')), '{item.ProviderDoc}', GETDATE());";
-            //StringBuilder sb = new StringBuilder();
-            //sb.AppendFormat(await GetParamAsync("postRFSale"), item.Oid, item.Customer.Oid, item.RFCount, lip);
-            //string queryString = sb.ToString();
+            //string queryString = $@"INSERT INTO RFΑγορές (Oid, Προμηθευτής, ΠαραστατικόΠρομηθευτή, ΗμνίαΔημιουργίας)
+            //        VALUES((Convert(uniqueidentifier, N'{item.Oid}')), (Convert(uniqueidentifier, N'{item.Provider.Oid}')), '{item.ProviderDoc}', GETDATE());";
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat(await GetParamAsync("postPurchase"), item.Oid, item.Provider.Oid, item.ProviderDoc);
+            string queryString = sb.ToString();
 
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
@@ -76,12 +76,12 @@ namespace Smart_Orders_Project.Services
         public async Task<bool> UpdateItemAsync(RFPurchase item)
         {
             //update item from db
-            string queryString = $@"UPDATE RFΑγορές SET Προμηθευτής = '{item.Provider.Oid}',ΠαραστατικόΠρομηθευτή = '{item.ProviderDoc}', Ολοκληρώθηκε = '{item.Complete}' , 
-UpdSmart = '{item.Complete}' WHERE Oid = '{item.Oid}' ";
+//            string queryString = $@"UPDATE RFΑγορές SET Προμηθευτής = '{item.Provider.Oid}',ΠαραστατικόΠρομηθευτή = '{item.ProviderDoc}', Ολοκληρώθηκε = '{item.Complete}' , 
+//UpdSmart = '{item.Complete}' WHERE Oid = '{item.Oid}' ";
 
-            //StringBuilder sb = new StringBuilder();
-            //sb.AppendFormat(await GetParamAsync("putRFSales"), item.Customer.Oid, item.Complete, item.Complete, lip, item.Oid);
-            //string queryString = sb.ToString();
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat(await GetParamAsync("putPurchase"), item.Provider.Oid, item.ProviderDoc, item.Complete,  item.Oid);
+            string queryString = sb.ToString();
 
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {

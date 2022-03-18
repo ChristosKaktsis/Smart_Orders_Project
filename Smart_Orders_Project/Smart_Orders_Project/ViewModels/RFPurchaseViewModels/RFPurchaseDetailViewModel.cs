@@ -32,6 +32,7 @@ namespace Smart_Orders_Project.ViewModels
         public Command SelectProductCommand { get; set; }
         public Command SetLineCommand { get; set; }
         public Command SaveCommand { get; set; }
+        public Command<RFPurchaseLine> DeleteCommand { get; set; }
         public RFPurchaseDetailViewModel()
         {
             InitializeModel();
@@ -42,7 +43,17 @@ namespace Smart_Orders_Project.ViewModels
             SaveCommand = new Command(ExecuteSaveCommand, ValidateSave);
             this.PropertyChanged +=
                (_, __) => SaveCommand.ChangeCanExecute();
+
+            DeleteCommand = new Command<RFPurchaseLine>(ExecuteDeleteCommand);
         }
+
+        private void ExecuteDeleteCommand(RFPurchaseLine obj)
+        {
+            if (obj == null)
+                return;
+            LinesList.Remove(obj);
+        }
+
         private bool ValidateSave()
         {
             return ProviderName != "Επιλογή Προμηθευτή" && LinesList.Any();
