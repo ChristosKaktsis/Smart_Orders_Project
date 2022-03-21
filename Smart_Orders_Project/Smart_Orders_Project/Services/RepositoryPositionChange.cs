@@ -33,10 +33,10 @@ namespace Smart_Orders_Project.Services
             if (string.IsNullOrEmpty(id))
                 return null;
 
-            //StringBuilder sb = new StringBuilder();
-            //sb.AppendFormat(await GetParamAsync("getProductWithName"), id);
-            //string queryString = sb.ToString();
-            string queryString = $@"select * from (SELECT Είδος, BarCodeΕίδους, sum( IIF([ΤύποςΚίνησηςΘέσης]=1,[ΠοσότηταΕγγραφής]*-1,[ΠοσότηταΕγγραφής])) as Ποσότητα
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat(await GetParamAsync("getProductsFromPosition"), id);
+            string queryString = sb.ToString();
+            string oldqueryString = $@"select * from (SELECT Είδος, BarCodeΕίδους, sum( IIF([ΤύποςΚίνησηςΘέσης]=1,[ΠοσότηταΕγγραφής]*-1,[ΠοσότηταΕγγραφής])) as Ποσότητα
 FROM[maindemo].[dbo].[ΚίνησηΘέσης] where Θέση = '{id}' group by[Είδος], [BarCodeΕίδους] ) a left join
 (SELECT[Είδος].[Oid],[Κωδικός],[Είδος].[Περιγραφή] FROM[maindemo].[dbo].[Είδος]) b on a.Είδος = b.Oid";
 
