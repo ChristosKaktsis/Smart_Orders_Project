@@ -81,15 +81,12 @@
     <Shell.FlyoutHeader>
         <local:FlyoutHeader />
     </Shell.FlyoutHeader>
-    <!--<TabBar>
+    <TabBar>
         <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate local:LoginPage}" />
-    </TabBar>-->
-    
+    </TabBar>
+
     <FlyoutItem Title="RFΠωλήσεις" Icon="icon_feed.png">
         <ShellContent Route="OrdersPage" ContentTemplate="{DataTemplate local:OrdersPage}" />
-    </FlyoutItem>
-    <FlyoutItem Title="Μετακίνηση σε θέση" Icon="icon_feed.png">
-        <ShellContent Route="MoveToPositionPage" ContentTemplate="{DataTemplate local:MoveToPositionPage}" />
     </FlyoutItem>
     <FlyoutItem Title="RFΑγορές" Icon="icon_feed.png">
         <ShellContent Route="RFPurchasePage" ContentTemplate="{DataTemplate local:RFPurchasePage}" />
@@ -102,6 +99,12 @@
     </FlyoutItem>
     <FlyoutItem Title="Εξαγωγή απο θέση" Icon="icon_feed.png">
         <ShellContent Route="PositionExportPage" ContentTemplate="{DataTemplate local:PositionExportPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="Μετακίνηση σε θέση" Icon="icon_feed.png">
+        <ShellContent Route="MoveToPositionPage" ContentTemplate="{DataTemplate local:MoveToPositionPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="Υπόλοιπα Θέσης" Icon="icon_feed.png">
+        <ShellContent Route="RestOfPositionPage" ContentTemplate="{DataTemplate local:RestOfPositionPage}" />
     </FlyoutItem>
     <FlyoutItem Title="Ανταλλακτικό" Icon="icon_feed.png">
         <ShellContent Route="SparePartPage" ContentTemplate="{DataTemplate local:SparePartPage}" />
