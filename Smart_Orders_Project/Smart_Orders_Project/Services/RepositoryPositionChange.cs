@@ -24,7 +24,7 @@ namespace Smart_Orders_Project.Services
             {
                 connection.Open();
                 SqlCommand command = new SqlCommand(queryString, connection);
-                result = command.ExecuteNonQuery();
+                result = await command.ExecuteNonQueryAsync();
             }
             return await Task.FromResult(result != 0);
         }
@@ -59,6 +59,38 @@ FROM[maindemo].[dbo].[ΚίνησηΘέσης] where Θέση = '{id}' group by[�
                     });
                 }
                 return await Task.FromResult(ProductsList);
+
+            }
+        }
+        public async Task<Product> GetProductFromPosition(string position_id, string product_id)
+        {
+            if (string.IsNullOrEmpty(position_id) || string.IsNullOrEmpty(product_id))
+                return null;
+
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat(await GetParamAsync("getProductFromPosition"), position_id, product_id);
+            string queryString = sb.ToString();
+//            string oldqueryString = $@"select * from (SELECT Είδος, BarCodeΕίδους, sum( IIF([ΤύποςΚίνησηςΘέσης]=1,[ΠοσότηταΕγγραφής]*-1,[ΠοσότηταΕγγραφής])) as Ποσότητα
+//FROM[maindemo].[dbo].[ΚίνησηΘέσης] where Θέση = '{id}' group by[Είδος], [BarCodeΕίδους] ) a left join
+//(SELECT[Είδος].[Oid],[Κωδικός],[Είδος].[Περιγραφή] FROM[maindemo].[dbo].[Είδος]) b on a.Είδος = b.Oid";
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                /*ProductsList.Clear()*/
+               
+                connection.Open();
+                SqlCommand command = new SqlCommand(queryString, connection);
+                SqlDataReader reader = await command.ExecuteReaderAsync();
+                reader.Read();
+                Product product = new Product()
+                {
+                    Oid = Guid.Parse(reader["Oid"].ToString()),
+                    ProductCode = reader["Κωδικός"] != DBNull.Value ? reader["Κωδικός"].ToString() : string.Empty,
+                    BarCode = reader["BarCodeΕίδους"] != DBNull.Value ? reader["BarCodeΕίδους"].ToString() : string.Empty,
+                    Name = reader["Περιγραφή"].ToString(),
+                    Quantity = int.Parse(reader["Ποσότητα"].ToString())
+                };
+                return await Task.FromResult(product);
 
             }
         }

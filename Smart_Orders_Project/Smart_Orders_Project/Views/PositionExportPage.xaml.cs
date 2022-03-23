@@ -64,12 +64,33 @@ namespace Smart_Orders_Project.Views
 
         private async void Reset()
         {
+            var answer = await PositionCheck();
+            if (!answer)
+                return;
             //Done
             await _viewModel.ExecuteSavePosition(1);
             Product_text.Focus();
             Product_text.Text = string.Empty;
         }
+        private async Task<bool> PositionCheck()
+        {
+            bool result = false;
+            if (_viewModel.Position == null || _viewModel.Product == null)
+                return result;
 
+            var pleft = await _viewModel.AnyProductLeft(_viewModel.Position.Oid.ToString(), _viewModel.Product.Oid.ToString(), _viewModel.Quantity);
+            if (!pleft)
+            {
+                bool answer = await DisplayAlert("Προσοχή", "Η ποσότητα που αφαιρείτε είναι μεγαλήτερη απο αυτή που έχει η θέση", "ΟΚ", "Άκυρο");
+                if (answer)
+                    result = true;
+            }
+            else
+            {
+                result = true;
+            }
+            return result;
+        }
         private void OpenPopUp_Button(object sender, EventArgs e)
         {
             OpenPopUp();

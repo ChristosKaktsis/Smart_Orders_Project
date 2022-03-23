@@ -8,7 +8,7 @@
              x:Class="Smart_Orders_Project.Views.MoveToPositionPage"
              Title="Μετακίνηση σε θέση">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Cart" Clicked="Close_ProductPopUp_Clicked"/>
+        <ToolbarItem Text="Cart" Clicked="Close_ProductPopUp_Clicked" IconImageSource="cart.png"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout x:DataType="vm:MoveToPositionViewModel" Margin="11" Spacing="30" >
@@ -62,23 +62,23 @@
 
             </dxp:DXPopup>
             <dxp:DXPopup x:Name="ProductPopUp"
-                         AllowScrim="True"
+                         AllowScrim="True" CornerRadius="5"
                          ScrimColor="{StaticResource BackGroundDarkTranc}">
                 <StackLayout WidthRequest="350" HeightRequest="500" BackgroundColor="AliceBlue">
                     <Frame>
                         <Label Text="Είδη για μετακίνηση" FontAttributes="Bold" FontSize="20"/>
                     </Frame>
-                    <Frame Padding="5">
+                    <Frame Padding="0">
                         <StackLayout>
 
-                            <dxcv:DXCollectionView ItemsSource="{Binding ProductList}" SelectedItems="{Binding SelectedProductList}" SelectionMode="Multiple">
+                            <dxcv:DXCollectionView ItemsSource="{Binding ProductList}" SelectedItems="{Binding SelectedProductList}" SelectionMode="Multiple" BackgroundColor="{StaticResource BackGround}">
                                 <dxcv:DXCollectionView.ItemTemplate>
                                     <DataTemplate>
                                         <Grid>
-                                            <Frame x:DataType="model:Product" BorderColor="LightGray">
+                                            <Frame x:DataType="model:Product" CornerRadius="5" Margin="5">
                                                 <Grid>
                                                     <Label Text="{Binding Name}"/>
-                                                    <Label Grid.Column="1" HorizontalOptions="End" Text="{Binding Quantity,StringFormat=':{0}'}"/>
+                                                    <Label Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" Text="{Binding Quantity}"/>
                                                 </Grid>
                                             </Frame>
                                         </Grid>
@@ -89,10 +89,10 @@
                                     <DataTemplate>
                                         <Grid>
                                             
-                                            <Frame x:DataType="model:Product" BackgroundColor="{StaticResource ComplementaryLight}">
+                                            <Frame x:DataType="model:Product" CornerRadius="5" Margin="5" BackgroundColor="{StaticResource ComplementaryLight}">
                                                 <Grid>
                                                     <Label Text="{Binding Name}"/>
-                                                    <Label Grid.Column="1"  HorizontalOptions="End"  Text="{Binding Quantity,StringFormat=':{0}'}"/>
+                                                    <Label Grid.Column="1"  HorizontalOptions="End" VerticalOptions="Center" Text="{Binding Quantity}"/>
                                                 </Grid>
                                             </Frame>
                                         </Grid>
@@ -148,7 +148,7 @@
 
                 </Grid>
 
-                <Image Grid.Row="2" Source="rack.png"/>
+                <Image Grid.Row="2" Source="positionTo.png"/>
                 <dxe:TextEdit x:Name="Position_text" Grid.Row="2" Grid.Column="1" 
                               PlaceholderText="Από Θέση" TextFontSize="22"
                               IsFocused ="{Binding IsPositionFocused,Mode=OneWayToSource}"
@@ -183,7 +183,7 @@
                     <Button Text="Add" Clicked="Add_Button_Clicked"/>
 
                 </StackLayout>
-                <Image Grid.Row="8" Source="positionTo.png"/>
+                <Image Grid.Row="8" Source="rack.png"/>
                 <dxe:TextEdit x:Name="PositionTo_text" Grid.Row="8" Grid.Column="1" 
                               PlaceholderText="Σε Θέση" TextFontSize="22"    
                               Focused="PositionTo_text_Focused"

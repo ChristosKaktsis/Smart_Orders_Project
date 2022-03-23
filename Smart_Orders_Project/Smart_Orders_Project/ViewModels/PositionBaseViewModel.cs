@@ -126,6 +126,20 @@ namespace Smart_Orders_Project.ViewModels
                 IsBusy = false;
             }
         }
+        public async Task<bool> AnyProductLeft(string position, string product, int quantity)
+        {
+            bool result = false;
+            try
+            {
+                var item = await positionChange.GetProductFromPosition(position, product);
+                result = (item.Quantity - quantity) >= 0;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            return result;
+        }
         public bool ProductHasError
         {
             get { return productHasError; }

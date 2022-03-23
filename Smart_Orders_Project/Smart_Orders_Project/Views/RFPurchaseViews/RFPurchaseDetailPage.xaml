@@ -20,7 +20,7 @@
             <StackLayout>
 
                 <Frame BackgroundColor="Transparent" Padding="0" Margin="10,0,10,0" HeightRequest="50" CornerRadius="30" HasShadow="True">
-                    <Button Text="{Binding ProviderName}" TextTransform="None" CornerRadius="30" BackgroundColor="{StaticResource Tradic}" Command="{Binding SelectProviderCommand}"/>
+                    <Button Text="{Binding ProviderName}" TextTransform="None" CornerRadius="30" BackgroundColor="{StaticResource Secondary}" Command="{Binding SelectProviderCommand}"/>
                 </Frame>
                 <StackLayout Orientation="Horizontal"  Margin="10,5,10,0">
                     <Frame BackgroundColor="Transparent" Padding="0" Margin="0,0,10,0" HorizontalOptions="FillAndExpand">

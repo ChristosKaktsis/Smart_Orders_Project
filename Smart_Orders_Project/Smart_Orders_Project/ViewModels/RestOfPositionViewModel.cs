@@ -11,6 +11,7 @@ namespace Smart_Orders_Project.ViewModels
 {
     public class RestOfPositionViewModel : BaseViewModel
     {
+        public Command EmptyPositionCommand { get; set; }
         public ObservableCollection<Product> ProductList { get; set; }
         public Position Position 
         { 
@@ -55,6 +56,7 @@ namespace Smart_Orders_Project.ViewModels
         {
             ProductList = new ObservableCollection<Product>();
             repositoryPosition = new RepositoryPositionChange();
+            EmptyPositionCommand = new Command(async () => await EmptyPosition());
         }
         public async Task LoadPosition(string id)
         {
@@ -87,6 +89,31 @@ namespace Smart_Orders_Project.ViewModels
                 var items = await repositoryPosition.GetProductsFromList(position.Oid.ToString());
                 foreach (var item in items)
                     ProductList.Add(item);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+        public async Task EmptyPosition()
+        {
+            if (Position == null)
+                return;
+            try
+            {
+                IsBusy = true;
+                foreach (var item in ProductList)
+                {
+                    if (item.Quantity > 0)
+                        await repositoryPosition.PositionChange(Position, item, item.Quantity, 1);
+                    else if (item.Quantity < 0)
+                        await repositoryPosition.PositionChange(Position, item, item.Quantity * -1, 0);
+                    item.Quantity = 0;
+                }
             }
             catch(Exception ex)
             {

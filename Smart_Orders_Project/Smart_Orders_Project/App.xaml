@@ -8,16 +8,17 @@
     -->
     <Application.Resources>
         <ResourceDictionary>
-            <Color x:Key="Primary">#1446bd</Color>
-            <Color x:Key="PrimaryLight">#009aff</Color>
-            <Color x:Key="Secondary">#7802ee</Color>
-            <Color x:Key="SecondaryLight">#a669f5</Color>
-            <Color x:Key="Complementary">#ee7802</Color>
-            <Color x:Key="ComplementaryLight">#fab34c</Color>
-            <Color x:Key="Analogous">#02eeee</Color>
-            <Color x:Key="AnalogousLight">#d7fbfa</Color>
-            <Color x:Key="Tradic">#ee0278</Color>
-            <Color x:Key="TradicLight">#f8b5d0</Color>
+            <Color x:Key="Primary">#0078df</Color>
+            <Color x:Key="PrimaryLight">#0098ff</Color>
+            <Color x:Key="Secondary">#6800df</Color>
+            <Color x:Key="SecondaryLight">#8c42eb</Color>
+            <Color x:Key="Complementary">#df6800</Color>
+            <Color x:Key="ComplementaryLight">#eb8702</Color>
+            <Color x:Key="Analogous">#00dfd8</Color>
+            <Color x:Key="AnalogousLight">#9bfdf6</Color>
+            <Color x:Key="Tradic">#df0077</Color>
+            <Color x:Key="TradicLight">#f13b91</Color>
+            <Color x:Key="BackGround">#f0f0f0</Color>
             <Color x:Key="BackGroundDarkTranc">#b3a0a0a0</Color>
             <Style TargetType="Button">
                 <Setter Property="TextColor" Value="White"></Setter>
@@ -26,7 +27,7 @@
                         <VisualStateGroup x:Name="CommonStates">
                             <VisualState x:Name="Normal">
                                 <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{StaticResource Secondary}" />
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Complementary}" />
                                 </VisualState.Setters>
                             </VisualState>
                             <VisualState x:Name="Disabled">
