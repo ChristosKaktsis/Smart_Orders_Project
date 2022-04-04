@@ -81,12 +81,15 @@
     <Shell.FlyoutHeader>
         <local:FlyoutHeader />
     </Shell.FlyoutHeader>
-    <TabBar>
+    <!--<TabBar>
         <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate local:LoginPage}" />
-    </TabBar>
+    </TabBar>-->
 
-    <FlyoutItem Title="RFΠωλήσεις" Icon="sell.png">
+    <!--<FlyoutItem Title="RFΠωλήσεις" Icon="sell.png">
         <ShellContent Route="OrdersPage" ContentTemplate="{DataTemplate local:OrdersPage}" />
+    </FlyoutItem>-->
+    <FlyoutItem Title="RFFreePickingPage" Icon="buy.png">
+        <ShellContent Route="FreePickingPage" ContentTemplate="{DataTemplate local:FreePickingPage}" />
     </FlyoutItem>
     <FlyoutItem Title="RFΑγορές" Icon="buy.png">
         <ShellContent Route="RFPurchasePage" ContentTemplate="{DataTemplate local:RFPurchasePage}" />
@@ -105,6 +108,9 @@
     </FlyoutItem>
     <FlyoutItem Title="Υπόλοιπα Θέσης" Icon="census.png">
         <ShellContent Route="RestOfPositionPage" ContentTemplate="{DataTemplate local:RestOfPositionPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="Θέσεις Είδους" Icon="multiposition.png">
+        <ShellContent Route="RestOfProducts" ContentTemplate="{DataTemplate local:RestOfProducts}" />
     </FlyoutItem>
     <FlyoutItem Title="Ανταλλακτικό" Icon="screw.png">
         <ShellContent Route="SparePartPage" ContentTemplate="{DataTemplate local:SparePartPage}" />

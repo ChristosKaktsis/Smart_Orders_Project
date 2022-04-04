@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Smart_Orders_Project.Views.FreePickingPage"
+             xmlns:dxcv="http://schemas.devexpress.com/xamarin/2014/forms/collectionview" 
+             xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors" 
+             xmlns:dxp="http://schemas.devexpress.com/xamarin/2014/forms/popup" 
+             xmlns:model="clr-namespace:Smart_Orders_Project.Models" 
+             xmlns:vm="clr-namespace:Smart_Orders_Project.ViewModels" 
+             xmlns:local="clr-namespace:Smart_Orders_Project"
+             Title="Ελευθερη συλλογή">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="StartScan_Button" Text="Start Scan"  Clicked="StartScan_Button_Clicked"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="normal_template">
+                <dxcv:SwipeContainer>
+                    <dxcv:SwipeContainer.ItemView>
+                        <Grid x:DataType="model:Product" >
+                            <Frame CornerRadius="5" HasShadow="True" Margin="5">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="50"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.ColumnSpan="2" Text="{Binding Name}" FontSize="13"/>
+                                    
+                                    <StackLayout Grid.Row="1" Orientation="Horizontal">
+                                        <Label  Text="{Binding CodeDisplay}"/>
+                                    </StackLayout>
+                                    
+                                    <StackLayout Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                                        <Label Text="{Binding Quantity2,StringFormat=' {0}'}" FontAttributes="Bold" HorizontalOptions="EndAndExpand"/>
+                                        <Label Text="{Binding Quantity,StringFormat='/ {0}'}" FontAttributes="Bold" HorizontalOptions="End"/>
+                                    </StackLayout>
+                                </Grid>
+                            </Frame>
+                        </Grid>
+                    </dxcv:SwipeContainer.ItemView>
+                    <dxcv:SwipeContainer.StartSwipeItems>
+                        <dxcv:SwipeItem
+                            Caption="Υπόλοιπο ανα θέση"
+                            BackgroundColor="{StaticResource SecondaryLight}"
+                            Invoked="FindPositions"/>
+                    </dxcv:SwipeContainer.StartSwipeItems>
+                </dxcv:SwipeContainer>
+            </DataTemplate>
+            <DataTemplate x:Key="strikethrough_template">
+                <dxcv:SwipeContainer>
+                    <dxcv:SwipeContainer.ItemView>
+                        <Grid x:DataType="model:Product" >
+                            <Frame CornerRadius="5" HasShadow="True" Margin="5">
+                                <Grid>
+                                    <Label Grid.ColumnSpan="2" Text="{Binding Name}" TextDecorations="Strikethrough" FontSize="13"/>
+                                    <StackLayout Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                                        <Label Text="{Binding Quantity2,StringFormat=' {0}'}" TextDecorations="Strikethrough" HorizontalOptions="EndAndExpand"/>
+                                        <Label Text="{Binding Quantity,StringFormat='/ {0}'}" TextDecorations="Strikethrough" HorizontalOptions="End"/>
+                                    </StackLayout>
+                                    <StackLayout Grid.Row="1">
+                                        <Label  Text="{Binding ProductCode}" TextDecorations="Strikethrough"/>
+                                    </StackLayout>
+                                </Grid>
+                            </Frame>
+                        </Grid>
+                    </dxcv:SwipeContainer.ItemView>
+                    <dxcv:SwipeContainer.StartSwipeItems>
+                        <dxcv:SwipeItem
+                            Caption="Θέσεις"
+                            BackgroundColor="{StaticResource SecondaryLight}"
+                            Invoked="FindPositions"/>
+                    </dxcv:SwipeContainer.StartSwipeItems>
+                </dxcv:SwipeContainer>
+            </DataTemplate>
+            <local:ItemDataTemplateSelector x:Key="itemDataTemplateSelector"
+                                        CompletedDataTemplate="{StaticResource strikethrough_template}"
+                                        UncompletedDataTemplate="{StaticResource normal_template}"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        
+        <Grid x:DataType="vm:FreePickingViewModel">
+            <dxp:DXPopup x:Name="DocPopUp"
+                         AllowScrim="True"
+                         ScrimColor="{StaticResource BackGroundDarkTranc}">
+                <Frame CornerRadius="5">
+                    <StackLayout>
+                        <Label Text="Εύρεση παραστατικού" FontSize="20" FontAttributes="Bold"/>
+                        <dxe:TextEdit Text="{Binding SalesDoc,Mode=OneWayToSource}" CharacterCasing="Upper" />
+                        
+                        <Button x:Name="CheckDoc_button" Text="OK" Clicked="CheckDoc_button_Clicked"/>
+                    </StackLayout>
+                </Frame>
+            </dxp:DXPopup>
+            <dxp:DXPopup x:Name="ScanPopUp"
+                         AllowScrim="True"
+                         VerticalAlignment="Top"
+                         ScrimColor="{StaticResource BackGroundDarkTranc}">
+                <Frame WidthRequest="350">
+                    <Grid RowSpacing="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="60"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="60"/>
+                            <RowDefinition Height="25"/>
+                            <RowDefinition Height="60"/>
+                            <RowDefinition Height="60"/>
+                            <RowDefinition Height="60"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Row="0" Source="rack.png"/>
+                        <dxe:TextEdit x:Name="Position_text" Grid.Row="0" Grid.Column="1" 
+                              PlaceholderText="Θέση" TextFontSize="22"
+                              IsFocused ="{Binding IsPositionFocused,Mode=OneWayToSource}"
+                              Unfocused="Position_text_Unfocused"
+                              Text="{Binding PositionID,Mode=OneWayToSource}"
+                              HasError="{Binding PositionHasError}"
+                              ErrorText="{Binding ErrorMessage}"/>
+                        <Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding Position.Description}" FontSize="17" HorizontalOptions="EndAndExpand"/>
+                        <Image Grid.Row="2" Source="item.png"/>
+                        <dxe:TextEdit x:Name="Product_text" Grid.Row="2" Grid.Column="1" 
+                              PlaceholderText="Είδος" TextFontSize="22"
+                              IsFocused ="{Binding IsProductFocused,Mode=OneWayToSource}"
+                              Unfocused="Product_text_Unfocused"
+                              Text="{Binding ProductID,Mode=OneWayToSource}"
+                              HasError="{Binding ProductHasError}"
+                              ErrorText="{Binding ErrorMessage}"/>
+                        <Label Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding Product.Name}" FontSize="17" HorizontalOptions="EndAndExpand"/>
+                        <StackLayout  Grid.Row="4" Grid.Column="0">
+                            <Label Text="Ένα Ένα" VerticalOptions="Center" FontSize="20"/>
+                            <Switch x:Name="Quick_switch" HorizontalOptions="EndAndExpand" IsToggled="{Binding IsQuickOn,Mode=TwoWay}"/>
+                        </StackLayout>
+                        <StackLayout Grid.Row="4" Grid.Column="1" Orientation="Horizontal">
+                            <Image Source="multibox.png"/>
+                            <dxe:NumericEdit x:Name="Quantity_text" 
+                                    HorizontalOptions="FillAndExpand"
+                                     IsUpDownIconVisible="True"
+                                     SelectValueOnFocus="True"
+                                     MinValue="1"
+                                     AllowLooping="False"
+                                     Value="{Binding Quantity,Mode=OneWayToSource}"
+                                     TextFontSize="24"/>
+                        </StackLayout>
+                        <Label Grid.Row="5" Grid.Column="1" 
+                               HorizontalOptions="EndAndExpand"
+                               Text="{Binding Quantity_Text}" FontSize="16"/>
+                        <Button x:Name="Add_Button" Text="Add" Grid.Row="6" CornerRadius="5" BackgroundColor="{StaticResource PrimaryLight}" Clicked="Add_Button_Clicked"/>
+                        <Button x:Name="Done_button" Clicked="Done_button_Clicked" Grid.Row="6" Grid.Column="1" Text="Done"  HorizontalOptions="EndAndExpand" FontSize="Body" CornerRadius="5"/>
+                    </Grid>
+                </Frame>
+                
+
+            </dxp:DXPopup>
+            <dxp:DXPopup x:Name="LessPopUp"
+                         AllowScrim="True"
+                         ScrimColor="{StaticResource BackGroundDarkTranc}">
+                <Frame CornerRadius="5" WidthRequest="350" HeightRequest="450">
+                    <StackLayout>
+                        <Label Text="Είδη που δεν έχουν ολοκληρωθεί" FontSize="18" FontAttributes="Bold"/>
+                        <dxcv:DXCollectionView x:Name="lessCollection" ItemsSource="{Binding LessProducts}"
+                                       ItemTemplate="{StaticResource normal_template}">
+                        </dxcv:DXCollectionView>
+                        <StackLayout Orientation="Horizontal">
+                            <Button x:Name="Less_close_button" Text="Άκυρο" CornerRadius="50" 
+                                    HorizontalOptions="EndAndExpand" 
+                                    BackgroundColor="White" TextColor="{StaticResource Primary}"
+                                    Clicked="Less_close_button_Clicked"/>
+                            <Button x:Name="Doit_button" Text="Συνέχεια" CornerRadius="50" Clicked="Doit_button_Clicked"/>
+                        </StackLayout>
+                    </StackLayout>
+                </Frame>
+            </dxp:DXPopup>
+            
+            <ActivityIndicator IsRunning="{Binding IsBusy}" VerticalOptions="Start"/>
+            <StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Button x:Name="OpenPopUp_Button" Text="{Binding SalesDoc}" Clicked="OpenPopUp_Button_Clicked" HorizontalOptions="Start"/>
+                    <!--<Button x:Name="StartScan_Button" Clicked="StartScan_Button_Clicked"
+                            Text="Start Scan" 
+                            IsEnabled="False"
+                            HorizontalOptions="EndAndExpand"/>-->
+                    <Label Text="{Binding CustomerName}"
+                           FontSize="18" FontAttributes="Bold"
+                           HorizontalOptions="Center" VerticalOptions="Center"/>
+                </StackLayout>
+                
+                <dxcv:DXCollectionView x:Name="collectionView" ItemsSource="{Binding ProductList}"
+                                       ItemTemplate="{StaticResource itemDataTemplateSelector}">
+                </dxcv:DXCollectionView>
+            </StackLayout>
+            <Button x:Name="Save_button"
+                    Text="Ολοκλήρωση" TextTransform="None" FontSize="18" 
+                    HorizontalOptions="End" VerticalOptions="End" Margin="20"
+                    CornerRadius="5"
+                    IsVisible="false"
+                    Clicked="Save_button_Clicked"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

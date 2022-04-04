@@ -10,15 +10,17 @@ namespace Smart_Orders_Project.Services
     public class RepositoryPositionChange : RepositoryService
     {
         int result = 0;
-        public async Task<bool> PositionChange(Position position, Product product, int quantity, int impexp)
+        public async Task<bool> PositionChange(Position position, Product product, int quantity, int type , Management manage)
         {
             if (position == null || product == null)
                 return await Task.FromResult(false);
+
             var Oid = Guid.NewGuid();
             var barcode = string.IsNullOrEmpty(product.BarCode) ? "null" : product.BarCode;
+            string m = manage == null ? "null" : $"'{manage.Oid}'";//if null send null else send 'guid'
 
             StringBuilder sb = new StringBuilder();
-            sb.AppendFormat(await GetParamAsync("postPosition"), Oid, position.Oid, barcode, product.Oid, quantity, impexp);
+            sb.AppendFormat(await GetParamAsync("postPosition"), Oid, position.Oid, barcode, product.Oid, quantity, type, m);
             string queryString = sb.ToString();
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
@@ -81,6 +83,8 @@ FROM[maindemo].[dbo].[ΚίνησηΘέσης] where Θέση = '{id}' group by[�
                 connection.Open();
                 SqlCommand command = new SqlCommand(queryString, connection);
                 SqlDataReader reader = await command.ExecuteReaderAsync();
+                if (!reader.HasRows)
+                    return null;
                 reader.Read();
                 Product product = new Product()
                 {
@@ -91,6 +95,36 @@ FROM[maindemo].[dbo].[ΚίνησηΘέσης] where Θέση = '{id}' group by[�
                     Quantity = int.Parse(reader["Ποσότητα"].ToString())
                 };
                 return await Task.FromResult(product);
+
+            }
+        }
+        public async Task<List<Position>> GetPositionsFromProduct(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                return null;
+
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat(await GetParamAsync("getPositionFromProduct"), id);
+            string queryString = sb.ToString();
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                /*ProductsList.Clear()*/
+                List<Position> PositionList = new List<Position>();
+                connection.Open();
+                SqlCommand command = new SqlCommand(queryString, connection);
+                SqlDataReader reader = await command.ExecuteReaderAsync();
+                while (reader.Read())
+                {
+                    PositionList.Add(new Position()
+                    {
+                        Oid = Guid.Parse(reader["Oid"].ToString()),
+                        Description = reader["Περιγραφή"].ToString(),
+                        PositionCode = reader["Κωδικός"].ToString(),
+                        ItemQuantity = int.Parse(reader["Ποσότητα"].ToString())
+                    });
+                }
+                return await Task.FromResult(PositionList);
 
             }
         }

@@ -3,11 +3,34 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace Smart_Orders_Project.Models
 {
-    public class Product : INotifyPropertyChanged
+    public enum TaskStatus
     {
+        Urgent = 0,
+        Uncompleted = 1,
+        Completed = 2
+    }
+    public class Product :BaseModel
+    {
+        public Product()
+        {
+
+        }
+        TaskStatus status;
+        public TaskStatus Status
+        {
+            get
+            {
+                if (Quantity == Quantity2)
+                    return TaskStatus.Completed;
+                else
+                    return TaskStatus.Uncompleted;
+            }
+        }
         public Guid Oid { get; set; }
         public string Name { get; set; }
         public string ProductCode { get; set; }
@@ -29,18 +52,25 @@ namespace Smart_Orders_Project.Models
             get => _quantity; 
             set 
             {
-                _quantity = value;
-                OnPropertyChanged(); 
+                SetProperty(ref _quantity, value);
             }  
         }
+        int _quantity2;
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        public int Quantity2
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-                handler(this, new PropertyChangedEventArgs(propertyName));
+            get => _quantity2;
+            set
+            {
+                SetProperty(ref _quantity2, value);
+            }
+        }
+        public string CodeDisplay 
+        { 
+            get 
+            {
+                return string.IsNullOrEmpty(BarCode) ? ProductCode : BarCode;
+            } 
         }
     }
 }

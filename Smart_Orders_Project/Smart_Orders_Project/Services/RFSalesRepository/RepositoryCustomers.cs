@@ -53,31 +53,28 @@ namespace Smart_Orders_Project.Services
 
         public async Task<Customer> GetItemAsync(string id)
         {
-            return await Task.Run(async() =>
-            {
-                string oldqueryString = "select Oid , Κωδικός ,Επωνυμία ,ΔιακριτικόςΤίτλος ,ΑΦΜ ,Email from Πελάτης where Oid ='" + id + "' and  GCRecord is null";
-                StringBuilder sb = new StringBuilder();
-                sb.AppendFormat(await GetParamAsync("getCustomerWithID"), id);
-                string queryString = sb.ToString();
+            string oldqueryString = "select Oid , Κωδικός ,Επωνυμία ,ΔιακριτικόςΤίτλος ,ΑΦΜ ,Email from Πελάτης where Oid ='" + id + "' and  GCRecord is null";
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat(await GetParamAsync("getCustomerWithID"), id);
+            string queryString = sb.ToString();
 
-                using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(queryString, connection);
+                SqlDataReader reader = await command.ExecuteReaderAsync();
+                await reader.ReadAsync();
+                Customer customer = new Customer()
                 {
-                    connection.Open();
-                    SqlCommand command = new SqlCommand(queryString, connection);
-                    SqlDataReader reader = command.ExecuteReader();
-                    reader.Read();
-                    Customer customer = new Customer()
-                    {
-                        Oid = Guid.Parse(reader["Oid"].ToString()),
-                        CodeNumber = reader["Κωδικός"] != null ? reader["Κωδικός"].ToString() : string.Empty,
-                        Name = reader["Επωνυμία"].ToString(),
-                        AFM = reader["ΑΦΜ"].ToString(),
-                        Email = reader["Email"].ToString(),
-                        AltName = reader["ΔιακριτικόςΤίτλος"].ToString()
-                    };
-                    return customer;
-                }
-            });
+                    Oid = Guid.Parse(reader["Oid"].ToString()),
+                    CodeNumber = reader["Κωδικός"] != null ? reader["Κωδικός"].ToString() : string.Empty,
+                    Name = reader["Επωνυμία"].ToString(),
+                    AFM = reader["ΑΦΜ"].ToString(),
+                    Email = reader["Email"].ToString(),
+                    AltName = reader["ΔιακριτικόςΤίτλος"].ToString()
+                };
+                return await Task.FromResult(customer);
+            }
         }
 
         public async Task<List<Customer>> GetItemsAsync(bool forceRefresh = false)

@@ -168,6 +168,39 @@ namespace Smart_Orders_Project.Services
             });
 
         }
+        public async Task<List<Product>> GetProductsFromSalesDoc(string doc)
+        {
+            return await Task.Run(async () =>
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat(await GetParamAsync("getProductsFromSalesDoc"), doc);
+                string queryString = sb.ToString();
+                using (SqlConnection connection = new SqlConnection(ConnectionString))
+                {
+                    /*ProductsList.Clear()*/
+                    ProductsList = new List<Product>();
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(queryString, connection);
+                    SqlDataReader reader = command.ExecuteReader();
+
+
+                    while (reader.Read())
+                    {
+                        ProductsList.Add(new Product()
+                        {
+                            Oid = Guid.Parse(reader["Oid"].ToString()),
+                            ProductCode = reader["Κωδικός"] != DBNull.Value ? reader["Κωδικός"].ToString() : string.Empty,
+                            BarCode = reader["BarCodeΕίδους"] != DBNull.Value ? reader["BarCodeΕίδους"].ToString() : string.Empty,
+                            Name = reader["Περιγραφή"].ToString(),
+                            Quantity = int.Parse(reader["Ποσότητα"].ToString()),
+                        });
+                    }
+                    return ProductsList;
+
+                }
+            });
+
+        }
 
         public Task<bool> DeleteItemFromDBAsync(string id)
         {
