@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors" 
+             xmlns:dxcv="http://schemas.devexpress.com/xamarin/2014/forms/collectionview" 
+             xmlns:model="clr-namespace:Smart_Orders_Project.Models" 
+             xmlns:vm="clr-namespace:Smart_Orders_Project.ViewModels"
+             x:Class="Smart_Orders_Project.Views.PalettePage"
+             Title="Νέα Παλέτα">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Finish" Clicked="Finish_Clicked"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="normal_template">
+                <dxcv:SwipeContainer>
+                    <dxcv:SwipeContainer.ItemView>
+                        <Grid x:DataType="model:Product">
+                            <Frame Padding="6" Margin="0,0,0,1">
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding CodeDisplay}" FontAttributes="Bold"
+                                   HorizontalOptions="Center"/>
+                                    <Label Text="{Binding Name}" 
+                                   WidthRequest="160" HeightRequest="33"
+                                       HorizontalOptions="Center"/>
+                                    <dxe:NumericEdit Value="{Binding Quantity}" SelectValueOnFocus="True"
+                                             WidthRequest="60" HeightRequest="30"
+                                             HorizontalOptions="EndAndExpand"/>
+                                </StackLayout>
+                            </Frame>
+                        </Grid>
+                    </dxcv:SwipeContainer.ItemView>
+                    <dxcv:SwipeContainer.EndSwipeItems>
+                        <dxcv:SwipeItem Caption="Delete"
+                                   BackgroundColor="{StaticResource TradicLight}"
+                                   Invoked="SwipeItem_Invoked"/>
+                    </dxcv:SwipeContainer.EndSwipeItems>
+                </dxcv:SwipeContainer>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid x:DataType="vm:PaletteBuildViewModel">
+            <StackLayout >
+                <Frame>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+                        <dxe:TextEdit x:Name="SSCC_Edit" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
+                        PlaceholderText="SSCC" Text="{Binding SSCC}"
+                                      Unfocused="SSCC_Edit_Unfocused"/>
+                        <dxe:TextEdit x:Name="Description_edit" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
+                        PlaceholderText="Περιγραφή" Text="{Binding Description}"/>
+                        <dxe:NumericEdit x:Name="Length_Edit" Grid.Row="2" Grid.Column="0" 
+                                     Value="{Binding Length}" SelectValueOnFocus="True"
+                        LabelText="Μήκος" Suffix="cm" />
+                        <dxe:NumericEdit x:Name="Width_Edit" Grid.Row="2" Grid.Column="1" 
+                                     Value="{Binding Width}" SelectValueOnFocus="True"
+                        LabelText="Πλάτος" Suffix="cm" />
+                        <dxe:NumericEdit x:Name="Height_Edit" Grid.Row="2" Grid.Column="2" 
+                                     Value="{Binding Height}" SelectValueOnFocus="True"
+                        LabelText="Ύψος" Suffix="cm"/>
+                    </Grid>
+                </Frame>
+                <Button x:Name="Start_Button" Text="Ξεκίνησε την Προσθήκη" TextTransform="None" TextColor="{StaticResource Primary}" 
+                        IsVisible="true" BackgroundColor="White"
+                        HeightRequest="54" 
+                        Clicked="Start_Button_Clicked"/>
+                <Frame x:Name="Scan_Frame" IsVisible="false" Padding="7">
+                    <StackLayout Orientation="Horizontal" HeightRequest="40">
+                        <Label Text="Scan Code" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"/>
+                        <dxe:TextEdit x:Name="Scan_Code_Edit"
+                                  HorizontalOptions="EndAndExpand" WidthRequest="220" 
+                                      HasError="{Binding HasError,Mode=OneWay}" ErrorText="{Binding ErrorText}"
+                                  Unfocused="Scan_Code_Edit_Unfocused"/>
+                    </StackLayout>
+
+                </Frame>
+                <Frame Padding="10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20"/>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0"
+                            Text="Κωδικός"/>
+                        <Label Grid.Row="0" Grid.Column="1" HorizontalOptions="Center"
+                            Text="Περιγραφή"/>
+                        <Label Grid.Row="0" Grid.Column="2" HorizontalOptions="End"
+                            Text="Ποσότητα"/>
+                    </Grid>
+                </Frame>
+                <Frame Padding="10">
+                    <dxcv:DXCollectionView ItemsSource="{Binding ProductCollection}"
+                                ItemTemplate="{StaticResource normal_template}">
+                    </dxcv:DXCollectionView>
+                </Frame>
+                
+            </StackLayout>
+            <ActivityIndicator IsRunning="{Binding IsBusy}" VerticalOptions="Center"/>
+            
+        </Grid>
+        
+    </ContentPage.Content>
+</ContentPage>

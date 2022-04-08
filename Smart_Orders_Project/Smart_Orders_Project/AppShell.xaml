@@ -84,12 +84,17 @@
     <!--<TabBar>
         <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate local:LoginPage}" />
     </TabBar>-->
-
-    <!--<FlyoutItem Title="RFΠωλήσεις" Icon="sell.png">
-        <ShellContent Route="OrdersPage" ContentTemplate="{DataTemplate local:OrdersPage}" />
+    <!--<FlyoutItem Title="PalettePage" Icon="sell.png">
+        <ShellContent Route="PalettePage" ContentTemplate="{DataTemplate local:PalettePage}" />
     </FlyoutItem>-->
-    <FlyoutItem Title="RFFreePickingPage" Icon="buy.png">
-        <ShellContent Route="FreePickingPage" ContentTemplate="{DataTemplate local:FreePickingPage}" />
+    <FlyoutItem Title="PalettePage" Icon="sell.png">
+        <ShellContent Route="PaletteStartPage" ContentTemplate="{DataTemplate local:PaletteStartPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="RFΠωλήσεις" Icon="sell.png">
+        <ShellContent Route="OrdersPage" ContentTemplate="{DataTemplate local:OrdersPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="ColCommandPage" Icon="buy.png">
+        <ShellContent Route="ColCommandPage" ContentTemplate="{DataTemplate local:ColCommandPage}" />
     </FlyoutItem>
     <FlyoutItem Title="RFΑγορές" Icon="buy.png">
         <ShellContent Route="RFPurchasePage" ContentTemplate="{DataTemplate local:RFPurchasePage}" />
@@ -105,6 +110,9 @@
     </FlyoutItem>
     <FlyoutItem Title="Μετακίνηση σε θέση" Icon="move.png">
         <ShellContent Route="MoveToPositionPage" ContentTemplate="{DataTemplate local:MoveToPositionPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="Ελευθερη συλλογή" Icon="buy.png">
+        <ShellContent Route="FreePickingPage" ContentTemplate="{DataTemplate local:FreePickingPage}" />
     </FlyoutItem>
     <FlyoutItem Title="Υπόλοιπα Θέσης" Icon="census.png">
         <ShellContent Route="RestOfPositionPage" ContentTemplate="{DataTemplate local:RestOfPositionPage}" />

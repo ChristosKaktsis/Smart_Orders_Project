@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors"
+             x:Class="Smart_Orders_Project.Views.PaletteStartPage"
+             Title="Παλετοποίηση">
+    <ContentPage.Content>
+        <StackLayout>
+            <Frame>
+                <StackLayout>
+                    <dxe:TextEdit PlaceholderText="Search"/>
+                </StackLayout>
+            </Frame>
+            <Button Text="Ξεκίνησε νέα παλέτα" TextTransform="None" FontSize="17" 
+                    BackgroundColor="White" TextColor="{StaticResource Primary}"
+                    Clicked="Button_Clicked"/>
+            <Frame>
+                <StackLayout>
+                    <Button Text="Αποπαλετοποίηση" TextTransform="None" FontSize="17" 
+                    BackgroundColor="White" TextColor="{StaticResource Primary}"
+                    Clicked="Button_Clicked"/>
+                    <Button Text="Παλετοποίηση" TextTransform="None" FontSize="17" 
+                    BackgroundColor="White" TextColor="{StaticResource Primary}"
+                    Clicked="Button_Clicked"/>
+                    <Button Text="Αφαίρεση" TextTransform="None" FontSize="17" 
+                    BackgroundColor="White" TextColor="{StaticResource Primary}"
+                    Clicked="Button_Clicked"/>
+                </StackLayout>
+                
+            </Frame>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

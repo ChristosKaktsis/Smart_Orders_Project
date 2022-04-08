@@ -17,7 +17,7 @@ namespace Smart_Orders_Project.Services
                 Preferences.Set(nameof(ConnectionString), value);
             }
         }
-        public async Task<string> GetParamAsync(string parName)
+        protected async Task<string> GetParamAsync(string parName)
         {
             string queryString = $@"SELECT ParamName, Parameter
                 From XamarinMobWMSParameters where ParamName='{parName}'";
@@ -26,10 +26,10 @@ namespace Smart_Orders_Project.Services
             {
                 connection.Open();
                 SqlCommand command = new SqlCommand(queryString, connection);
-                SqlDataReader reader = command.ExecuteReader();
+                SqlDataReader reader = await command.ExecuteReaderAsync();
                 if (!reader.HasRows)
                     return null;
-                reader.Read();
+                await reader.ReadAsync();
 
                 return await Task.FromResult(reader["Parameter"].ToString());
             }
