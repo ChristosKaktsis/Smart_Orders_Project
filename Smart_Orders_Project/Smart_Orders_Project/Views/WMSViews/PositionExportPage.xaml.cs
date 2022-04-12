@@ -13,12 +13,12 @@ namespace Smart_Orders_Project.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PositionExportPage : ContentPage
     {
-        private PositionExportViewModel _viewModel;
+        private PositionBaseViewModel _viewModel;
 
         public PositionExportPage()
         {
             InitializeComponent();
-            BindingContext = _viewModel = new PositionExportViewModel();
+            BindingContext = _viewModel = new PositionBaseViewModel();
             OpenPopUp();
         }
 

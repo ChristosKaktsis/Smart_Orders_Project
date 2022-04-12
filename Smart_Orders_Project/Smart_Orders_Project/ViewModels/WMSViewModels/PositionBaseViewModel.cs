@@ -17,7 +17,7 @@ namespace Smart_Orders_Project.ViewModels
         protected Product product;
         protected bool _IsPositionFocused, _IsProductFocused, productHasError, positionHasError;
         private int _Quantity;
-        
+        private RepositoryPalette repositoryPalette;
 
         public ObservableCollection<Storage> StorageList { get; set; }
         public Command LoadStorageCommand { get; set; }
@@ -28,14 +28,15 @@ namespace Smart_Orders_Project.ViewModels
             InitializeModel();
             LoadStorageCommand = new Command(async () => await ExecuteLoadStorageCommand());
             
-            
         }
         private void InitializeModel()
         {
             StorageList = new ObservableCollection<Storage>();
             positionChange = new RepositoryPositionChange();
+            repositoryPalette = new RepositoryPalette();
+
         }
-       
+
 
         public void OnAppearing()
         {
@@ -99,6 +100,8 @@ namespace Smart_Orders_Project.ViewModels
             set
             {
                 SetProperty(ref product, value);
+                if (value != null)
+                    DisplayFounder = value.Name;
             }
         }
         public async Task SetProduct(string value)
@@ -161,8 +164,6 @@ namespace Smart_Orders_Project.ViewModels
 
             }
         }
-       
-        
         public bool IsPositionFocused
         {
             get { return _IsPositionFocused; }
@@ -219,6 +220,75 @@ namespace Smart_Orders_Project.ViewModels
                 SetProperty(ref _Quantity, value);
             }
         }
-        
+
+        public async Task ExecuteSavePosition(int type)
+        {
+            try
+            {
+                var result = await positionChange.PositionChange(Position, Product, Quantity, type, null);
+                Console.WriteLine($"Saved? {result}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                await Shell.Current.DisplayAlert("Προσοχή!", $"Κάτι πήγε στραβά :{ex}", "Ok");
+            }
+
+        }
+        //not good practice 
+        //palette founders 
+        private Palette palette;
+        private bool haserror;
+        private string errorText;
+        private string displayFounder;
+
+        public Palette Palette
+        {
+            get => palette;
+            set
+            {
+                SetProperty(ref palette, value);
+                if (value != null)
+                    DisplayFounder = value.Description;
+            }
+        }
+        public bool PaletteHasError
+        {
+            get => haserror;
+            set => SetProperty(ref haserror, value);
+        }
+        public string PaletteErrorText
+        {
+            get => errorText;
+            set => SetProperty(ref errorText, value);
+        }
+        public string DisplayFounder
+        {
+            get => displayFounder;
+            set => SetProperty(ref displayFounder, value);
+        }
+        public async Task FindPalette(string sscc)
+        {
+            try
+            {
+                IsBusy = true;
+                PaletteHasError = false;
+                var item = await repositoryPalette.GetPalette(sscc);
+                if (PaletteHasError = item == null)
+                {
+                    PaletteErrorText = "Η παλέτα δεν βρέθηκε";
+                }
+                Palette = item;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
     }
 }

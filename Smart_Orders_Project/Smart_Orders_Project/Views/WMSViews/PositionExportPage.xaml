@@ -9,7 +9,7 @@
              x:Class="Smart_Orders_Project.Views.PositionExportPage"
              Title="Εξαγωγή απο Θέση">
     <ContentPage.Content>
-        <StackLayout x:DataType="vm:PositionExportViewModel" Margin="11" Spacing="30" >
+        <StackLayout x:DataType="vm:PositionBaseViewModel" Margin="11" Spacing="30" >
             
             <dxp:DXPopup x:Name="SpacePopUp"
                          AllowScrim="True"

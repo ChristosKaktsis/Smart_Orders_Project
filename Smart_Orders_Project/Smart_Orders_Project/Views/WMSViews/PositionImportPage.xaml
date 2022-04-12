@@ -5,7 +5,7 @@
              x:Class="Smart_Orders_Project.Views.PositionImportPage"
              Title="Παραλαβή σε Θέση">
     <ContentPage.Content>
-        <StackLayout x:DataType="vm:PositionImportViewModel" Margin="11" Spacing="30" >
+        <StackLayout x:DataType="vm:PositionBaseViewModel" Margin="11" Spacing="30" >
             
             <dxp:DXPopup x:Name="SpacePopUp"
                          AllowScrim="True"
@@ -103,7 +103,7 @@
                               Text="{Binding ProductID,Mode=OneWayToSource}"
                               HasError="{Binding ProductHasError}"
                               ErrorText="{Binding ErrorMessage}"/>
-                <Label Grid.Row="5" Grid.ColumnSpan="2" Text="{Binding Product.Name}" FontSize="17" HorizontalOptions="EndAndExpand"/>
+                <Label Grid.Row="5" Grid.ColumnSpan="2" Text="{Binding DisplayFounder}" FontSize="17" HorizontalOptions="EndAndExpand"/>
                 <StackLayout Grid.Row="6" Grid.ColumnSpan="2" HorizontalOptions="EndAndExpand">
                     <Label Text="Ένα Ένα" VerticalOptions="Center" FontSize="20"/>
                     <Switch x:Name="Quick_switch" HorizontalOptions="EndAndExpand" IsToggled="{Binding IsQuickOn,Mode=TwoWay}"/>

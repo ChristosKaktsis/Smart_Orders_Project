@@ -84,12 +84,6 @@
     <!--<TabBar>
         <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate local:LoginPage}" />
     </TabBar>-->
-    <!--<FlyoutItem Title="PalettePage" Icon="sell.png">
-        <ShellContent Route="PalettePage" ContentTemplate="{DataTemplate local:PalettePage}" />
-    </FlyoutItem>-->
-    <FlyoutItem Title="PalettePage" Icon="sell.png">
-        <ShellContent Route="PaletteStartPage" ContentTemplate="{DataTemplate local:PaletteStartPage}" />
-    </FlyoutItem>
     <FlyoutItem Title="RFΠωλήσεις" Icon="sell.png">
         <ShellContent Route="OrdersPage" ContentTemplate="{DataTemplate local:OrdersPage}" />
     </FlyoutItem>
@@ -119,6 +113,9 @@
     </FlyoutItem>
     <FlyoutItem Title="Θέσεις Είδους" Icon="multiposition.png">
         <ShellContent Route="RestOfProducts" ContentTemplate="{DataTemplate local:RestOfProducts}" />
+    </FlyoutItem>
+    <FlyoutItem Title="PalettePage" Icon="sell.png">
+        <ShellContent Route="PaletteStartPage" ContentTemplate="{DataTemplate local:PaletteStartPage}" />
     </FlyoutItem>
     <FlyoutItem Title="Ανταλλακτικό" Icon="screw.png">
         <ShellContent Route="SparePartPage" ContentTemplate="{DataTemplate local:SparePartPage}" />

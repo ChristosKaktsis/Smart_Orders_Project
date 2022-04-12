@@ -13,12 +13,12 @@ namespace Smart_Orders_Project.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PositionImportPage : ContentPage
     {
-        private PositionImportViewModel _viewModel;
+        private PositionBaseViewModel _viewModel;
 
         public PositionImportPage()
         {
             InitializeComponent();
-            BindingContext = _viewModel = new PositionImportViewModel();
+            BindingContext = _viewModel = new PositionBaseViewModel();
             OpenPopUp();
         }
 
@@ -45,7 +45,20 @@ namespace Smart_Orders_Project.Views
             }
             
         }
-        private async void Product_text_Unfocused(object sender, FocusEventArgs e)
+        private  void Product_text_Unfocused(object sender, FocusEventArgs e)
+        {
+            if (IsPalette(_viewModel.ProductID))
+                GoForPalette();
+            else
+                GoForProduct();
+        }
+
+        private async void GoForPalette()
+        {
+            await _viewModel.FindPalette(_viewModel.ProductID);
+        }
+
+        private async void GoForProduct()
         {
             await _viewModel.SetProduct(_viewModel.ProductID);
             if (_viewModel.IsQuickOn)
@@ -55,8 +68,13 @@ namespace Smart_Orders_Project.Views
                 await Task.Delay(200);
                 Quantity_text.Focus();
             }
-                
         }
+
+        private bool IsPalette(string productID)
+        {
+            return productID.StartsWith("111");
+        }
+
         private void Done_button_Clicked(object sender, EventArgs e)
         {
             
