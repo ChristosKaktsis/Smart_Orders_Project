@@ -19,21 +19,22 @@ namespace Smart_Orders_Project.Services
         }
         protected async Task<string> GetParamAsync(string parName)
         {
-            string queryString = $@"SELECT ParamName, Parameter
+            return await Task.Run( async() => {
+                string queryString = $@"SELECT ParamName, Parameter
                 From XamarinMobWMSParameters where ParamName='{parName}'";
 
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand(queryString, connection);
-                SqlDataReader reader = await command.ExecuteReaderAsync();
-                if (!reader.HasRows)
-                    return null;
-                await reader.ReadAsync();
+                using (SqlConnection connection = new SqlConnection(ConnectionString))
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(queryString, connection);
+                    SqlDataReader reader = await command.ExecuteReaderAsync();
+                    if (!reader.HasRows)
+                        return null;
+                    await reader.ReadAsync();
 
-                return await Task.FromResult(reader["Parameter"].ToString());
-            }
-
+                    return await Task.FromResult(reader["Parameter"].ToString());
+                }
+            });
         }
     }
 }

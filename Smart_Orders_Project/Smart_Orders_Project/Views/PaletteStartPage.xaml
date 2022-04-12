@@ -1,31 +1,47 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors"
+             xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors" xmlns:vm="clr-namespace:Smart_Orders_Project.ViewModels"
              x:Class="Smart_Orders_Project.Views.PaletteStartPage"
              Title="Παλετοποίηση">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout x:DataType="vm:PaletteStartViewModel">
+            
             <Frame>
                 <StackLayout>
-                    <dxe:TextEdit PlaceholderText="Search"/>
+                    <dxe:TextEdit x:Name="Search_Edit"
+                                  PlaceholderText="Search"
+                                  Unfocused="Search_Edit_Unfocused"
+                                  HasError="{Binding HasError}" ErrorText="{Binding ErrorText}"/>
                 </StackLayout>
             </Frame>
             <Button Text="Ξεκίνησε νέα παλέτα" TextTransform="None" FontSize="17" 
                     BackgroundColor="White" TextColor="{StaticResource Primary}"
                     Clicked="Button_Clicked"/>
-            <Frame>
-                <StackLayout>
-                    <Button Text="Αποπαλετοποίηση" TextTransform="None" FontSize="17" 
-                    BackgroundColor="White" TextColor="{StaticResource Primary}"
-                    Clicked="Button_Clicked"/>
-                    <Button Text="Παλετοποίηση" TextTransform="None" FontSize="17" 
-                    BackgroundColor="White" TextColor="{StaticResource Primary}"
-                    Clicked="Button_Clicked"/>
-                    <Button Text="Αφαίρεση" TextTransform="None" FontSize="17" 
-                    BackgroundColor="White" TextColor="{StaticResource Primary}"
-                    Clicked="Button_Clicked"/>
-                </StackLayout>
+            
+            <Frame Margin="10" CornerRadius="5">
+                <Grid>
+                    <StackLayout>
+                        <Label Text="{Binding Palette.SSCC}" FontSize="20" FontAttributes="Bold"/>
+                        <Label Text="{Binding Palette.Description}" FontSize="17" />
+                    </StackLayout>
+                    <StackLayout Grid.Row="1" Orientation="Horizontal" Spacing="15" VerticalOptions="Center" HorizontalOptions="Center">
+                        <Label Text="{Binding Palette.Length,StringFormat='Μήκος {0} cm,'}" FontSize="15"/>
+                        <Label Text="{Binding Palette.Width,StringFormat='Πλάτος {0} cm'}" FontSize="15"/>
+                        <Label Text="{Binding Palette.Height,StringFormat='Υψος {0} cm,'}" FontSize="15"/>
+                    </StackLayout>
+                    <Button x:Name="Delete_button" Grid.Row="2" 
+                            IsVisible="{Binding CanEdit}"
+                            Text="Αποπαλετοποίηση" TextTransform="None" FontSize="17" 
+                    BackgroundColor="{StaticResource TradicLight}" CornerRadius="5"
+                    Clicked="Delete_button_Clicked"/>
+                    <Button x:Name="Edit_button" Grid.Row="3"
+                            IsVisible="{Binding CanEdit}"
+                            Text="Επεξεργασία" TextTransform="None" FontSize="17" 
+                    BackgroundColor="{StaticResource PrimaryLight}"
+                    Clicked="Edit_button_Clicked"/>
+                    <ActivityIndicator IsRunning="{Binding IsBusy}"/>
+                </Grid>
                 
             </Frame>
         </StackLayout>

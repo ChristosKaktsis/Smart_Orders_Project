@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Smart_Orders_Project.Views.PaletteEditPage"
+             xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors" 
+             xmlns:dxcv="http://schemas.devexpress.com/xamarin/2014/forms/collectionview" 
+             xmlns:dxp="http://schemas.devexpress.com/xamarin/2014/forms/popup" 
+             xmlns:model="clr-namespace:Smart_Orders_Project.Models" 
+             xmlns:vm="clr-namespace:Smart_Orders_Project.ViewModels"
+             Title="Επεξεργασία Παλέτας">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="Finish_Button" Text="Finish"  Clicked="Finish_Button_Clicked"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="normal_template">
+                <dxcv:SwipeContainer>
+                    <dxcv:SwipeContainer.ItemView>
+                        <Grid x:DataType="model:Product">
+                            <Frame Padding="6" Margin="0,0,0,1">
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding CodeDisplay}" FontAttributes="Bold"
+                                   HorizontalOptions="Center"/>
+                                    <Label Text="{Binding Name}" 
+                                   WidthRequest="160" HeightRequest="33"
+                                       HorizontalOptions="Center"/>
+                                    <dxe:NumericEdit Value="{Binding Quantity}" SelectValueOnFocus="True"
+                                             WidthRequest="60" HeightRequest="30"
+                                             HorizontalOptions="EndAndExpand"/>
+                                </StackLayout>
+                            </Frame>
+                        </Grid>
+                    </dxcv:SwipeContainer.ItemView>
+                </dxcv:SwipeContainer>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid x:DataType="vm:PaletteEditViewModel">
+            <StackLayout >
+                <Frame>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            
+                        </Grid.RowDefinitions>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="SSCC" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" />
+                            <dxe:TextEdit x:Name="SSCC_Edit"
+                                          WidthRequest="200"
+                                      PlaceholderText="SSCC" Text="{Binding Palette.SSCC}"
+                                      IsReadOnly="True"/>
+                        </StackLayout>
+                        
+                    </Grid>
+                </Frame>
+                <Frame x:Name="Just_Text" Padding="11">
+                    <Label  Text="Επιλογή Αφαίρεσης ή Προσθήκης"  FontSize="20" 
+                           HorizontalOptions="Center" VerticalOptions="Center"/>
+                </Frame>
+                
+                <Frame x:Name="Scan_Frame" IsVisible="false" Padding="7">
+                    <StackLayout Orientation="Horizontal" HeightRequest="40">
+                        <Label Text="Scan Code" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"/>
+                        <dxe:TextEdit x:Name="Scan_Code_Edit"
+                                      HasError="{Binding HasError}" ErrorText="{Binding ErrorText}"
+                                  HorizontalOptions="EndAndExpand" WidthRequest="220" 
+                                  Unfocused="Scan_Code_Edit_Unfocused"/>
+                    </StackLayout>
+
+                </Frame>
+                <StackLayout Orientation="Horizontal">
+                    <Button x:Name="Delete_Button" Text="Αφαίρεση" TextTransform="None" FontSize="18"
+                            Clicked="Delete_Button_Clicked"
+                            BackgroundColor="{StaticResource TradicLight}" HorizontalOptions="FillAndExpand"/>
+                    <Button x:Name="Add_Button" Text="Προσθήκη" TextTransform="None" FontSize="18" 
+                            Clicked="Add_Button_Clicked"
+                            BackgroundColor="{StaticResource Analogous}" HorizontalOptions="FillAndExpand"/>
+                </StackLayout>
+                <Frame Padding="10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20"/>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0"
+                            Text="Κωδικός"/>
+                        <Label Grid.Row="0" Grid.Column="1" HorizontalOptions="Center"
+                            Text="Περιγραφή"/>
+                        <Label Grid.Row="0" Grid.Column="2" HorizontalOptions="End"
+                            Text="Ποσότητα"/>
+                    </Grid>
+                </Frame>
+                <Frame Padding="10">
+                    <dxcv:DXCollectionView ItemsSource="{Binding ProductCollection}"
+                                ItemTemplate="{StaticResource normal_template}">
+                    </dxcv:DXCollectionView>
+                </Frame>
+            </StackLayout>
+            <ActivityIndicator IsRunning="{Binding IsBusy}" VerticalOptions="Center"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

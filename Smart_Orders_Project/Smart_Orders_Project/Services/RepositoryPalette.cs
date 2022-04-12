@@ -37,6 +37,36 @@ namespace Smart_Orders_Project.Services
                 return await Task.FromResult(palette);
             }
         }
+        public async Task<List<Product>> GetPaletteContent(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                return null;
+            List<Product> list = new List<Product>();
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat(await GetParamAsync("getPaletteContent"), id);
+            string queryString = sb.ToString();
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(queryString, connection);
+                SqlDataReader reader = await command.ExecuteReaderAsync();
+                
+                while(await reader.ReadAsync())
+                {
+                    Product pro = new Product()
+                    {
+                        Oid = Guid.Parse(reader["Oid"].ToString()),
+                        ProductCode = reader["Κωδικός"] != DBNull.Value ? reader["Κωδικός"].ToString() : string.Empty,
+                        BarCode = reader["BarCodeΕίδους"] != DBNull.Value ? reader["BarCodeΕίδους"].ToString() : string.Empty,
+                        Name = reader["Περιγραφή"] != DBNull.Value ? reader["Περιγραφή"].ToString() : string.Empty,
+                        Quantity = int.Parse(reader["Ποσότητα"].ToString())
+                    };
+                    list.Add(pro);
+                }
+                return await Task.FromResult(list);
+            }
+        }
         public async Task<bool> PostPalette(Palette palette)
         {
             if (palette == null)
@@ -61,6 +91,21 @@ namespace Smart_Orders_Project.Services
             var barcode = string.IsNullOrEmpty(product.BarCode) ? "null" : product.BarCode;
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat(await GetParamAsync("postPaletteItem"),oid, palette.Oid, product.Oid, barcode, product.Quantity);
+            string queryString = sb.ToString();
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(queryString, connection);
+                result = await command.ExecuteNonQueryAsync();
+            }
+            return await Task.FromResult(result != 0);
+        }
+        public async Task<bool> DeletePaletteContent(Palette palette)
+        {
+            if (palette == null)
+                return false;
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat(await GetParamAsync("deletePaletteContent"), palette.Oid);
             string queryString = sb.ToString();
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
