@@ -28,14 +28,12 @@ namespace Smart_Orders_Project.Views
             SpacePopUp.IsOpen = !SpacePopUp.IsOpen;
             _viewModel.OnAppearing();
         }
-
         private void Button_Clicked(object sender, EventArgs e)
         {
             SpacePopUp.IsOpen = !SpacePopUp.IsOpen;
             if (!SpacePopUp.IsOpen)
                 Position_text.Focus();
         }
-
         private async void Position_text_Unfocused(object sender, FocusEventArgs e)
         {
             if(!string.IsNullOrWhiteSpace(Position_text.Text))
@@ -43,32 +41,53 @@ namespace Smart_Orders_Project.Views
                 await Task.Delay(200);
                 Product_text.Focus();
             }
-            
         }
-        private async void Product_text_Unfocused(object sender, FocusEventArgs e)
+        private  void Product_text_Unfocused(object sender, FocusEventArgs e)
+        {
+            if (_viewModel.IsPalette(Product_text.Text))
+                GoForPalette();
+            else
+                GoForProduct();
+        }
+        private async void GoForPalette()
+        {
+            await _viewModel.FindPalette(_viewModel.ProductID);
+            await _viewModel.LoadContent();
+        }
+        private async void GoForProduct()
         {
             await _viewModel.SetProduct(_viewModel.ProductID);
             if (_viewModel.IsQuickOn)
-                Reset();
+                SaveProduct();
             else if (!string.IsNullOrWhiteSpace(Product_text.Text))
             {
                 await Task.Delay(200);
                 Quantity_text.Focus();
             }
-                
         }
-        private void Done_button_Clicked(object sender, EventArgs e)
+        private async void SavePalette()
         {
+            await _viewModel.SavePaletteAtPosition(1);
             Reset();
         }
-
-        private async void Reset()
+        private async void SaveProduct()
         {
             var answer = await PositionCheck();
             if (!answer)
                 return;
-            //Done
             await _viewModel.ExecuteSavePosition(1);
+            Reset();
+        }
+        private void Done_button_Clicked(object sender, EventArgs e)
+        {
+            if (_viewModel.IsPalette(Product_text.Text))
+                SavePalette();
+            else
+                SaveProduct();
+        }
+        private  void Reset()
+        {
+            //Done
             Product_text.Focus();
             Product_text.Text = string.Empty;
         }

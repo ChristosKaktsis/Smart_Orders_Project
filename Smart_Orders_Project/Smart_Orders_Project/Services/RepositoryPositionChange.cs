@@ -10,7 +10,7 @@ namespace Smart_Orders_Project.Services
     public class RepositoryPositionChange : RepositoryService
     {
         int result = 0;
-        public async Task<bool> PositionChange(Position position, Product product, int quantity, int type , Management manage)
+        public async Task<bool> PositionChange(Position position, Product product, int quantity, int type , Management manage = null, Palette palette = null)
         {
             if (position == null || product == null)
                 return await Task.FromResult(false);
@@ -18,9 +18,10 @@ namespace Smart_Orders_Project.Services
             var Oid = Guid.NewGuid();
             var barcode = string.IsNullOrEmpty(product.BarCode) ? "null" : product.BarCode;
             string m = manage == null ? "null" : $"'{manage.Oid}'";//if null send null else send 'guid'
+            string pal = palette == null ? "null" : $"'{palette.Oid}'";//if null send null else send 'guid'
 
             StringBuilder sb = new StringBuilder();
-            sb.AppendFormat(await GetParamAsync("postPosition"), Oid, position.Oid, barcode, product.Oid, quantity, type, m);
+            sb.AppendFormat(await GetParamAsync("postPosition"), Oid, position.Oid, barcode, product.Oid, quantity, type, m, pal);
             string queryString = sb.ToString();
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {

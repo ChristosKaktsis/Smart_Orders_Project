@@ -14,7 +14,7 @@ namespace Smart_Orders_Project.Services
             return await Task.Run(() =>
             {
                 List<string> printers = new List<string>();
-                string ConnectionString = Preferences.Get("ConnectionString", @"User ID=sa;Password=1;Pooling=false;Data Source=192.168.1.187,1433\SQLEXPRESS2019;Initial Catalog=SmartLobSidall");
+                string ConnectionString = Preferences.Get("ConnectionString", App.Current.Resources["ConnectionString"] as string);
                 string queryString = "select Περιγραφή  " +
                 "from ΠίνακαςΔεδομένων15 where GCRecord is null";
                 using (SqlConnection connection = new SqlConnection(ConnectionString))

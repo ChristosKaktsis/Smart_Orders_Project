@@ -113,10 +113,10 @@ namespace Smart_Orders_Project.ViewModels
                 if (!Positions_Are_Set())
                     return;
                 foreach (var item in ProductList)
-                    await positionChange.PositionChange(Position, item, item.Quantity, 1,null);
+                    await positionChange.PositionChange(Position, item, item.Quantity, 1);
                 //move to positionTo
                 foreach (var item in ProductList)
-                    await positionChange.PositionChange(PositionTo, item, item.Quantity, 0,null);
+                    await positionChange.PositionChange(PositionTo, item, item.Quantity, 0);
 
                 ProductList.Clear();
             }
@@ -128,12 +128,45 @@ namespace Smart_Orders_Project.ViewModels
             finally
             {
                 IsBusy = false;
+                ClearAll();
+            }
+        }
+        public async Task MovePaletteToPosition()
+        {
+            try
+            {
+                IsBusy = true;
+                if (!Positions_Are_Set())
+                    return;
+                foreach (var item in PaletteContent)
+                    await positionChange.PositionChange(Position, item, item.Quantity, 1,palette:Palette);
+                //move to positionTo
+                foreach (var item in PaletteContent)
+                    await positionChange.PositionChange(PositionTo, item, item.Quantity, 0, palette: Palette);
+
+                PaletteContent.Clear();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                await AppShell.Current.DisplayAlert("Σφάλμα", $"MoveToPosition : {ex}", "Ok");
+            }
+            finally
+            {
+                IsBusy = false;
+                ClearAll();
             }
         }
 
         private bool Positions_Are_Set()
         {
             return Position != null && PositionTo != null;
+        }
+        private void ClearAll()
+        {
+            Position = null;
+            PositionTo = null;
+            Palette = null;
         }
     }
 }

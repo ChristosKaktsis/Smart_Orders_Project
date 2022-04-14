@@ -127,7 +127,7 @@
                               Text="{Binding ProductID,Mode=OneWayToSource}"
                               HasError="{Binding ProductHasError}"
                               ErrorText="{Binding ErrorMessage}"/>
-                        <Label Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding Product.Name}" FontSize="17" HorizontalOptions="EndAndExpand"/>
+                        <Label Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding DisplayFounder}" FontSize="17" HorizontalOptions="EndAndExpand"/>
                         <StackLayout  Grid.Row="4" Grid.Column="0">
                             <Label Text="Ένα Ένα" VerticalOptions="Center" FontSize="20"/>
                             <Switch x:Name="Quick_switch" HorizontalOptions="EndAndExpand" IsToggled="{Binding IsQuickOn,Mode=TwoWay}"/>

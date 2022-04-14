@@ -109,9 +109,9 @@ namespace Smart_Orders_Project.ViewModels
                 foreach (var item in ProductList)
                 {
                     if (item.Quantity > 0)
-                        await repositoryPosition.PositionChange(Position, item, item.Quantity, 1,null);
+                        await repositoryPosition.PositionChange(Position, item, item.Quantity, 1);
                     else if (item.Quantity < 0)
-                        await repositoryPosition.PositionChange(Position, item, item.Quantity * -1, 0,null);
+                        await repositoryPosition.PositionChange(Position, item, item.Quantity * -1, 0);
                     item.Quantity = 0;
                 }
             }

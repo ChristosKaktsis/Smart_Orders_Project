@@ -87,9 +87,6 @@
     <FlyoutItem Title="RFΠωλήσεις" Icon="sell.png">
         <ShellContent Route="OrdersPage" ContentTemplate="{DataTemplate local:OrdersPage}" />
     </FlyoutItem>
-    <FlyoutItem Title="ColCommandPage" Icon="buy.png">
-        <ShellContent Route="ColCommandPage" ContentTemplate="{DataTemplate local:ColCommandPage}" />
-    </FlyoutItem>
     <FlyoutItem Title="RFΑγορές" Icon="buy.png">
         <ShellContent Route="RFPurchasePage" ContentTemplate="{DataTemplate local:RFPurchasePage}" />
     </FlyoutItem>
@@ -105,8 +102,11 @@
     <FlyoutItem Title="Μετακίνηση σε θέση" Icon="move.png">
         <ShellContent Route="MoveToPositionPage" ContentTemplate="{DataTemplate local:MoveToPositionPage}" />
     </FlyoutItem>
-    <FlyoutItem Title="Ελευθερη συλλογή" Icon="buy.png">
+    <FlyoutItem Title="Ελευθερη συλλογή" Icon="go.png">
         <ShellContent Route="FreePickingPage" ContentTemplate="{DataTemplate local:FreePickingPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="Εντολή συλλογής" Icon="go.png">
+        <ShellContent Route="ColCommandPage" ContentTemplate="{DataTemplate local:ColCommandPage}" />
     </FlyoutItem>
     <FlyoutItem Title="Υπόλοιπα Θέσης" Icon="census.png">
         <ShellContent Route="RestOfPositionPage" ContentTemplate="{DataTemplate local:RestOfPositionPage}" />
@@ -114,7 +114,7 @@
     <FlyoutItem Title="Θέσεις Είδους" Icon="multiposition.png">
         <ShellContent Route="RestOfProducts" ContentTemplate="{DataTemplate local:RestOfProducts}" />
     </FlyoutItem>
-    <FlyoutItem Title="PalettePage" Icon="sell.png">
+    <FlyoutItem Title="Παλετοποίηση" Icon="palette.png">
         <ShellContent Route="PaletteStartPage" ContentTemplate="{DataTemplate local:PaletteStartPage}" />
     </FlyoutItem>
     <FlyoutItem Title="Ανταλλακτικό" Icon="screw.png">

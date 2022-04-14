@@ -57,7 +57,7 @@ namespace Smart_Orders_Project.ViewModels
         }
         public string ConnectionString
         {
-            get => Preferences.Get(nameof(ConnectionString), @"User ID=sa;Password=1;Pooling=false;Data Source=192.168.1.187\SQLEXPRESS2019;Initial Catalog=SmartLobSidall");
+            get => Preferences.Get(nameof(ConnectionString), App.Current.Resources["ConnectionString"] as string);
             set
             {
                 Preferences.Set(nameof(ConnectionString), value);

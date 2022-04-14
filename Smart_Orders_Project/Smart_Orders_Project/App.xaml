@@ -79,7 +79,8 @@
                     </VisualStateGroupList>
                 </Setter>
             </Style>-->
-            
+            <x:String x:Key="ConnectionString">User ID=sa;Password=1;Pooling=false;Data Source=192.168.3.99\SQLEXPRESS;Initial Catalog=maindemo</x:String>
+            <x:String x:Key="PaletteNO">111</x:String>
         </ResourceDictionary>        
     </Application.Resources>
 </Application>

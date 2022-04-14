@@ -99,29 +99,32 @@ namespace Smart_Orders_Project.ViewModels
                 IsBusy = false;
             }
         }
-        public void AddToList()
+        public void AddFoundProductToList()
         {
-            if (Position == null || Product == null)
-                return;
             Product.Quantity = Quantity;
-            
-            CheckQuantity(Product);
+            AddToList(Product);
+        }
+        public void AddToList(Product pro)
+        {
+            if (Position == null || pro == null)
+                return;
+            CheckQuantity(pro);
             var sameItem = Positions.Where(x => x.Oid == Position.Oid);
             if (sameItem.Any())
             {
                 var samePosition = sameItem.FirstOrDefault();
                 var sameProduct = samePosition.Products.Where(
-                    p => p.CodeDisplay == Product.CodeDisplay);
+                    p => p.CodeDisplay == pro.CodeDisplay);
 
                 if (sameProduct.Any())
-                    sameProduct.FirstOrDefault().Quantity += Product.Quantity;
+                    sameProduct.FirstOrDefault().Quantity += pro.Quantity;
                 else
-                    samePosition.Products.Add(Product);
+                    samePosition.Products.Add(pro);
             }
             else
             {
                 Position.Products = new List<Product>();
-                Position.Products.Add(Product);
+                Position.Products.Add(pro);
                 Positions.Add(Position);
             }
             
@@ -154,7 +157,28 @@ namespace Smart_Orders_Project.ViewModels
             
             Quantity_Text = $"{find.Quantity2}/{find.Quantity}";
         }
-
+        public bool IsPaletteValid()
+        {
+            bool isMatching = false;
+            foreach (var item in PaletteContent)
+            {
+                isMatching = ProductList.Where(
+                x => x.CodeDisplay == item.CodeDisplay
+                && (x.Quantity - x.Quantity2) >= item.Quantity).Any();
+                if (!isMatching)
+                    break;
+            }
+            return isMatching;
+        }
+        public void AddFromPalette()
+        {
+            if (!IsPaletteValid())
+                return;
+            foreach(var item in PaletteContent)
+            {
+                AddToList(item);
+            }
+        }
         private async void CheckQuantity(Product p)
         {
             if (p == null)
