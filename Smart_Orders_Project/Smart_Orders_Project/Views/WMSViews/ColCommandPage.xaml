@@ -109,7 +109,7 @@
                         <dxe:TextEdit x:Name="Product_text" Grid.Row="2" Grid.Column="1" 
                               PlaceholderText="Είδος" TextFontSize="22"
                               Unfocused="Product_text_Unfocused"/>
-                        <Label Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding FoundProduct.Name}" FontSize="17" HorizontalOptions="EndAndExpand"/>
+                        <Label Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding DisplayFounder}" FontSize="17" HorizontalOptions="EndAndExpand"/>
                         <StackLayout  Grid.Row="4" Grid.Column="0">
                             <Label Text="Ένα Ένα" VerticalOptions="Center" FontSize="20"/>
                             <Switch x:Name="Quick_switch" HorizontalOptions="EndAndExpand" IsToggled="{Binding IsQuickOn,Mode=TwoWay}"/>

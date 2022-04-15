@@ -83,10 +83,32 @@ namespace Smart_Orders_Project.Views
             }
         }
 
-        private async void Product_text_Unfocused(object sender, FocusEventArgs e)
+        private  void Product_text_Unfocused(object sender, FocusEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(Product_text.Text))
                 return;
+            if (_viewModel.IsPalette(Product_text.Text))
+                GoForPalette();
+            else
+                GoForProduct();
+        }
+
+        private async void GoForPalette()
+        {
+            _viewModel.FoundProduct = null;
+            _viewModel.DisplayFounder = string.Empty;
+            await _viewModel.FindPalette(Product_text.Text);
+            await _viewModel.LoadContent();
+            if (Product_text.HasError = !_viewModel.IsPaletteValid())
+            {
+                await DisplayAlert("Προσοχή", "Η παλέτα δεν ακολουθεί την εντολή συλλογής", "Οκ");
+                Reset();
+            }
+        }
+
+        private async void GoForProduct()
+        {
+            _viewModel.DisplayFounder = string.Empty;
             _viewModel.FindProduct(Product_text.Text);
             if (Product_text.HasError = _viewModel.FoundProduct == null)
             {
@@ -106,7 +128,10 @@ namespace Smart_Orders_Project.Views
 
         private  void Add_Button_Clicked(object sender, EventArgs e)
         {
-            AddItem();
+            if (_viewModel.IsPalette(Product_text.Text))
+                _viewModel.AddPalette();
+            else
+                AddItem();
             Reset();
         }
         private async void AddItem()
@@ -122,6 +147,8 @@ namespace Smart_Orders_Project.Views
         private void Reset()
         {
             _viewModel.FoundProduct = null;
+            _viewModel.Position = null;
+            _viewModel.DisplayFounder = string.Empty;
             Product_text.Text = string.Empty;
             Quantity_text.Value = 1;
             Product_text.Focus();

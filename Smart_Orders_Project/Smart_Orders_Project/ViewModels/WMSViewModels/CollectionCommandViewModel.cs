@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Smart_Orders_Project.ViewModels
 {
-    public class CollectionCommandViewModel : BaseViewModel
+    public class CollectionCommandViewModel : PositionBaseViewModel
     {
         public string Doc 
         { 
@@ -122,7 +122,9 @@ namespace Smart_Orders_Project.ViewModels
             set
             {
                 SetProperty(ref foundProduct, value);
-                DisplayRest();
+                DisplayRest();//show how many left to add
+                if (value != null && Palette == null)
+                    DisplayFounder = value.Name;
             }
         }
 
@@ -151,6 +153,31 @@ namespace Smart_Orders_Project.ViewModels
             var ok = ColCommandList.Where(x => x.Product.CodeDisplay == productID && x.Position.Oid == FoundPosition.Oid);
             if (ok.Any())
                 FoundProduct = ok.FirstOrDefault().Product;
+        }
+        public bool IsPaletteValid()
+        {
+            bool result = false;
+            foreach(var item in PaletteContent)
+            {
+                FindProduct(item.CodeDisplay);
+                if (FoundProduct == null || item.Quantity > (FindLine.Quantity - FindLine.Collected))
+                {
+                    result = false;
+                    break; 
+                }
+                result = true;
+            }
+            return result;
+        }
+        public void AddPalette()
+        {
+            if (!IsPaletteValid())
+                return;
+            foreach (var item in PaletteContent)
+            {
+                FindProduct(item.CodeDisplay);
+                AddToCollection(item.Quantity);
+            }
         }
         public CollectionCommand FindLine 
         {
