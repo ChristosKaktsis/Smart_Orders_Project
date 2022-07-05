@@ -24,6 +24,47 @@ namespace Smart_Orders_Project.ViewModels
 
             ScannerCommand = new Command(OnScannerClicked);
         }
+        protected override void CheckSum()
+        {
+            if (SelectedProduct == null)
+                return;
+
+            float oldwidth = SelectedProduct.Width == 0 ? 1 : SelectedProduct.Width;
+            float oldlength = SelectedProduct.Length == 0 ? 1 : SelectedProduct.Length;
+            float oldheight = SelectedProduct.Height == 0 ? 1 : SelectedProduct.Height;
+
+            switch (SelectedProduct.Type)
+            {
+                case 1:
+                    oldwidth = 1;
+                    oldheight = 1;
+                    break;
+                case 2:
+                    oldheight = 1;
+                    break;
+            }
+            float oldunit = (oldwidth * oldlength) * oldheight;
+            float newunit = (Width * Length) * Height;
+
+            if (SelectedProduct.Length == 0)
+            {
+                Sum = Quantity * SelectedProduct.LastPriceSold;
+            }
+            else
+            {
+                Unit = newunit * Quantity;
+                if (oldunit == 0)
+                {
+                    Sum = 0;
+                }
+                else
+                {
+                    var athr = (newunit * SelectedProduct.LastPriceSold) / oldunit;
+                    Sum = Quantity * athr;
+                }
+            }
+
+        }
         private async void OnSave()
         {
             RFPurchaseLine newItem = new RFPurchaseLine()

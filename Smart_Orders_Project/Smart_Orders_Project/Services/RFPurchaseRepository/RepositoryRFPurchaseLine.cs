@@ -115,6 +115,7 @@ namespace Smart_Orders_Project.Services
                         Name = reader["Περιγραφή"].ToString(),
                         FPA = int.Parse(reader["ΦΠΑ"] != null ? reader["ΦΠΑ"].ToString() : "0"),
                         Price = double.Parse(reader["ΤιμήΧονδρικής"].ToString()),
+                        LastPriceSold = reader["LastPrice"] != DBNull.Value ? double.Parse(reader["LastPrice"].ToString()) : 0,
                         Color = reader["Χρώματα"] != null ? reader["Χρώματα"].ToString() : string.Empty,
                         Size = reader["Μεγέθη"] != null ? reader["Μεγέθη"].ToString() : string.Empty,
                         Width = reader["Πλάτος"] != DBNull.Value ? float.Parse(reader["Πλάτος"].ToString()) : 0,

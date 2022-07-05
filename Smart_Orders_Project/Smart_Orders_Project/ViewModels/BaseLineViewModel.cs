@@ -227,7 +227,7 @@ namespace Smart_Orders_Project.ViewModels
                 CheckSum();
             }
         }
-        protected void CheckSum()
+        protected virtual void CheckSum()
         {
             if (SelectedProduct == null)
                 return;

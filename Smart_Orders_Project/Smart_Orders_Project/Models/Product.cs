@@ -36,6 +36,7 @@ namespace Smart_Orders_Project.Models
         public string ProductCode { get; set; }
         public string ProductCode2 { get; set; }
         public double Price { get; set; }
+        public double LastPriceSold { get; set; }
         public int FPA { get; set; } 
         public string BarCode { get; set; }
         public string Color { get; set; }

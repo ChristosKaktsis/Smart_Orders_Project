@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors" 
+             xmlns:vm="clr-namespace:Smart_Orders_Project.ViewModels"
+             x:Class="Smart_Orders_Project.Views.HallwayPage"
+             Title="Εκμάθηση Διαδρόμων">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="FontSize" Value="20"/>
+            </Style>
+            <x:String x:Key="Explain"></x:String>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout x:DataType="vm:HallWayViewModel">
+            <Button x:Name="Start_Button" Text="Start" 
+                    Margin="10" CornerRadius="5"
+                    BackgroundColor="{StaticResource PrimaryLight}"
+                    Clicked="Start_Button_Clicked"/>
+            
+            <Frame x:Name="Scan_Frame" Padding="10" IsVisible="false" TranslationX="400">
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Scan" VerticalOptions="Center" />
+                    <dxe:TextEdit x:Name="Hallway_Edit" HorizontalOptions="EndAndExpand" WidthRequest="200" HeightRequest="40"
+                          Unfocused="Hallway_Edit_Unfocused"/>
+                </StackLayout>
+            </Frame>
+            <Frame x:Name="Info_Frame" TranslationX="400">
+                <Grid>
+                    <Label Text="AA :"/>
+                    <Label Text="Προηγούμενος Διάδρομος :"
+                           Grid.Row="1"/>
+                    <Label Text="{Binding AAPicking}" 
+                           Grid.Row="0" Grid.Column="1"/>
+                    <Label Text="{Binding HallWay.Description}" 
+                           Grid.Row="1" Grid.Column="1"/>
+                </Grid>
+            </Frame>
+            <ActivityIndicator IsRunning="{Binding IsBusy}"/>
+            <Frame VerticalOptions="CenterAndExpand">
+                
+                <StackLayout>
+                    <Label Text="Στην διαδικασία εκμάθησης καταγράφεται η αρίθμηση των διαδρόμων. Όταν ολοκληρωθεί η διαδικασία θα γίνει η αποθήκευση των καινούριων εγγραφών." FontSize="16"
+                   />
+                    <Label Text="Προσοχή!!!θα διαγραφούν όλες οι προηγούμενες" TextColor="{StaticResource Tradic}"/>
+                </StackLayout>
+            </Frame>
+            
+            <Button x:Name="Stop_Button" TranslationY="100"
+                    VerticalOptions="EndAndExpand" Margin="10"
+                    CornerRadius="5"
+                    Text="Τέλος Εκμάθησης" TextTransform="None" FontSize="18"
+                    Clicked="Stop_Button_Clicked"/>
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

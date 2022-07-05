@@ -51,7 +51,7 @@
                                                 <StackLayout  Orientation="Horizontal" >
                                                     <Label Text="{Binding UnitOfMeasure ,StringFormat='{0}'}" FontSize="16"/>
 
-                                                    <Label Text="{Binding Price,StringFormat='{0} €'}" HorizontalOptions="EndAndExpand" FontSize="16"/>
+                                                    <Label Text="{Binding LastPriceSold,StringFormat='{0} €'}" HorizontalOptions="EndAndExpand" FontSize="16"/>
                                                 </StackLayout>
                                             </StackLayout>
                                         </StackLayout>
@@ -77,7 +77,7 @@
                                                 <StackLayout  Orientation="Horizontal" >
                                                     <Label Text="{Binding UnitOfMeasure ,StringFormat='{0}'}" FontSize="16"/>
 
-                                                    <Label Text="{Binding Price,StringFormat='{0} €'}" HorizontalOptions="EndAndExpand" FontSize="16"/>
+                                                    <Label Text="{Binding LastPriceSold,StringFormat='{0} €'}" HorizontalOptions="EndAndExpand" FontSize="16"/>
                                                 </StackLayout>
                                             </StackLayout>
                                         </StackLayout>

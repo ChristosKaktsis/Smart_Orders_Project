@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
-
+//better Delete this class and use RepositorryPosition
 namespace Smart_Orders_Project.Services
 {
     public class RepositoryRFPosition : RepositoryService, IDataStore<Position>
