@@ -1,4 +1,4 @@
-﻿using Smart_Orders_Project.Models;
+﻿using SmartMobileWMS.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 
-namespace Smart_Orders_Project.Services
+namespace SmartMobileWMS.Services
 {
     public class RepositoryRecievers : RepositoryService, IDataStore<Reciever>
     {

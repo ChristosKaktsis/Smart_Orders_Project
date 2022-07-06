@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             xmlns:vm="clr-namespace:Smart_Orders_Project.ViewModels" 
+             xmlns:vm="clr-namespace:SmartMobileWMS.ViewModels" 
              xmlns:dxcv="http://schemas.devexpress.com/xamarin/2014/forms/collectionview" 
-             xmlns:model="clr-namespace:Smart_Orders_Project.Models"
-             x:Class="Smart_Orders_Project.Views.RFCesusPage"
+             xmlns:model="clr-namespace:SmartMobileWMS.Models"
+             x:Class="SmartMobileWMS.Views.RFCesusPage"
              Title="RFΑπογραφή"
              Shell.NavBarHasShadow="False">
     <RefreshView x:DataType="vm:RFCensusViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">

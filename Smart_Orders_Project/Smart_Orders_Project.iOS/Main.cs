@@ -5,7 +5,7 @@ using System.Linq;
 using Foundation;
 using UIKit;
 
-namespace Smart_Orders_Project.iOS
+namespace SmartMobileWMS.iOS
 {
     public class Application
     {

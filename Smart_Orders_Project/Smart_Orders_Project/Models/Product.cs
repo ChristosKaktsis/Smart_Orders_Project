@@ -6,7 +6,7 @@ using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
 
-namespace Smart_Orders_Project.Models
+namespace SmartMobileWMS.Models
 {
     public enum TaskStatus
     {

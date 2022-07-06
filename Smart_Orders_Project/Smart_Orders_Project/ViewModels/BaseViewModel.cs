@@ -1,6 +1,6 @@
-﻿using Smart_Orders_Project.Models;
-using Smart_Orders_Project.Models.SparePartModels;
-using Smart_Orders_Project.Services;
+﻿using SmartMobileWMS.Models;
+using SmartMobileWMS.Models.SparePartModels;
+using SmartMobileWMS.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
-namespace Smart_Orders_Project.ViewModels
+namespace SmartMobileWMS.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {

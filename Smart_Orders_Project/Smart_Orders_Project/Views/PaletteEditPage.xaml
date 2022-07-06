@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Smart_Orders_Project.Views.PaletteEditPage"
+             x:Class="SmartMobileWMS.Views.PaletteEditPage"
              xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors" 
              xmlns:dxcv="http://schemas.devexpress.com/xamarin/2014/forms/collectionview" 
              xmlns:dxp="http://schemas.devexpress.com/xamarin/2014/forms/popup" 
-             xmlns:model="clr-namespace:Smart_Orders_Project.Models" 
-             xmlns:vm="clr-namespace:Smart_Orders_Project.ViewModels"
+             xmlns:model="clr-namespace:SmartMobileWMS.Models" 
+             xmlns:vm="clr-namespace:SmartMobileWMS.ViewModels"
              Title="Επεξεργασία Παλέτας">
     <ContentPage.ToolbarItems>
         <ToolbarItem x:Name="Finish_Button" Text="Finish"  Clicked="Finish_Button_Clicked"/>

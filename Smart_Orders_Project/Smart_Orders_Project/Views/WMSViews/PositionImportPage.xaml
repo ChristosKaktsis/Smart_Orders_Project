@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             xmlns:dxp="http://schemas.devexpress.com/xamarin/2014/forms/popup" xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors" xmlns:dxcv="http://schemas.devexpress.com/xamarin/2014/forms/collectionview" xmlns:vm="clr-namespace:Smart_Orders_Project.ViewModels" xmlns:model="clr-namespace:Smart_Orders_Project.Models"
-             x:Class="Smart_Orders_Project.Views.PositionImportPage"
+             xmlns:dxp="http://schemas.devexpress.com/xamarin/2014/forms/popup" xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors" xmlns:dxcv="http://schemas.devexpress.com/xamarin/2014/forms/collectionview" xmlns:vm="clr-namespace:SmartMobileWMS.ViewModels" xmlns:model="clr-namespace:SmartMobileWMS.Models"
+             x:Class="SmartMobileWMS.Views.PositionImportPage"
              Title="Παραλαβή σε Θέση">
     <ContentPage.Content>
         <StackLayout x:DataType="vm:PositionBaseViewModel" Margin="11" Spacing="30" >

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Shell xmlns="http://xamarin.com/schemas/2014/forms" 
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-       xmlns:local="clr-namespace:Smart_Orders_Project.Views"
+       xmlns:local="clr-namespace:SmartMobileWMS.Views"
        Title="Smart_Orders_Project"
-       x:Class="Smart_Orders_Project.AppShell">
+       x:Class="SmartMobileWMS.AppShell">
 
     <!--
         The overall app visual hierarchy is defined here, along with navigation.

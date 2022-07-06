@@ -1,10 +1,10 @@
-﻿using Smart_Orders_Project.ViewModels;
-using Smart_Orders_Project.Views;
+﻿using SmartMobileWMS.ViewModels;
+using SmartMobileWMS.Views;
 using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
 
-namespace Smart_Orders_Project
+namespace SmartMobileWMS
 {
     public partial class AppShell : Xamarin.Forms.Shell
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Smart_Orders_Project.Models.SparePartModels
+namespace SmartMobileWMS.Models.SparePartModels
 {
     public class SparePart
     {

@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace Smart_Orders_Project.Models
+namespace SmartMobileWMS.Models
 {
    public class RFPurchaseLine : INotifyPropertyChanged
     {

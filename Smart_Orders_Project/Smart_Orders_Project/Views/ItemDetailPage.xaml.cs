@@ -1,8 +1,8 @@
-﻿using Smart_Orders_Project.ViewModels;
+﻿using SmartMobileWMS.ViewModels;
 using System.ComponentModel;
 using Xamarin.Forms;
 
-namespace Smart_Orders_Project.Views
+namespace SmartMobileWMS.Views
 {
     public partial class ItemDetailPage : ContentPage
     {

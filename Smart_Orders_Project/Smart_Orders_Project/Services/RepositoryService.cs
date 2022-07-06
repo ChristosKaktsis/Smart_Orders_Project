@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 
-namespace Smart_Orders_Project.Services
+namespace SmartMobileWMS.Services
 {
     public class RepositoryService
     {

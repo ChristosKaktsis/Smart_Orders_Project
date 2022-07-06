@@ -1,6 +1,6 @@
 ﻿using DevExpress.XamarinForms.CollectionView;
-using Smart_Orders_Project.Models;
-using Smart_Orders_Project.ViewModels;
+using SmartMobileWMS.Models;
+using SmartMobileWMS.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Smart_Orders_Project
+namespace SmartMobileWMS
 {
     class ItemDataTemplateSelector : DataTemplateSelector
     {
@@ -33,7 +33,7 @@ namespace Smart_Orders_Project
     }
 }
 
-namespace Smart_Orders_Project.Views
+namespace SmartMobileWMS.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FreePickingPage : ContentPage

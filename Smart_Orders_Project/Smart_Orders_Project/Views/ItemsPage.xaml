@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Smart_Orders_Project.Views.ItemsPage"
+             x:Class="SmartMobileWMS.Views.ItemsPage"
              Title="{Binding Title}"
-             xmlns:local="clr-namespace:Smart_Orders_Project.ViewModels"  
-             xmlns:model="clr-namespace:Smart_Orders_Project.Models"  
+             xmlns:local="clr-namespace:SmartMobileWMS.ViewModels"  
+             xmlns:model="clr-namespace:SmartMobileWMS.Models"  
              x:Name="BrowseItemsPage">
 
     <ContentPage.ToolbarItems>

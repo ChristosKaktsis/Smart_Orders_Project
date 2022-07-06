@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Smart_Orders_Project.Views.FreePickingPage"
+             x:Class="SmartMobileWMS.Views.FreePickingPage"
              xmlns:dxcv="http://schemas.devexpress.com/xamarin/2014/forms/collectionview" 
              xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors" 
              xmlns:dxp="http://schemas.devexpress.com/xamarin/2014/forms/popup" 
-             xmlns:model="clr-namespace:Smart_Orders_Project.Models" 
-             xmlns:vm="clr-namespace:Smart_Orders_Project.ViewModels" 
-             xmlns:local="clr-namespace:Smart_Orders_Project"
+             xmlns:model="clr-namespace:SmartMobileWMS.Models" 
+             xmlns:vm="clr-namespace:SmartMobileWMS.ViewModels" 
+             xmlns:local="clr-namespace:SmartMobileWMS"
              Title="Ελευθερη συλλογή">
     <ContentPage.ToolbarItems>
         <ToolbarItem x:Name="StartScan_Button" Text="Start Scan"  Clicked="StartScan_Button_Clicked"/>

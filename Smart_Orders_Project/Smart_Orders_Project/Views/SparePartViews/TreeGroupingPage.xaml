@@ -2,9 +2,9 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:dxcv="http://schemas.devexpress.com/xamarin/2014/forms/collectionview" 
-             xmlns:model="clr-namespace:Smart_Orders_Project.Models.SparePartModels" 
-             xmlns:vm="clr-namespace:Smart_Orders_Project.ViewModels"
-             x:Class="Smart_Orders_Project.Views.TreeGroupingPage"
+             xmlns:model="clr-namespace:SmartMobileWMS.Models.SparePartModels" 
+             xmlns:vm="clr-namespace:SmartMobileWMS.ViewModels"
+             x:Class="SmartMobileWMS.Views.TreeGroupingPage"
              Title="Επιλογή Ομαδοποίηση car.gr">
     <RefreshView x:DataType="vm:TreeGroupingViewModel" x:Name="page" IsRefreshing="{Binding IsBusy, Mode=TwoWay}" >
         <Grid>

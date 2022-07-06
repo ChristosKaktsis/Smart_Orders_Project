@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Smart_Orders_Project.Services
+namespace SmartMobileWMS.Services
 {
    public interface IUser<T>
     {

@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Smart_Orders_Project.Services
+namespace SmartMobileWMS.Services
 {
     public class RepositoryBarCodeCounter : RepositoryService
     {

@@ -3,7 +3,7 @@ using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
-namespace Smart_Orders_Project.ViewModels
+namespace SmartMobileWMS.ViewModels
 {
     public class AboutViewModel : BaseViewModel
     {

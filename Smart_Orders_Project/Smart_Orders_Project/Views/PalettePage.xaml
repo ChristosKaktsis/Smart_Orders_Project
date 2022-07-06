@@ -3,9 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors" 
              xmlns:dxcv="http://schemas.devexpress.com/xamarin/2014/forms/collectionview" 
-             xmlns:model="clr-namespace:Smart_Orders_Project.Models" 
-             xmlns:vm="clr-namespace:Smart_Orders_Project.ViewModels"
-             x:Class="Smart_Orders_Project.Views.PalettePage"
+             xmlns:model="clr-namespace:SmartMobileWMS.Models" 
+             xmlns:vm="clr-namespace:SmartMobileWMS.ViewModels"
+             x:Class="SmartMobileWMS.Views.PalettePage"
              Title="Νέα Παλέτα">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Finish" Clicked="Finish_Clicked"/>

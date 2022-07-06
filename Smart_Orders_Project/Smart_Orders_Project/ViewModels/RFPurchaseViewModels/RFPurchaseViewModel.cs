@@ -1,5 +1,5 @@
-﻿using Smart_Orders_Project.Models;
-using Smart_Orders_Project.Views;
+﻿using SmartMobileWMS.Models;
+using SmartMobileWMS.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace Smart_Orders_Project.ViewModels
+namespace SmartMobileWMS.ViewModels
 {
     public class RFPurchaseViewModel : BaseViewModel
     {

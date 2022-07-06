@@ -1,11 +1,11 @@
-﻿using Smart_Orders_Project.Views;
+﻿using SmartMobileWMS.Views;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using Xamarin.Forms;
 
-namespace Smart_Orders_Project.ViewModels
+namespace SmartMobileWMS.ViewModels
 {
     public class LoginViewModel : BaseViewModel
     {

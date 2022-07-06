@@ -1,11 +1,11 @@
-﻿using Smart_Orders_Project.Models;
+﻿using SmartMobileWMS.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using Xamarin.Forms;
 
-namespace Smart_Orders_Project.ViewModels
+namespace SmartMobileWMS.ViewModels
 {
     [QueryProperty(nameof(ItemId), nameof(ItemId))]
     class RFPurchaseLinesViewModel : BaseLineViewModel

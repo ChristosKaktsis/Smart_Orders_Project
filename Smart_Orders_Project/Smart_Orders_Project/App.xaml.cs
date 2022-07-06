@@ -1,8 +1,8 @@
-﻿using Smart_Orders_Project.Data;
-using Smart_Orders_Project.Services;
+﻿using SmartMobileWMS.Data;
+using SmartMobileWMS.Services;
 using Xamarin.Forms;
 
-namespace Smart_Orders_Project
+namespace SmartMobileWMS
 {
     public partial class App : Application
     {

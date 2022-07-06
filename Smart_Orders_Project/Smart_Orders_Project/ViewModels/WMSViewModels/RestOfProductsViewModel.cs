@@ -1,11 +1,11 @@
-﻿using Smart_Orders_Project.Models;
+﻿using SmartMobileWMS.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Smart_Orders_Project.ViewModels
+namespace SmartMobileWMS.ViewModels
 {
     public class RestOfProductsViewModel : PositionBaseViewModel
     {

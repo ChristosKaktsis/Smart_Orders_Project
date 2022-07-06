@@ -1,6 +1,6 @@
-﻿using Smart_Orders_Project.Models;
-using Smart_Orders_Project.ViewModels;
-using Smart_Orders_Project.Views;
+﻿using SmartMobileWMS.Models;
+using SmartMobileWMS.ViewModels;
+using SmartMobileWMS.Views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Smart_Orders_Project.Views
+namespace SmartMobileWMS.Views
 {
     public partial class ItemsPage : ContentPage
     {

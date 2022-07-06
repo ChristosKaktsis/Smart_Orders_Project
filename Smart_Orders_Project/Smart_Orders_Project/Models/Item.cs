@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Smart_Orders_Project.Models
+namespace SmartMobileWMS.Models
 {
     public class Item
     {

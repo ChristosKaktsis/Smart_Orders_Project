@@ -1,5 +1,5 @@
-﻿using Smart_Orders_Project.Models;
-using Smart_Orders_Project.Services;
+﻿using SmartMobileWMS.Models;
+using SmartMobileWMS.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace Smart_Orders_Project.ViewModels
+namespace SmartMobileWMS.ViewModels
 {
     public class PositionBaseViewModel : BaseViewModel
     {

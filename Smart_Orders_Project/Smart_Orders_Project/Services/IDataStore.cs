@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 
-namespace Smart_Orders_Project.Services
+namespace SmartMobileWMS.Services
 {
     public interface IDataStore<T>
     {

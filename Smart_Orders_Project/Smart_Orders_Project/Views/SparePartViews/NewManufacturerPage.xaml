@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             xmlns:local="clr-namespace:Smart_Orders_Project.ViewModels"
+             xmlns:local="clr-namespace:SmartMobileWMS.ViewModels"
              xmlns:editors="http://schemas.devexpress.com/xamarin/2014/forms/editors"
-             x:Class="Smart_Orders_Project.Views.NewManufacturerPage"
+             x:Class="SmartMobileWMS.Views.NewManufacturerPage"
              Title="Νέος Κατασκευαστής">
     <ContentPage.Resources>
         <ResourceDictionary>

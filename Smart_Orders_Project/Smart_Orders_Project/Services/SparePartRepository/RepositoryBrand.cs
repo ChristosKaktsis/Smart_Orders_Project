@@ -1,4 +1,4 @@
-﻿using Smart_Orders_Project.Models.SparePartModels;
+﻿using SmartMobileWMS.Models.SparePartModels;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Smart_Orders_Project.Services
+namespace SmartMobileWMS.Services
 {
     public class RepositoryBrand :RepositoryService,IDataStore<Brand>
     {

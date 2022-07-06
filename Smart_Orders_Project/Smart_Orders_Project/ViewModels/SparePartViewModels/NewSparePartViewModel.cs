@@ -1,6 +1,6 @@
-﻿using Smart_Orders_Project.Models.SparePartModels;
-using Smart_Orders_Project.Services;
-using Smart_Orders_Project.Views;
+﻿using SmartMobileWMS.Models.SparePartModels;
+using SmartMobileWMS.Services;
+using SmartMobileWMS.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
-namespace Smart_Orders_Project.ViewModels
+namespace SmartMobileWMS.ViewModels
 {
     [QueryProperty(nameof(GroupId), nameof(GroupId))]
     class NewSparePartViewModel : BaseViewModel

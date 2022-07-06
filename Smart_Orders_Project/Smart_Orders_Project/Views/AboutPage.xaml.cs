@@ -3,7 +3,7 @@ using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Smart_Orders_Project.Views
+namespace SmartMobileWMS.Views
 {
     public partial class AboutPage : ContentPage
     {

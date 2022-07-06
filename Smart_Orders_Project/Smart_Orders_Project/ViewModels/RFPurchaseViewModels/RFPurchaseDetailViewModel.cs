@@ -1,6 +1,6 @@
-﻿using Smart_Orders_Project.Models;
-using Smart_Orders_Project.Services;
-using Smart_Orders_Project.Views;
+﻿using SmartMobileWMS.Models;
+using SmartMobileWMS.Services;
+using SmartMobileWMS.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace Smart_Orders_Project.ViewModels
+namespace SmartMobileWMS.ViewModels
 {
     [QueryProperty(nameof(ProviderID), nameof(ProviderID))]
     [QueryProperty(nameof(RFPurchaseID), nameof(RFPurchaseID))]
