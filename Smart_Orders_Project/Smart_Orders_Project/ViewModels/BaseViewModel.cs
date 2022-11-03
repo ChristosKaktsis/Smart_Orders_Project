@@ -154,7 +154,7 @@ namespace SmartMobileWMS.ViewModels
         }
         private async void OnBackButtonPressed()
         {
-            var answer = await Shell.Current.DisplayAlert("Ερώτηση;", "Θέλετε να αποχορήσετε", "Ναί", "Όχι");
+            var answer = await Shell.Current.DisplayAlert("Ερώτηση;", "Θέλετε να αποχωρήσετε", "Ναί", "Όχι");
             if (answer)
                 GoBack();
         }

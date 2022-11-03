@@ -1,0 +1,2 @@
+INSERT INTO [Παραλαβών] (Oid, Επωνυμία)
+VALUES((Convert(uniqueidentifier, N'{0}')),'{1}')

@@ -1,0 +1,4 @@
+INSERT INTO RFΓραμμέςΠωλήσεων (Oid, RFΠωλήσεις, Είδος, Ποσότητα, Θέση, 
+                    OptimisticLockField, GCRecord, BarCodeΕίδους, ΠοσότηταΔιάστασης, Μήκος, Πλάτος, Υψος)
+
+VALUES((Convert(uniqueidentifier, N'{0}')), (Convert(uniqueidentifier, N'{1}')), (Convert(uniqueidentifier, N'{2}')), Convert(float,'{3}'), null, '1', null, {4}, Convert(float,'{5}'), Convert(float,'{6}'), Convert(float,'{7}'), Convert(float,'{8}')); 

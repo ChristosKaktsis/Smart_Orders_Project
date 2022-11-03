@@ -81,47 +81,12 @@
     <Shell.FlyoutHeader>
         <local:FlyoutHeader />
     </Shell.FlyoutHeader>
+    
     <TabBar>
         <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate local:LoginPage}" />
     </TabBar>
-    <FlyoutItem Title="RFΠωλήσεις" Icon="sell.png">
-        <ShellContent Route="OrdersPage" ContentTemplate="{DataTemplate local:OrdersPage}" />
-    </FlyoutItem>
-    <FlyoutItem Title="RFΑγορές" Icon="buy.png">
-        <ShellContent Route="RFPurchasePage" ContentTemplate="{DataTemplate local:RFPurchasePage}" />
-    </FlyoutItem>
-    <FlyoutItem Title="RFΑπογραφή" Icon="notes.png">
-        <ShellContent Route="RFCesusPage" ContentTemplate="{DataTemplate local:RFCesusPage}" />
-    </FlyoutItem>
-    <FlyoutItem Title="Παραλαβή σε θέση" Icon="boximport.png">
-        <ShellContent Route="PositionImportPage" ContentTemplate="{DataTemplate local:PositionImportPage}" />
-    </FlyoutItem>
-    <FlyoutItem Title="Εξαγωγή απο θέση" Icon="boxexport.png">
-        <ShellContent Route="PositionExportPage" ContentTemplate="{DataTemplate local:PositionExportPage}" />
-    </FlyoutItem>
-    <FlyoutItem Title="Μετακίνηση σε θέση" Icon="move.png">
-        <ShellContent Route="MoveToPositionPage" ContentTemplate="{DataTemplate local:MoveToPositionPage}" />
-    </FlyoutItem>
-    <FlyoutItem Title="Ελευθερη συλλογή" Icon="go.png">
-        <ShellContent Route="FreePickingPage" ContentTemplate="{DataTemplate local:FreePickingPage}" />
-    </FlyoutItem>
-    <FlyoutItem Title="Εντολή συλλογής" Icon="go.png">
-        <ShellContent Route="ColCommandPage" ContentTemplate="{DataTemplate local:ColCommandPage}" />
-    </FlyoutItem>
-    <FlyoutItem Title="Υπόλοιπα Θέσης" Icon="census.png">
-        <ShellContent Route="RestOfPositionPage" ContentTemplate="{DataTemplate local:RestOfPositionPage}" />
-    </FlyoutItem>
-    <FlyoutItem Title="Θέσεις Είδους" Icon="multiposition.png">
-        <ShellContent Route="RestOfProducts" ContentTemplate="{DataTemplate local:RestOfProducts}" />
-    </FlyoutItem>
-    <FlyoutItem Title="Παλετοποίηση" Icon="palette.png">
-        <ShellContent Route="PaletteStartPage" ContentTemplate="{DataTemplate local:PaletteStartPage}" />
-    </FlyoutItem>
-    <FlyoutItem Title="SelectTrainingPage" Icon="palette.png">
-        <ShellContent Route="SelectTrainingPage" ContentTemplate="{DataTemplate local:SelectTrainingPage}" />
-    </FlyoutItem>
-    <FlyoutItem Title="Ανταλλακτικό" Icon="screw.png">
-        <ShellContent Route="SparePartPage" ContentTemplate="{DataTemplate local:SparePartPage}" />
+    <FlyoutItem Title="Main Menu" Icon="sell.png">
+        <ShellContent Route="MainMenu" ContentTemplate="{DataTemplate local:MainMenu}" />
     </FlyoutItem>
     <FlyoutItem Title="Settings" Icon="settings.png">
         <ShellContent Route="BarCodeValuesPage" ContentTemplate="{DataTemplate local:BarCodeValuesPage}" />
@@ -133,6 +98,16 @@
     <!-- When the Flyout is visible this will be a menu item you can tie a click behavior to  -->
     <MenuItem Text="Logout" IconImageSource="logout.png" StyleClass="MenuItemLayoutStyle" Clicked="OnMenuItemClicked">
     </MenuItem>
+    <Shell.FlyoutFooterTemplate>
+        <DataTemplate>
+            <Frame>
+                <Label Text="Ver 1.9"
+                       TextColor="Gray"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center" />
+            </Frame>
+        </DataTemplate>
+    </Shell.FlyoutFooterTemplate>
 
     <!--
         TabBar lets you define content that won't show up in a flyout menu. When this content is active

@@ -1,0 +1,2 @@
+INSERT INTO [Κατασκευαστής] (Oid, Κωδικός, Περιγραφή)
+VALUES((Convert(uniqueidentifier, N'{0}')), '{1}','{2}')

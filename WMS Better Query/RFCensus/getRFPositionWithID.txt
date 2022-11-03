@@ -1,0 +1,1 @@
+SELECT  Oid, Κωδικός, Περιγραφή FROM Θέση where (Κωδικός = '{0}' or Περιγραφή = '{0}')  and GCRecord is null

@@ -1,0 +1,1 @@
+UPDATE ΓενικόςΜετρητής SET Τιμή = {0} WHERE Μετρητής = 'Barcode'

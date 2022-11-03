@@ -1,0 +1,2 @@
+SELECT [Είδος].Oid,[Είδος].Κωδικός,[BarCodeΕίδους],iif([BarCodeΕίδους] is not null,[BarCodeΕίδους].Περιγραφή,[Είδος].Περιγραφή) as Περιγραφή,[Ποσότητα] FROM ΠεριεχόμεναΠαλέτας
+left join [Είδος] on [Είδος].Oid = ΠεριεχόμεναΠαλέτας.Είδος left join [BarCodeΕίδους] on [BarCodeΕίδους].BarCode = ΠεριεχόμεναΠαλέτας.BarCodeΕίδους where Παλέτα ='{0}'

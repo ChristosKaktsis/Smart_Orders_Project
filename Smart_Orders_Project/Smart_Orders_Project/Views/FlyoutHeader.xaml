@@ -8,7 +8,7 @@
             <StackLayout>
                 <Frame Margin="0" HorizontalOptions="Center" HasShadow="False">
                     <StackLayout Orientation="Horizontal">
-                        <Label Text="RF" FontSize="16"/>
+                        <Label Text="Smart WMS" FontSize="16"/>
                     </StackLayout>
                 </Frame>
             </StackLayout>

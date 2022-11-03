@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31424.327
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smart_Orders_Project.Android", "Smart_Orders_Project\Smart_Orders_Project.Android\Smart_Orders_Project.Android.csproj", "{9173D8F1-18E4-49A4-8378-B4F0E977C0A3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartMobileWMS.Android", "Smart_Orders_Project\Smart_Orders_Project.Android\SmartMobileWMS.Android.csproj", "{9173D8F1-18E4-49A4-8378-B4F0E977C0A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smart_Orders_Project.iOS", "Smart_Orders_Project\Smart_Orders_Project.iOS\Smart_Orders_Project.iOS.csproj", "{3AA49A61-E58C-4C0F-9473-003991497AF0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartMobileWMS.iOS", "Smart_Orders_Project\Smart_Orders_Project.iOS\SmartMobileWMS.iOS.csproj", "{3AA49A61-E58C-4C0F-9473-003991497AF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smart_Orders_Project", "Smart_Orders_Project\Smart_Orders_Project\Smart_Orders_Project.csproj", "{05CD96C4-E284-4238-A618-3AD5D678E1F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartMobileWMS", "Smart_Orders_Project\Smart_Orders_Project\SmartMobileWMS.csproj", "{05CD96C4-E284-4238-A618-3AD5D678E1F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

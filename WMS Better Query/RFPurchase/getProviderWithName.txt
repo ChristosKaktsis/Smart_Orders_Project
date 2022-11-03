@@ -1,0 +1,1 @@
+select Oid , Κωδικός ,Επωνυμία ,ΑΦΜ, Email from [Προμηθευτής] where (Επωνυμία like '%{0}%' or ΑΦΜ like '%{0}%') and GCRecord is null

@@ -1,0 +1,3 @@
+UPDATE RFΑπογραφή
+SET Ποσότητα = '{0}'
+WHERE Oid = '{1}' 

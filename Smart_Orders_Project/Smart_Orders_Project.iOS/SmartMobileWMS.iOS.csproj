@@ -133,25 +133,25 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="DevExpress.XamarinForms.CollectionView">
-      <Version>21.2.6</Version>
+      <Version>22.1.6</Version>
     </PackageReference>
     <PackageReference Include="DevExpress.XamarinForms.Editors">
-      <Version>21.2.6</Version>
+      <Version>22.1.6</Version>
     </PackageReference>
     <PackageReference Include="DevExpress.XamarinForms.Grid">
-      <Version>21.2.6</Version>
+      <Version>22.1.6</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2401" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.7.1" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2515" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.3" />
     <PackageReference Include="ZXing.Net.Mobile.Forms">
       <Version>3.1.0-beta2</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\Smart_Orders_Project\Smart_Orders_Project.csproj">
-      <Project>{3E414C9F-B408-4A22-AB1C-0A8EB25AD3FB}</Project>
-      <Name>Smart_Orders_Project</Name>
+    <ProjectReference Include="..\Smart_Orders_Project\SmartMobileWMS.csproj">
+      <Project>{05CD96C4-E284-4238-A618-3AD5D678E1F7}</Project>
+      <Name>SmartMobileWMS</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

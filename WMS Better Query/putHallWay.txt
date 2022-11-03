@@ -1,0 +1,1 @@
+UPDATE Διάδρομος SET AAPicking = '{1}' where [Κωδικός]='{0}'

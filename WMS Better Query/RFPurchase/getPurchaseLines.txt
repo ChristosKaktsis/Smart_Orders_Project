@@ -1,0 +1,2 @@
+SELECT Oid,RFΠωλήσεις,Είδος,Ποσότητα,BarCodeΕίδους,ΠοσότηταΔιάστασης,Μήκος,Πλάτος,Υψος
+FROM RFΓραμμέςΑγορών where RFΠωλήσεις = '{0}' and GCRecord is null

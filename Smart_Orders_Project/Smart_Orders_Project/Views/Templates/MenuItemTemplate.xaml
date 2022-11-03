@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Frame xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+       xmlns:model="clr-namespace:SmartMobileWMS.Models"
+       x:Class="SmartMobileWMS.Views.Templates.MenuItemTemplate"
+       Padding="1">
+    <Frame  WidthRequest="100" HeightRequest="100" 
+            BackgroundColor="{StaticResource BackGroundMenuItem}"
+                HasShadow="True" 
+                CornerRadius="1" Padding="10" 
+            x:DataType="model:MenuItem"
+                VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+        <Grid>
+            <Image x:Name="image" 
+                   Source="{Binding ImageSource}"
+                   WidthRequest="60" HeightRequest="60" VerticalOptions="Start" />
+            <Label x:Name="title_label"
+                   Text="{Binding Title}"
+                   TextColor="White"
+                   FontAttributes="None" FontSize="16"
+                   WidthRequest="100" 
+                   HorizontalTextAlignment="Center" VerticalTextAlignment="End" />
+            <Button x:Name="goto_button"
+                    Command="{Binding Action}"
+                    BackgroundColor="Transparent">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="Transparent" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="#332196F3" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
+            </Button>
+        </Grid>
+    </Frame>
+</Frame>

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:editors="http://schemas.devexpress.com/xamarin/2014/forms/editors"
              x:Class="SmartMobileWMS.Views.ConnectionPage"
              Title="Connection String">
     <ContentPage.Content>
@@ -9,10 +9,10 @@
                 <Frame HorizontalOptions="FillAndExpand" VerticalOptions="Center" HasShadow="True"  Margin="10">
                     <StackLayout>
                         <Label Text="Connection String"/>
-                        <Entry Text="{Binding UserID}" Placeholder="User ID" ClearButtonVisibility="WhileEditing"/>
-                        <Entry Text="{Binding Password}" Placeholder="Password" ClearButtonVisibility="WhileEditing"/>
-                        <Entry Text="{Binding DataSource}" Placeholder="Data Source" ClearButtonVisibility="WhileEditing"/>
-                        <Entry Text="{Binding Catalog}" Placeholder="Initial Catalog" ClearButtonVisibility="WhileEditing"/>
+                        <editors:TextEdit Text="{Binding UserID}" PlaceholderText="User ID" ClearIconVisibility="Auto"/>
+                        <editors:TextEdit Text="{Binding Password}" PlaceholderText="Password" ClearIconVisibility="Auto"/>
+                        <editors:TextEdit Text="{Binding DataSource}" PlaceholderText="Data Source" ClearIconVisibility="Auto"/>
+                        <editors:TextEdit Text="{Binding Catalog}" PlaceholderText="Initial Catalog" ClearIconVisibility="Auto"/>
                         <Button Text="Αποθήκευση" CornerRadius="10" Command="{Binding SaveCommand}" HorizontalOptions="Center"/>
                     </StackLayout>
                 </Frame>

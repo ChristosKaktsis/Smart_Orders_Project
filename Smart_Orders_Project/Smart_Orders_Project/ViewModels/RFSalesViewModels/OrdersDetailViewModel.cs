@@ -80,7 +80,7 @@ namespace SmartMobileWMS.ViewModels
         }
         private async void OnBackButtonPressed(object obj)
         {
-            var answer = await Shell.Current.DisplayAlert("Ερώτηση;", "Θέλετε να αποχορήσετε", "Ναί", "Όχι");
+            var answer = await Shell.Current.DisplayAlert("Ερώτηση;", "Θέλετε να αποχωρήσετε", "Ναί", "Όχι");
             if (answer)
             {
                 //remove the items from the cart before going back

@@ -1,0 +1,3 @@
+select Oid , Κωδικός ,Επωνυμία ,ΔιακριτικόςΤίτλος ,ΑΦΜ ,Email 
+from Πελάτης 
+where Oid ='{0}' and  GCRecord is null

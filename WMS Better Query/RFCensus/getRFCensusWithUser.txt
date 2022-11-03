@@ -1,0 +1,4 @@
+select Oid ,ΑποθηκευτικόςΧώρος ,Είδος ,Ποσότητα 
+           ,ΗμνίαΔημιουργίας ,Θέση ,BarCodeΕίδους ,Ράφι 
+from RFΑπογραφή 
+where ΧρήστηςΔημιουργίας ='{0}' and UpdSmart = 'false' and UpdWMS = 'false'  and GCRecord is null

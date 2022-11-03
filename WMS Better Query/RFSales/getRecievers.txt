@@ -1,0 +1,2 @@
+select Oid ,Επωνυμία 
+from Παραλαβών where GCRecord is null

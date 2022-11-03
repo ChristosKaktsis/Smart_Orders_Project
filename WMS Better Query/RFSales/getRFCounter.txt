@@ -1,0 +1,3 @@
+SELECT Τιμή 
+FROM ΓενικόςΜετρητής 
+where Μετρητής='ΜετρητήςRF' and GCRecord is null

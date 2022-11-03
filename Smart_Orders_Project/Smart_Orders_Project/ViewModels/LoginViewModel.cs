@@ -51,7 +51,7 @@ namespace SmartMobileWMS.ViewModels
                     return;
                 }
                 UserString = user.UserName;
-                await Shell.Current.GoToAsync($"//{nameof(OrdersPage)}");
+                await Shell.Current.GoToAsync($"//{nameof(MainMenu)}");
             }
             catch (Exception Ex)
             {

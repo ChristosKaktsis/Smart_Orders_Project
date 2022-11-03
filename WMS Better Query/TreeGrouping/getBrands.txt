@@ -1,0 +1,5 @@
+SELECT Oid
+                                        ,Κωδικός
+                                        ,Περιγραφή
+                                        FROM ΙεραρχικόΖοομ1
+                                        where GCRecord is null

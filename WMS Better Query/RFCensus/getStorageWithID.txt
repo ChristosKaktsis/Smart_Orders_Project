@@ -1,0 +1,1 @@
+SELECT Oid, Περιγραφή FROM ΑποθηκευτικόςΧώρος where Oid ='{0}' and GCRecord is null

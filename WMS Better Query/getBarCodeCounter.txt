@@ -1,0 +1,1 @@
+SELECT Μετρητής ,Τιμή FROM ΓενικόςΜετρητής where Μετρητής = 'Barcode' and GCRecord is null

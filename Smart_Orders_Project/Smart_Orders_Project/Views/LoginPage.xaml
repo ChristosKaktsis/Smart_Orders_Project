@@ -3,9 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:editors="http://schemas.devexpress.com/xamarin/2014/forms/editors"
              mc:Ignorable="d"
              x:Class="SmartMobileWMS.Views.LoginPage"
              Shell.NavBarIsVisible="False">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="editors:TextEdit">
+                <Setter Property="CornerRadius" Value="30"/>
+            </Style>
+            <Style TargetType="editors:PasswordEdit">
+                <Setter Property="CornerRadius" Value="30"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout Padding="0" Margin="0">
             <Grid>
@@ -18,25 +29,12 @@
                         <StackLayout>
                             <StackLayout HorizontalOptions="CenterAndExpand">
                                 <Label Text="Είσοδος" TextColor="black" FontSize="Medium" FontAttributes="Bold"/>
-
                             </StackLayout>
                             <StackLayout Margin="0,25,0,0">
-                                <Frame BackgroundColor="Transparent" BorderColor="DarkGray" Padding="0" Margin="0" CornerRadius="50" HorizontalOptions="FillAndExpand">
-                                    <StackLayout Orientation="Horizontal">
-                                        <Frame BackgroundColor="AliceBlue" CornerRadius="50" HeightRequest="35" WidthRequest="35" Padding="0" Margin="7">
-                                        </Frame>
-                                        <Entry Placeholder="User" Text="{Binding UserName}" TextColor="#008bff"  HorizontalOptions="FillAndExpand" Margin="0,0,15,0"/>
-                                    </StackLayout>
-                                </Frame>
+                                <editors:TextEdit PlaceholderText="User" Text="{Binding UserName}" TextColor="#008bff"  HorizontalOptions="FillAndExpand" Margin="0,0,15,0"/>
                             </StackLayout>
                             <StackLayout Margin="0,25,0,0">
-                                <Frame BackgroundColor="Transparent" BorderColor="DarkGray" Padding="0" Margin="0" CornerRadius="50" HorizontalOptions="FillAndExpand">
-                                    <StackLayout Orientation="Horizontal">
-                                        <Frame BackgroundColor="AliceBlue" CornerRadius="50" HeightRequest="35" WidthRequest="35" Padding="0" Margin="7">
-                                        </Frame>
-                                        <Entry Placeholder="Password" IsPassword="True" Text="{Binding Password}" TextColor="#008bff"  HorizontalOptions="FillAndExpand" Margin="0,0,15,0"/>
-                                    </StackLayout>
-                                </Frame>
+                                <editors:PasswordEdit PlaceholderText="Password" Text="{Binding Password}" TextColor="#008bff"  HorizontalOptions="FillAndExpand" Margin="0,0,15,0"/>
                             </StackLayout>
                             <StackLayout Margin="0,15,0,10">
                                 <Button Text="Είσοδος" BackgroundColor="#7802ee" TextColor="White" FontAttributes="Bold" CornerRadius="30" Command="{Binding LoginCommand}"/>

@@ -1,0 +1,1 @@
+SELECT  Oid, Κωδικός, Περιγραφή FROM Θέση where GCRecord is null

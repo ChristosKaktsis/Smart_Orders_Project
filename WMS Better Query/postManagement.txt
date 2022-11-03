@@ -1,0 +1,1 @@
+INSERT INTO Διαχείριση (Oid, Τύπος, Πελάτης, Ημνία, Παραστατικό) VALUES((Convert(uniqueidentifier, N'{0}')),'{1}',(Convert(uniqueidentifier, N'{2}')), GETDATE(),'{3}'); 

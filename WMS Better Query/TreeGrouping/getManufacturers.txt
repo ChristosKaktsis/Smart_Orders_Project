@@ -1,0 +1,5 @@
+Select Oid
+                                       ,Κωδικός
+                                       ,Περιγραφή
+                                       FROM Κατασκευαστής
+                                       where GCRecord is null

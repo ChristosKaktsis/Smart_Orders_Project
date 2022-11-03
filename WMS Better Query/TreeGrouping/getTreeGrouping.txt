@@ -1,0 +1,5 @@
+SELECT a.Oid
+                                      ,a.Parent
+                                      ,a.Name as NameChild
+	                                  ,ΔενδρικήΟμαδοποιησηΕιδών.ID   
+  FROM HCategory a   inner join ΔενδρικήΟμαδοποιησηΕιδών on ΔενδρικήΟμαδοποιησηΕιδών.Oid = a.Oid

@@ -1,0 +1,49 @@
+select * from
+ (SELECT  Είδος.Oid     
+       ,Κωδικός
+       ,Περιγραφή
+       ,barcode = null
+       ,ΦΠΑ 
+       ,ΜονάδεςΜέτρησης.ΜονάδαΜέτρησης
+,ΜονάδεςΜέτρησης.ΤύποςΔιάστασης
+        ,Πλάτος
+        ,Μήκος
+        ,Υψος
+        ,Κείμενο2 as ProductCode2
+	,ΤιμήΧονδρικής
+	,Χρώματα = null 
+	,Μεγέθη = null
+FROM Είδος left join ΜονάδεςΜέτρησης on ΜονάδεςΜέτρησης.Oid = Είδος.ΜονάδαΜέτρησης
+where ((Είδος.Κωδικός = '{0}' or Είδος.Κείμενο2 ='{0}')  and (ΥποχρεωτικήΔιαχείρησηSN ='false' or ΥποχρεωτικήΔιαχείρησηSN is null)) and Είδος.GCRecord is null
+UNION
+SELECT Είδος as Oid
+	,BarCode as Κωδικός
+        ,Περιγραφή
+        ,BarCode
+	,ΦΠΑ
+	,ΜονάδεςΜέτρησης.ΜονάδαΜέτρησης
+	,ΜονάδεςΜέτρησης.ΤύποςΔιάστασης
+	,Πλάτος
+        ,Μήκος
+        ,Υψος
+	,Κείμενο2 as ProductCode2
+        ,ΤιμήΧονδρικής
+        ,Χρώματα.Χρώματα
+        ,Μεγέθη.Μεγέθη
+FROM BarCodeΕίδους
+     left join Χρώματα on Χρώματα.Oid = BarCodeΕίδους.Χρώμα
+                                  left join ΜονάδεςΜέτρησης on ΜονάδεςΜέτρησης.Oid = BarCodeΕίδους.ΜονάδαΜέτρησης
+                                  left join Μεγέθη on Μεγέθη.Oid = BarCodeΕίδους.Μέγεθος
+where  (BarCode = '{0}' or BarCodeΕίδους.Κείμενο2 ='{0}') and BarCodeΕίδους.GCRecord is null) a
+left join 
+(SELECT     ΚινήσειςΕιδών.Είδος as ΕίδοςOid , ΚινήσειςΕιδών.Τιμή as LastPrice
+FROM       ΚινήσειςΕιδών AS ΚινήσειςΕιδών INNER JOIN
+           (SELECT     Είδος, MAX(Ημνία) AS MaxPurchaseDate
+             FROM          ΚινήσειςΕιδών
+             WHERE      (ΕισαγωγήΑξία  > 0 and GCRecord is null)
+             GROUP BY Είδος) AS LastPurchase ON
+		     LastPurchase.MaxPurchaseDate = ΚινήσειςΕιδών.Ημνία AND LastPurchase.Είδος = ΚινήσειςΕιδών.Είδος 
+							 INNER JOIN  Προμηθευτής ON ΚινήσειςΕιδών.Προμηθευτής = Προμηθευτής.Oid
+				        	   inner join Είδος  on Είδος.oid= ΚινήσειςΕιδών.Είδος
+							   left join ΓραμμέςΠαραστατικώνΑγορών on ΓραμμέςΠαραστατικώνΑγορών.Oid = ΚινήσειςΕιδών.ΓραμμήΑγορών) b 
+on a.Oid=b.ΕίδοςOid

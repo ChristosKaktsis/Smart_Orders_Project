@@ -1,0 +1,2 @@
+INSERT INTO ΚίνησηΘέσης (Oid ,Θέση ,BarCodeΕίδους ,Είδος , ΠοσότηταΕγγραφής, ΤύποςΚίνησηςΘέσης, Διαχείρηση, Ημνία)
+VALUES((Convert(uniqueidentifier, N'{0}')), (Convert(uniqueidentifier, N'{1}')),{2}, (Convert(uniqueidentifier, N'{3}')),'{4}','0',null,GETDATE());

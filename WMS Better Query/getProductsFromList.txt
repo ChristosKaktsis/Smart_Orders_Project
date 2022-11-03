@@ -1,0 +1,3 @@
+select * from (SELECT Είδος, BarCodeΕίδους, sum( IIF([ΤύποςΚίνησηςΘέσης]=1,[ΠοσότηταΕγγραφής]*-1,[ΠοσότηταΕγγραφής])) as Ποσότητα
+FROM[maindemo].[dbo].[ΚίνησηΘέσης] where Θέση = '{0}' group by[Είδος], [BarCodeΕίδους] ) a left join
+(SELECT[Είδος].[Oid],[Κωδικός],[Είδος].[Περιγραφή] FROM[maindemo].[dbo].[Είδος]) b on a.Είδος = b.Oid

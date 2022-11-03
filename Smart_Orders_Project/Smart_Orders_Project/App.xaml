@@ -19,6 +19,7 @@
             <Color x:Key="Tradic">#df0077</Color>
             <Color x:Key="TradicLight">#f13b91</Color>
             <Color x:Key="BackGround">#f0f0f0</Color>
+            <Color x:Key="BackGroundMenuItem">#a0a0a0</Color>
             <Color x:Key="BackGroundDarkTranc">#b3a0a0a0</Color>
             <Style TargetType="Button">
                 <Setter Property="TextColor" Value="White"></Setter>

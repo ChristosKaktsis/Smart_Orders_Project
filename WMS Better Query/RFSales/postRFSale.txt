@@ -1,0 +1,5 @@
+INSERT INTO RFΠωλήσεις (Oid, ΑποθηκευτικόςΧώρος, Πελάτης, ΠαραστατικάΠωλήσεων, ΠαραστατικόΠελάτη, 
+                    Διαχείριση, UpdSmart, Ολοκληρώθηκε, ΗμνίαΔημιουργίας, ΑυτόματηΔιαγραφήΠαραστατικών, OptimisticLockField, GCRecord, Παραλαβών)
+                    VALUES((Convert(uniqueidentifier, N'{0}')), null, (Convert(uniqueidentifier, N'{1}'))
+                    , null, '{2}', null, '0', '0', GETDATE(), '0', '1', null, 
+                    {3}); 

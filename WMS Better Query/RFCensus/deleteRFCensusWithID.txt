@@ -1,0 +1,1 @@
+DELETE FROM RFΑπογραφή WHERE Oid ='{0}'
