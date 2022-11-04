@@ -11,8 +11,6 @@ namespace SmartMobileWMS
         public AppShell()
         {
             InitializeComponent();
-            Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
-            Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
             Routing.RegisterRoute(nameof(OrderDetailPage), typeof(OrderDetailPage));
             Routing.RegisterRoute(nameof(CustomerSelectionPage), typeof(CustomerSelectionPage));
             Routing.RegisterRoute(nameof(LineOfOrdersSelectionPage), typeof(LineOfOrdersSelectionPage));
@@ -22,7 +20,6 @@ namespace SmartMobileWMS
             Routing.RegisterRoute(nameof(RFPurchaseDetailPage), typeof(RFPurchaseDetailPage));
             Routing.RegisterRoute(nameof(RFPurchaseLineSelectionPage), typeof(RFPurchaseLineSelectionPage));
             Routing.RegisterRoute(nameof(ProviderSelectionPage), typeof(ProviderSelectionPage));
-            Routing.RegisterRoute(nameof(TestEmptyPage), typeof(TestEmptyPage));
             Routing.RegisterRoute(nameof(NewRecieverPage), typeof(NewRecieverPage));
             Routing.RegisterRoute(nameof(TreeGroupingPage), typeof(TreeGroupingPage));
             Routing.RegisterRoute(nameof(NewSparePartPage), typeof(NewSparePartPage));

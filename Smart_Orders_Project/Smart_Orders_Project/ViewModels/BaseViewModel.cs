@@ -12,7 +12,6 @@ namespace SmartMobileWMS.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
         public IDataStore<Customer> CustomerRepo => DependencyService.Get<IDataStore<Customer>>();
         public IDataStore<Product> ProductRepo => DependencyService.Get<IDataStore<Product>>();
         public IDataStore<LineOfOrder> LinesRepo => DependencyService.Get<IDataStore<LineOfOrder>>();
@@ -146,6 +145,22 @@ namespace SmartMobileWMS.ViewModels
             {
                 Preferences.Set(nameof(ArticleTo), value);
                 
+            }
+        }
+        public string SSCC
+        {
+            get => Preferences.Get(nameof(SSCC), "111");
+            set
+            {
+                Preferences.Set(nameof(SSCC), value);
+            }
+        }
+        public bool ZeroValues //for ypol theshs and thesis eidous
+        {
+            get => Preferences.Get(nameof(ZeroValues), false);
+            set
+            {
+                Preferences.Set(nameof(ZeroValues), value);
             }
         }
         public async void GoBack()

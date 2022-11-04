@@ -28,7 +28,6 @@ namespace SmartMobileWMS
             InitializeComponent();
             
 
-            DependencyService.Register<MockDataStore>();
             DependencyService.Register<RepositoryCustomers>();
             DependencyService.Register<RepositoryItems>();
             DependencyService.Register<RepositoryLineOfOrder>();

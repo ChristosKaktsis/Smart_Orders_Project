@@ -25,15 +25,15 @@
             <StackLayout>
                
                 <Frame BackgroundColor="Transparent" Padding="0" Margin="10,0,10,0" HeightRequest="50" CornerRadius="30" HasShadow="True">
-                    <Button Text="{Binding CustomerName}" CornerRadius="30" BackgroundColor="{StaticResource Secondary}" Command="{Binding SelectCustomer}" TextTransform="None" />
+                    <Button Text="{Binding CustomerName}" CornerRadius="30" BackgroundColor="{StaticResource PrimaryLight}" Command="{Binding SelectCustomer}" TextTransform="None" />
                 </Frame>
                 <StackLayout Orientation="Horizontal"  Margin="10,5,10,0">
                     <Frame BackgroundColor="Transparent" Padding="0" Margin="0,0,10,0" HorizontalOptions="FillAndExpand">
                         <StackLayout >
-                            <dxe:ComboBoxEdit LabelText="Παραλαβών" BoxPadding="8" LabelColor="White" FocusedLabelColor="{StaticResource TradicLight}"
-                                              FocusedBorderColor="{StaticResource TradicLight}" IconColor="White" IconSpacing="0"
+                            <dxe:ComboBoxEdit LabelText="Παραλαβών" BoxPadding="8" LabelColor="White" FocusedLabelColor="{StaticResource AnalogousLight}"
+                                              FocusedBorderColor="{StaticResource AnalogousLight}" IconColor="White" IconSpacing="0"
                                               TextColor="white"
-                                              BorderColor="{StaticResource Tradic}" CornerRadius="20"
+                                              BorderColor="{StaticResource AnalogousLight}" CornerRadius="20"
                                               ItemsSource="{Binding RecieverList}"
                                               SelectedItem="{Binding Reciever,Mode=TwoWay}"
                                               DisplayMember="RecieverName"

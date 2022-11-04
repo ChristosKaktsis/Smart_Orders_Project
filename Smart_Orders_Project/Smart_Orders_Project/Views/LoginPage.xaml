@@ -37,10 +37,10 @@
                                 <editors:PasswordEdit PlaceholderText="Password" Text="{Binding Password}" TextColor="#008bff"  HorizontalOptions="FillAndExpand" Margin="0,0,15,0"/>
                             </StackLayout>
                             <StackLayout Margin="0,15,0,10">
-                                <Button Text="Είσοδος" BackgroundColor="#7802ee" TextColor="White" FontAttributes="Bold" CornerRadius="30" Command="{Binding LoginCommand}"/>
+                                <Button Text="Είσοδος" BackgroundColor="{StaticResource Primary}" TextColor="White" FontAttributes="Bold" CornerRadius="30" Command="{Binding LoginCommand}"/>
                             </StackLayout>
                             <StackLayout HorizontalOptions="Center">
-                                <Button Text="Σύνδεση" TextTransform="None" BackgroundColor="White" CornerRadius="30" TextColor="{StaticResource  SecondaryLight}" Command="{Binding ConnectionCommand}"/>
+                                <Button Text="Σύνδεση" TextTransform="None" BackgroundColor="White" CornerRadius="30" TextColor="{StaticResource  Primary}" Command="{Binding ConnectionCommand}"/>
                             </StackLayout>
                         </StackLayout>
                     </Frame>

@@ -44,7 +44,8 @@ namespace SmartMobileWMS.Services
                             PositionCode =  reader["Θέση_Κωδικός"].ToString(),
                             Description = reader["Θέση_Περιγραφή"].ToString()
                         },
-                        Quantity = int.Parse(reader["ΠοσότηταΕντολής"].ToString())
+                        Quantity = int.Parse(reader["ΠοσότηταΕντολής"].ToString()),
+                        Collected = int.Parse(reader["ΠοσότηταΣυλλογής"].ToString())
                     });
                 }
                 return await Task.FromResult(Collection);

@@ -53,6 +53,7 @@ namespace SmartMobileWMS.Views
         {
             await _viewModel.FindPalette(_viewModel.ProductID);
             await _viewModel.LoadContent();
+            if (_viewModel.IsQuickOn) SavePalette();
         }
         private async void GoForProduct()
         {

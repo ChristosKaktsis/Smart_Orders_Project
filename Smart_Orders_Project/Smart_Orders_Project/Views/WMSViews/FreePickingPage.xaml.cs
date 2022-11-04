@@ -69,7 +69,6 @@ namespace SmartMobileWMS.Views
                 await DisplayAlert("Προσοχή", "Το παραστατικό δεν βρέθηκε", "Οκ");
                 StartScan_Button.IsEnabled = false;
                 Save_button.IsVisible = false;
-                _viewModel.SalesDoc = "Αναζήτηση Παρ.";
                 _viewModel.Customer = null;
             }
             else

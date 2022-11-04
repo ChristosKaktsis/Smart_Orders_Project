@@ -87,8 +87,10 @@ namespace SmartMobileWMS.ViewModels
                 IsBusy = true;
                 ProductList.Clear();
                 var items = await repositoryPosition.GetProductsFromList(position.Oid.ToString());
+
                 foreach (var item in items)
-                    ProductList.Add(item);
+                    AddItemToList(item);
+
             }
             catch(Exception ex)
             {
@@ -99,6 +101,14 @@ namespace SmartMobileWMS.ViewModels
                 IsBusy = false;
             }
         }
+
+        private void AddItemToList(Product item)
+        {
+            if (item.Quantity == 0 && !ZeroValues)
+                return;
+            ProductList.Add(item);
+        }
+
         public async Task EmptyPosition()
         {
             if (Position == null)

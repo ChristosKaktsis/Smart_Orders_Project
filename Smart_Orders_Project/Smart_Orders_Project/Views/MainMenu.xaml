@@ -4,7 +4,7 @@
              xmlns:tempalte="clr-namespace:SmartMobileWMS.Views.Templates" 
              xmlns:vm="clr-namespace:SmartMobileWMS.ViewModels"
              x:Class="SmartMobileWMS.Views.MainMenu"
-             Title="Main Menu">
+             Title="Main Menu" BackgroundColor="{StaticResource BackGround}">
     <ContentPage.Resources>
         <ResourceDictionary>
             <DataTemplate x:Key="menuItem_template">
@@ -15,9 +15,10 @@
     <ContentPage.Content>
         <Grid x:DataType="vm:MainMenuViewModel">
             <CollectionView ItemTemplate="{StaticResource menuItem_template}"
-                            ItemsSource="{Binding MenuItems}">
+                            ItemsSource="{Binding MenuItems}"
+                            BackgroundColor="{StaticResource BackGround}">
                 <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" Span="3"/>
+                    <GridItemsLayout Orientation="Vertical" Span="2"/>
                 </CollectionView.ItemsLayout>
             </CollectionView>
         </Grid>

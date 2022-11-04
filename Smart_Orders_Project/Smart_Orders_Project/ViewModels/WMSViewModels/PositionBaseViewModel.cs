@@ -233,7 +233,7 @@ namespace SmartMobileWMS.ViewModels
         private string displayFounder;
         public bool IsPalette(string productID)
         {
-            string pnumber = App.Current.Resources["PaletteNO"] as string;
+            string pnumber = SSCC;
             if (string.IsNullOrWhiteSpace(productID))
                 return false;
             return productID.StartsWith(pnumber);

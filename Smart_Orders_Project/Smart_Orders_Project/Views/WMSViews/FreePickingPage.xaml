@@ -86,7 +86,7 @@
                 <Frame CornerRadius="5">
                     <StackLayout>
                         <Label Text="Εύρεση παραστατικού" FontSize="20" FontAttributes="Bold"/>
-                        <dxe:TextEdit Text="{Binding SalesDoc,Mode=OneWayToSource}" CharacterCasing="Upper" />
+                        <dxe:TextEdit Text="{Binding SalesDoc,Mode=TwoWay}" CharacterCasing="Upper" />
                         
                         <Button x:Name="CheckDoc_button" Text="OK" Clicked="CheckDoc_button_Clicked"/>
                     </StackLayout>
@@ -146,8 +146,8 @@
                         <Label Grid.Row="5" Grid.Column="1" 
                                HorizontalOptions="EndAndExpand"
                                Text="{Binding Quantity_Text}" FontSize="16"/>
-                        <Button x:Name="Add_Button" Text="Add" Grid.Row="6" CornerRadius="5" BackgroundColor="{StaticResource PrimaryLight}" Clicked="Add_Button_Clicked"/>
-                        <Button x:Name="Done_button" Clicked="Done_button_Clicked" Grid.Row="6" Grid.Column="1" Text="Done"  HorizontalOptions="EndAndExpand" FontSize="Body" CornerRadius="5"/>
+                        <Button x:Name="Done_button" Clicked="Done_button_Clicked" Grid.Row="6"  Text="Done"   FontSize="Body" CornerRadius="5"/>
+                        <Button x:Name="Add_Button" Text="Add" Grid.Row="6" Grid.Column="1" CornerRadius="5" HorizontalOptions="EndAndExpand" BackgroundColor="{StaticResource PrimaryLight}" Clicked="Add_Button_Clicked"/>
                     </Grid>
                 </Frame>
                 
@@ -176,7 +176,7 @@
             <ActivityIndicator IsRunning="{Binding IsBusy}" VerticalOptions="Start"/>
             <StackLayout>
                 <StackLayout Orientation="Horizontal">
-                    <Button x:Name="OpenPopUp_Button" Text="{Binding SalesDoc}" TextTransform="None" Clicked="OpenPopUp_Button_Clicked" HorizontalOptions="Start"/>
+                    <Button x:Name="OpenPopUp_Button" Text="Αναζήτηση ΠΑΡ." TextTransform="None" Clicked="OpenPopUp_Button_Clicked" HorizontalOptions="Start"/>
                     <Label Text="{Binding CustomerName}"
                            FontSize="18" FontAttributes="Bold"
                            HorizontalOptions="Center" VerticalOptions="Center"/>

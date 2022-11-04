@@ -77,7 +77,7 @@
                 <Frame CornerRadius="5">
                     <StackLayout>
                         <Label Text="Εύρεση παραστατικού" FontSize="20" FontAttributes="Bold"/>
-                        <dxe:TextEdit Text="{Binding Doc,Mode=OneWayToSource}" CharacterCasing="Upper" />
+                        <dxe:TextEdit Text="{Binding Doc,Mode=TwoWay}" CharacterCasing="Upper" />
                         <Button x:Name="CheckDoc_button" Text="OK" Clicked="CheckDoc_button_Clicked"/>
                     </StackLayout>
                 </Frame>
@@ -130,8 +130,8 @@
                                Text="{Binding RestToAdd_Text}"
                                HorizontalOptions="EndAndExpand"
                                FontSize="16"/>
-                        <Button x:Name="Add_Button" Clicked="Add_Button_Clicked" Text="Add" Grid.Row="6" CornerRadius="5" BackgroundColor="{StaticResource PrimaryLight}" />
-                        <Button x:Name="Done_button" Clicked="Done_button_Clicked" Grid.Row="6" Grid.Column="1" Text="Done"  HorizontalOptions="EndAndExpand" FontSize="Body" CornerRadius="5"/>
+                        <Button x:Name="Add_Button" Clicked="Add_Button_Clicked" Text="Add" Grid.Row="6" Grid.Column="1" HorizontalOptions="EndAndExpand" CornerRadius="5" BackgroundColor="{StaticResource PrimaryLight}" />
+                        <Button x:Name="Done_button" Clicked="Done_button_Clicked" Grid.Row="6"  Text="Done"   FontSize="Body" CornerRadius="5"/>
                     </Grid>
                 </Frame>
 

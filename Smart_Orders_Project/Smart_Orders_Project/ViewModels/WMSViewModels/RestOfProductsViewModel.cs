@@ -29,7 +29,7 @@ namespace SmartMobileWMS.ViewModels
                 PositionList.Clear();
                 var items = await positionChange.GetPositionsFromProduct(Product.CodeDisplay);
                 foreach (var item in items)
-                    PositionList.Add(item);
+                    AddItemToList(item);
             }
             catch(Exception ex)
             {
@@ -39,6 +39,12 @@ namespace SmartMobileWMS.ViewModels
             {
                 IsBusy = false;
             }
+        }
+        private void AddItemToList(Position item)
+        {
+            if (item.ItemQuantity == 0 && !ZeroValues)
+                return;
+            PositionList.Add(item);
         }
     }
 }

@@ -120,7 +120,13 @@
                                      TextFontSize="24"/>
                     
                 </StackLayout>
-                <Button x:Name="Done_button" Clicked="Done_button_Clicked" Grid.Row="8" Grid.Column="1" Text="Done" HeightRequest="80" HorizontalOptions="EndAndExpand" FontSize="Body" CornerRadius="10"/>
+                <Button x:Name="Done_button" 
+                        Clicked="Done_button_Clicked" 
+                        Grid.Row="8" Grid.Column="1" 
+                        Text="Add" 
+                        BackgroundColor="{StaticResource Primary}"
+                        HeightRequest="80" HorizontalOptions="EndAndExpand" 
+                        FontSize="Body" CornerRadius="10"/>
             </Grid>
             
         </StackLayout>

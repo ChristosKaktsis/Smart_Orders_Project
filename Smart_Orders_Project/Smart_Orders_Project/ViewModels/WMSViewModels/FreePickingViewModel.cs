@@ -36,8 +36,7 @@ namespace SmartMobileWMS.ViewModels
         public string SalesDoc 
         {
             get => salesDoc;
-
-            set => SetProperty(ref salesDoc, value);
+            set =>SetProperty(ref salesDoc, value);
         }
         public Customer Customer 
         {
@@ -226,7 +225,7 @@ namespace SmartMobileWMS.ViewModels
                 Positions.Clear();
                 ProductList.Clear();
                 Customer = null;
-                SalesDoc = "Αναζήτηση Παρ.";
+                SalesDoc = string.Empty;
             }
             catch(Exception ex)
             {

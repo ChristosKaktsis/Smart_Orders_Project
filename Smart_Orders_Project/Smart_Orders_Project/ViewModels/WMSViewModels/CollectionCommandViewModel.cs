@@ -17,7 +17,7 @@ namespace SmartMobileWMS.ViewModels
             get => doc;
             set 
             {
-                doc = value;
+                SetProperty(ref doc, value);
                 if (!string.IsNullOrWhiteSpace(value))
                     DocName = value;
                 else
@@ -188,7 +188,9 @@ namespace SmartMobileWMS.ViewModels
 
                 var hold = ColCommandList.Where(
                 x => x.Position.Oid == FoundPosition.Oid &&
-                x.Product.Oid == FoundProduct.Oid);
+                x.Product.Oid == FoundProduct.Oid &&
+                x.Product.BarCode == FoundProduct.BarCode);
+                
                 return hold.FirstOrDefault();
             } 
         }

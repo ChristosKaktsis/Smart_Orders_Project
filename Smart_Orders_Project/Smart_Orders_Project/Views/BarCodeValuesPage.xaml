@@ -5,8 +5,11 @@
              xmlns:editors="http://schemas.devexpress.com/xamarin/2014/forms/editors"
              BackgroundColor="LightGray" 
              Title="Settings">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Αποθήκευση" Command="{Binding SaveValuesCommand}"/>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <Grid>
+        <ScrollView>
             <StackLayout> 
                 <Frame Padding="0" Margin="20">
                     <StackLayout>
@@ -29,11 +32,34 @@
                             <Label Text="Produser" VerticalOptions="Center" FontSize="18" TextColor="Black" Margin="10,0,0,0"/>
                             <editors:TextEdit HorizontalOptions="EndAndExpand" WidthRequest="150" Text="{Binding ProduserTextEdit}"/>
                         </StackLayout>
-                        <Button Text="Αποθήκευση" Command="{Binding SaveValuesCommand}" FontSize="20" TextTransform="None" CornerRadius="3" Margin="0,10,0,0"/>
+                    </StackLayout>
+                </Frame>
+                <Frame Padding="0" Margin="20">
+                    <StackLayout>
+                        <Frame Padding="0" BackgroundColor="{StaticResource Primary}">
+                            <Label Text="SSCC" FontSize="20" TextColor="white" Margin="10"/>
+                        </Frame>
+                        <StackLayout Orientation="Horizontal" Margin="10" >
+                            <Label Text="SSCC" VerticalOptions="Center" FontSize="18" TextColor="Black" Margin="10,0,0,0"/>
+                            <editors:TextEdit HorizontalOptions="EndAndExpand" WidthRequest="150" Text="{Binding SSCCTextEdit}"/>
+                        </StackLayout>
+                       
+                    </StackLayout>
+                </Frame>
+                <Frame Padding="0" Margin="20">
+                    <StackLayout>
+                        <Frame Padding="0" BackgroundColor="{StaticResource Primary}">
+                            <Label Text="Είδος" FontSize="20" TextColor="white" Margin="10"/>
+                        </Frame>
+                        <StackLayout Orientation="Horizontal" Margin="10" >
+                            <Label Text="Εμφάνηση μηδενικών τιμών" VerticalOptions="Center" FontSize="18" TextColor="Black" Margin="10,0,0,0"/>
+                            <editors:CheckEdit HorizontalOptions="EndAndExpand" IsChecked="{Binding ZeroValuesTextEdit}"/>
+                        </StackLayout>
+
                     </StackLayout>
                 </Frame>
             </StackLayout>
             
-        </Grid>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

@@ -8,18 +8,18 @@
     -->
     <Application.Resources>
         <ResourceDictionary>
-            <Color x:Key="Primary">#0078df</Color>
-            <Color x:Key="PrimaryLight">#0098ff</Color>
+            <Color x:Key="Primary">#0576bd</Color>
+            <Color x:Key="PrimaryLight">#07a8f4</Color>
             <Color x:Key="Secondary">#6800df</Color>
             <Color x:Key="SecondaryLight">#8c42eb</Color>
-            <Color x:Key="Complementary">#df6800</Color>
-            <Color x:Key="ComplementaryLight">#eb8702</Color>
-            <Color x:Key="Analogous">#00dfd8</Color>
-            <Color x:Key="AnalogousLight">#9bfdf6</Color>
-            <Color x:Key="Tradic">#df0077</Color>
-            <Color x:Key="TradicLight">#f13b91</Color>
+            <Color x:Key="Complementary">#c94300</Color>
+            <Color x:Key="ComplementaryLight">#faa781</Color>
+            <Color x:Key="Analogous">#8197fa</Color>
+            <Color x:Key="AnalogousLight">#cbd2fc</Color>
+            <Color x:Key="Tradic">#b60098</Color>
+            <Color x:Key="TradicLight">#f043c0</Color>
             <Color x:Key="BackGround">#f0f0f0</Color>
-            <Color x:Key="BackGroundMenuItem">#a0a0a0</Color>
+            <Color x:Key="BackGroundMenuItem">#ffffff</Color>
             <Color x:Key="BackGroundDarkTranc">#b3a0a0a0</Color>
             <Style TargetType="Button">
                 <Setter Property="TextColor" Value="White"></Setter>
@@ -41,22 +41,22 @@
                 </Setter>
             </Style>
             <Style TargetType="editors:TextEdit">
-                <Setter Property="FocusedBorderColor" Value="{StaticResource Secondary}"/>
-                <Setter Property="FocusedLabelColor" Value="{StaticResource SecondaryLight}"/>
+                <Setter Property="FocusedBorderColor" Value="{StaticResource Primary}"/>
+                <Setter Property="FocusedLabelColor" Value="{StaticResource PrimaryLight}"/>
                 <Setter Property="BackgroundColor" Value="White"/>
                 <Setter Property="LabelFontSize" Value="15"/>
                 <Setter Property="BorderColor" Value="black"/>
             </Style>
             <Style TargetType="editors:ComboBoxEdit">
-                <Setter Property="FocusedBorderColor" Value="{StaticResource Secondary}"/>
-                <Setter Property="FocusedLabelColor" Value="{StaticResource SecondaryLight}"/>
+                <Setter Property="FocusedBorderColor" Value="{StaticResource Primary}"/>
+                <Setter Property="FocusedLabelColor" Value="{StaticResource PrimaryLight}"/>
                 <Setter Property="LabelFontSize" Value="15"/>
                 <Setter Property="BorderColor" Value="black"/>
                 <Setter Property="DropDownBackgroundColor" Value="#f5f5f5"/>
             </Style>
             <Style TargetType="editors:NumericEdit">
-                <Setter Property="FocusedBorderColor" Value="{StaticResource Secondary}"/>
-                <Setter Property="FocusedLabelColor" Value="{StaticResource SecondaryLight}"/>
+                <Setter Property="FocusedBorderColor" Value="{StaticResource Primary}"/>
+                <Setter Property="FocusedLabelColor" Value="{StaticResource PrimaryLight}"/>
                 <Setter Property="LabelFontSize" Value="15"/>
                 <Setter Property="BorderColor" Value="black"/>
             </Style>
@@ -81,8 +81,6 @@
                 </Setter>
             </Style>-->
             <x:String x:Key="ConnectionString">User ID=sa;Password=1;Pooling=false;Data Source=192.168.3.99\SQLEXPRESS;Initial Catalog=maindemo</x:String>
-            <x:String x:Key="PaletteNO">111</x:String>
-           
         </ResourceDictionary>        
     </Application.Resources>
 </Application>
