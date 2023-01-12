@@ -1,4 +1,5 @@
 ﻿using SmartMobileWMS.Models;
+using SmartMobileWMS.Network;
 using SmartMobileWMS.Views;
 using System;
 using System.Collections.Generic;
@@ -31,12 +32,14 @@ namespace SmartMobileWMS.ViewModels
 
         private async Task ExecuteLoadItemsCommand()
         {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
             IsBusy = true;
             try
             {
                 RFCensusList.Clear();
                 var user = await UserRepo.GetUser();
                 var items = await RFCensusRepo.GetItemsWithNameAsync(user.UserID.ToString());
+                //var items = await RFApi.GetItemAsync(user.UserID.ToString());
                 foreach (var item in items)
                 {
                     RFCensusList.Add(item);
@@ -50,6 +53,9 @@ namespace SmartMobileWMS.ViewModels
             finally
             {
                 IsBusy = false;
+                watch.Stop();
+                var elapsedMs = watch.ElapsedMilliseconds;
+                Console.WriteLine(elapsedMs.ToString());
             }
         }
         public void OnAppearing()

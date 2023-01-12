@@ -44,39 +44,35 @@ namespace SmartMobileWMS.Services
 
         public async Task<List<RFCensus>> GetItemsWithNameAsync(string name)
         {
-           return await Task.Run(async () =>
-            {
-                List<RFCensus> newlist = new List<RFCensus>();
-                string oldqueryString = $@"select Oid ,ΑποθηκευτικόςΧώρος ,Είδος ,Ποσότητα 
+            List<RFCensus> newlist = new List<RFCensus>();
+            string oldqueryString = $@"select Oid ,ΑποθηκευτικόςΧώρος ,Είδος ,Ποσότητα 
                                             ,ΗμνίαΔημιουργίας ,Θέση ,BarCodeΕίδους ,Ράφι 
                                        from RFΑπογραφή 
                                        where ΧρήστηςΔημιουργίας ='{name}' and UpdSmart = 'false' and UpdWMS = 'false'  and GCRecord is null";
-                StringBuilder sb = new StringBuilder();
-                sb.AppendFormat(await GetParamAsync("getRFCensusWithUser"), name);
-                string queryString = sb.ToString();
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat(await GetParamAsync("getRFCensusWithUser"), name);
+            string queryString = sb.ToString();
 
-                using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                await connection.OpenAsync();
+                SqlCommand command = new SqlCommand(queryString, connection);
+                SqlDataReader reader = await command.ExecuteReaderAsync();
+
+                while (await reader.ReadAsync())
                 {
-                    connection.Open();
-                    SqlCommand command = new SqlCommand(queryString, connection);
-                    SqlDataReader reader = command.ExecuteReader();
-
-                    while (reader.Read())
+                    newlist.Add(new RFCensus
                     {
-
-                        newlist.Add(new RFCensus
-                        {
-                            Oid = Guid.Parse(reader["Oid"].ToString()),
-                            CreationDate = reader["ΗμνίαΔημιουργίας"] == DBNull.Value ? DateTime.Now : DateTime.Parse(reader["ΗμνίαΔημιουργίας"].ToString()),
-                            Quantity= reader["Ποσότητα"] == DBNull.Value ? 0 : decimal.Parse(reader["Ποσότητα"].ToString()),
-                            Storage = await GetStorageDB(reader["ΑποθηκευτικόςΧώρος"].ToString()),
-                            Position = await GetPositionDB(reader["Θέση"].ToString()),
-                            Product = await GetProduct(reader["Είδος"].ToString(), reader["BarCodeΕίδους"].ToString()),
-                        });
-                    }
-                    return newlist;
+                        Oid = Guid.Parse(reader["Oid"].ToString()),
+                        CreationDate = reader["ΗμνίαΔημιουργίας"] == DBNull.Value ? DateTime.Now : DateTime.Parse(reader["ΗμνίαΔημιουργίας"].ToString()),
+                        Quantity = reader["Ποσότητα"] == DBNull.Value ? 0 : decimal.Parse(reader["Ποσότητα"].ToString()),
+                        Storage = await GetStorageDB(reader["ΑποθηκευτικόςΧώρος"].ToString()),
+                        Position = await GetPositionDB(reader["Θέση"].ToString()),
+                        Product = await GetProduct(reader["Είδος"].ToString(), reader["BarCodeΕίδους"].ToString()),
+                    });
                 }
-            });
+                return newlist;
+            }
         }
 
         private async Task<Product> GetProduct(string id, string bar)
