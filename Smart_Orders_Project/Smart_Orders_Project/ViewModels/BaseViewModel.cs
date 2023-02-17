@@ -15,21 +15,15 @@ namespace SmartMobileWMS.ViewModels
         public IDataStore<Customer> CustomerRepo => DependencyService.Get<IDataStore<Customer>>();
         public IDataStore<Product> ProductRepo => DependencyService.Get<IDataStore<Product>>();
         public IDataStore<LineOfOrder> LinesRepo => DependencyService.Get<IDataStore<LineOfOrder>>();
-        public IDataStore<RFSales> RFSalesRepo => DependencyService.Get<IDataStore<RFSales>>();
         public IDataStore<Storage> RFStorageRepo => DependencyService.Get<IDataStore<Storage>>();
         public IDataStore<Position> RFPositionRepo => DependencyService.Get<IDataStore<Position>>();
-        public IDataStore<RFCensus> RFCensusRepo => DependencyService.Get<IDataStore<RFCensus>>();
         public IUser<User> UserRepo => DependencyService.Get<IUser<User>>();
-        public IDataStore<Reciever> RecieverRepo => DependencyService.Get<IDataStore<Reciever>>();
         public IDataStore<Brand> BrandRepo => DependencyService.Get<IDataStore<Brand>>();
         public IDataStore<Manufacturer> ManufacturerRepo => DependencyService.Get<IDataStore<Manufacturer>>();
         public IDataGet<Grouping> GroupingRepo => DependencyService.Get<IDataGet<Grouping>>();
         //
         public RepositoryModel ModelRepo = new RepositoryModel();
         public RepositorySparePart SparePartRepo = new RepositorySparePart();
-        public RepositoryRFPurchase RFPurchaseRepo = new RepositoryRFPurchase();
-        public RepositoryProvider ProviderRepo = new RepositoryProvider();
-        public RepositoryRFPurchaseLine RFPurchaseLineRepo = new RepositoryRFPurchaseLine();
         
         bool isBusy = false;
         public bool IsBusy
@@ -71,15 +65,6 @@ namespace SmartMobileWMS.ViewModels
                 Preferences.Set(nameof(BarCode), value);
                 OnPropertyChanged(nameof(BarCode));
                 GoBack();
-            }
-        }
-        public int RFCounter
-        {
-            get => Preferences.Get(nameof(RFCounter), 1);
-            set
-            {
-                Preferences.Set(nameof(RFCounter), value);
-                OnPropertyChanged(nameof(RFCounter));
             }
         }
         public string UserString

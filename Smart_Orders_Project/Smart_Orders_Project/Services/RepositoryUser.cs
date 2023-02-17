@@ -38,10 +38,10 @@ namespace SmartMobileWMS.Services
                     if (!reader.HasRows)
                         return LoggedUser = null;
                     reader.Read();
-                    
+
                     User user = new User()
                     {
-                        UserID =  Guid.Parse(reader["Oid"].ToString()),
+                        UserID = Guid.Parse(reader["Oid"].ToString()),
                         UserName = reader["UserName"] == DBNull.Value ? "null User" : reader["UserName"].ToString()
                     };
                     LoggedUser = user;

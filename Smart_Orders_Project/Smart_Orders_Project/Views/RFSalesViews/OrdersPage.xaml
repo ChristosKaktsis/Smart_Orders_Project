@@ -25,7 +25,7 @@
                                 <dxcv:SwipeContainer.ItemView>
                                     <Grid Padding="0">
                                         <Frame BackgroundColor="white" BorderColor="LightGray" Padding="10" Margin="0,0,0,0" CornerRadius="0" HasShadow="True">
-                                            <StackLayout x:DataType="model:RFSales" HorizontalOptions="FillAndExpand" >
+                                            <StackLayout x:DataType="model:RFSale" HorizontalOptions="FillAndExpand" >
                                                 <Label Text="{Binding RFCount}" FontSize="16" FontAttributes="Bold"/>
                                                 <Label Text="{Binding Customer.Name}" FontSize="16" FontAttributes="Bold"/>
                                                 <StackLayout Orientation="Horizontal">

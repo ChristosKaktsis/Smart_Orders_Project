@@ -37,7 +37,7 @@ namespace SmartMobileWMS.ViewModels
             };
             try
             {
-                await RecieverRepo.UploadItemAsync(newItem);
+                //await RecieverRepo.UploadItemAsync(newItem);
             }
             catch(Exception ex)
             {

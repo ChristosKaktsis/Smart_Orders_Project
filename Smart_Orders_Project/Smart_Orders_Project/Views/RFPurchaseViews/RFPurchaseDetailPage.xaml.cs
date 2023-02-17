@@ -1,4 +1,5 @@
 ﻿using DevExpress.XamarinForms.CollectionView;
+using SmartMobileWMS.Models;
 using SmartMobileWMS.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -16,26 +17,42 @@ namespace SmartMobileWMS.Views
     {
         private RFPurchaseDetailViewModel _viewModel;
 
-        public RFPurchaseDetailPage()
+        public RFPurchaseDetailPage(RFPurchase rf = null)
         {
             InitializeComponent();
-            BindingContext = _viewModel = new RFPurchaseDetailViewModel();
+            BindingContext = _viewModel = new RFPurchaseDetailViewModel(rf);
         }
         protected override void OnAppearing()
         {
             base.OnAppearing();
             _viewModel.OnAppearing();
         }
-        void SwipeItem_Delete_Invoked(System.Object sender, SwipeItemTapEventArgs e)
+        private async void Scan_Code_Edit_Unfocused(object sender, FocusEventArgs e)
         {
-            _viewModel.DeleteCommand.Execute(e.Item);
+            await _viewModel.GetProduct(Scan_Code_Edit.Text);
+            Reset();
         }
-       
-        void SwipeItem_Edit_Invoked(System.Object sender, SwipeItemTapEventArgs e)
+        private void Reset()
         {
+            if (string.IsNullOrWhiteSpace(Scan_Code_Edit.Text))
+                return;
+            Scan_Code_Edit.Text = string.Empty;
+            Scan_Code_Edit.Focus();
+        }
 
-            //_viewModel.RFEdit.Execute(e.Item);
+        private async void Search_TextChanged(object sender, EventArgs e)
+        {
+            await _viewModel.GetProviders(Search.Text);
+        }
 
+        private void SwipeItem_Invoked(object sender, SwipeItemTapEventArgs e)
+        {
+            _viewModel.DeleteLine(e.Item as RFPurchaseLine);
+        }
+
+        private void NumericEdit_Unfocused(object sender, FocusEventArgs e)
+        {
+            Scan_Code_Edit.Focus();
         }
     }
 }

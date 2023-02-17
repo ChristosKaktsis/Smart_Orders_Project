@@ -1,4 +1,5 @@
 ﻿using DevExpress.XamarinForms.CollectionView;
+using SmartMobileWMS.Models;
 using SmartMobileWMS.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -16,34 +17,53 @@ namespace SmartMobileWMS.Views
     {
         private OrdersDetailViewModel _viewModel;
 
-        public OrderDetailPage()
+        public OrderDetailPage(RFSale rf = null)
         {
             InitializeComponent();
-            this.BindingContext = _viewModel = new OrdersDetailViewModel();
+            this.BindingContext = _viewModel = new OrdersDetailViewModel(rf);
         }
         protected override void OnAppearing()
         {
             base.OnAppearing();
             _viewModel.OnAppearing();
         }
-        void SwipeItem_Delete_Invoked(System.Object sender, SwipeItemTapEventArgs e)
+        private async void Scan_Code_Edit_Unfocused(object sender, FocusEventArgs e)
         {
-
-            //_viewModel.RFEdit.Execute(e.Item);
-            _viewModel.DeleteCommand.Execute(e.Item);
+            await _viewModel.GetProduct(Scan_Code_Edit.Text);
+            Reset();
         }
-        void SwipeItem_Edit_Invoked(System.Object sender, SwipeItemTapEventArgs e)
+        private void Reset()
         {
-
-            //_viewModel.RFEdit.Execute(e.Item);
-            
+            if (string.IsNullOrWhiteSpace(Scan_Code_Edit.Text))
+                return;
+            Scan_Code_Edit.Text = string.Empty;
+            Scan_Code_Edit.Focus();
         }
         protected override bool OnBackButtonPressed()
         {
             //cancel navigation 
             //check if user wants to leave
-            _viewModel.BackCommand.Execute(null);
             return true;
+        }
+
+        private void Customer_popup_Button_Clicked(object sender, EventArgs e)
+        {
+            customer_popup.IsOpen = !customer_popup.IsOpen;
+        }
+
+        private async void Search_TextChanged(object sender, EventArgs e)
+        {
+            await _viewModel.GetCustomers(Search.Text);
+        }
+
+        private void SwipeItem_Invoked(object sender, SwipeItemTapEventArgs e)
+        {
+            _viewModel.DeleteLine(e.Item as LineOfOrder);
+        }
+
+        private void NumericEdit_Unfocused(object sender, FocusEventArgs e)
+        {
+            Scan_Code_Edit.Focus();
         }
     }
 }

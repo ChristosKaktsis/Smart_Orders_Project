@@ -1,5 +1,7 @@
-﻿using SmartMobileWMS.Data;
+﻿using SmartMobileWMS.Constants;
+using SmartMobileWMS.Data;
 using SmartMobileWMS.Services;
+using System;
 using Xamarin.Forms;
 
 namespace SmartMobileWMS
@@ -20,23 +22,30 @@ namespace SmartMobileWMS
                 return database;
             }
         }
+        static Database _database;
+
+        public static Database _Database
+        {
+            get
+            {
+                if (_database == null)
+                {
+                    _database = new Database(ConnectionStrings.ConnectionString);
+                }
+                return _database;
+            }
+        }
         public App()
         {
             DevExpress.XamarinForms.Editors.Initializer.Init();
             DevExpress.XamarinForms.CollectionView.Initializer.Init();
             DevExpress.XamarinForms.Popup.Initializer.Init();
             InitializeComponent();
-            
 
-            DependencyService.Register<RepositoryCustomers>();
             DependencyService.Register<RepositoryItems>();
-            DependencyService.Register<RepositoryLineOfOrder>();
-            DependencyService.Register<RepositoryRFSales>();
             DependencyService.Register<RepositoryRFStorage>();
             DependencyService.Register<RepositoryRFPosition>();
-            DependencyService.Register<RepositoryRFCensus>();
             DependencyService.Register<RepositoryUser>();
-            DependencyService.Register<RepositoryRecievers>();
             DependencyService.Register<RepositoryBrand>();
             DependencyService.Register<RepositoryManufacturer>();
             DependencyService.Register<RepositoryTreeGrouping>();

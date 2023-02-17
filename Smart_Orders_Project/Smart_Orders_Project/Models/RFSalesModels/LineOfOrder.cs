@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace SmartMobileWMS.Models
 {
@@ -16,15 +17,17 @@ namespace SmartMobileWMS.Models
 
         public Guid Oid { get; set; }
         public Product Product { get; set; }
+        [JsonPropertyName("RFΠωλήσεις")]
         public Guid RFSalesOid { get; set; }
-        public string ProductBarCode { get; set; }        
+        public string ProductBarCode { get; set; }
+        [JsonPropertyName("ΠοσότηταΔιάστασης")]
         public decimal Quantity
         {
             get => _quantity;
             set
             {
-                _quantity = value;
-                OnPropertyChanged();
+                _quantity = decimal.Round(value, 1, MidpointRounding.AwayFromZero);
+                Sum = (double)value * Product.Price;
             }
         }
         public decimal Width

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -32,17 +33,27 @@ namespace SmartMobileWMS.Models
             }
         }
         public Guid Oid { get; set; }
+        [JsonPropertyName("Περιγραφή")]
         public string Name { get; set; }
+        [JsonPropertyName("Κωδικός")]
         public string ProductCode { get; set; }
         public string ProductCode2 { get; set; }
+        [JsonPropertyName("ΤιμήΧονδρικής")]
         public double Price { get; set; }
         public double LastPriceSold { get; set; }
-        public int FPA { get; set; } 
+        [JsonPropertyName("ΦΠΑ")]
+        public string FPA { get; set; }
+        [JsonPropertyName("barcode")]
         public string BarCode { get; set; }
+        [JsonPropertyName("Χρώματα")]
         public string Color { get; set; }
+        [JsonPropertyName("Μεγέθη")]
         public string Size { get; set; }
+        [JsonPropertyName("Πλάτος")]
         public float Width { get; set; }
+        [JsonPropertyName("Μήκος")]
         public float Length { get; set; }
+        [JsonPropertyName("Υψος")]
         public float Height { get; set; }
         public int Type { get; set; }
         public string UnitOfMeasure { get; set; }

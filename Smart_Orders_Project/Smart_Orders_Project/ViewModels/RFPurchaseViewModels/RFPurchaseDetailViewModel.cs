@@ -1,490 +1,179 @@
-﻿using SmartMobileWMS.Models;
+﻿using DevExpress.XamarinForms.CollectionView;
+using SmartMobileWMS.Models;
+using SmartMobileWMS.Repositories;
 using SmartMobileWMS.Services;
 using SmartMobileWMS.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 
 namespace SmartMobileWMS.ViewModels
 {
-    [QueryProperty(nameof(ProviderID), nameof(ProviderID))]
-    [QueryProperty(nameof(RFPurchaseID), nameof(RFPurchaseID))]
     public class RFPurchaseDetailViewModel : BaseViewModel
     {
-        private string providerName = "Επιλογή Προμηθευτή";
+        private ProductRepository productRepository = new ProductRepository();
+        private PurchaseLineRepository lineRepository = new PurchaseLineRepository();
+
         private RFPurchase rfPurchase;
-        private string providerDoc;
-        private RFPurchaseLine selectedLine;
-        private bool isSelected, _isAddEnabled = true, _isWHLEnabled, _isHEnabled, _isLEnabled, _isWEnabled;
-        private float _quantity, _height, _unit, _length, _width;
-        private string _thisisa;
-        private double _sum;
-
-        
-
-        public ObservableCollection<RFPurchaseLine> LinesList { get; set; }
-        public Command LoadItemsCommand { get; set; }
-        public Command SelectProviderCommand { get; set; }
-        public Command SelectProductCommand { get; set; }
-        public Command SetLineCommand { get; set; }
-        public Command SaveCommand { get; set; }
-        public Command<RFPurchaseLine> DeleteCommand { get; set; }
-        public RFPurchaseDetailViewModel()
+        public ObservableCollection<RFPurchaseLine> LineCollection
+        { get; } = new ObservableCollection<RFPurchaseLine>();
+        public ObservableCollection<Provider> ProviderCollection
+        { get; } = new ObservableCollection<Provider>();
+        public Command OpenPopUp { get; }
+        public Command SaveCommand { get; }
+        public RFPurchaseDetailViewModel(RFPurchase rFPurchase = null)
         {
-            InitializeModel();
-            SelectProviderCommand = new Command(ExecuteSelectProviderCommand);
-            SelectProductCommand = new Command(ExecuteSelectProductCommand);
-            SetLineCommand = new Command(SetLineValues);
-            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-            SaveCommand = new Command(ExecuteSaveCommand, ValidateSave);
-            this.PropertyChanged +=
-               (_, __) => SaveCommand.ChangeCanExecute();
-
-            DeleteCommand = new Command<RFPurchaseLine>(ExecuteDeleteCommand);
+            OpenPopUp = new Command(() => { Provider_Popup_isOpen = !Provider_Popup_isOpen; });
+            SaveCommand = new Command(async () => await SaveOrder());
+            InitializeRFPurchase(rFPurchase);
         }
 
-        private void ExecuteDeleteCommand(RFPurchaseLine obj)
+        private async void InitializeRFPurchase(RFPurchase rFPurchase)
         {
-            if (obj == null)
+            this.rfPurchase = rFPurchase;
+            if (this.rfPurchase == null)
+            {
+                this.rfPurchase = new RFPurchase
+                {
+                    Oid = Guid.NewGuid()
+                };
                 return;
-            LinesList.Remove(obj);
-        }
-
-        private bool ValidateSave()
-        {
-            return ProviderName != "Επιλογή Προμηθευτή" && LinesList.Any();
-        }
-        private async void ExecuteSaveCommand()
-        {
-            try
-            {
-                AddLinesToPurchase();
-                //check if exist
-                var exist = await App.Database.GetPurchaseAsync(rFPurchase.Oid.ToString());
-                if (exist == null)
-                {
-                  var result =  await RFPurchaseRepo.AddItemAsync(rFPurchase);
-                    Console.WriteLine(result);
-                    if (result)
-                       await SaveRFPurchaseLines();
-                }
-                else
-                {
-                     await UpdateRFPurchase(rFPurchase);
-                }
-                   
             }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-            
-            await Shell.Current.GoToAsync("..");
+            Provider = this.rfPurchase.Provider;
+            ProviderDoc = this.rfPurchase.ProviderDoc;
+            await LoadLinesOfPurchase(this.rfPurchase.Oid.ToString());
         }
 
-        private async Task UpdateRFPurchase(RFPurchase rFPurchase)
-        {
-            var result = await RFPurchaseRepo.UpdateItemAsync(rFPurchase);
-            if (result)
-            {
-                await DeleteRFPurchaseLines();
-                await SaveRFPurchaseLines();
-            }
-                
-
-        }
-
-        private async Task DeleteRFPurchaseLines()
-        {
-            var result = await RFPurchaseLineRepo.DeleteItemsAsync(rFPurchase.Oid.ToString());
-            Console.WriteLine($"RFPLine deleted :{result}");
-        }
-
-        private async Task SaveRFPurchaseLines()
-        {
-            foreach(var item in rFPurchase.Lines)
-            {
-                var result = await RFPurchaseLineRepo.AddItemAsync(item);
-                Console.WriteLine($"RFPLine added :{result}");
-            }    
-        }
-
-        private void AddLinesToPurchase()
-        {
-            rFPurchase.Lines.Clear();
-            foreach (var item in LinesList)
-                    rFPurchase.Lines.Add(item);
-        }
-
-        private  void InitializeModel()
-        {
-            //view model lives after going to the next page
-            //
-            LinesList = new ObservableCollection<RFPurchaseLine>();
-            
-        }
-        public RFPurchase rFPurchase 
-        { 
-            get 
-            { 
-                if(rfPurchase == null)
-                {
-                    rfPurchase = new RFPurchase
-                    {
-                        Oid = Guid.NewGuid(),
-                        Lines = new List<RFPurchaseLine>(),
-                        CreationDate = DateTime.Now,
-                    };
-                }
-                return rfPurchase;
-            }
-            set
-            {
-                rfPurchase = value;
-                ProviderDoc = value.ProviderDoc;
-                ProviderName = value.Provider.Name;
-            } 
-        }
-
-        private async Task AddLinesToData()
-        {
-            rFPurchase.Lines = await RFPurchaseLineRepo.GetItemsAsync(rFPurchase.Oid.ToString());
-
-            foreach (var item in rFPurchase.Lines)
-                if (LinesList.All(l => l.Oid != item.Oid))
-                    LinesList.Add(item);
-        }
-
-        private async void ExecuteSelectProductCommand(object obj)
-        {
-            await Shell.Current.GoToAsync($"{nameof(Views.RFPurchaseLineSelectionPage)}?{nameof(RFPurchaseLinesViewModel.ItemId)}={rFPurchase.Oid}");
-        }
-
-        public string ProviderName
-        {
-            get
-            {
-                return providerName;
-            }
-            set
-            {
-                SetProperty(ref providerName, value);
-            }
-        }
-        public string ProviderDoc
-        {
-            get
-            {
-                return providerDoc;
-            }
-            set
-            {
-                SetProperty(ref providerDoc, value);
-                if (!string.IsNullOrEmpty(value))
-                    rFPurchase.ProviderDoc = value;
-            }
-        }
-        public  void OnAppearing()
-        {
-            IsBusy = true;
-        }
-        private async void ExecuteSelectProviderCommand()
-        {
-            await Shell.Current.GoToAsync(nameof(ProviderSelectionPage));
-        }
-
-        public string ProviderID
-        {
-            set
-            {
-                LoadProvider(value);
-            }
-        }
-        public string RFPurchaseID
-        {
-            set
-            {
-                LoadRFPurchase(value);
-            }
-        }
-
-        private async void LoadRFPurchase(string value)
-        {
-            if (string.IsNullOrEmpty(value))
-                return;
-            try
-            {
-                rFPurchase = await App.Database.GetPurchaseAsync(value);
-                await AddLinesToData();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-        }
-
-        private async Task ExecuteLoadItemsCommand() 
+        private async Task LoadLinesOfPurchase(string id)
         {
             IsBusy = true;
             try
             {
-                
-                var items = await App.Database.GetPurchaseLineAsync();
-                foreach(var item in items)
+                var items = await lineRepository.GetItemsAsync(id);
+                items.ForEach(item =>
                 {
-                    if(!LinesList.Contains(item))
-                        LinesList.Add(item);
-                }
-
+                    LineCollection.Add(item);
+                });
             }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-            finally
-            {
-                IsBusy = false;
-            }
+            catch (Exception ex) { Debug.WriteLine(ex); }
+            finally { IsBusy = false; }
         }
 
-        private async void LoadProvider(string value)
+        public void OnAppearing()
         {
-            if (string.IsNullOrEmpty(value))
-                return;
+        }
+        private Provider _Provider;
+        public Provider Provider { 
+            get => _Provider; 
+            set
+            {
+                _Provider = value;
+                DisplayProvider = value == null ? "Επιλογή προμηθευτή" : value.Name;
+                OpenPopUp.Execute(null);
+            }
+        }
+        public bool Provider_Popup_isOpen
+        {
+            get => _Provider_Popup_isOpen;
+            set => SetProperty(ref _Provider_Popup_isOpen, value);
+        }
+        private string _DisplayProvider = "Επιλογή προμηθευτή";
+        private bool _Provider_Popup_isOpen;
+
+        public string DisplayProvider
+        {
+            get => _DisplayProvider;
+            set => SetProperty(ref _DisplayProvider, value);
+        }
+        public string ProviderDoc { get; set; }
+        public async Task GetProviders(string search)
+        {
+            IsBusy = true;
             try
             {
-                var provider = await App.Database.GetProviderAsync(value);
-                ProviderName = provider.Name;
-                AddProviderToPurchase(provider);
+                if (string.IsNullOrWhiteSpace(search)) return;
+                ProviderCollection.Clear();
+                ProviderRepository repository = new ProviderRepository();
+                var items = await repository.GetItemAsync(search);
+                items.ForEach(item => { ProviderCollection.Add(item); });
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                Debug.WriteLine(ex);
+                await Shell.Current.DisplayAlert("", "Η αναζήτηση προμηθευτή απέτυχε", "ΟΚ");
             }
-            
+            finally { IsBusy = false; }
+        }
+        public async Task GetProduct(string id)
+        {
+            IsBusy = true;
+            try
+            {
+                if (string.IsNullOrWhiteSpace(id)) return;
+                var item = await productRepository.GetItemAsync(id);
+                if (item == null) await Shell.Current.DisplayAlert("", "Το είδος δεν βρέθηκε", "ΟΚ");
+                AddNewLine(item);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                await Shell.Current.DisplayAlert("", "Η αναζήτηση είδους απέτυχε", "ΟΚ");
+            }
+            finally { IsBusy = false; }
         }
 
-        private void AddProviderToPurchase(Provider provider)
+        private void AddNewLine(Product item)
         {
-            if (provider == null)
-                return;
+            if (item == null) return;
+            var newLine = new RFPurchaseLine
+            {
+                Oid = Guid.NewGuid(),
+                Product = item,
+                Quantity = 1,
+                RFSalesOid = rfPurchase.Oid
+            };
+            LineCollection.Add(newLine);
+        }
+        public void DeleteLine(RFPurchaseLine item)
+        {
+            if (item == null) return;
+            LineCollection.Remove(item);
+        }
 
-            rFPurchase.Provider = provider;
-        }
-        public RFPurchaseLine SelectedLine
+        private async Task SaveOrder()
         {
-            get
+            try
             {
-                return selectedLine;
-            }
-            set
-            {
-                SetProperty(ref selectedLine, value);
-                EnableButtons(value);
-            }
-        }
-        private void EnableButtons(RFPurchaseLine value)
-        {
-            if (value != null)
-            {
-                Width = (float)value.Width;
-                Height = (float)value.Height;
-                Length = (float)value.Length;
-                Quantity = (float)value.Quantity;
-                IsWHLEnabled = true;
-                IsAddEnabled = false;
-                switch (value.Product.Type)
+                IsBusy = true;
+                RFPurchaseRepository repository = new RFPurchaseRepository();
+                rfPurchase.Provider = Provider;
+                rfPurchase.ProviderDoc = ProviderDoc;
+                bool added = false;
+                bool updated = false;
+                if(!(updated = await repository.UpdateItem(rfPurchase)))
+                    added = await repository.AddItem(rfPurchase);
+                if (!updated && !added)
                 {
-                    case 0:
-                        IsWEnabled = false;
-                        IsLEnabled = false;
-                        IsHEnabled = false;
-                        break;
-                    case 1:
-                        IsWEnabled = false;
-                        IsLEnabled = true;
-                        IsHEnabled = false;
-                        break;
-                    case 2:
-                        IsWEnabled = true;
-                        IsLEnabled = true;
-                        IsHEnabled = false;
-                        ThisIsA = "Τετρ.Μέτρα";
-                        break;
-                    case 3:
-                        IsWEnabled = true;
-                        IsLEnabled = true;
-                        IsHEnabled = true;
-                        ThisIsA = "Κυβ.Μέτρα";
-                        break;
+                    await Shell.Current.DisplayAlert("Η αποθηκευση δεν ολοκληρώθηκε",
+                        "Δεν ήταν δυνατή η αποθήκευση της παραγγελίας", "ΟΚ");
+                    return;
                 }
+                await SaveLineOfOrder();
+                await Shell.Current.GoToAsync("..");
             }
-            else
-            {
-                IsWEnabled = false;
-                IsLEnabled = false;
-                IsHEnabled = false;
-                IsWHLEnabled = false;
-                IsAddEnabled = true;
-            }
+            catch (Exception ex) { Debug.WriteLine(ex);} finally { IsBusy = false; }
         }
-        public double Sum
+        private async Task SaveLineOfOrder()
         {
-            get => _sum;
-            set
-            {
-                SetProperty(ref _sum, value);
-            }
-        }
-        public float Quantity
-        {
-            get => _quantity;
-            set
-            {
-                SetProperty(ref _quantity, value);
-                CheckSum();
-                
-            }
-        }
-        public float Height
-        {
-            get => _height;
-            set
-            {
-                SetProperty(ref _height, value);
-                CheckSum();
-                
-            }
-        }
-        public float Width
-        {
-            get => _width;
-            set
-            {
-                SetProperty(ref _width, value);
-                CheckSum();
-                
-            }
-        }
-        public float Length
-        {
-            get => _length;
-            set
-            {
-                SetProperty(ref _length, value);
-                CheckSum();
-                
-            }
-        }
-        private void CheckSum()
-        {
-            if (SelectedLine == null)
-                return;
-
-            float oldwidth = SelectedLine.Product.Width == 0 ? 1 : SelectedLine.Product.Width;
-            float oldlength = SelectedLine.Product.Length == 0 ? 1 : SelectedLine.Product.Length;
-            float oldheight = SelectedLine.Product.Height == 0 ? 1 : SelectedLine.Product.Height;
-            switch (SelectedLine.Product.Type)
-            {
-                case 1:
-                    oldwidth = 1;
-                    oldheight = 1;
-                    break;
-                case 2:
-                    oldheight = 1;
-                    break;
-            }
-            float oldunit = (oldwidth * oldlength) * oldheight;
-            float newunit = (Width * Length) * Height;
-
-            if (SelectedLine.Product.Length == 0)
-            {
-                Sum = Quantity * SelectedLine.Product.Price;
-            }
-            else
-            {
-                Unit = newunit * Quantity;
-                if (oldunit == 0)
-                {
-                    Sum = 0;
-                }
-                else
-                {
-                    var athr = (newunit * SelectedLine.Product.Price) / oldunit;
-                    Sum = Quantity * athr;
-                }
-            }
-        }
-        private void SetLineValues()
-        {
-            if (SelectedLine == null)
-                return;
-            SelectedLine.Quantity = (decimal)Quantity;
-            SelectedLine.Width = (decimal)Width;
-            SelectedLine.Height = (decimal)Height;
-            SelectedLine.Length = (decimal)Length;
-            SelectedLine.Sum = Sum;
-            SelectedLine = null;
-        }
-        public string ThisIsA
-        {
-            get => _thisisa;
-            set
-            {
-                SetProperty(ref _thisisa, value);
-            }
-        }
-        public float Unit
-        {
-            get => _unit;
-            set
-            {
-                SetProperty(ref _unit, value);
-            }
-        }
-        public bool IsWEnabled
-        {
-            get => _isWEnabled;
-            set
-            {
-                SetProperty(ref _isWEnabled, value);
-            }
-        }
-        public bool IsLEnabled
-        {
-            get => _isLEnabled;
-            set
-            {
-                SetProperty(ref _isLEnabled, value);
-            }
-        }
-        public bool IsHEnabled
-        {
-            get => _isHEnabled;
-            set
-            {
-                SetProperty(ref _isHEnabled, value);
-            }
-        }
-        public bool IsWHLEnabled
-        {
-            get => _isWHLEnabled;
-            set
-            {
-                SetProperty(ref _isWHLEnabled, value);
-            }
-        }
-        public bool IsAddEnabled
-        {
-            get => _isAddEnabled;
-            set
-            {
-                SetProperty(ref _isAddEnabled, value);
-            }
+            await lineRepository.DeleteItems(rfPurchase.Oid.ToString());
+            foreach (var line in LineCollection)
+                await lineRepository.AddItem(line);
         }
     }
 }

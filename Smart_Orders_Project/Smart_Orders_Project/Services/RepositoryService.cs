@@ -22,7 +22,6 @@ namespace SmartMobileWMS.Services
             return await Task.Run( async() => {
                 string queryString = $@"SELECT ParamName, Parameter
                 From XamarinMobWMSParameters where ParamName='{parName}'";
-
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();

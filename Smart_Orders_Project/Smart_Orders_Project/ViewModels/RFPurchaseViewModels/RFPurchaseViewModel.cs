@@ -1,4 +1,5 @@
 ﻿using SmartMobileWMS.Models;
+using SmartMobileWMS.Repositories;
 using SmartMobileWMS.Views;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,11 @@ namespace SmartMobileWMS.ViewModels
     public class RFPurchaseViewModel : BaseViewModel
     {
         public Command AddOrder { get; }
-        public ObservableCollection<RFPurchase> RFPurchaseList { get; set; }
+        public ObservableCollection<RFPurchase> RFPurchaseList { get; }
         public Command LoadItemsCommand { get; }
         public Command<RFPurchase> RFEdit { get; }
         public Command<RFPurchase> RFDone { get; }
+        private RFPurchaseRepository purchaseRepository = new RFPurchaseRepository();
         public RFPurchaseViewModel()
         {
             RFPurchaseList = new ObservableCollection<RFPurchase>();
@@ -27,32 +29,27 @@ namespace SmartMobileWMS.ViewModels
         private async void OnRFDone(RFPurchase purchase)
         {
             bool answer = await App.Current.MainPage.DisplayAlert("Ολοκλήρωση?", "Θέλετε να ολοκληρωθεί η Αγορά ;", "Ναι", "Οχι");
-            if (answer)
+            if (!answer) return;
+            try
             {
-                try
-                {
-                    //complete the Rfpurchase
-                    purchase.Complete = true;
-                    var result = await RFPurchaseRepo.UpdateItemAsync(purchase);
-                    Console.WriteLine($"Complete ?{result}");
-                }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine(ex);
-                    await Shell.Current.DisplayAlert("Σφάλμα!", "RFDone \n" + ex.Message, "Οκ");
-                }
-                IsBusy = true;
+                //complete the Rfpurchase
+                purchase.Complete = true;
+                await purchaseRepository.UpdateItem(purchase);
             }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex);
+                await Shell.Current.DisplayAlert("Σφάλμα!", "RFDone \n" + ex.Message, "Οκ");
+            }
+            IsBusy = true;
         }
 
         private async void OnRFEdit(RFPurchase rf)
         {
             if (rf == null)
                 return;
-
-            await App.Database.AddPurchaseAsync(rf);
             // This will push the ItemDetailPage onto the navigation stack
-            await Shell.Current.GoToAsync($"{nameof(RFPurchaseDetailPage)}?{nameof(RFPurchaseDetailViewModel.RFPurchaseID)}={rf.Oid}");
+            await Shell.Current.Navigation.PushAsync(new RFPurchaseDetailPage(rf));
         }
 
         private async Task ExecuteLoadItemsCommand()
@@ -63,11 +60,9 @@ namespace SmartMobileWMS.ViewModels
             {
                 RFPurchaseList.Clear();
                 
-                var items = await RFPurchaseRepo.GetItemsAsync();
+                var items = await purchaseRepository.GetItemsAsync();
                 foreach (var item in items)
-                {
                     RFPurchaseList.Add(item);
-                }
             }
             catch (Exception ex)
             {
@@ -82,17 +77,11 @@ namespace SmartMobileWMS.ViewModels
         public void OnAppearing()
         {
             IsBusy = true;
-            ClearData();//clear cart
-        }
-
-        private async void ClearData()
-        {
-            await App.Database.DeletePurchaseLinesAsync();
         }
 
         private async void OnAddOrderClicked(object obj)
         {
-            await Shell.Current.GoToAsync(nameof(RFPurchaseDetailPage));
+            await Shell.Current.Navigation.PushAsync(new RFPurchaseDetailPage());
         }
     }
 }

@@ -33,7 +33,7 @@
                             </VisualState>
                             <VisualState x:Name="Pressed">
                                 <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="#332196F3" />
+                                    <Setter Property="BackgroundColor" Value="Transparent" />
                                 </VisualState.Setters>
                             </VisualState>
                         </VisualStateGroup>
