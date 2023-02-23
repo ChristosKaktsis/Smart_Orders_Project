@@ -14,7 +14,7 @@ namespace SmartMobileWMS.Repositories
         {
             var lip = string.IsNullOrEmpty(item.Product.BarCode) ? "null" : $"'{item.Product.BarCode}'";
             StringBuilder sb = new StringBuilder();
-            sb.AppendFormat(await GetParamAsync("postRFCensus"), item.Oid, item.Storage.Oid, item.Product.Oid, item.UserCreator.UserID, item.Quantity, item.Position.Oid, lip);
+            sb.AppendFormat(await GetParamAsync("postRFCensus"), item.Oid, item.Storage.Oid, item.Product.Oid, item.UserCreator.Oid, item.Quantity, item.Position.Oid, lip);
             var result = await ExecutePostMethod(sb.ToString());
             return result != 0;
         }

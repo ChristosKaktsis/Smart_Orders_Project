@@ -17,7 +17,6 @@ namespace SmartMobileWMS.ViewModels
 {
     public class RFPurchaseDetailViewModel : BaseViewModel
     {
-        private ProductRepository productRepository = new ProductRepository();
         private PurchaseLineRepository lineRepository = new PurchaseLineRepository();
 
         private RFPurchase rfPurchase;

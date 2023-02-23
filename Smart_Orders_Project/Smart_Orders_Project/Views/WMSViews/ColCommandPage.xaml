@@ -130,8 +130,8 @@
                                Text="{Binding RestToAdd_Text}"
                                HorizontalOptions="EndAndExpand"
                                FontSize="16"/>
-                        <Button x:Name="Add_Button" Clicked="Add_Button_Clicked" Text="Add" Grid.Row="6" Grid.Column="1" HorizontalOptions="EndAndExpand" CornerRadius="5" BackgroundColor="{StaticResource PrimaryLight}" />
-                        <Button x:Name="Done_button" Clicked="Done_button_Clicked" Grid.Row="6"  Text="Done"   FontSize="Body" CornerRadius="5"/>
+                        <Button x:Name="Add_Button" Clicked="Add_Button_Clicked" Text="Προσθηκη" Grid.Row="6" Grid.Column="1" HorizontalOptions="EndAndExpand" CornerRadius="5" BackgroundColor="{StaticResource PrimaryLight}" />
+                        <Button x:Name="Done_button" Clicked="Done_button_Clicked" Grid.Row="6"  Text="Τελος"   FontSize="Body" CornerRadius="5"/>
                     </Grid>
                 </Frame>
 

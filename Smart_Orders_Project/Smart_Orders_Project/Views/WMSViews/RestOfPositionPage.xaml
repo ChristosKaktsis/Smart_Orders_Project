@@ -2,9 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SmartMobileWMS.Views.RestOfPositionPage"
-             xmlns:dxcv="http://schemas.devexpress.com/xamarin/2014/forms/collectionview" 
              xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors" 
-             xmlns:dxp="http://schemas.devexpress.com/xamarin/2014/forms/popup" 
              xmlns:model="clr-namespace:SmartMobileWMS.Models" 
              xmlns:vm="clr-namespace:SmartMobileWMS.ViewModels"
              Title="Υπόλοιπα θέσης">
@@ -19,8 +17,8 @@
                        HorizontalOptions="End"/>
                 <Frame Margin="5" Padding="0" CornerRadius="5">
                     <StackLayout>
-                        <dxcv:DXCollectionView ItemsSource="{Binding ProductList}" BackgroundColor="{StaticResource BackGround}">
-                            <dxcv:DXCollectionView.ItemTemplate>
+                        <CollectionView ItemsSource="{Binding ProductList}" BackgroundColor="{StaticResource BackGround}">
+                            <CollectionView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid>
                                         <Frame x:DataType="model:Product" CornerRadius="5" Margin="5">
@@ -34,24 +32,9 @@
                                             </Grid>
                                         </Frame>
                                     </Grid>
-
                                 </DataTemplate>
-                            </dxcv:DXCollectionView.ItemTemplate>
-                            <!--<dxcv:DXCollectionView.SelectedItemTemplate>
-                                <DataTemplate>
-                                    <Grid>
-
-                                        <Frame x:DataType="model:Product" BackgroundColor="{StaticResource ComplementaryLight}">
-                                            <Grid>
-                                                <Label Text="{Binding Name}"/>
-                                                <Label Grid.Column="1"  HorizontalOptions="End"  Text="{Binding Quantity,StringFormat=':{0}'}"/>
-                                            </Grid>
-                                        </Frame>
-                                    </Grid>
-
-                                </DataTemplate>
-                            </dxcv:DXCollectionView.SelectedItemTemplate>-->
-                        </dxcv:DXCollectionView>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
                         <Button Text="Άδειασμα" TextTransform="None" CornerRadius="5" Margin="0,10,0,0" Command="{Binding EmptyPositionCommand}"/>
                     </StackLayout>
                 </Frame>

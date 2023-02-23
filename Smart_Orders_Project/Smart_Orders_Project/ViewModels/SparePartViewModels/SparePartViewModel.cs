@@ -32,21 +32,21 @@ namespace SmartMobileWMS.ViewModels
                 
                 if (SearchText.Length == 13)
                 {
-                    var it = await ProductRepo.GetItemAsync(SearchText);
+                    var it = await productRepository.GetItemAsync(SearchText);
                     if (it != null)
                         ProductList.Add(it);
                     else
                         await Shell.Current.DisplayAlert("Barcode!", "το είδος δεν βρέθηκε", "Οκ");
                 }
-                else
-                {
-                    var items = await ProductRepo.GetItemsWithNameAsync(SearchText);
+                //else
+                //{
+                //    var items = await ProductRepo.GetItemsWithNameAsync(SearchText);
 
-                    foreach (var item in items)
-                    {
-                        ProductList.Add(item);
-                    }
-                }
+                //    foreach (var item in items)
+                //    {
+                //        ProductList.Add(item);
+                //    }
+                //}
             }
             catch (Exception ex)
             {

@@ -4,10 +4,10 @@ using System.Text;
 
 namespace SmartMobileWMS.Models
 {
-   public class User
+    public class CCommand
     {
         public Guid Oid { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
+        public Customer Customer { get; set; }
+        public IEnumerable<CollectionCommand> Commands { get; set; }
     }
 }

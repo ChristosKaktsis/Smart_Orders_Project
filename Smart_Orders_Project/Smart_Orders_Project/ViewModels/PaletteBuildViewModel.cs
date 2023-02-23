@@ -1,8 +1,10 @@
 ﻿using SmartMobileWMS.Models;
+using SmartMobileWMS.Repositories;
 using SmartMobileWMS.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,7 +12,7 @@ namespace SmartMobileWMS.ViewModels
 {
     public class PaletteBuildViewModel : BaseViewModel
     {
-        private RepositoryPalette repositoryPalette;
+        private PaletteRepository repositoryPalette = new PaletteRepository();
         private bool hasError, sSCCHasError;
         private string description = "παλέτα ", sscc;
         private float length = 120, width = 80, height = 120;
@@ -24,7 +26,6 @@ namespace SmartMobileWMS.ViewModels
         private void InitializeModel()
         {
             ProductCollection = new ObservableCollection<Product>();
-            repositoryPalette = new RepositoryPalette();
         }
         public async Task FindPalette(string sscc)
         {
@@ -35,13 +36,13 @@ namespace SmartMobileWMS.ViewModels
                 IsBusy = true;
                 SSCCHasError = false;
 
-                var palette = await repositoryPalette.GetPalette(sscc);
+                var palette = await repositoryPalette.GetItemAsync(sscc);
                 if (palette != null)
                     SSCCHasError = true;
             }
             catch(Exception ex)
             {
-                Console.WriteLine(ex);
+                Debug.WriteLine(ex);
             }
             finally
             {
@@ -86,7 +87,7 @@ namespace SmartMobileWMS.ViewModels
             {
                 IsBusy = true;
                 HasError = false;
-                var item = await ProductRepo.GetItemAsync(id);
+                var item = await productRepository.GetItemAsync(id);
                 if(item != null)
                 {
                     item.Quantity++;
@@ -131,16 +132,12 @@ namespace SmartMobileWMS.ViewModels
                     SSCC = SSCC,
                     Length = Length,
                     Width = Width,
-                    Height = Height
+                    Height = Height,
+                    Products = ProductCollection,
                 };
-                var result = await repositoryPalette.PostPalette(palette);
+                var result = await repositoryPalette.AddItem(palette);
                 if (!result)
                     return;
-                foreach(var item in ProductCollection)
-                {
-                    result = await repositoryPalette.PostPaletteItem(palette, item);
-                    Console.WriteLine($"item:{item.CodeDisplay} is Saved? {result}");
-                }
                 await AppShell.Current.DisplayAlert("Αποθήκευση", "Η παλέτα αποθηκεύτηκε !", "Οκ");
                 await AppShell.Current.Navigation.PopAsync();
             }

@@ -50,7 +50,7 @@ namespace SmartMobileWMS.Views
         private async void GoForPalette()
         {
             await _viewModel.FindPalette(_viewModel.ProductID);
-            await _viewModel.LoadContent();
+            _viewModel.LoadContent();
             PositionTo_text.Focus();
         }
         private async void GoForProduct()

@@ -21,11 +21,10 @@ namespace SmartMobileWMS.Views
             InitializeComponent();
             BindingContext = _viewModel = new PaletteEditViewModel(palette);
         }
-        protected async override void OnAppearing()
+        protected override void OnAppearing()
         {
             base.OnAppearing();
-
-            await _viewModel.LoadContent();
+            _viewModel.LoadContent();
         }
         private void Delete_Button_Clicked(object sender, EventArgs e)
         {

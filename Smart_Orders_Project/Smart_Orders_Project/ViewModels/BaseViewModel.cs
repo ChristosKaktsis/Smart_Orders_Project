@@ -1,5 +1,6 @@
 ﻿using SmartMobileWMS.Models;
 using SmartMobileWMS.Models.SparePartModels;
+using SmartMobileWMS.Repositories;
 using SmartMobileWMS.Services;
 using System;
 using System.Collections.Generic;
@@ -12,19 +13,15 @@ namespace SmartMobileWMS.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<Customer> CustomerRepo => DependencyService.Get<IDataStore<Customer>>();
-        public IDataStore<Product> ProductRepo => DependencyService.Get<IDataStore<Product>>();
-        public IDataStore<LineOfOrder> LinesRepo => DependencyService.Get<IDataStore<LineOfOrder>>();
-        public IDataStore<Storage> RFStorageRepo => DependencyService.Get<IDataStore<Storage>>();
-        public IDataStore<Position> RFPositionRepo => DependencyService.Get<IDataStore<Position>>();
-        public IUser<User> UserRepo => DependencyService.Get<IUser<User>>();
         public IDataStore<Brand> BrandRepo => DependencyService.Get<IDataStore<Brand>>();
         public IDataStore<Manufacturer> ManufacturerRepo => DependencyService.Get<IDataStore<Manufacturer>>();
         public IDataGet<Grouping> GroupingRepo => DependencyService.Get<IDataGet<Grouping>>();
         //
         public RepositoryModel ModelRepo = new RepositoryModel();
         public RepositorySparePart SparePartRepo = new RepositorySparePart();
-        
+        //new 
+        protected ProductRepository productRepository = new ProductRepository();
+        protected PositionRepository positionRepository = new PositionRepository();
         bool isBusy = false;
         public bool IsBusy
         {

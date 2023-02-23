@@ -19,8 +19,8 @@
                        HorizontalOptions="End"/>
                 <Frame Margin="5" Padding="0" CornerRadius="5">
                     <StackLayout>
-                        <dxcv:DXCollectionView ItemsSource="{Binding PositionList}" BackgroundColor="{StaticResource BackGround}">
-                            <dxcv:DXCollectionView.ItemTemplate>
+                        <CollectionView ItemsSource="{Binding PositionList}" BackgroundColor="{StaticResource BackGround}">
+                            <CollectionView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid>
                                         <Frame x:DataType="model:Position" CornerRadius="5" Margin="5">
@@ -35,22 +35,8 @@
                                     </Grid>
 
                                 </DataTemplate>
-                            </dxcv:DXCollectionView.ItemTemplate>
-                            <!--<dxcv:DXCollectionView.SelectedItemTemplate>
-                                <DataTemplate>
-                                    <Grid>
-
-                                        <Frame x:DataType="model:Product" BackgroundColor="{StaticResource ComplementaryLight}">
-                                            <Grid>
-                                                <Label Text="{Binding Name}"/>
-                                                <Label Grid.Column="1"  HorizontalOptions="End"  Text="{Binding Quantity,StringFormat=':{0}'}"/>
-                                            </Grid>
-                                        </Frame>
-                                    </Grid>
-
-                                </DataTemplate>
-                            </dxcv:DXCollectionView.SelectedItemTemplate>-->
-                        </dxcv:DXCollectionView>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
                     </StackLayout>
                 </Frame>
             </StackLayout>

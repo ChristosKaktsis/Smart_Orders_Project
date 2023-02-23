@@ -146,8 +146,8 @@
                         <Label Grid.Row="5" Grid.Column="1" 
                                HorizontalOptions="EndAndExpand"
                                Text="{Binding Quantity_Text}" FontSize="16"/>
-                        <Button x:Name="Done_button" Clicked="Done_button_Clicked" Grid.Row="6"  Text="Done"   FontSize="Body" CornerRadius="5"/>
-                        <Button x:Name="Add_Button" Text="Add" Grid.Row="6" Grid.Column="1" CornerRadius="5" HorizontalOptions="EndAndExpand" BackgroundColor="{StaticResource PrimaryLight}" Clicked="Add_Button_Clicked"/>
+                        <Button x:Name="Done_button" Clicked="Done_button_Clicked" Grid.Row="6"  Text="Τελος"   FontSize="Body" CornerRadius="5"/>
+                        <Button x:Name="Add_Button" Text="Προσθηκη" Grid.Row="6" Grid.Column="1" CornerRadius="5" HorizontalOptions="EndAndExpand" BackgroundColor="{StaticResource PrimaryLight}" Clicked="Add_Button_Clicked"/>
                     </Grid>
                 </Frame>
                 

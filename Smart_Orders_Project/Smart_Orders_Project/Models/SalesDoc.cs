@@ -9,5 +9,6 @@ namespace SmartMobileWMS.Models
         public Guid Oid { get; set; }
         public Customer Customer { get; set; }
         public string Doc { get; set; }
+        public IEnumerable<Product> Products { get; set; }
     }
 }

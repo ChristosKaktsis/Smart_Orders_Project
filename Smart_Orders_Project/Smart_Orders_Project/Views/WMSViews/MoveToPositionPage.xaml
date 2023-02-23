@@ -180,7 +180,7 @@
                                      AllowLooping="False"
                                      Value="{Binding Quantity,Mode=OneWayToSource}"
                                      TextFontSize="24"/>
-                    <Button Text="Add" Clicked="Add_Button_Clicked"/>
+                    <Button Text="Προσθηκη" Clicked="Add_Button_Clicked"/>
 
                 </StackLayout>
                 <Image Grid.Row="8" Source="rack.png"/>

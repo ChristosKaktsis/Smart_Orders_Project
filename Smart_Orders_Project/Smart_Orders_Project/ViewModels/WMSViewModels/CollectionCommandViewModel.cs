@@ -1,9 +1,11 @@
 ﻿using SmartMobileWMS.Models;
+using SmartMobileWMS.Repositories;
 using SmartMobileWMS.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,15 +31,11 @@ namespace SmartMobileWMS.ViewModels
             get => docName;
             set => SetProperty(ref docName, value);
         }
-        private RepositoryColComand repositoryCol;
+        private CollectionCommandRepository repositoryCol = new CollectionCommandRepository();
         private Product foundProduct;
         private Position foundPosition;
-        private string restToadd_text;
+        private string restToadd_text, customerName, doc, docName;
         private Customer customer;
-        private string customerName;
-        private string doc;
-        private string docName;
-
         public IList<CollectionCommand> ColCommandList { get; set; }
         public IList<CollectionCommand> LessColCommandList { get; set; }
         public CollectionCommandViewModel()
@@ -48,7 +46,6 @@ namespace SmartMobileWMS.ViewModels
         {
             ColCommandList = new BindingList<CollectionCommand>();
             LessColCommandList = new ObservableCollection<CollectionCommand>();
-            repositoryCol = new RepositoryColComand();
         }
         public async Task LoadColCommands()
         {
@@ -56,14 +53,15 @@ namespace SmartMobileWMS.ViewModels
             {
                 IsBusy = true;
                 ColCommandList.Clear();
-                var items = await repositoryCol.GetCollectionCommands(Doc);
-                
-                foreach (var item in items)
+                var itemC = await repositoryCol.GetItemsAsync(Doc);
+                if (itemC == null) return;
+                Customer = itemC.Customer;
+                foreach (var item in itemC.Commands)
                     ColCommandList.Add(item);
             }
             catch(Exception ex)
             {
-                Console.WriteLine(ex);
+                Debug.WriteLine(ex);
             }
             finally
             {
@@ -89,27 +87,6 @@ namespace SmartMobileWMS.ViewModels
         {
             get => customerName;
             set => SetProperty(ref customerName, value);
-        }
-        public async Task LoadCustomer()
-        {
-            try
-            {
-                IsBusy = true;
-                Customer = null;
-                RepositorySalesDoc repositorySales = new RepositorySalesDoc();
-                var doc = await repositorySales.getSalesDoc(Doc);
-                if (doc == null)
-                    return;
-                Customer = await CustomerRepo.GetItemAsync(doc.Customer.Oid.ToString());
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-            finally
-            {
-                IsBusy = false;
-            }
         }
         public Position FoundPosition 
         { 
@@ -239,15 +216,14 @@ namespace SmartMobileWMS.ViewModels
                 IsBusy = true;
                 foreach(var item in ColCommandList)
                 {
-                    bool result = await repositoryCol.UpdateCollectionCommand(item);
-                    Console.WriteLine($"Collection Updated {result}");
+                    bool result = await repositoryCol.UpdateItem(item);
+                    Debug.WriteLine($"Collection Updated {result}");
                 }
-
                 ClearAll();
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                Debug.WriteLine(ex);
             }
             finally
             {

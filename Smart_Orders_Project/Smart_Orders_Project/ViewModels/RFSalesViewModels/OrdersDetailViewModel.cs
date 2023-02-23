@@ -16,7 +16,6 @@ namespace SmartMobileWMS.ViewModels
 {
     class OrdersDetailViewModel : BaseViewModel
     {
-        private ProductRepository productRepository = new ProductRepository();
         private LineRepository lineRepository = new LineRepository();
         private RFSale RFSale;
         private Counter counter;

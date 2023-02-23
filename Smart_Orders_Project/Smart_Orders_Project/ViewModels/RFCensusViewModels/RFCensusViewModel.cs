@@ -14,10 +14,8 @@ namespace SmartMobileWMS.ViewModels
 {
     class RFCensusViewModel : BaseViewModel
     {
-        private ProductRepository productRepository = new ProductRepository();
         private CensusRepository censusRepository = new CensusRepository();
         private StorageRepository storageRepository = new StorageRepository();
-        private PositionRepository positionRepository = new PositionRepository();
         public ObservableCollection<RFCensus> RFCensusList 
         { get; } = new ObservableCollection<RFCensus>();
         public ObservableCollection<Storage> StorageCollection 
@@ -94,9 +92,9 @@ namespace SmartMobileWMS.ViewModels
             try
             {
                 RFCensusList.Clear();
-                var user = await UserRepo.GetUser();
+                var user = App.User;
                 var items = await censusRepository.GetItemsAsync(
-                    user.UserID.ToString(),Storage.Oid.ToString(),Position.Oid.ToString());
+                    user.Oid.ToString(),Storage.Oid.ToString(),Position.Oid.ToString());
                 if(items==null) return;
                 foreach (var item in items)
                     RFCensusList.Add(item);
@@ -139,7 +137,7 @@ namespace SmartMobileWMS.ViewModels
             IsBusy = true;
             try
             {
-                var user = await UserRepo.GetUser();
+                var user = App.User;
                 var item = new RFCensus
                 {
                     Oid = Guid.NewGuid(),

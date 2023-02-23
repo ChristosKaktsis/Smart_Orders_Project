@@ -13,6 +13,7 @@ namespace SmartMobileWMS.Models
         [JsonPropertyName("Κωδικός")]
         public string PositionCode { get; set; }
         public int AAPicking { get; set; }
+        [JsonPropertyName("Ποσότητα")]
         public int ItemQuantity { get; set; }
         public List<Product> Products { get; set; }
     }

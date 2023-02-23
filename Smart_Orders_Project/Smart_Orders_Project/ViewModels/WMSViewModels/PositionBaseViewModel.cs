@@ -1,8 +1,10 @@
 ﻿using SmartMobileWMS.Models;
+using SmartMobileWMS.Repositories;
 using SmartMobileWMS.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -11,29 +13,30 @@ namespace SmartMobileWMS.ViewModels
 {
     public class PositionBaseViewModel : BaseViewModel
     {
+        private StorageRepository storageRepository = new StorageRepository();
         private Storage selectedStorage;
         private string positionid, productID, errorMessage;
         private Position position;
         protected Product product;
         protected bool _IsPositionFocused, _IsProductFocused, productHasError, positionHasError;
         private int _Quantity;
-        private RepositoryPalette repositoryPalette;
+        private PaletteRepository repositoryPalette;
+        protected PositionChangeRepository positionChangeRepository = new PositionChangeRepository();
 
         public ObservableCollection<Storage> StorageList { get; set; }
         public Command LoadStorageCommand { get; set; }
-        protected RepositoryPositionChange positionChange;
         public ObservableCollection<Product> PaletteContent { get; set; }
+        public ObservableCollection<Product> Cart 
+        { get; } = new ObservableCollection<Product>();
         public PositionBaseViewModel()
         {
             InitializeModel();
             LoadStorageCommand = new Command(async () => await ExecuteLoadStorageCommand());
-            
         }
         private void InitializeModel()
         {
             StorageList = new ObservableCollection<Storage>();
-            positionChange = new RepositoryPositionChange();
-            repositoryPalette = new RepositoryPalette();
+            repositoryPalette = new PaletteRepository();
             PaletteContent = new ObservableCollection<Product>();
         }
         public void OnAppearing()
@@ -46,7 +49,7 @@ namespace SmartMobileWMS.ViewModels
             try
             {
                 StorageList.Clear();
-                var items = await RFStorageRepo.GetItemsAsync();
+                var items = await storageRepository.GetItemsAsync();
                 foreach (var item in items)
                     StorageList.Add(item);
             }
@@ -94,8 +97,7 @@ namespace SmartMobileWMS.ViewModels
             set
             {
                 SetProperty(ref product, value);
-                if (value != null)
-                    DisplayFounder = value.Name;
+                DisplayFounder = value != null? value.Name:string.Empty;
             }
         }
         public async Task SetProduct(string value)
@@ -109,7 +111,7 @@ namespace SmartMobileWMS.ViewModels
             IsBusy = true;
             try
             {
-                var item = await ProductRepo.GetItemAsync(value);
+                var item = await productRepository.GetItemAsync(value);
                 Product = item;
 
                 ProductHasError = Product == null;
@@ -128,14 +130,14 @@ namespace SmartMobileWMS.ViewModels
             bool result = false;
             try
             {
-                var item = await positionChange.GetProductFromPosition(position, product);
+                var item = await productRepository.GetItemAsync(product,position);
                 if (item == null)
                     return result;
                 result = (item.Quantity - quantity) >= 0;
             }
             catch(Exception ex)
             {
-                Console.WriteLine(ex);
+                Debug.WriteLine(ex);
             }
             return result;
         }
@@ -193,7 +195,7 @@ namespace SmartMobileWMS.ViewModels
             IsBusy = true;
             try
             {
-                var item = await RFPositionRepo.GetItemAsync(value);
+                var item = await positionRepository.GetItemAsync(value);
                 Position = item;
                 PositionHasError = Position == null;
             }
@@ -218,13 +220,23 @@ namespace SmartMobileWMS.ViewModels
         {
             try
             {
-                var result = await positionChange.PositionChange(Position, Product, Quantity, type);
-                Console.WriteLine($"Saved? {result}");
+                var item = new PositionChange
+                {
+                    Position = Position,
+                    Product = Product,
+                    Quantity = Quantity,
+                    Type = type
+                };
+                var result = await positionChangeRepository.AddItem(item);
+                Product.Quantity = Quantity;
+                Cart.Add(Product);
+                Product = null;
+                Debug.WriteLine($"Saved? {result}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
-                await Shell.Current.DisplayAlert("Προσοχή!", $"Κάτι πήγε στραβά :{ex}", "Ok");
+                Debug.WriteLine(ex);
+                await Shell.Current.DisplayAlert("", $"Η ενέργεια δεν πραγματοποιήθηκε", "Ok");
             }
         }
         //not good practice 
@@ -259,7 +271,7 @@ namespace SmartMobileWMS.ViewModels
             {
                 IsBusy = true;
                 ProductHasError = false;
-                var item = await repositoryPalette.GetPalette(sscc);
+                var item = await repositoryPalette.GetItemAsync(sscc);
                 if (ProductHasError = item == null)
                 {
                     ErrorMessage = "Η παλέτα δεν βρέθηκε";
@@ -275,7 +287,7 @@ namespace SmartMobileWMS.ViewModels
                 IsBusy = false;
             }
         }
-        public async Task LoadContent()
+        public void LoadContent()
         {
             try
             {
@@ -283,13 +295,13 @@ namespace SmartMobileWMS.ViewModels
                 if (Palette == null)
                     return;
                 PaletteContent.Clear();
-                var items = await repositoryPalette.GetPaletteContent(Palette.Oid.ToString());
+                var items = Palette.Products;
                 foreach (var item in items)
                     PaletteContent.Add(item);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                Debug.WriteLine(ex);
             }
             finally
             {
@@ -302,16 +314,23 @@ namespace SmartMobileWMS.ViewModels
             {
                 foreach(var item in PaletteContent)
                 {
-                    var result = await positionChange.PositionChange(Position, item, item.Quantity, type, palette:Palette);
-                    Console.WriteLine($"Saved? {result}");
+                    var pChange = new PositionChange
+                    {
+                        Position = Position,
+                        Product = item,
+                        Quantity = item.Quantity,
+                        Type = type,
+                        Palette = Palette
+                    };
+                    var result = await positionChangeRepository.AddItem(pChange);
+                    Debug.WriteLine($"Saved? {result}");
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
-                await Shell.Current.DisplayAlert("Προσοχή!", $"Κάτι πήγε στραβά :{ex}", "Ok");
+                Debug.WriteLine(ex);
+                await Shell.Current.DisplayAlert("", $"Η ενέργεια δεν πραγματοποιήθηκε", "Ok");
             }
-
         }
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -75,7 +76,7 @@ namespace SmartMobileWMS.ViewModels
             IsBusy = true;
             try
             {
-                PositionTo = await RFPositionRepo.GetItemAsync(value);
+                PositionTo = await positionRepository.GetItemAsync(value);
                 PositionHasError = PositionTo == null;
             }
             catch (Exception ex)
@@ -113,17 +114,34 @@ namespace SmartMobileWMS.ViewModels
                 if (!Positions_Are_Set())
                     return;
                 foreach (var item in ProductList)
-                    await positionChange.PositionChange(Position, item, item.Quantity, 1);
+                {
+                    var pChange = new PositionChange
+                    {
+                        Position = Position,
+                        Product = item,
+                        Quantity = item.Quantity,
+                        Type = 1,
+                    };
+                    var result = await positionChangeRepository.AddItem(pChange);
+                }
                 //move to positionTo
                 foreach (var item in ProductList)
-                    await positionChange.PositionChange(PositionTo, item, item.Quantity, 0);
-
+                {
+                    var pChange = new PositionChange
+                    {
+                        Position = PositionTo,
+                        Product = item,
+                        Quantity = item.Quantity,
+                        Type = 0,
+                    };
+                    var result = await positionChangeRepository.AddItem(pChange);
+                }
                 ProductList.Clear();
             }
             catch(Exception ex)
             {
-                Console.WriteLine(ex);
-                await AppShell.Current.DisplayAlert("Σφάλμα", $"MoveToPosition : {ex}", "Ok");
+                Debug.WriteLine(ex);
+                await Shell.Current.DisplayAlert("", $"Η ενέργεια δεν πραγματοποιήθηκε", "Ok");
             }
             finally
             {
@@ -139,11 +157,30 @@ namespace SmartMobileWMS.ViewModels
                 if (!Positions_Are_Set())
                     return;
                 foreach (var item in PaletteContent)
-                    await positionChange.PositionChange(Position, item, item.Quantity, 1,palette:Palette);
+                {
+                    var pChange = new PositionChange
+                    {
+                        Position = Position,
+                        Product = item,
+                        Quantity = item.Quantity,
+                        Type = 1,
+                        Palette = Palette
+                    };
+                    var result = await positionChangeRepository.AddItem(pChange);
+                }
                 //move to positionTo
                 foreach (var item in PaletteContent)
-                    await positionChange.PositionChange(PositionTo, item, item.Quantity, 0, palette: Palette);
-
+                {
+                    var pChange = new PositionChange
+                    {
+                        Position = PositionTo,
+                        Product = item,
+                        Quantity = item.Quantity,
+                        Type = 0,
+                        Palette = Palette
+                    };
+                    var result = await positionChangeRepository.AddItem(pChange);
+                }
                 PaletteContent.Clear();
             }
             catch (Exception ex)

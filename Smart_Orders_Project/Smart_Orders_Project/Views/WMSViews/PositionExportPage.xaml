@@ -8,9 +8,11 @@
              xmlns:model="clr-namespace:SmartMobileWMS.Models"
              x:Class="SmartMobileWMS.Views.PositionExportPage"
              Title="Εξαγωγή απο Θέση">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Cart" Clicked="ToolbarItem_Clicked" IconImageSource="cart.png"/>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout x:DataType="vm:PositionBaseViewModel" Margin="11" Spacing="30" >
-            
             <dxp:DXPopup x:Name="SpacePopUp"
                          AllowScrim="True"
                          ScrimColor="{StaticResource BackGroundDarkTranc}">
@@ -59,8 +61,52 @@
                 </StackLayout>
                 
             </dxp:DXPopup>
-            
-            
+            <dxp:DXPopup x:Name="CartPopUp"
+                         AllowScrim="True"
+                         ScrimColor="{StaticResource BackGroundDarkTranc}">
+                <StackLayout BackgroundColor="AliceBlue">
+                    <Frame>
+                        <Label Text="Ενέργειες" FontAttributes="Bold" FontSize="20"/>
+                    </Frame>
+                    <Frame>
+                        <StackLayout>
+                            <dxcv:DXCollectionView ItemsSource="{Binding Cart}">
+                                <dxcv:DXCollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid x:DataType="model:Product">
+                                            <Frame Padding="6" Margin="0,0,0,1">
+                                                <StackLayout Orientation="Horizontal">
+                                                    <Label Text="{Binding CodeDisplay}" FontAttributes="Bold"
+                                   HorizontalOptions="Center"/>
+                                                    <Label Text="{Binding Name}" 
+                                   WidthRequest="150" HeightRequest="33"
+                                       HorizontalOptions="Center"/>
+                                                    <StackLayout HorizontalOptions="EndAndExpand">
+                                                        <dxe:NumericEdit Value="{Binding Quantity}"
+                                                         IsReadOnly="True"
+                                                         SelectValueOnFocus="True"
+                                             WidthRequest="45" HeightRequest="30"
+                                             HorizontalOptions="EndAndExpand"/>
+                                                    </StackLayout>
+                                                </StackLayout>
+                                            </Frame>
+                                        </Grid>
+                                    </DataTemplate>
+                                </dxcv:DXCollectionView.ItemTemplate>
+                                <!--Sort items.-->
+                                <dxcv:DXCollectionView.SortDescriptions>
+                                    <dxcv:SortDescription SortOrder="Descending"/>
+                                </dxcv:DXCollectionView.SortDescriptions>
+                            </dxcv:DXCollectionView>
+                        </StackLayout>
+                    </Frame>
+                    <Frame>
+                        <StackLayout Orientation="Horizontal">
+                            <Button Text="Close" Clicked="ToolbarItem_Clicked" HorizontalOptions="EndAndExpand" CornerRadius="10"/>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+            </dxp:DXPopup>
             <Grid RowSpacing="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50"/>
@@ -124,7 +170,12 @@
                                      TextFontSize="24"/>
                     
                 </StackLayout>
-                <Button x:Name="Done_button" Clicked="Done_button_Clicked" Grid.Row="8" Grid.Column="1" Text="Done" HeightRequest="80" HorizontalOptions="EndAndExpand" FontSize="Body" CornerRadius="10"/>
+                <Button x:Name="Done_button"
+                        Clicked="Done_button_Clicked" 
+                        Grid.Row="8" Grid.Column="1"  
+                        TextTransform="None"
+                        Text="Εξαγωγή" 
+                        HeightRequest="80" HorizontalOptions="EndAndExpand" FontSize="Body" CornerRadius="10"/>
             </Grid>
             
         </StackLayout>

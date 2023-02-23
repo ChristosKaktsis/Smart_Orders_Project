@@ -59,6 +59,7 @@ namespace SmartMobileWMS.Models
         public string UnitOfMeasure { get; set; }
         //nonPressistant
         int _quantity;
+        [JsonPropertyName("Ποσότητα")]
         public int Quantity 
         { 
             get => _quantity; 

@@ -57,8 +57,6 @@ namespace SmartMobileWMS.Views
             if (!_viewModel.ColCommandList.Any())
                 await DisplayAlert(
                     "Προσοχή", "Δεν βρέθηκε εντολή συλλογής με αυτό το παραστατικό", "ΟΚ");
-            else
-                await _viewModel.LoadCustomer();
         }
 
         private void StartScan_Button_Clicked(object sender, EventArgs e)
@@ -98,7 +96,7 @@ namespace SmartMobileWMS.Views
             _viewModel.FoundProduct = null;
             _viewModel.DisplayFounder = string.Empty;
             await _viewModel.FindPalette(Product_text.Text);
-            await _viewModel.LoadContent();
+            _viewModel.LoadContent();
             if (Product_text.HasError = !_viewModel.IsPaletteValid())
             {
                 await DisplayAlert("Προσοχή", "Η παλέτα δεν ακολουθεί την εντολή συλλογής", "Οκ");

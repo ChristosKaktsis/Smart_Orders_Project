@@ -62,23 +62,17 @@ namespace SmartMobileWMS.Views
         private async void CheckDoc_button_Clicked(object sender, EventArgs e)
         {
             OpenPopUp();
-            
-            await _viewModel.LoadProducts();
+            await _viewModel.LoadDoc();
             if(!_viewModel.ProductList.Any())
             {
-                await DisplayAlert("Προσοχή", "Το παραστατικό δεν βρέθηκε", "Οκ");
+                await DisplayAlert("", "Το παραστατικό δεν βρέθηκε", "Οκ");
                 StartScan_Button.IsEnabled = false;
                 Save_button.IsVisible = false;
                 _viewModel.Customer = null;
+                return;
             }
-            else
-            {
-                await _viewModel.LoadCustomer();
-                StartScan_Button.IsEnabled = true;
-                Save_button.IsVisible = true;
-            }
-
-           
+            StartScan_Button.IsEnabled = true;
+            Save_button.IsVisible = true;
         }
         private void OpenPopUp_Button_Clicked(object sender, EventArgs e)
         {
@@ -145,7 +139,7 @@ namespace SmartMobileWMS.Views
         private async Task LoadPalette()
         {
             await _viewModel.FindPalette(_viewModel.ProductID);
-            await _viewModel.LoadContent();
+            _viewModel.LoadContent();
         }
         private void Done_button_Clicked(object sender, EventArgs e)
         {

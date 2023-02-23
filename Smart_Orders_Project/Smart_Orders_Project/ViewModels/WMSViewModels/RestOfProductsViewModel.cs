@@ -27,7 +27,7 @@ namespace SmartMobileWMS.ViewModels
                     return;
                 IsBusy = true;
                 PositionList.Clear();
-                var items = await positionChange.GetPositionsFromProduct(Product.CodeDisplay);
+                var items = await positionRepository.GetItemsAsync(Product.CodeDisplay);
                 foreach (var item in items)
                     AddItemToList(item);
             }

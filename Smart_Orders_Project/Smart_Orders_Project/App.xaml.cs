@@ -1,5 +1,6 @@
 ﻿using SmartMobileWMS.Constants;
 using SmartMobileWMS.Data;
+using SmartMobileWMS.Models;
 using SmartMobileWMS.Services;
 using System;
 using Xamarin.Forms;
@@ -8,33 +9,7 @@ namespace SmartMobileWMS
 {
     public partial class App : Application
     {
-        static FakeData database;
-
-        // Create the database connection as a singleton.
-        public static FakeData Database
-        {
-            get
-            {
-                if (database == null)
-                {
-                    database = new FakeData();
-                }
-                return database;
-            }
-        }
-        static Database _database;
-
-        public static Database _Database
-        {
-            get
-            {
-                if (_database == null)
-                {
-                    _database = new Database(ConnectionStrings.ConnectionString);
-                }
-                return _database;
-            }
-        }
+        public static User User { get; set; }
         public App()
         {
             DevExpress.XamarinForms.Editors.Initializer.Init();
@@ -42,10 +17,6 @@ namespace SmartMobileWMS
             DevExpress.XamarinForms.Popup.Initializer.Init();
             InitializeComponent();
 
-            DependencyService.Register<RepositoryItems>();
-            DependencyService.Register<RepositoryRFStorage>();
-            DependencyService.Register<RepositoryRFPosition>();
-            DependencyService.Register<RepositoryUser>();
             DependencyService.Register<RepositoryBrand>();
             DependencyService.Register<RepositoryManufacturer>();
             DependencyService.Register<RepositoryTreeGrouping>();

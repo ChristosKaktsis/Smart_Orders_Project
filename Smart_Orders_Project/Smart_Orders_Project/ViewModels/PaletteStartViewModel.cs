@@ -1,7 +1,9 @@
 ﻿using SmartMobileWMS.Models;
+using SmartMobileWMS.Repositories;
 using SmartMobileWMS.Services;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,7 +11,7 @@ namespace SmartMobileWMS.ViewModels
 {
     public class PaletteStartViewModel : BaseViewModel
     {
-        private RepositoryPalette repository;
+        private PaletteRepository repository = new PaletteRepository();
         private bool haserror;
         private string errorText;
         private Palette palette;
@@ -17,7 +19,6 @@ namespace SmartMobileWMS.ViewModels
 
         public PaletteStartViewModel()
         {
-            repository = new RepositoryPalette();
         }
         public Palette Palette 
         { 
@@ -44,7 +45,7 @@ namespace SmartMobileWMS.ViewModels
             {
                 IsBusy = true;
                 HasError = false;
-                var item = await repository.GetPalette(sscc);
+                var item = await repository.GetItemAsync(sscc);
                 if(HasError = item == null)
                 {
                     ErrorText = "Η παλέτα δεν βρέθηκε";
@@ -53,7 +54,7 @@ namespace SmartMobileWMS.ViewModels
             }
             catch(Exception ex)
             {
-                Console.WriteLine(ex);
+                Debug.WriteLine(ex);
             }
             finally
             {
@@ -70,12 +71,12 @@ namespace SmartMobileWMS.ViewModels
             try 
             { 
                 IsBusy = true;
-                var result = await repository.DeletePaletteContent(Palette);
-                Console.WriteLine($"Is Content Deleted?{result}");
+                var result = await repository.DeleteItem(Palette);
+                Debug.WriteLine($"Is Content Deleted?{result}");
             }
             catch(Exception ex)
             {
-                Console.WriteLine(ex);
+                Debug.WriteLine(ex);
             }
             finally
             {

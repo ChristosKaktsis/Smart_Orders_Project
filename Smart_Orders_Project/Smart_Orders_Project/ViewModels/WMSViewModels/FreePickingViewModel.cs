@@ -1,18 +1,20 @@
 ﻿using SmartMobileWMS.Models;
+using SmartMobileWMS.Repositories;
 using SmartMobileWMS.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms.Internals;
 
 namespace SmartMobileWMS.ViewModels
 {
     public class FreePickingViewModel : PositionBaseViewModel
     {
-        private RepositoryItems repositoryProduct;
         private string customerName;
         private Customer customer;
         private string quantity_Text;
@@ -28,7 +30,6 @@ namespace SmartMobileWMS.ViewModels
 
         private void InitializeModel()
         {
-            repositoryProduct = new RepositoryItems();
             ProductList = new BindingList<Product>();
             Positions = new List<Position>();
             LessProducts = new ObservableCollection<Product>();
@@ -58,45 +59,37 @@ namespace SmartMobileWMS.ViewModels
             get => customerName;
             set => SetProperty(ref customerName, value);
         }
-        public async Task LoadCustomer()
+        public async Task LoadDoc()
         {
             try
             {
                 IsBusy = true;
                 Customer = null;
-                RepositorySalesDoc repositorySales = new RepositorySalesDoc();
-                var doc = await repositorySales.getSalesDoc(SalesDoc);
+                SalesDocRepository repositorySales = new SalesDocRepository();
+                var doc = await repositorySales.GetItemAsync(SalesDoc);
                 if (doc == null)
                     return;
-                Customer = await CustomerRepo.GetItemAsync(doc.Customer.Oid.ToString());
+                Customer = doc.Customer;
+                AddProducts(doc);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                Debug.WriteLine(ex);
             }
             finally
             {
                 IsBusy = false;
             }
         }
-        public async Task LoadProducts()
+        private void AddProducts(SalesDoc doc)
         {
-            try
+            if(doc == null) return;
+            if(doc.Products == null) return;
+            ProductList.Clear();
+            doc.Products.ForEach(item =>
             {
-                IsBusy = true;
-                var items = await repositoryProduct.GetProductsFromSalesDoc(SalesDoc);
-                ProductList.Clear();
-                foreach (var item in items)
-                    ProductList.Add(item);
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-            finally
-            {
-                IsBusy = false;
-            }
+                ProductList.Add(item);
+            });
         }
         public void AddFoundProductToList()
         {
@@ -212,14 +205,22 @@ namespace SmartMobileWMS.ViewModels
                 var isSaved = await SaveManagement();
                 if (!isSaved)
                 {
-                    Console.WriteLine("Management did not saved");
+                    Debug.WriteLine("Management did not saved");
                     return;
                 }
                 foreach(var position in Positions)
                     foreach (var item in position.Products)
                     {
-                        var ispSaved = await positionChange.PositionChange(position, item, item.Quantity, 1, Management);
-                        Console.WriteLine($"Position Saved ? {ispSaved}");
+                        var pChange = new PositionChange
+                        {
+                            Position = position,
+                            Product = item,
+                            Quantity = item.Quantity,
+                            Type = 1,
+                            Management = Management
+                        };
+                        var ispSaved = await positionChangeRepository.AddItem(pChange);
+                        Debug.WriteLine($"Position Saved ? {ispSaved}");
                     }
                 //clear saves
                 Positions.Clear();
@@ -239,7 +240,7 @@ namespace SmartMobileWMS.ViewModels
         private Management Management { get; set; }
         private async Task<bool> SaveManagement()
         {
-            RepositoryManagement repositoryManagement = new RepositoryManagement();
+            ManagementRepository repositoryManagement = new ManagementRepository();
             Management = new Management
             {
                 Oid = Guid.NewGuid(),
@@ -247,7 +248,7 @@ namespace SmartMobileWMS.ViewModels
                 Customer = this.Customer,
                 Type = 2
             };
-            var result = await repositoryManagement.AddManagement(Management);
+            var result = await repositoryManagement.AddItem(Management);
             return result;
         }
     }

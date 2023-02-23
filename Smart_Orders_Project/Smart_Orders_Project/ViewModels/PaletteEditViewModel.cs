@@ -1,10 +1,10 @@
 ﻿using SmartMobileWMS.Models;
+using SmartMobileWMS.Repositories;
 using SmartMobileWMS.Services;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SmartMobileWMS.ViewModels
@@ -13,7 +13,7 @@ namespace SmartMobileWMS.ViewModels
     {
         private bool hasError;
         public ObservableCollection<Product> ProductCollection { get; set; }
-        public RepositoryPalette repository;
+        public PaletteRepository repository= new PaletteRepository();
         private Palette palette;
         private Product toDelete;
 
@@ -26,11 +26,9 @@ namespace SmartMobileWMS.ViewModels
         private void InitializeModel()
         {
             ProductCollection = new ObservableCollection<Product>();
-            repository = new RepositoryPalette();
-            
         }
         public Palette Palette { get => palette; set => SetProperty(ref palette, value); }
-        public async Task LoadContent()
+        public void LoadContent()
         {
             try
             {
@@ -38,13 +36,12 @@ namespace SmartMobileWMS.ViewModels
                 if (Palette == null)
                     return;
                 ProductCollection.Clear();
-                var items = await repository.GetPaletteContent(Palette.Oid.ToString());
-                foreach (var item in items)
+                foreach (var item in Palette.Products)
                     ProductCollection.Add(item);
             }
             catch(Exception ex)
             {
-                Console.WriteLine(ex);
+                Debug.WriteLine(ex);
             }
             finally
             {
@@ -68,7 +65,7 @@ namespace SmartMobileWMS.ViewModels
             {
                 IsBusy = true;
                 HasError = false;
-                var item = await ProductRepo.GetItemAsync(id);
+                var item = await productRepository.GetItemAsync(id);
                 if (item != null)
                 {
                     item.Quantity++;
@@ -98,13 +95,13 @@ namespace SmartMobileWMS.ViewModels
             try
             {
                 IsBusy = true;
-                await repository.DeletePaletteContent(Palette);
-                foreach (var item in ProductCollection)
-                    await repository.PostPaletteItem(Palette,item);
+                await repository.DeleteItem(Palette);
+                Palette.Products = ProductCollection;
+                await repository.UpdateItem(Palette);
             }
             catch(Exception ex)
             {
-                Console.WriteLine(ex);
+                Debug.WriteLine(ex);
             }
             finally
             {

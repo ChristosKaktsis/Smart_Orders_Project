@@ -52,7 +52,7 @@ namespace SmartMobileWMS.Views
         private async void GoForPalette()
         {
             await _viewModel.FindPalette(_viewModel.ProductID);
-            await _viewModel.LoadContent();
+            _viewModel.LoadContent();
             if (_viewModel.IsQuickOn) SavePalette();
         }
         private async void GoForProduct()
@@ -91,6 +91,11 @@ namespace SmartMobileWMS.Views
         private void OpenPopUp_Button(object sender, EventArgs e)
         {
             OpenPopUp();
+        }
+
+        private void ToolbarItem_Clicked(object sender, EventArgs e)
+        {
+            CartPopUp.IsOpen = !CartPopUp.IsOpen;
         }
     }
 }

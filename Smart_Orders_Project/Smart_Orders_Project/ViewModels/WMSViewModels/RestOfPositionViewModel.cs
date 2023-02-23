@@ -6,6 +6,8 @@ using SmartMobileWMS.Models;
 using SmartMobileWMS.Services;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using SmartMobileWMS.Repositories;
+using System.Diagnostics;
 
 namespace SmartMobileWMS.ViewModels
 {
@@ -41,12 +43,10 @@ namespace SmartMobileWMS.ViewModels
 
             }
         }
-
-        private RepositoryPositionChange repositoryPosition;
         private Position position;
         private string errorMessage;
         private bool positionHasError;
-
+        private PositionChangeRepository positionChangeRepository = new PositionChangeRepository();
         public RestOfPositionViewModel()
         {
             InitializeModel();
@@ -55,7 +55,6 @@ namespace SmartMobileWMS.ViewModels
         private void InitializeModel()
         {
             ProductList = new ObservableCollection<Product>();
-            repositoryPosition = new RepositoryPositionChange();
             EmptyPositionCommand = new Command(async () => await EmptyPosition());
         }
         public async Task LoadPosition(string id)
@@ -65,12 +64,12 @@ namespace SmartMobileWMS.ViewModels
                 if (string.IsNullOrWhiteSpace(id))
                     return;
                 IsBusy = true;
-                Position = await RFPositionRepo.GetItemAsync(id);
+                Position = await positionRepository.GetItemAsync(id);
                 
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                Debug.WriteLine(ex);
                 PositionHasError = true;
             }
             finally
@@ -86,15 +85,14 @@ namespace SmartMobileWMS.ViewModels
                     return;
                 IsBusy = true;
                 ProductList.Clear();
-                var items = await repositoryPosition.GetProductsFromList(position.Oid.ToString());
-
+                var items = await productRepository.GetItemsAsync(position.Oid.ToString());
+                if (items == null) return;
                 foreach (var item in items)
                     AddItemToList(item);
-
             }
             catch(Exception ex)
             {
-                Console.WriteLine(ex);
+                Debug.WriteLine(ex);
             }
             finally
             {
@@ -113,26 +111,51 @@ namespace SmartMobileWMS.ViewModels
         {
             if (Position == null)
                 return;
+            if (!await Continue()) return;
             try
             {
                 IsBusy = true;
                 foreach (var item in ProductList)
                 {
+                    PositionChange positionChange = null;
                     if (item.Quantity > 0)
-                        await repositoryPosition.PositionChange(Position, item, item.Quantity, 1);
+                    {
+                        positionChange = new PositionChange
+                        {
+                            Position = Position,
+                            Product = item,
+                            Quantity = item.Quantity,
+                            Type = 1,
+                        };
+                    }
                     else if (item.Quantity < 0)
-                        await repositoryPosition.PositionChange(Position, item, item.Quantity * -1, 0);
+                    {
+                        positionChange = new PositionChange
+                        {
+                            Position = Position,
+                            Product = item,
+                            Quantity = item.Quantity * -1,
+                            Type = 0,
+                        };
+                    }
+                    var result = await positionChangeRepository.AddItem(positionChange);
                     item.Quantity = 0;
                 }
             }
             catch(Exception ex)
             {
-                Console.WriteLine(ex);
+                Debug.WriteLine(ex);
+                await Shell.Current.DisplayAlert("", $"Η ενέργεια δεν πραγματοποιήθηκε", "Ok");
             }
             finally
             {
                 IsBusy = false;
             }
         }
+
+        private async Task<bool> Continue() => await Shell.Current.DisplayAlert(
+            "Θέλετε να μηδενίσετε τις τιμές των ειδών ?"
+            , $"Οι τιμές τω ειδών στη συγκεκριμένη θέση θα μηδενιστούν"
+            ,"Μηδενισμός","Άκυρο");
     }
 }

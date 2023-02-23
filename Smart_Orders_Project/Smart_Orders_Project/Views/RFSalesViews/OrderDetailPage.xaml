@@ -76,6 +76,8 @@
     <RefreshView x:DataType="vm:OrdersDetailViewModel" >
         <Grid>
             <StackLayout>
+                <Button IsVisible="true" HeightRequest="1" BackgroundColor="Transparent"/>
+
                 <Frame BackgroundColor="Transparent" Padding="2" Margin="10,10,10,0" BorderColor="Black">
                     <Button Text="{Binding DisplayCustomer,Mode=OneWay}" TextColor="Black" TextTransform="None" HeightRequest="40"
                             BackgroundColor="White" 

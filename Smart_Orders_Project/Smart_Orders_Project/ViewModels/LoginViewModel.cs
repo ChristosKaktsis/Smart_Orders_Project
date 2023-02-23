@@ -1,4 +1,5 @@
-﻿using SmartMobileWMS.Views;
+﻿using SmartMobileWMS.Repositories;
+using SmartMobileWMS.Views;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,6 +13,7 @@ namespace SmartMobileWMS.ViewModels
         private string _userName;
         private string _password;
 
+        private UserRepository userRepository = new UserRepository();
         public Command LoginCommand { get; }
         public Command ConnectionCommand { get; }
 
@@ -41,22 +43,21 @@ namespace SmartMobileWMS.ViewModels
             try
             {
                 IsBusy = true;
-                // Prefixing with `//` switches to a different navigation stack instead of pushing to the active one
-                var u = await UserRepo.GetUserFromDB(UserName, Password);
-                var user = await UserRepo.GetUser();
+                var user = await userRepository.GetItemAsync(UserName,Password);
                 if (user == null)
                 {
-                    await Shell.Current.DisplayAlert("Προσοχή!","Λάθος όνομα χρήστη", "Οκ");
+                    await Shell.Current.DisplayAlert("","Λάθος όνομα χρήστη", "Οκ");
                     Debug.WriteLine("Wrong Log In");
                     return;
                 }
                 UserString = user.UserName;
+                App.User = user;
                 await Shell.Current.GoToAsync($"//{nameof(MainMenu)}");
             }
             catch (Exception Ex)
             {
                 Debug.WriteLine(Ex);
-                await Shell.Current.DisplayAlert("Προσοχή!", "Κάτι πήγε λάθος στην σύδεση \n"+Ex.Message, "Οκ");
+                await Shell.Current.DisplayAlert("", "Κάτι πήγε λάθος στην σύδεση \n"+Ex.Message, "Οκ");
             }
             finally
             {
