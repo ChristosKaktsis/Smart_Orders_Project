@@ -1,4 +1,5 @@
-﻿using SmartMobileWMS.Models;
+﻿using SmartMobileWMS.Constants;
+using SmartMobileWMS.Models;
 using SmartMobileWMS.Repositories;
 using SmartMobileWMS.Services;
 using System;
@@ -245,10 +246,9 @@ namespace SmartMobileWMS.ViewModels
         private string displayFounder;
         public bool IsPalette(string productID)
         {
-            string pnumber = SSCC;
             if (string.IsNullOrWhiteSpace(productID))
                 return false;
-            return productID.StartsWith(pnumber);
+            return productID.Length >= SSCCDigits;
         }
         public Palette Palette
         {
@@ -271,7 +271,7 @@ namespace SmartMobileWMS.ViewModels
             {
                 IsBusy = true;
                 ProductHasError = false;
-                var item = await repositoryPalette.GetItemAsync(sscc);
+                var item = await repositoryPalette.GetItemAsync(SSCC.GetSSCC(sscc,SSCCStart,SSCCEnd));
                 if (ProductHasError = item == null)
                 {
                     ErrorMessage = "Η παλέτα δεν βρέθηκε";
@@ -322,6 +322,7 @@ namespace SmartMobileWMS.ViewModels
                         Type = type,
                         Palette = Palette
                     };
+                    Cart.Add(item);
                     var result = await positionChangeRepository.AddItem(pChange);
                     Debug.WriteLine($"Saved? {result}");
                 }

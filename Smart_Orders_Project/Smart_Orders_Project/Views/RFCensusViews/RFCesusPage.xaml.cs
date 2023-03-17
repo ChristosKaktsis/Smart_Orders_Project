@@ -1,4 +1,5 @@
 ﻿using SmartMobileWMS.ViewModels;
+using SmartMobileWMS.Views.CustomViews;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,6 +46,14 @@ namespace SmartMobileWMS.Views
         {
             await _viewModel.GetPosition(Position_TextEdit.Text);
             Scan_Code_Edit.Focus();
+        }
+        private void ImageButton_Clicked(object sender, EventArgs e)
+        {
+            custom_popup.IsOpen = !custom_popup.IsOpen;
+        }
+        private async void custom_popup_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            await _viewModel.SearchProduct(((ProductPopup)sender).Text);
         }
     }
 }

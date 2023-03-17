@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:SmartMobileWMS.ViewModels" 
+             xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors"
+             x:Class="SmartMobileWMS.Views.ProductDetailPage"
+             Title="Πληροφορίες Είδους">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="FontSize" Value="18"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout x:DataType="vm:ProductDetailViewModel">
+            <Button IsVisible="true" HeightRequest="1" BackgroundColor="Transparent"/>
+            <Frame x:Name="Scan_Frame"  Padding="7">
+                <StackLayout Orientation="Horizontal" HeightRequest="40">
+                    <Label Text="Scan Code" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"/>
+                    <dxe:TextEdit x:Name="Scan_Code_Edit"
+                                      HorizontalOptions="EndAndExpand" WidthRequest="220"
+                                      Unfocused="Scan_Code_Edit_Unfocused"/>
+                </StackLayout>
+            </Frame>
+            <Frame>
+                <Grid>
+                    <Label Text="Περιγραφή"/>
+                    <Label Text="{Binding Name}"
+                           Grid.Column="1" HorizontalTextAlignment="End"/>
+                </Grid>
+            </Frame>
+            <Frame>
+                <Grid>
+                    <Label Text="Κωδικός"/>
+                    <Label Text="{Binding Code}" Grid.Column="1"
+                           HorizontalTextAlignment="End"/>
+                </Grid>
+            </Frame>
+            <Frame>
+                <Grid>
+                    <Label Text="Τιμή"/>
+                    <Label Text="{Binding Price,StringFormat='{0} €'}" Grid.Column="1"
+                           HorizontalTextAlignment="End"/>
+                </Grid>
+            </Frame>
+            <Frame>
+                <Grid>
+                    <Label Text="ΦΠΑ"/>
+                    <Label Text="{Binding VAT,StringFormat='{0} %'}" Grid.Column="1"
+                           HorizontalTextAlignment="End"/>
+                </Grid>
+            </Frame>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

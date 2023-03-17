@@ -129,12 +129,28 @@ namespace SmartMobileWMS.ViewModels
                 
             }
         }
-        public string SSCC
+        public int SSCCDigits
         {
-            get => Preferences.Get(nameof(SSCC), "111");
+            get => Preferences.Get(nameof(SSCCDigits), 0);
             set
             {
-                Preferences.Set(nameof(SSCC), value);
+                Preferences.Set(nameof(SSCCDigits), value);
+            }
+        }
+        public int SSCCStart
+        {
+            get => Preferences.Get(nameof(SSCCStart), 0);
+            set
+            {
+                Preferences.Set(nameof(SSCCStart), value);
+            }
+        }
+        public int SSCCEnd
+        {
+            get => Preferences.Get(nameof(SSCCEnd), 0);
+            set
+            {
+                Preferences.Set(nameof(SSCCEnd), value);
             }
         }
         public bool ZeroValues //for ypol theshs and thesis eidous

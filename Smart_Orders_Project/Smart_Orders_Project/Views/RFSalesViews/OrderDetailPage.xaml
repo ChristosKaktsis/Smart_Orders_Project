@@ -6,7 +6,7 @@
              xmlns:dxcv="http://schemas.devexpress.com/xamarin/2014/forms/collectionview" 
              xmlns:model="clr-namespace:SmartMobileWMS.Models" 
              xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors"
-             xmlns:dxp="http://schemas.devexpress.com/xamarin/2014/forms/popup" 
+             xmlns:dxp="http://schemas.devexpress.com/xamarin/2014/forms/popup" xmlns:customviews="clr-namespace:SmartMobileWMS.Views.CustomViews"
              Shell.NavBarHasShadow="False"
              Title="{Binding Title,Mode=OneWay}">
     <ContentPage.ToolbarItems>
@@ -48,17 +48,16 @@
                         <Grid x:DataType="model:LineOfOrder">
                             <Frame Padding="6" Margin="0,0,0,1">
                                 <StackLayout Orientation="Horizontal">
-                                    <Label Text="{Binding Product.CodeDisplay}" FontAttributes="Bold"
-                                   HorizontalOptions="Center"/>
-                                    <Label Text="{Binding Product.Name}" 
-                                   WidthRequest="160" HeightRequest="33"
-                                       HorizontalOptions="Center"/>
+                                    <StackLayout>
+                                        <Label Text="{Binding Product.Name}" FontSize="18"/>
+                                        <Label Text="{Binding Product.CodeDisplay}" FontAttributes="Bold"/>
+                                    </StackLayout>
                                     <StackLayout HorizontalOptions="EndAndExpand">
                                         <Label Text="{Binding Sum,StringFormat='{0} €'}" HorizontalOptions="EndAndExpand"/>
                                         <dxe:NumericEdit Value="{Binding Quantity}" SelectValueOnFocus="True"
                                              WidthRequest="60" HeightRequest="30"
                                              HorizontalOptions="EndAndExpand"
-                                                         Unfocused="NumericEdit_Unfocused"/>
+                                             Unfocused="NumericEdit_Unfocused"/>
                                     </StackLayout>
                                 </StackLayout>
                             </Frame>
@@ -93,7 +92,8 @@
                 </StackLayout>
                 <Frame x:Name="Scan_Frame"  Padding="7">
                     <StackLayout Orientation="Horizontal" HeightRequest="40">
-                        <Label Text="Scan Code" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"/>
+                        <ImageButton Source="search.png" Padding="5" BackgroundColor="White" Clicked="ImageButton_Clicked"/>
+                        <Label Text="Scan" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"/>
                         <dxe:TextEdit x:Name="Scan_Code_Edit"
                                       HorizontalOptions="EndAndExpand" WidthRequest="220"
                                       Unfocused="Scan_Code_Edit_Unfocused"/>
@@ -109,6 +109,12 @@
                     </dxcv:DXCollectionView>
                 </StackLayout>
             </StackLayout>
+            <customviews:ProductPopup x:Name="custom_popup"
+                                      AllowScrim="True" ScrimColor="{StaticResource BackGroundDarkTranc}"
+                                      TextChanged="custom_popup_TextChanged"
+                                      Products="{Binding ProductCollection}"
+                                      SelectedProduct="{Binding SelectedProduct,Mode=OneWayToSource}"
+                                      IsLoading="{Binding IsBusy,Mode=OneWay}"/>
             <dxp:DXPopup x:Name="customer_popup"
                          IsOpen="{Binding Customer_Popup_isOpen,Mode=OneWay}"
                          AllowScrim="True"

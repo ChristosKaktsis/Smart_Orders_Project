@@ -15,6 +15,8 @@ namespace SmartMobileWMS.ViewModels
         private int _ArticleToTextEdit;
         private string _SSCCTextEdit;
         private bool _ZeroValuesTextEdit;
+        private string _SSCCStartTextEdit;
+        private string _SSCCEndTextEdit;
 
         public Command LoadValuesCommand { get; set; }
         public Command SaveValuesCommand { get; set; }
@@ -30,7 +32,9 @@ namespace SmartMobileWMS.ViewModels
             Produser = ProduserTextEdit;
             ArticleFrom = ArticleFromTextEdit;
             ArticleTo = ArticleToTextEdit;
-            SSCC = SSCCTextEdit;
+            SSCCDigits = int.TryParse(SSCCTextEdit, out int d) ? d : 0;
+            SSCCStart = int.TryParse(SSCCStartTextEdit, out int s) ? s : 0;
+            SSCCEnd = int.TryParse(SSCCEndTextEdit, out int e) ? e : 0;
             ZeroValues = ZeroValuesTextEdit;
             await Shell.Current.DisplayAlert("Αποθήκευση!", "Οι αλλαγές αποθηκεύτηκαν", "Οκ");
         }
@@ -43,7 +47,9 @@ namespace SmartMobileWMS.ViewModels
                 ProduserTextEdit = Produser;
                 ArticleFromTextEdit = ArticleFrom;
                 ArticleToTextEdit = ArticleTo;
-                SSCCTextEdit = SSCC;
+                SSCCTextEdit = SSCCDigits.ToString();
+                SSCCStartTextEdit = SSCCStart.ToString();
+                SSCCEndTextEdit = SSCCEnd.ToString();
                 ZeroValuesTextEdit = ZeroValues;
             }
             catch
@@ -75,6 +81,16 @@ namespace SmartMobileWMS.ViewModels
         {
             get { return _SSCCTextEdit; }
             set { SetProperty(ref _SSCCTextEdit, value); }
+        }
+        public string SSCCStartTextEdit
+        {
+            get { return _SSCCStartTextEdit; }
+            set { SetProperty(ref _SSCCStartTextEdit, value); }
+        }
+        public string SSCCEndTextEdit
+        {
+            get { return _SSCCEndTextEdit; }
+            set { SetProperty(ref _SSCCEndTextEdit, value); }
         }
         public bool ZeroValuesTextEdit
         {

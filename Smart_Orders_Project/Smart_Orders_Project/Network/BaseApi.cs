@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace SmartMobileWMS.Network
 {
-    internal class BaseApi
+    public class BaseApi
     {
-        protected static readonly string BaseAddress = "http://192.168.3.20:7145";
-        protected static readonly string Url = $"{BaseAddress}/api/RF";
+        protected static readonly string BaseAddress = "http://192.168.3.140:5259";
+        protected static readonly string Url = $"{BaseAddress}/api";
         private static HttpClient client;
 
         protected static async Task<HttpClient> GetClient()

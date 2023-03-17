@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace SmartMobileWMS.Models
 {
-    public class MenuItem
+    public class MenuItem 
     {
         public ImageSource ImageSource { get; set; }
         public string Title { get; set; }

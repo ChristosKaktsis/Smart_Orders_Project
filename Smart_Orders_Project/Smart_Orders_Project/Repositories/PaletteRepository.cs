@@ -2,11 +2,9 @@
 using SmartMobileWMS.Models;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using ZXing;
 
 namespace SmartMobileWMS.Repositories
 {

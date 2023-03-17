@@ -1,6 +1,7 @@
 ﻿using DevExpress.XamarinForms.CollectionView;
 using SmartMobileWMS.Models;
 using SmartMobileWMS.ViewModels;
+using SmartMobileWMS.Views.CustomViews;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,6 +54,15 @@ namespace SmartMobileWMS.Views
         private void NumericEdit_Unfocused(object sender, FocusEventArgs e)
         {
             Scan_Code_Edit.Focus();
+        }
+        private void ImageButton_Clicked(object sender, EventArgs e)
+        {
+            custom_popup.IsOpen = !custom_popup.IsOpen;
+        }
+
+        private async void custom_popup_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            await _viewModel.SearchProduct(((ProductPopup)sender).Text);
         }
     }
 }

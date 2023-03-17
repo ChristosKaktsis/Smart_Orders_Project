@@ -39,5 +39,25 @@ namespace SmartMobileWMS.Repositories
             if (string.IsNullOrEmpty(result)) return null;
             return JsonSerializer.Deserialize<IEnumerable<Product>>(result);
         }
+        public async Task<IEnumerable<Product>> SearchItemsAsync(string search)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat(await GetParamAsync("getProductWithName"), search);
+            string result = await ExecuteGetMethod(sb.ToString());
+            if (string.IsNullOrEmpty(result)) return null;
+            return JsonSerializer.Deserialize<IEnumerable<Product>>(result);
+        }
+        public async Task<IEnumerable<ProductAndPosition>> GetItemsFromMovementAsync(string doc)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat(await GetParamAsync("getItemsFromMovement"), doc);
+            string result = await ExecuteGetMethod(sb.ToString());
+            if (string.IsNullOrEmpty(result)) return null;
+            return JsonSerializer.Deserialize<IEnumerable<ProductAndPosition>>(result);
+        }
+    }
+    public class ProductAndPosition : Product
+    {
+        public Position Position { get; set; }
     }
 }

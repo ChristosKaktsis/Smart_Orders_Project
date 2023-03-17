@@ -132,17 +132,17 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="DevExpress.Persistent.BaseImpl.EF6">
+      <Version>22.2.4</Version>
+    </PackageReference>
     <PackageReference Include="DevExpress.XamarinForms.CollectionView">
       <Version>22.1.6</Version>
     </PackageReference>
     <PackageReference Include="DevExpress.XamarinForms.Editors">
       <Version>22.1.6</Version>
     </PackageReference>
-    <PackageReference Include="DevExpress.XamarinForms.Grid">
-      <Version>22.1.6</Version>
-    </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2515" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.7.3" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2578" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.5" />
     <PackageReference Include="ZXing.Net.Mobile.Forms">
       <Version>3.1.0-beta2</Version>
     </PackageReference>

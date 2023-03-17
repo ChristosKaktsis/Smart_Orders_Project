@@ -1,5 +1,6 @@
 ﻿using SmartMobileWMS.Views;
 using System.Collections.Generic;
+using System.Linq;
 using Xamarin.Forms;
 using MenuItem = SmartMobileWMS.Models.MenuItem;
 
@@ -72,13 +73,25 @@ namespace SmartMobileWMS.Data
                 },
                 new MenuItem
                 {
+                    Title = "Είδος",
+                    ImageSource = "product.png",
+                    Action = new Command(async () => await Shell.Current.Navigation.PushAsync(new ProductDetailPage()))
+                },
+                new MenuItem
+                {
                     Title = "Παλετοποίηση",
                     ImageSource = "palette.png",
                     Action = new Command(async () => await Shell.Current.Navigation.PushAsync(new PaletteStartPage()))
                 },
                 new MenuItem
                 {
-                    Title = "SelectTrainingPage",
+                    Title = "Καλάθι",
+                    ImageSource = "shopcart.png",
+                    Action = new Command(async () => await Shell.Current.Navigation.PushAsync(new CartPage()))
+                },
+                new MenuItem
+                {
+                    Title = "Εκμάθηση",
                     ImageSource = "palette.png",
                     Action = new Command(async () => await Shell.Current.Navigation.PushAsync(new SelectTrainingPage()))
                 },

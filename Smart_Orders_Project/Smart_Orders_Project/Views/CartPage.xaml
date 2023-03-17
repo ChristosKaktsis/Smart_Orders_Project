@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:SmartMobileWMS.ViewModels" 
+             xmlns:dxcv="http://schemas.devexpress.com/xamarin/2014/forms/collectionview" 
+             xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors"
+             xmlns:dxp="http://schemas.devexpress.com/xamarin/2014/forms/popup" 
+             xmlns:model="clr-namespace:SmartMobileWMS.Models"
+             x:Class="SmartMobileWMS.Views.CartPage"
+             Title = "Καλάθι">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="StorageCollectionTemplate">
+                <Frame CornerRadius="5" Margin="5" Padding="10" 
+                       BorderColor="{StaticResource PrimaryLight}">
+                    <Grid x:DataType="model:Storage">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20"/>
+                        </Grid.RowDefinitions>
+                        <Label Text="{Binding Description}"/>
+                    </Grid>
+                </Frame>
+            </DataTemplate>
+            <DataTemplate x:Key="StorageCollectionSelectedTemplate">
+                <Frame CornerRadius="5" Margin="5" Padding="10"
+                       BorderColor="{StaticResource PrimaryLight}" BackgroundColor="{StaticResource PrimaryLight}">
+                    <Grid x:DataType="model:Storage">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20"/>
+                        </Grid.RowDefinitions>
+                        <Label Text="{Binding Description}"/>
+                    </Grid>
+                </Frame>
+            </DataTemplate>
+            <DataTemplate x:Key="Product_template">
+                <dxcv:SwipeContainer>
+                    <dxcv:SwipeContainer.ItemView>
+                        <Grid x:DataType="model:PositionChange">
+                            <Frame Padding="6" Margin="0,0,0,1">
+                                <StackLayout>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{Binding Product.CodeDisplay}" FontAttributes="Bold"
+                                   HorizontalOptions="Center"/>
+                                        <Label Text="{Binding Product.Name}" 
+                                   WidthRequest="160" HeightRequest="33"
+                                       HorizontalOptions="Center"/>
+                                        <StackLayout HorizontalOptions="EndAndExpand">
+                                            <dxe:NumericEdit Value="{Binding Quantity}"
+                                                         SelectValueOnFocus="True"
+                                             WidthRequest="60" HeightRequest="30"
+                                             HorizontalOptions="EndAndExpand"/>
+                                        </StackLayout>
+                                    </StackLayout>
+                                    <Label Text="{Binding Position.Description}"/>
+                                </StackLayout>
+                            </Frame>
+                        </Grid>
+                    </dxcv:SwipeContainer.ItemView>
+                    <dxcv:SwipeContainer.StartSwipeItems>
+                        <dxcv:SwipeItem Caption="Delete"
+                                   BackgroundColor="{StaticResource TradicLight}"
+                                   Invoked="SwipeItem_Invoked"/>
+                    </dxcv:SwipeContainer.StartSwipeItems>
+                </dxcv:SwipeContainer>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <StackLayout>
+                <Button IsVisible="true" HeightRequest="1" BackgroundColor="Transparent"/>
+                <Frame BackgroundColor="Transparent" Padding="2" Margin="10,10,10,0" BorderColor="Black">
+                    <Button Text="{Binding DisplayStorage}" TextColor="Black" TextTransform="None" HeightRequest="40"
+                            BackgroundColor="White" 
+                            Command="{Binding OpenPopUp}"/>
+                </Frame>
+                <dxe:TextEdit x:Name="Position_TextEdit" LabelText="Θέση" Margin="10,0,10,0"
+                              HeightRequest="50"
+                              Unfocused="Position_TextEdit_Unfocused"/>
+                <Frame x:Name="Scan_Frame"  Padding="7">
+                    <StackLayout Orientation="Horizontal" HeightRequest="40">
+                        <Label Text="Scan Code" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"/>
+                        <dxe:TextEdit x:Name="Scan_Code_Edit"
+                                      HorizontalOptions="EndAndExpand" WidthRequest="220"
+                                      Unfocused="Scan_Code_Edit_Unfocused"/>
+                    </StackLayout>
+                </Frame>
+                <dxcv:DXCollectionView x:Name="OrdersList" 
+                                       SelectionMode="None" 
+                                       ItemsSource="{Binding ProductCollection}"
+                                       ItemTemplate="{StaticResource Product_template}">
+                    <!--Sort items.-->
+                    <dxcv:DXCollectionView.SortDescriptions>
+                        <dxcv:SortDescription SortOrder="Descending"/>
+                    </dxcv:DXCollectionView.SortDescriptions>
+                </dxcv:DXCollectionView>
+            </StackLayout>
+            <dxp:DXPopup x:Name="storage_popup"
+                         IsOpen="{Binding Popup_isOpen,Mode=OneWay}"
+                         AllowScrim="True"
+                         ScrimColor="{StaticResource BackGroundDarkTranc}">
+                <Frame Padding="20" CornerRadius="0"
+                       WidthRequest="340" 
+                       BackgroundColor="White">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="360"/>
+                            <RowDefinition Height="60"/>
+                        </Grid.RowDefinitions>
+                        <Label Text="{Binding DisplayStorage,Mode=OneWay}" FontSize="20" FontAttributes="Bold"/>
+                        <dxcv:DXCollectionView x:Name="storageCollection" 
+                                                   ItemsSource="{Binding StorageCollection}"
+                                                   ItemTemplate="{StaticResource StorageCollectionTemplate}"
+                                                   SelectedItemTemplate="{StaticResource StorageCollectionSelectedTemplate}"
+                                                   SelectedItem="{Binding Storage,Mode=TwoWay}" SelectionMode="Single"
+                                                   Grid.Row="2"/>
+                        <Button Text="Κλείσιμο"
+                                    Grid.Row="3"
+                                    CornerRadius="5"
+                                    HorizontalOptions="Center"
+                                    Command="{Binding OpenPopUp}"/>
+                        <ActivityIndicator IsRunning="{Binding IsBusy}"/>
+                    </Grid>
+                </Frame>
+            </dxp:DXPopup>
+            <ActivityIndicator IsRunning="{Binding IsBusy}"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

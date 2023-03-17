@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Frame xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+       xmlns:models="clr-namespace:SmartMobileWMS.Models"
+       x:Class="SmartMobileWMS.Views.Templates.ProductTemplate"
+       x:DataType="models:Product">
+    <StackLayout Orientation="Horizontal">
+        <StackLayout>
+            <Label Text="{Binding Name}" FontSize="18"/>
+            <Label Text="{Binding CodeDisplay}" FontAttributes="Bold"/>
+        </StackLayout>
+        <StackLayout HorizontalOptions="EndAndExpand">
+            <Label Text="{Binding Price,StringFormat='{0} €'}" HorizontalOptions="EndAndExpand"
+                   WidthRequest="70"/>
+        </StackLayout>
+    </StackLayout>
+</Frame>

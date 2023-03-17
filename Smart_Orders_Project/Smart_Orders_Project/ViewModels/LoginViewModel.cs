@@ -1,9 +1,15 @@
-﻿using SmartMobileWMS.Repositories;
+﻿using DevExpress.Persistent.Base;
+using DevExpress.XtraRichEdit.Fields;
+using SmartMobileWMS.Models;
+using SmartMobileWMS.Network;
+using SmartMobileWMS.Repositories;
 using SmartMobileWMS.Views;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Text;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace SmartMobileWMS.ViewModels
@@ -21,6 +27,60 @@ namespace SmartMobileWMS.ViewModels
         {
             LoginCommand = new Command(OnLoginClicked);
             ConnectionCommand = new Command(OnConnectionClicked);
+        }
+        public void OnAppearing()
+        {
+            CheckForDatabase();
+        }
+
+        private async void CheckForDatabase()
+        {
+            IsBusy = true;
+            try
+            {
+                if (!await IsCorrectVersion()) return;
+                if (!await DatabaseService.ParametersExist())
+                   await Shell.Current.DisplayAlert(
+                        "Δεν υπάρχει ο πίνακας XamarinMobWMSParameters στη βάση",
+                        "Για να λειτουργίσει η εφαρμογή θα πρέπει να υπάρχει στην βάση ο πίνακας XamarinMobWMSParameters",
+                        "OK");
+            }
+            
+            catch(SqlException cex)
+            {
+                await Shell.Current.DisplayAlert(
+                       "Συνδεση με την βάση δεδομένων",
+                       "Παρουσιάστηκε ένα σφάλμα που σχετίζεται με το δίκτυο κατά τη δημιουργία μιας σύνδεσης" +
+                       " με τον SQL Server. Ο διακομιστής δεν βρέθηκε ή δεν ήταν προσβάσιμος." +
+                       " Βεβαιωθείτε ότι έχετε εισάγει το σωστό Connection String.",
+                       "OK");
+                Debug.WriteLine(cex);
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert(
+                       "",
+                       "Το σφάλμα παρουσιάστηκε στον έλεγχο βάση δεδομένων",
+                       "OK");
+                Debug.WriteLine(ex);
+            }
+            finally { IsBusy = false; }
+        }
+
+        private async Task<bool> IsCorrectVersion()
+        {
+            var version = await DatabaseService.GetVersion();
+            float no = 0;
+            float.TryParse(version, out no);
+            if (no < 13)
+            {
+                await Shell.Current.DisplayAlert(
+                       $"Έκδοση βάσης δεδομένων {version}",
+                       $"Η έκδοση της βάσης είναι χαμηλότερη απο την απαιτούμενη έκδοση SQL Server 2016 (13.x) ή μεγαλύτερη",
+                       "OK");
+                return false;
+            }
+            return true;
         }
 
         private async void OnConnectionClicked(object obj)
@@ -47,7 +107,11 @@ namespace SmartMobileWMS.ViewModels
                 if (user == null)
                 {
                     await Shell.Current.DisplayAlert("","Λάθος όνομα χρήστη", "Οκ");
-                    Debug.WriteLine("Wrong Log In");
+                    return;
+                }
+                if (!CheckPassword(user.Password))
+                {
+                    await Shell.Current.DisplayAlert("", "Λάθος Κωδικός χρήστη", "Οκ");
                     return;
                 }
                 UserString = user.UserName;
@@ -63,7 +127,13 @@ namespace SmartMobileWMS.ViewModels
             {
                 IsBusy = false;
             }
+        }
 
+        private bool CheckPassword(string password)
+        {
+            PasswordCryptographer.EnableRfc2898 = true;
+            PasswordCryptographer.SupportLegacySha512 = true;
+            return PasswordCryptographer.VerifyHashedPasswordDelegate(password, Password);
         }
     }
 }

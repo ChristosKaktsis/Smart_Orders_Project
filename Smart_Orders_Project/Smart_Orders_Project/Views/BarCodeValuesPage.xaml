@@ -39,11 +39,20 @@
                         <Frame Padding="0" BackgroundColor="{StaticResource Primary}">
                             <Label Text="SSCC" FontSize="20" TextColor="white" Margin="10"/>
                         </Frame>
+                        
                         <StackLayout Orientation="Horizontal" Margin="10" >
-                            <Label Text="SSCC" VerticalOptions="Center" FontSize="18" TextColor="Black" Margin="10,0,0,0"/>
+                            <Label Text="Μήκος" VerticalOptions="Center" FontSize="18" TextColor="Black" Margin="10,0,0,0"/>
                             <editors:TextEdit HorizontalOptions="EndAndExpand" WidthRequest="150" Text="{Binding SSCCTextEdit}"/>
                         </StackLayout>
-                       
+                        <StackLayout Orientation="Horizontal" Margin="10" >
+                            <Label Text="Απο" VerticalOptions="Center" FontSize="18" TextColor="Black" Margin="10,0,0,0"/>
+                            <editors:TextEdit HorizontalOptions="EndAndExpand" WidthRequest="150" Text="{Binding SSCCStartTextEdit}"/>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal" Margin="10" >
+                            <Label Text="Μήκος Κωδ. Παλέτας" VerticalOptions="Center" FontSize="18" TextColor="Black" Margin="10,0,0,0"/>
+                            <editors:TextEdit HorizontalOptions="EndAndExpand" WidthRequest="150" Text="{Binding SSCCEndTextEdit}"/>
+                        </StackLayout>
+
                     </StackLayout>
                 </Frame>
                 <Frame Padding="0" Margin="20">

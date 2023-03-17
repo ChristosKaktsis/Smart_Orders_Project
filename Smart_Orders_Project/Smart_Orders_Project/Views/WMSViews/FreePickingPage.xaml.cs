@@ -63,6 +63,7 @@ namespace SmartMobileWMS.Views
         {
             OpenPopUp();
             await _viewModel.LoadDoc();
+            await _viewModel.LoadItemsFromMovement();
             if(!_viewModel.ProductList.Any())
             {
                 await DisplayAlert("", "Το παραστατικό δεν βρέθηκε", "Οκ");

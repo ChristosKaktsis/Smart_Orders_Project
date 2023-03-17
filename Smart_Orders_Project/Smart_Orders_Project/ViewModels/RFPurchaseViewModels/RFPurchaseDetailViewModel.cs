@@ -24,6 +24,8 @@ namespace SmartMobileWMS.ViewModels
         { get; } = new ObservableCollection<RFPurchaseLine>();
         public ObservableCollection<Provider> ProviderCollection
         { get; } = new ObservableCollection<Provider>();
+        public ObservableCollection<Product> ProductCollection
+        { get; } = new ObservableCollection<Product>();
         public Command OpenPopUp { get; }
         public Command SaveCommand { get; }
         public RFPurchaseDetailViewModel(RFPurchase rFPurchase = null)
@@ -66,6 +68,28 @@ namespace SmartMobileWMS.ViewModels
 
         public void OnAppearing()
         {
+            LoadCartItems();
+        }
+        private bool loadedFromCart;
+        private async void LoadCartItems()
+        {
+            try
+            {
+                if (!Data.Cart.CartItems.Any()) return;
+                var answer = await Shell.Current.DisplayAlert(
+                    "Φορτωση Ειδων απο το καλάθι?",
+                    "Υπάρχουν είδη στο καλάθι. Θα θέλατε να γίνει φόρτωση των ειδών?",
+                    "Αποδοχή", "Άκυρο");
+                if (!answer) return;
+                foreach (var item in Data.Cart.CartItems)
+                    AddNewLine(item.Product);
+                loadedFromCart = true;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                await Shell.Current.DisplayAlert("", "Η φορτωση καλαθιού απέτυχε !", "ΟΚ");
+            }
         }
         private Provider _Provider;
         public Provider Provider { 
@@ -108,6 +132,34 @@ namespace SmartMobileWMS.ViewModels
                 await Shell.Current.DisplayAlert("", "Η αναζήτηση προμηθευτή απέτυχε", "ΟΚ");
             }
             finally { IsBusy = false; }
+        }
+        public async Task SearchProduct(string search)
+        {
+            IsBusy = true;
+            try
+            {
+                ProductCollection.Clear();
+                if (string.IsNullOrWhiteSpace(search)) return;
+                var items = await productRepository.SearchItemsAsync(search);
+                items.ForEach(item => { ProductCollection.Add(item); });
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                await Shell.Current.DisplayAlert("", "Η αναζήτηση είδους απέτυχε", "ΟΚ");
+            }
+            finally { IsBusy = false; }
+        }
+        private Product _SelectedProduct;
+
+        public Product SelectedProduct
+        {
+            get { return _SelectedProduct; }
+            set
+            {
+                _SelectedProduct = value;
+                AddNewLine(value);
+            }
         }
         public async Task GetProduct(string id)
         {
@@ -164,9 +216,15 @@ namespace SmartMobileWMS.ViewModels
                     return;
                 }
                 await SaveLineOfOrder();
+                //change position to the cart items 
+                if (loadedFromCart) await Data.Cart.SavePosition(0);
                 await Shell.Current.GoToAsync("..");
             }
-            catch (Exception ex) { Debug.WriteLine(ex);} finally { IsBusy = false; }
+            catch (Exception ex) { 
+                Debug.WriteLine(ex);
+                await Shell.Current.DisplayAlert("Αποτυχία αποθήκευσης",
+                        "Προέκυψε κάποιο σφάλμα στην αποθήκευση της Παραγγελίας", "ΟΚ");
+            } finally { IsBusy = false; }
         }
         private async Task SaveLineOfOrder()
         {

@@ -5,7 +5,7 @@
              xmlns:dxcv="http://schemas.devexpress.com/xamarin/2014/forms/collectionview" 
              xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors" 
              xmlns:dxp="http://schemas.devexpress.com/xamarin/2014/forms/popup" 
-             xmlns:model="clr-namespace:SmartMobileWMS.Models"
+             xmlns:model="clr-namespace:SmartMobileWMS.Models" xmlns:customviews="clr-namespace:SmartMobileWMS.Views.CustomViews"
              x:Class="SmartMobileWMS.Views.RFPurchaseDetailPage"
              Shell.NavBarHasShadow="False">
     <ContentPage.Resources>
@@ -44,11 +44,10 @@
                         <Grid x:DataType="model:RFPurchaseLine">
                             <Frame Padding="6" Margin="0,0,0,1">
                                 <StackLayout Orientation="Horizontal">
-                                    <Label Text="{Binding Product.CodeDisplay}" FontAttributes="Bold"
-                                   HorizontalOptions="Center"/>
-                                    <Label Text="{Binding Product.Name}" 
-                                   WidthRequest="160" HeightRequest="33"
-                                       HorizontalOptions="Center"/>
+                                    <StackLayout>
+                                        <Label Text="{Binding Product.Name}" FontSize="18"/>
+                                        <Label Text="{Binding Product.CodeDisplay}" FontAttributes="Bold"/>
+                                    </StackLayout>
                                     <StackLayout HorizontalOptions="EndAndExpand">
                                         <Label Text="{Binding Sum,StringFormat='{0} €'}" HorizontalOptions="EndAndExpand"/>
                                         <dxe:NumericEdit Value="{Binding Quantity}" SelectValueOnFocus="True"
@@ -87,6 +86,7 @@
                 
                 <Frame x:Name="Scan_Frame"  Padding="7">
                     <StackLayout Orientation="Horizontal" HeightRequest="40">
+                        <ImageButton Source="search.png" Padding="5" BackgroundColor="White" Clicked="ImageButton_Clicked"/>
                         <Label Text="Scan Code" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"/>
                         <dxe:TextEdit x:Name="Scan_Code_Edit"
                                       HorizontalOptions="EndAndExpand" WidthRequest="220"
@@ -103,6 +103,12 @@
                     </dxcv:DXCollectionView>
                 </StackLayout>
             </StackLayout>
+            <customviews:ProductPopup x:Name="custom_popup"
+                                      AllowScrim="True" ScrimColor="{StaticResource BackGroundDarkTranc}"
+                                      TextChanged="custom_popup_TextChanged"
+                                      Products="{Binding ProductCollection}"
+                                      SelectedProduct="{Binding SelectedProduct,Mode=OneWayToSource}"
+                                      IsLoading="{Binding IsBusy,Mode=OneWay}"/>
             <dxp:DXPopup x:Name="customer_popup"
                          IsOpen="{Binding Provider_Popup_isOpen,Mode=OneWay}"
                          AllowScrim="True"

@@ -1,4 +1,5 @@
 ﻿using SmartMobileWMS.Models;
+using SmartMobileWMS.Network;
 using SmartMobileWMS.Repositories;
 using SmartMobileWMS.Services;
 using SmartMobileWMS.Views;
@@ -59,6 +60,7 @@ namespace SmartMobileWMS.ViewModels
         private async Task ExecuteLoadItemsCommand()
         {
             IsBusy = true;
+            //var watch = Stopwatch.StartNew();
 
             try
             {
@@ -76,6 +78,8 @@ namespace SmartMobileWMS.ViewModels
             finally
             {
                 IsBusy = false;
+                //watch.Stop();
+                //Debug.WriteLine($"Execution Time: {watch.ElapsedMilliseconds} ms");
             }
         }
         public void OnAppearing()

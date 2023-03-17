@@ -61,6 +61,7 @@ namespace SmartMobileWMS.ViewModels
                 RFPurchaseList.Clear();
                 
                 var items = await purchaseRepository.GetItemsAsync();
+                if (items == null) return;
                 foreach (var item in items)
                     RFPurchaseList.Add(item);
             }
