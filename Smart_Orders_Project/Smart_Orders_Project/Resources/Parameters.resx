@@ -1,0 +1,330 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="addCounter" xml:space="preserve">
+    <value>INSERT INTO ΓενικόςΜετρητής (Oid, Μετρητής, Τιμή) VALUES((Convert(uniqueidentifier, N'{0}')),'ΜετρητήςRF', 0)</value>
+  </data>
+  <data name="deleteMovement" xml:space="preserve">
+    <value>DELETE From ΚίνησηΘέσης Where Διαχείρηση = '{0}'
+</value>
+  </data>
+  <data name="deletePaletteContent" xml:space="preserve">
+    <value>DELETE From ΠεριεχόμεναΠαλέτας where Παλέτα = '{0}'</value>
+  </data>
+  <data name="deletePurchaseLine" xml:space="preserve">
+    <value>DELETE From RFΓραμμέςΑγορών where RFΠωλήσεις = '{0}'</value>
+  </data>
+  <data name="deleteRFCensusWithID" xml:space="preserve">
+    <value>DELETE FROM RFΑπογραφή WHERE Oid ='{0}'</value>
+  </data>
+  <data name="deleteRFLineWithID" xml:space="preserve">
+    <value>DELETE From RFΓραμμέςΠωλήσεων where RFΠωλήσεις = '{0}'</value>
+  </data>
+  <data name="getAllStorage" xml:space="preserve">
+    <value>SELECT Oid, Περιγραφή FROM ΑποθηκευτικόςΧώρος where GCRecord is null FOR JSON PATH</value>
+  </data>
+  <data name="getBarCodeCounter" xml:space="preserve">
+    <value>SELECT Μετρητής ,Τιμή FROM ΓενικόςΜετρητής where Μετρητής = 'Barcode' and GCRecord is null</value>
+  </data>
+  <data name="getBrands" xml:space="preserve">
+    <value>SELECT Oid ,Κωδικός,Περιγραφή FROM ΙεραρχικόΖοομ1 where GCRecord is null</value>
+  </data>
+  <data name="getCollectionCommands" xml:space="preserve">
+    <value>select Oid ,JSON_QUERY((select Πελάτης.Oid , Πελάτης.Κωδικός ,Επωνυμία ,ΔιακριτικόςΤίτλος ,ΑΦΜ ,Email from Πελάτης where Oid = Πελάτης and GCRecord is null FOR JSON PATH,WITHOUT_ARRAY_WRAPPER)) as Customer, (SELECT ΓραμμέςΕντολήςΣυλλογής.Oid,JSON_QUERY((SELECT  Θέση.Oid, Θέση.Κωδικός, Θέση.Περιγραφή, Θέση.AAPicking FROM Θέση where Oid = Θέση and GCRecord is null FOR JSON PATH,WITHOUT_ARRAY_WRAPPER)) as Θέση,JSON_QUERY((select IIF (BarCodeΕίδους is null,(SELECT  Είδος.Oid ,Είδος.Κωδικός ,Είδος.Περιγραφή FROM Είδος where Είδος.Oid = ΓραμμέςΕντολήςΣυλλογής.Είδος and Είδος.GCRecord is null FOR JSON PATH,WITHOUT_ARRAY_WRAPPER),(SELECT Είδος as Oid ,BarCode as Κωδικός ,Περιγραφή ,BarCode, SN FROM BarCodeΕίδους where (BarCode = BarCodeΕίδους or BarCodeΕίδους.Κείμενο2 =BarCodeΕίδους)  and BarCodeΕίδους.GCRecord is null FOR JSON PATH,WITHOUT_ARRAY_WRAPPER)))) as Product,Είδος.Κωδικός,CAST(ΠοσότηταΕντολής as int) as ΠοσότηταΕντολής,CAST(ΠοσότηταΣυλλογής as int) as ΠοσότηταΣυλλογής, ΑφοράΓραμμήΕντολήςΣυλλογής  FROM ΓραμμέςΕντολήςΣυλλογής left join Θέση on ΓραμμέςΕντολήςΣυλλογής.Θέση = Θέση.Oid left join Είδος on ΓραμμέςΕντολήςΣυλλογής.Είδος = Είδος.Oid left join BarCodeΕίδους on ΓραμμέςΕντολήςΣυλλογής.BarCodeΕίδους = BarCodeΕίδους.BarCode where ΕντολήΣυλλογής = ΕντολήΣυλλογής.Oid FOR JSON PATH) as Commands from ΕντολήΣυλλογής where Παραστατικό = '{0}' FOR JSON PATH,WITHOUT_ARRAY_WRAPPER</value>
+  </data>
+  <data name="getCustomers" xml:space="preserve">
+    <value>select Oid , Κωδικός ,Επωνυμία ,ΑΦΜ, ΔιακριτικόςΤίτλος ,Email from Πελάτης where GCRecord is null</value>
+  </data>
+  <data name="getCustomersWithName" xml:space="preserve">
+    <value>SELECT Oid , Κωδικός ,Επωνυμία ,ΑΦΜ, ΔιακριτικόςΤίτλος ,Email from Πελάτης where Κωδικός Like '%{0}%' or Επωνυμία like '%{0}%' or ΑΦΜ like '%{0}%' and GCRecord is null FOR JSON PATH</value>
+  </data>
+  <data name="getCustomerWithID" xml:space="preserve">
+    <value>select Oid , Κωδικός ,Επωνυμία ,ΔιακριτικόςΤίτλος ,ΑΦΜ ,Email from Πελάτης where Oid ='{0}' and GCRecord is null</value>
+  </data>
+  <data name="getHallWay" xml:space="preserve">
+    <value>SELECT [Oid],[Κωδικός],[Περιγραφή],[AAPicking] FROM Διάδρομος where [Κωδικός]='{0}' and GCRecord is null</value>
+  </data>
+  <data name="getItemsFromMovement" xml:space="preserve">
+    <value>SELECT [BarCodeΕίδους] as barcode,k.[Είδος] as Oid,Είδος.Κωδικός,iif(BarCodeΕίδους is not null,BarCodeΕίδους.Περιγραφή,Είδος.Περιγραφή) as Περιγραφή,CAST(ΠοσότηταΕγγραφής as int) as Ποσότητα ,JSON_QUERY((SELECT  Oid, Κωδικός, Περιγραφή FROM Θέση where Oid = k.Θέση and GCRecord is null FOR JSON PATH,WITHOUT_ARRAY_WRAPPER)) as Position FROM [ΚίνησηΘέσης] k Join [Διαχείριση] d on k.[Διαχείρηση] = d.Oid join Είδος on Είδος.Oid = k.Είδος left join BarCodeΕίδους on BarCodeΕίδους.BarCode = k.BarCodeΕίδους where d.Παραστατικό='{0}' FOR JSON PATH
+</value>
+  </data>
+  <data name="getManagement" xml:space="preserve">
+    <value>SELECT top(1) [Oid], Πελάτης,[Παραστατικό],Τύπος FROM Διαχείριση where Παραστατικό='{0}' and GCRecord is null FOR JSON PATH,WITHOUT_ARRAY_WRAPPER</value>
+  </data>
+  <data name="getManufacturers" xml:space="preserve">
+    <value>Select Oid ,Κωδικός  ,Περιγραφή FROM Κατασκευαστής where GCRecord is null</value>
+  </data>
+  <data name="getModelsByBrand" xml:space="preserve">
+    <value>SELECT Oid  ,ΙεραρχικόΖοομ1 ,Κωδικός ,Περιγραφή  FROM ΙεραρχικόΖοομ2 where ΙεραρχικόΖοομ1 ='{0}' and GCRecord is null</value>
+  </data>
+  <data name="getPalette" xml:space="preserve">
+    <value>SELECT [Oid],[SSCC],[Περιγραφή],[Πλάτος],[Μήκος],[Υψος], (SELECT iif([BarCodeΕίδους] is not null,[BarCodeΕίδους].[Είδος],[Είδος].Oid) as Oid,[Είδος].Κωδικός,[BarCodeΕίδους] as barcode,iif([BarCodeΕίδους] is not null,[BarCodeΕίδους].Περιγραφή,[Είδος].Περιγραφή) as Περιγραφή,CAST(Ποσότητα as int) as Ποσότητα, BarCodeΕίδους.SN FROM ΠεριεχόμεναΠαλέτας left join [Είδος] on [Είδος].Oid = ΠεριεχόμεναΠαλέτας.Είδος left join [BarCodeΕίδους] on [BarCodeΕίδους].BarCode = ΠεριεχόμεναΠαλέτας.BarCodeΕίδους where Παλέτα = Παλέτα.Oid and ΠεριεχόμεναΠαλέτας.GCRecord is null FOR JSON PATH) as Products FROM Παλέτα where SSCC='{0}' and GCRecord is null  FOR JSON PATH,WITHOUT_ARRAY_WRAPPER
+</value>
+  </data>
+  <data name="getPaletteContent" xml:space="preserve">
+    <value>SELECT [Είδος].Oid,[Είδος].Κωδικός,[BarCodeΕίδους],iif([BarCodeΕίδους] is not null,[BarCodeΕίδους].Περιγραφή,[Είδος].Περιγραφή) as Περιγραφή,[Ποσότητα] FROM ΠεριεχόμεναΠαλέτας left join [Είδος] on [Είδος].Oid = ΠεριεχόμεναΠαλέτας.Είδος left join [BarCodeΕίδους] on [BarCodeΕίδους].BarCode = ΠεριεχόμεναΠαλέτας.BarCodeΕίδους where Παλέτα ='{0}' and GCRecord is null</value>
+  </data>
+  <data name="getPosition" xml:space="preserve">
+    <value>SELECT  Oid, Κωδικός, Περιγραφή, AAPicking FROM Θέση where (Κωδικός = '{0}' or Περιγραφή = '{0}') and GCRecord is null FOR JSON PATH,WITHOUT_ARRAY_WRAPPER</value>
+  </data>
+  <data name="getPositionFromProduct" xml:space="preserve">
+    <value>select * from (SELECT [Θέση],CAST(sum( IIF([ΤύποςΚίνησηςΘέσης]=1,[ΠοσότηταΕγγραφής]*-1,[ΠοσότηταΕγγραφής])) as int) as Ποσότητα FROM [ΚίνησηΘέσης] left join [Είδος] on [ΚίνησηΘέσης].Είδος = [Είδος].Oid where BarCodeΕίδους='{0}' or [Είδος].[Κωδικός] ='{0}'  group by [Θέση] ) a left join (SELECT [Oid], [Κωδικός],[Περιγραφή] FROM [Θέση]) b on a.[Θέση] = b.Oid where a.Θέση is not null FOR JSON PATH</value>
+  </data>
+  <data name="getPositionWithID" xml:space="preserve">
+    <value>SELECT Oid, Κωδικός, Περιγραφή, AAPicking FROM Θέση where (Κωδικός = '{0}' or Περιγραφή = '{0}') and ΘέσηPiking = 1 and GCRecord is null</value>
+  </data>
+  <data name="getPrinters" xml:space="preserve">
+    <value>select Περιγραφή from ΠίνακαςΔεδομένων15 where GCRecord is null</value>
+  </data>
+  <data name="getProductFromPosition" xml:space="preserve">
+    <value>select * from (SELECT Είδος, BarCodeΕίδους,CAST(sum( IIF([ΤύποςΚίνησηςΘέσης]=1,[ΠοσότηταΕγγραφής]*-1,[ΠοσότηταΕγγραφής])) as int) as Ποσότητα FROM [ΚίνησηΘέσης] where Θέση = '{0}' and GCRecord is null  group by[Είδος], [BarCodeΕίδους] ) a left join (SELECT[Είδος].[Oid],[Κωδικός],[Είδος].[Περιγραφή] FROM [Είδος] where GCRecord is null) b on a.Είδος = b.Oid where a.BarCodeΕίδους='{1}' or b.Κωδικός='{1}'  FOR JSON PATH,WITHOUT_ARRAY_WRAPPER</value>
+  </data>
+  <data name="getProductsFromPosition" xml:space="preserve">
+    <value>select * from (SELECT Είδος, BarCodeΕίδους as barcode,  CAST(sum( IIF([ΤύποςΚίνησηςΘέσης]=1,[ΠοσότηταΕγγραφής]*-1,[ΠοσότηταΕγγραφής])) as int) as Ποσότητα  FROM [ΚίνησηΘέσης] where Θέση = '{0}'  and GCRecord is null  group by[Είδος], [BarCodeΕίδους] ) a left join (SELECT[Είδος].[Oid],[Κωδικός],[Είδος].[Περιγραφή] FROM [Είδος] where GCRecord is null) b on a.Είδος = b.Oid  FOR JSON PATH</value>
+  </data>
+  <data name="getProductsFromSalesDoc" xml:space="preserve">
+    <value>SELECT [Παραστατικό],[Είδος].Oid,[Είδος].Κωδικός,[Ποσότητα],[BarCodeΕίδους] ,iif([BarCodeΕίδους] is not null,[BarCodeΕίδους].Περιγραφή,[Είδος].Περιγραφή) as Περιγραφή FROM [maindemo].[dbo].[ΠαραστατικάΠωλήσεων] join[ΓραμμέςΠαραστατικώνΠωλήσεων] on [ΠαραστατικάΠωλήσεων].Oid =[ΓραμμέςΠαραστατικώνΠωλήσεων].ΠαραστατικάΠωλήσεων join [Είδος] on [Είδος].Oid = [ΓραμμέςΠαραστατικώνΠωλήσεων].Είδος left join [BarCodeΕίδους] on[BarCodeΕίδους].BarCode = [ΓραμμέςΠαραστατικώνΠωλήσεων].BarCodeΕίδους where [Παραστατικό] ='{0}'</value>
+  </data>
+  <data name="getProductWithID" xml:space="preserve">
+    <value>select * from (SELECT  Είδος.Oid ,Κωδικός ,Περιγραφή ,barcode = null ,SN=null ,ΦΠΑ ,ΜονάδεςΜέτρησης.ΜονάδαΜέτρησης ,ΜονάδεςΜέτρησης.ΤύποςΔιάστασης ,Πλάτος ,Μήκος ,Υψος ,Κείμενο2 as ProductCode2,ΤιμήΧονδρικής ,Χρώματα = null ,Μεγέθη = null FROM Είδος left join ΜονάδεςΜέτρησης on ΜονάδεςΜέτρησης.Oid = Είδος.ΜονάδαΜέτρησης where ((Είδος.Κωδικός = '{0}' or Είδος.Κείμενο2 ='{0}')  and (ΥποχρεωτικήΔιαχείρησηSN ='false' or ΥποχρεωτικήΔιαχείρησηSN is null)) and Είδος.GCRecord is null UNION SELECT Είδος as Oid ,BarCode as Κωδικός ,Περιγραφή ,BarCode ,CAST(SN as BIT) as SN ,ΦΠΑ ,ΜονάδεςΜέτρησης.ΜονάδαΜέτρησης ,ΜονάδεςΜέτρησης.ΤύποςΔιάστασης ,Πλάτος ,Μήκος ,Υψος ,Κείμενο2 as ProductCode2 ,ΤιμήΧονδρικής ,Χρώματα.Χρώματα ,Μεγέθη.Μεγέθη FROM BarCodeΕίδους  left join Χρώματα on Χρώματα.Oid = BarCodeΕίδους.Χρώμα  left join ΜονάδεςΜέτρησης on ΜονάδεςΜέτρησης.Oid = BarCodeΕίδους.ΜονάδαΜέτρησης  left join Μεγέθη on Μεγέθη.Oid = BarCodeΕίδους.Μέγεθος where  (BarCode = '{0}' or BarCodeΕίδους.Κείμενο2 ='{0}') and BarCodeΕίδους.GCRecord is null) a left join  (SELECT     ΚινήσειςΕιδών.Είδος as ΕίδοςOid , ΚινήσειςΕιδών.Τιμή as LastPrice FROM  ΚινήσειςΕιδών AS ΚινήσειςΕιδών INNER JOIN (SELECT     Είδος, MAX(Ημνία) AS MaxPurchaseDate  FROM ΚινήσειςΕιδών WHERE (ΕισαγωγήΑξία  &gt; 0 and GCRecord is null)  GROUP BY Είδος) AS LastPurchase ON LastPurchase.MaxPurchaseDate = ΚινήσειςΕιδών.Ημνία AND LastPurchase.Είδος = ΚινήσειςΕιδών.Είδος INNER JOIN  Προμηθευτής ON ΚινήσειςΕιδών.Προμηθευτής = Προμηθευτής.Oid inner join Είδος  on Είδος.oid= ΚινήσειςΕιδών.Είδος  left join ΓραμμέςΠαραστατικώνΑγορών on ΓραμμέςΠαραστατικώνΑγορών.Oid = ΚινήσειςΕιδών.ΓραμμήΑγορών) b on a.Oid=b.ΕίδοςOid FOR JSON PATH</value>
+  </data>
+  <data name="getProductWithID_Barcode" xml:space="preserve">
+    <value>SELECT * FROM (select * from (SELECT  Είδος.Oid,Κωδικός,Περιγραφή,BarCode = null,ΦΠΑ ,ΜονάδεςΜέτρησης.ΜονάδαΜέτρησης,ΜονάδεςΜέτρησης.ΤύποςΔιάστασης,Πλάτος,Μήκος,Υψος,Κείμενο2 as ProductCode2,ΤιμήΧονδρικής,Χρώματα = null ,Μεγέθη = null FROM Είδος left join ΜονάδεςΜέτρησης on ΜονάδεςΜέτρησης.Oid = Είδος.ΜονάδαΜέτρησης where  Είδος.GCRecord is null UNION SELECT Είδος as Oid,BarCode as Κωδικός,Περιγραφή,BarCode,ΦΠΑ,ΜονάδεςΜέτρησης.ΜονάδαΜέτρησης ,ΜονάδεςΜέτρησης.ΤύποςΔιάστασης,Πλάτος,Μήκος,Υψος,Κείμενο2 as ProductCode2,ΤιμήΧονδρικής,Χρώματα.Χρώματα,Μεγέθη.Μεγέθη FROM BarCodeΕίδους left join Χρώματα on Χρώματα.Oid = BarCodeΕίδους.Χρώμα left join ΜονάδεςΜέτρησης on ΜονάδεςΜέτρησης.Oid = BarCodeΕίδους.ΜονάδαΜέτρησης left join Μεγέθη on Μεγέθη.Oid = BarCodeΕίδους.Μέγεθος where BarCodeΕίδους.GCRecord is null) as U where U.Oid = '{0}' and U.BarCode  {1}) a left join  (SELECT ΚινήσειςΕιδών.Είδος as ΕίδοςOid , ΚινήσειςΕιδών.Τιμή as LastPrice FROM ΚινήσειςΕιδών AS ΚινήσειςΕιδών INNER JOIN (SELECT Είδος, MAX(Ημνία) AS MaxPurchaseDate  FROM ΚινήσειςΕιδών WHERE  (ΕισαγωγήΑξία  &gt; 0 and GCRecord is null) GROUP BY Είδος) AS LastPurchase ON  LastPurchase.MaxPurchaseDate = ΚινήσειςΕιδών.Ημνία AND LastPurchase.Είδος = ΚινήσειςΕιδών.Είδος INNER JOIN  Προμηθευτής ON ΚινήσειςΕιδών.Προμηθευτής = Προμηθευτής.Oid   inner join Είδος  on Είδος.oid= ΚινήσειςΕιδών.Είδος  left join ΓραμμέςΠαραστατικώνΑγορών on ΓραμμέςΠαραστατικώνΑγορών.Oid = ΚινήσειςΕιδών.ΓραμμήΑγορών) b on a.Oid=b.ΕίδοςOid</value>
+  </data>
+  <data name="getProductWithName" xml:space="preserve">
+    <value>select * from (SELECT Είδος.Oid  ,Κωδικός ,Περιγραφή ,BarCode = null ,ΦΠΑ ,ΜονάδεςΜέτρησης.ΜονάδαΜέτρησης ,ΜονάδεςΜέτρησης.ΤύποςΔιάστασης ,Πλάτος ,Μήκος ,Υψος ,Κείμενο2 as ProductCode2 ,ΤιμήΧονδρικής ,Χρώματα = null ,Μεγέθη = null FROM Είδος left join ΜονάδεςΜέτρησης on ΜονάδεςΜέτρησης.Oid = Είδος.ΜονάδαΜέτρησης where ((Είδος.Κωδικός LIKE '%{0}%' OR  Είδος.Περιγραφή LIKE '%{0}%' or Είδος.Κείμενο2 LIKE '%{0}%') and (ΥποχρεωτικήΔιαχείρησηSN ='false' or ΥποχρεωτικήΔιαχείρησηSN is null)) and Είδος.GCRecord is null UNION SELECT Είδος as Oid ,BarCode as Κωδικός ,Περιγραφή ,BarCode ,ΦΠΑ ,ΜονάδεςΜέτρησης.ΜονάδαΜέτρησης ,ΜονάδεςΜέτρησης.ΤύποςΔιάστασης ,Πλάτος ,Μήκος ,Υψος ,Κείμενο2 as ProductCode2 ,ΤιμήΧονδρικής ,Χρώματα.Χρώματα ,Μεγέθη.Μεγέθη FROM BarCodeΕίδους  left join Χρώματα on Χρώματα.Oid = BarCodeΕίδους.Χρώμα  left join ΜονάδεςΜέτρησης on ΜονάδεςΜέτρησης.Oid = BarCodeΕίδους.ΜονάδαΜέτρησης left join Μεγέθη on Μεγέθη.Oid = BarCodeΕίδους.Μέγεθος where  (BarCode LIKE '%{0}%' OR  Περιγραφή LIKE '%{0}%'  or BarCodeΕίδους.Κείμενο2 LIKE '%{0}%') and BarCodeΕίδους.GCRecord is null) a left join  (SELECT     ΚινήσειςΕιδών.Είδος as ΕίδοςOid , ΚινήσειςΕιδών.Τιμή as LastPrice FROM       ΚινήσειςΕιδών AS ΚινήσειςΕιδών INNER JOIN (SELECT     Είδος, MAX(Ημνία) AS MaxPurchaseDate FROM          ΚινήσειςΕιδών  WHERE      (ΕισαγωγήΑξία  &gt; 0 and GCRecord is null)  GROUP BY Είδος) AS LastPurchase ON LastPurchase.MaxPurchaseDate = ΚινήσειςΕιδών.Ημνία AND LastPurchase.Είδος = ΚινήσειςΕιδών.Είδος INNER JOIN  Προμηθευτής ON ΚινήσειςΕιδών.Προμηθευτής = Προμηθευτής.Oid  inner join Είδος  on Είδος.oid= ΚινήσειςΕιδών.Είδος  left join ΓραμμέςΠαραστατικώνΑγορών on ΓραμμέςΠαραστατικώνΑγορών.Oid = ΚινήσειςΕιδών.ΓραμμήΑγορών) b on a.Oid=b.ΕίδοςOid FOR JSON PATH</value>
+  </data>
+  <data name="getProviderWithID" xml:space="preserve">
+    <value>select Oid , Κωδικός ,Επωνυμία ,ΑΦΜ, Email from [Προμηθευτής] where Oid = '{0}'</value>
+  </data>
+  <data name="getProviderWithName" xml:space="preserve">
+    <value>select Oid , Κωδικός ,Επωνυμία ,ΑΦΜ, Email from Προμηθευτής where (Επωνυμία like '%{0}%' or ΑΦΜ like '%{0}%') and GCRecord is null FOR JSON PATH</value>
+  </data>
+  <data name="getPurchase" xml:space="preserve">
+    <value>SELECT Oid,JSON_QUERY((SELECT Oid,Κωδικός,Επωνυμία,ΑΦΜ,Email FROM Προμηθευτής where Oid = Προμηθευτής FOR JSON PATH ,WITHOUT_ARRAY_WRAPPER)) as Provider,ΠαραστατικόΠρομηθευτή,Ολοκληρώθηκε,ΗμνίαΔημιουργίας FROM RFΑγορές where Oid='{0}' and (Ολοκληρώθηκε = 0 or Ολοκληρώθηκε is null) and GCRecord is null FOR JSON PATH,WITHOUT_ARRAY_WRAPPER</value>
+  </data>
+  <data name="getPurchaseLines" xml:space="preserve">
+    <value>SELECT Oid,RFΠωλήσεις ,JSON_QUERY((select * from (SELECT  Είδος.Oid ,Κωδικός ,Περιγραφή ,barcode = null ,ΦΠΑ ,ΜονάδεςΜέτρησης.ΜονάδαΜέτρησης ,ΜονάδεςΜέτρησης.ΤύποςΔιάστασης ,Πλάτος ,Μήκος ,Υψος ,Κείμενο2 as ProductCode2,ΤιμήΧονδρικής ,Χρώματα = null ,Μεγέθη = null FROM Είδος left join ΜονάδεςΜέτρησης on ΜονάδεςΜέτρησης.Oid = Είδος.ΜονάδαΜέτρησης where ((Είδος.Oid = Είδος )  and (ΥποχρεωτικήΔιαχείρησηSN ='false' or ΥποχρεωτικήΔιαχείρησηSN is null)) and Είδος.GCRecord is null UNION SELECT Είδος as Oid ,BarCode as Κωδικός ,Περιγραφή ,BarCode ,ΦΠΑ ,ΜονάδεςΜέτρησης.ΜονάδαΜέτρησης ,ΜονάδεςΜέτρησης.ΤύποςΔιάστασης ,Πλάτος ,Μήκος ,Υψος ,Κείμενο2 as ProductCode2 ,ΤιμήΧονδρικής ,Χρώματα.Χρώματα ,Μεγέθη.Μεγέθη FROM BarCodeΕίδους  left join Χρώματα on Χρώματα.Oid = BarCodeΕίδους.Χρώμα  left join ΜονάδεςΜέτρησης on ΜονάδεςΜέτρησης.Oid = BarCodeΕίδους.ΜονάδαΜέτρησης  left join Μεγέθη on Μεγέθη.Oid = BarCodeΕίδους.Μέγεθος where  (BarCode = BarCodeΕίδους or BarCodeΕίδους.Κείμενο2 =BarCodeΕίδους) and BarCodeΕίδους.GCRecord is null) a left join  (SELECT     ΚινήσειςΕιδών.Είδος as ΕίδοςOid , ΚινήσειςΕιδών.Τιμή as LastPrice FROM  ΚινήσειςΕιδών AS ΚινήσειςΕιδών INNER JOIN (SELECT     Είδος, MAX(Ημνία) AS MaxPurchaseDate  FROM ΚινήσειςΕιδών WHERE (ΕισαγωγήΑξία  &gt; 0 and GCRecord is null)  GROUP BY Είδος) AS LastPurchase ON LastPurchase.MaxPurchaseDate = ΚινήσειςΕιδών.Ημνία AND LastPurchase.Είδος = ΚινήσειςΕιδών.Είδος INNER JOIN  Προμηθευτής ON ΚινήσειςΕιδών.Προμηθευτής = Προμηθευτής.Oid inner join Είδος  on Είδος.oid= ΚινήσειςΕιδών.Είδος  left join ΓραμμέςΠαραστατικώνΑγορών on ΓραμμέςΠαραστατικώνΑγορών.Oid = ΚινήσειςΕιδών.ΓραμμήΑγορών) b on a.Oid=b.ΕίδοςOid FOR JSON PATH,WITHOUT_ARRAY_WRAPPER)) as Product,Ποσότητα,ΠοσότηταΔιάστασης,Μήκος,Πλάτος,Υψος FROM RFΓραμμέςΑγορών where RFΠωλήσεις = '{0}' and GCRecord is null FOR JSON PATH</value>
+  </data>
+  <data name="getPurchases" xml:space="preserve">
+    <value>SELECT Oid,JSON_QUERY((SELECT Oid,Κωδικός,Επωνυμία,ΑΦΜ,Email FROM Προμηθευτής where Oid = Προμηθευτής FOR JSON PATH ,WITHOUT_ARRAY_WRAPPER)) as Provider,ΠαραστατικόΠρομηθευτή,Ολοκληρώθηκε,ΗμνίαΔημιουργίας FROM RFΑγορές where (Ολοκληρώθηκε = 0 or Ολοκληρώθηκε is null) and GCRecord is null FOR JSON PATH</value>
+  </data>
+  <data name="getRecievers" xml:space="preserve">
+    <value>select Oid ,Επωνυμία from Παραλαβών where GCRecord is null FOR JSON PATH</value>
+  </data>
+  <data name="getRecieverWithID" xml:space="preserve">
+    <value>select Oid ,Επωνυμία from Παραλαβών where Oid = '{0}' and GCRecord is null</value>
+  </data>
+  <data name="getRFCensus" xml:space="preserve">
+    <value>select top(10) Oid ,JSON_QUERY((SELECT Oid, Περιγραφή FROM ΑποθηκευτικόςΧώρος where Oid =ΑποθηκευτικόςΧώρος and GCRecord is null FOR JSON PATH,WITHOUT_ARRAY_WRAPPER)) as Storage ,JSON_QUERY((SELECT Oid, Κωδικός, Περιγραφή, AAPicking FROM Θέση where Oid = Θέση and GCRecord is null FOR JSON PATH,WITHOUT_ARRAY_WRAPPER)) as Position ,JSON_QUERY((select IIF (BarCodeΕίδους is null,(SELECT  Είδος.Oid ,Κωδικός ,Περιγραφή FROM Είδος where Είδος.Oid = Είδος and Είδος.GCRecord is null FOR JSON PATH,WITHOUT_ARRAY_WRAPPER),(SELECT Είδος as Oid ,BarCode as Κωδικός ,Περιγραφή ,BarCode FROM BarCodeΕίδους where (BarCode = BarCodeΕίδους or BarCodeΕίδους.Κείμενο2 =BarCodeΕίδους)  and BarCodeΕίδους.GCRecord is null FOR JSON PATH,WITHOUT_ARRAY_WRAPPER)))) as Product ,Ποσότητα ,ΗμνίαΔημιουργίας ,Ράφι from RFΑπογραφή where ΧρήστηςΔημιουργίας ='{0}' and ΑποθηκευτικόςΧώρος='{1}' and Θέση='{2}' and UpdSmart = 'false' and UpdWMS = 'false'  and GCRecord is null order by  ΗμνίαΔημιουργίας desc FOR JSON PATH</value>
+  </data>
+  <data name="getRFCounter" xml:space="preserve">
+    <value>SELECT Τιμή FROM ΓενικόςΜετρητής where Μετρητής='ΜετρητήςRF' and GCRecord is null FOR JSON PATH,WITHOUT_ARRAY_WRAPPER</value>
+  </data>
+  <data name="getRFLinesWithRFSaleID" xml:space="preserve">
+    <value>select Oid, RFΠωλήσεις ,JSON_QUERY((select * from (SELECT  Είδος.Oid ,Κωδικός ,Περιγραφή ,barcode = null ,ΦΠΑ ,ΜονάδεςΜέτρησης.ΜονάδαΜέτρησης ,ΜονάδεςΜέτρησης.ΤύποςΔιάστασης ,Πλάτος ,Μήκος ,Υψος ,Κείμενο2 as ProductCode2,ΤιμήΧονδρικής ,Χρώματα = null ,Μεγέθη = null FROM Είδος left join ΜονάδεςΜέτρησης on ΜονάδεςΜέτρησης.Oid = Είδος.ΜονάδαΜέτρησης where ((Είδος.Oid = Είδος )  and (ΥποχρεωτικήΔιαχείρησηSN ='false' or ΥποχρεωτικήΔιαχείρησηSN is null)) and Είδος.GCRecord is null UNION SELECT Είδος as Oid ,BarCode as Κωδικός ,Περιγραφή ,BarCode ,ΦΠΑ ,ΜονάδεςΜέτρησης.ΜονάδαΜέτρησης ,ΜονάδεςΜέτρησης.ΤύποςΔιάστασης ,Πλάτος ,Μήκος ,Υψος ,Κείμενο2 as ProductCode2 ,ΤιμήΧονδρικής ,Χρώματα.Χρώματα ,Μεγέθη.Μεγέθη FROM BarCodeΕίδους  left join Χρώματα on Χρώματα.Oid = BarCodeΕίδους.Χρώμα  left join ΜονάδεςΜέτρησης on ΜονάδεςΜέτρησης.Oid = BarCodeΕίδους.ΜονάδαΜέτρησης  left join Μεγέθη on Μεγέθη.Oid = BarCodeΕίδους.Μέγεθος where  (BarCode = BarCodeΕίδους or BarCodeΕίδους.Κείμενο2 =BarCodeΕίδους) and BarCodeΕίδους.GCRecord is null) a left join  (SELECT     ΚινήσειςΕιδών.Είδος as ΕίδοςOid , ΚινήσειςΕιδών.Τιμή as LastPrice FROM  ΚινήσειςΕιδών AS ΚινήσειςΕιδών INNER JOIN (SELECT     Είδος, MAX(Ημνία) AS MaxPurchaseDate  FROM ΚινήσειςΕιδών WHERE (ΕισαγωγήΑξία  &gt; 0 and GCRecord is null)  GROUP BY Είδος) AS LastPurchase ON LastPurchase.MaxPurchaseDate = ΚινήσειςΕιδών.Ημνία AND LastPurchase.Είδος = ΚινήσειςΕιδών.Είδος INNER JOIN  Προμηθευτής ON ΚινήσειςΕιδών.Προμηθευτής = Προμηθευτής.Oid inner join Είδος  on Είδος.oid= ΚινήσειςΕιδών.Είδος  left join ΓραμμέςΠαραστατικώνΑγορών on ΓραμμέςΠαραστατικώνΑγορών.Oid = ΚινήσειςΕιδών.ΓραμμήΑγορών) b on a.Oid=b.ΕίδοςOid FOR JSON PATH,WITHOUT_ARRAY_WRAPPER)) as Product ,Ποσότητα ,ΠοσότηταΔιάστασης ,Μήκος ,Πλάτος ,Υψος from RFΓραμμέςΠωλήσεων where RFΠωλήσεις ='{0}' and GCRecord is null FOR JSON PATH</value>
+  </data>
+  <data name="getRFPositions" xml:space="preserve">
+    <value>SELECT  Oid, Κωδικός, Περιγραφή FROM Θέση where GCRecord is null</value>
+  </data>
+  <data name="getRFSale" xml:space="preserve">
+    <value>select Oid ,JSON_QUERY((select Oid,Κωδικός,Επωνυμία,ΑΦΜ,Email from Πελάτης where Oid=Πελάτης FOR JSON PATH,WITHOUT_ARRAY_WRAPPER)) as Customer ,ΠαραστατικόΠελάτη ,UpdSmart ,Ολοκληρώθηκε ,ΗμνίαΔημιουργίας ,JSON_QUERY((select Oid,Επωνυμία from Παραλαβών where Oid=Παραλαβών FOR JSON PATH,WITHOUT_ARRAY_WRAPPER)) as Reciever from RFΠωλήσεις where Oid='{0}' and UpdSmart = 'false' and GCRecord is null FOR JSON PATH,WITHOUT_ARRAY_WRAPPER</value>
+  </data>
+  <data name="getRFSales" xml:space="preserve">
+    <value>select Oid ,JSON_QUERY((select Oid,Κωδικός,Επωνυμία,ΑΦΜ,Email from Πελάτης where Oid=Πελάτης FOR JSON PATH,WITHOUT_ARRAY_WRAPPER)) as Customer ,ΠαραστατικόΠελάτη ,UpdSmart ,Ολοκληρώθηκε ,ΗμνίαΔημιουργίας ,JSON_QUERY((select Oid,Επωνυμία from Παραλαβών where Oid=Παραλαβών FOR JSON PATH,WITHOUT_ARRAY_WRAPPER)) as Reciever from RFΠωλήσεις where UpdSmart = 'false' and GCRecord is null FOR JSON PATH</value>
+  </data>
+  <data name="getSalesDoc" xml:space="preserve">
+    <value>SELECT  [Oid] ,JSON_QUERY((select Oid , Κωδικός ,Επωνυμία ,ΔιακριτικόςΤίτλος ,ΑΦΜ ,Email from Πελάτης where Oid = Πελάτης and GCRecord is null FOR JSON PATH,WITHOUT_ARRAY_WRAPPER)) as Customer,(SELECT Είδος.Oid,Είδος.Κωδικός,CAST(Ποσότητα as int) as Ποσότητα,BarCodeΕίδους as barcode ,iif(BarCodeΕίδους is not null,BarCodeΕίδους.Περιγραφή,Είδος.Περιγραφή) as Περιγραφή FROM ΠαραστατικάΠωλήσεων join ΓραμμέςΠαραστατικώνΠωλήσεων on ΠαραστατικάΠωλήσεων.Oid =ΓραμμέςΠαραστατικώνΠωλήσεων.ΠαραστατικάΠωλήσεων join Είδος on Είδος.Oid = ΓραμμέςΠαραστατικώνΠωλήσεων.Είδος left join BarCodeΕίδους on BarCodeΕίδους.BarCode = ΓραμμέςΠαραστατικώνΠωλήσεων.BarCodeΕίδους where Παραστατικό = '{0}' and ΓραμμέςΠαραστατικώνΠωλήσεων.GCRecord is null  FOR JSON PATH) as Products ,[Παραστατικό] FROM [ΠαραστατικάΠωλήσεων] where Παραστατικό = '{0}' and GCRecord is null FOR JSON PATH,WITHOUT_ARRAY_WRAPPER</value>
+  </data>
+  <data name="getStorageWithID" xml:space="preserve">
+    <value>SELECT Oid, Περιγραφή FROM ΑποθηκευτικόςΧώρος where Oid ='{0}' and GCRecord is null</value>
+  </data>
+  <data name="getTreeGrouping" xml:space="preserve">
+    <value>SELECT a.Oid  ,a.Parent ,a.Name as NameChild  ,ΔενδρικήΟμαδοποιησηΕιδών.ID FROM HCategory a   inner join ΔενδρικήΟμαδοποιησηΕιδών on ΔενδρικήΟμαδοποιησηΕιδών.Oid = a.Oid</value>
+  </data>
+  <data name="getUser" xml:space="preserve">
+    <value>select Oid, UserName,StoredPassword as Password from [User] where UserName ='{0}'  FOR JSON PATH ,WITHOUT_ARRAY_WRAPPER</value>
+  </data>
+  <data name="getUserWithID" xml:space="preserve">
+    <value>select Oid, UserName from [User] where UserName ='{0}'</value>
+  </data>
+  <data name="postCollectedToCommand" xml:space="preserve">
+    <value>INSERT INTO ΓραμμέςΕντολήςΣυλλογής (Oid ,Θέση ,BarCodeΕίδους ,Είδος , ΠοσότηταΕντολής,ΠοσότηταΣυλλογής, ΕντολήΣυλλογής, ΑφοράΓραμμήΕντολήςΣυλλογής) VALUES(Convert(uniqueidentifier, N'{0}'), Convert(uniqueidentifier, N'{1}'),'{2}',Convert(uniqueidentifier, N'{3}'),'{4}','{5}',Convert(uniqueidentifier, N'{6}'),Convert(uniqueidentifier, N'{7}'))</value>
+  </data>
+  <data name="postManagement" xml:space="preserve">
+    <value>INSERT INTO Διαχείριση (Oid, Τύπος, Πελάτης, Ημνία, Παραστατικό) VALUES((Convert(uniqueidentifier, N'{0}')),'{1}',(Convert(uniqueidentifier, N'{2}')), GETDATE(),'{3}'); </value>
+  </data>
+  <data name="postPalette" xml:space="preserve">
+    <value>INSERT INTO Παλέτα (Oid,SSCC,Περιγραφή,Μήκος,Πλάτος,Υψος) values ('{0}','{1}','{2}','{3}','{4}','{5}')</value>
+  </data>
+  <data name="postPaletteItem" xml:space="preserve">
+    <value>INSERT INTO ΠεριεχόμεναΠαλέτας (Oid,Παλέτα,[Είδος],[BarCodeΕίδους],[Ποσότητα]) values ('{0}','{1}','{2}',{3},'{4}')</value>
+  </data>
+  <data name="postPosition" xml:space="preserve">
+    <value>INSERT INTO ΚίνησηΘέσης (Oid ,Θέση ,BarCodeΕίδους ,Είδος , ΠοσότηταΕγγραφής, ΤύποςΚίνησηςΘέσης, Διαχείρηση, Ημνία, Παλέτα) VALUES((Convert(uniqueidentifier, N'{0}')), (Convert(uniqueidentifier, N'{1}')),{2}, (Convert(uniqueidentifier, N'{3}')),'{4}','{5}',{6},GETDATE(),{7});</value>
+  </data>
+  <data name="postPurchase" xml:space="preserve">
+    <value>INSERT INTO RFΑγορές (Oid, Προμηθευτής, ΠαραστατικόΠρομηθευτή, ΗμνίαΔημιουργίας) VALUES((Convert(uniqueidentifier, N'{0}')), (Convert(uniqueidentifier, N'{1}')), '{2}', GETDATE());</value>
+  </data>
+  <data name="postPurchaseLine" xml:space="preserve">
+    <value>INSERT INTO RFΓραμμέςΑγορών (Oid, RFΠωλήσεις, Είδος, Ποσότητα, BarCodeΕίδους, ΠοσότηταΔιάστασης, Μήκος, Πλάτος, Υψος) VALUES((Convert(uniqueidentifier, N'{0}')),(Convert(uniqueidentifier, N'{1}')),(Convert(uniqueidentifier, N'{2}')), Convert(float,'{3}'), {4}, Convert(float,'{5}'), Convert(float,'{6}'), Convert(float,'{7}'), Convert(float,'{8}')); </value>
+  </data>
+  <data name="postReciever" xml:space="preserve">
+    <value>INSERT INTO [Παραλαβών] (Oid, Επωνυμία) VALUES((Convert(uniqueidentifier, N'{0}')),'{1}')</value>
+  </data>
+  <data name="postRFCensus" xml:space="preserve">
+    <value>INSERT INTO RFΑπογραφή (Oid, ΑποθηκευτικόςΧώρος, Είδος, ΧρήστηςΔημιουργίας, Ποσότητα, ΗμνίαΔημιουργίας,  Θέση, BarCodeΕίδους ,UpdSmart ,UpdWMS ,Ολοκληρώθηκε) VALUES((Convert(uniqueidentifier, N'{0}')),(Convert(uniqueidentifier, N'{1}')),(Convert(uniqueidentifier, N'{2}')),(Convert(uniqueidentifier, N'{3}')),'{4}', GETDATE(),(Convert(uniqueidentifier, N'{5}')),{6},0,0,1)</value>
+  </data>
+  <data name="postRFLine" xml:space="preserve">
+    <value>INSERT INTO RFΓραμμέςΠωλήσεων (Oid, RFΠωλήσεις, Είδος, Ποσότητα, Θέση, OptimisticLockField, GCRecord, BarCodeΕίδους, ΠοσότηταΔιάστασης, Μήκος, Πλάτος, Υψος) VALUES((Convert(uniqueidentifier, N'{0}')), (Convert(uniqueidentifier, N'{1}')), (Convert(uniqueidentifier, N'{2}')), Convert(float,'{3}'), null, '1', null, {4}, Convert(float,'{5}'), Convert(float,'{6}'), Convert(float,'{7}'), Convert(float,'{8}')); </value>
+  </data>
+  <data name="postRFSale" xml:space="preserve">
+    <value>INSERT INTO RFΠωλήσεις (Oid, ΑποθηκευτικόςΧώρος, Πελάτης, ΠαραστατικάΠωλήσεων, ΠαραστατικόΠελάτη,  Διαχείριση, UpdSmart, Ολοκληρώθηκε, ΗμνίαΔημιουργίας, ΑυτόματηΔιαγραφήΠαραστατικών, OptimisticLockField, GCRecord, Παραλαβών)  VALUES((Convert(uniqueidentifier, N'{0}')), null, (Convert(uniqueidentifier, N'{1}')) , null, '{2}', null, '0', '0', GETDATE(), '0', '1', null,  {3}); </value>
+  </data>
+  <data name="putBarCodeCounter" xml:space="preserve">
+    <value>UPDATE ΓενικόςΜετρητής SET Τιμή = {0} WHERE Μετρητής = 'Barcode'</value>
+  </data>
+  <data name="putCollectedToCommand" xml:space="preserve">
+    <value>update ΓραμμέςΕντολήςΣυλλογής set ΠοσότηταΣυλλογής = {0} where Oid ='{1}'</value>
+  </data>
+  <data name="putHallWay" xml:space="preserve">
+    <value>UPDATE Διάδρομος SET AAPicking = '{1}' where [Κωδικός]='{0}'</value>
+  </data>
+  <data name="putPosition" xml:space="preserve">
+    <value>UPDATE [Θέση] SET AAPicking = '{1}',Διάδρομος = '{2}' where [Κωδικός]='{0}'</value>
+  </data>
+  <data name="putPurchase" xml:space="preserve">
+    <value>UPDATE RFΑγορές SET Προμηθευτής = '{0}',ΠαραστατικόΠρομηθευτή = '{1}', Ολοκληρώθηκε = '{2}', UpdSmart = '{2}' WHERE Oid = '{3}' </value>
+  </data>
+  <data name="putRFCensus" xml:space="preserve">
+    <value>UPDATE RFΑπογραφή SET Ποσότητα = '{0}' WHERE Oid = '{1}' </value>
+  </data>
+  <data name="putRFCounter" xml:space="preserve">
+    <value>UPDATE ΓενικόςΜετρητής  SET Τιμή = '{0}' WHERE Μετρητής = 'ΜετρητήςRF'</value>
+  </data>
+  <data name="putRFSale" xml:space="preserve">
+    <value>UPDATE RFΠωλήσεις SET Πελάτης = '{0}' , Ολοκληρώθηκε = '{1}' ,  UpdSmart = '{2}' , Παραλαβών = {3} WHERE Oid = '{4}' </value>
+  </data>
+  <data name="setHallAAToZero" xml:space="preserve">
+    <value>UPDATE Διάδρομος SET AAPicking = 0</value>
+  </data>
+  <data name="setPositionAAToZero" xml:space="preserve">
+    <value>UPDATE Θέση SET AAPicking = 0, Διάδρομος = null</value>
+  </data>
+</root>

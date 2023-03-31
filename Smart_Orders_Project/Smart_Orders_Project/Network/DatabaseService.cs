@@ -44,9 +44,28 @@ namespace SmartMobileWMS.Network
                 return result.Substring(0, 2);
             }
         }
+        public static async Task<int> NoOfParameters()
+        {
+            var method = "SELECT Count(*) as rows FROM XamarinMobWMSParameters for json path,without_array_wrapper";
+            var jsonResult = new StringBuilder();
+
+            using (SqlConnection connection = new SqlConnection(ConnectionStrings.ConnectionString))
+            {
+                await connection.OpenAsync();
+                SqlCommand command = new SqlCommand(method, connection);
+                SqlDataReader reader = await command.ExecuteReaderAsync();
+                while (await reader.ReadAsync())
+                {
+                    jsonResult.Append(reader.GetValue(0).ToString());
+                }
+            }
+            var result = JsonSerializer.Deserialize<ThisResult> (jsonResult.ToString());
+            return result.rows;
+        }
         class ThisResult
         {
             public bool result { get; set; }
+            public int rows { get; set; }
         }
     }
 }

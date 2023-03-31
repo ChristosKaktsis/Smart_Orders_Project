@@ -3,6 +3,7 @@ using DevExpress.XtraRichEdit.Fields;
 using SmartMobileWMS.Models;
 using SmartMobileWMS.Network;
 using SmartMobileWMS.Repositories;
+using SmartMobileWMS.Services;
 using SmartMobileWMS.Views;
 using System;
 using System.Collections.Generic;
@@ -22,11 +23,13 @@ namespace SmartMobileWMS.ViewModels
         private UserRepository userRepository = new UserRepository();
         public Command LoginCommand { get; }
         public Command ConnectionCommand { get; }
+        public Command UpdateTableCommand { get; }
 
         public LoginViewModel()
         {
             LoginCommand = new Command(OnLoginClicked);
             ConnectionCommand = new Command(OnConnectionClicked);
+            UpdateTableCommand = new Command(async () => await UpdateParameters());
         }
         public void OnAppearing()
         {
@@ -81,6 +84,36 @@ namespace SmartMobileWMS.ViewModels
                 return false;
             }
             return true;
+        }
+        private async Task UpdateParameters()
+        {
+            IsBusy = true;
+            try
+            {
+                var rows = await DatabaseService.NoOfParameters();
+                if (rows > 0)
+                {
+                     var answer = await Shell.Current.DisplayAlert(
+                        "Αντικατάσταση των παράμετρων?",
+                        "Οι Παράμετροι υπάρχουν ήδη στην βάση του Smart. " +
+                        "Θέλετε να γίνει αντικατάσταση με τα καινούργια?",
+                        "Αντικατάσταση.","Άκυρο"
+                        );
+                    if (answer)
+                    {
+                        await DatabaseParameter.DeleteParameters();
+                        await DatabaseParameter.CreateParameters();
+                    }
+                    return;
+                }
+
+                await DatabaseParameter.CreateParameters();
+            }
+            catch(Exception e) 
+            {
+                Debug.WriteLine(e);
+            }
+            finally { IsBusy = false; }
         }
 
         private async void OnConnectionClicked(object obj)

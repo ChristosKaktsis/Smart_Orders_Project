@@ -24,24 +24,15 @@
                     <Frame BackgroundColor="#1446bd" HeightRequest="130" HorizontalOptions="FillAndExpand">
                     </Frame>
                 </StackLayout>
-                <StackLayout Margin="10,130,10,0">
-                    <Frame BackgroundColor="White" HasShadow="True" HeightRequest="320" HorizontalOptions="FillAndExpand">
+                <StackLayout Margin="10,120,10,0">
+                    <Frame BackgroundColor="White" HasShadow="True" HorizontalOptions="FillAndExpand">
                         <StackLayout>
-                            <StackLayout HorizontalOptions="CenterAndExpand">
-                                <Label Text="Είσοδος" TextColor="black" FontSize="Medium" FontAttributes="Bold"/>
-                            </StackLayout>
-                            <StackLayout Margin="0,25,0,0">
-                                <editors:TextEdit PlaceholderText="User" Text="{Binding UserName}" TextColor="#008bff"  HorizontalOptions="FillAndExpand" Margin="0,0,15,0"/>
-                            </StackLayout>
-                            <StackLayout Margin="0,25,0,0">
-                                <editors:PasswordEdit PlaceholderText="Password" Text="{Binding Password}" TextColor="#008bff"  HorizontalOptions="FillAndExpand" Margin="0,0,15,0"/>
-                            </StackLayout>
-                            <StackLayout Margin="0,15,0,10">
-                                <Button Text="Είσοδος" BackgroundColor="{StaticResource Primary}" TextColor="White" FontAttributes="Bold" CornerRadius="30" Command="{Binding LoginCommand}"/>
-                            </StackLayout>
-                            <StackLayout HorizontalOptions="Center">
-                                <Button Text="Σύνδεση" TextTransform="None" BackgroundColor="White" CornerRadius="30" TextColor="{StaticResource  Primary}" Command="{Binding ConnectionCommand}"/>
-                            </StackLayout>
+                            <Label HorizontalOptions="CenterAndExpand" Text="Είσοδος" TextColor="black" FontSize="Medium" FontAttributes="Bold"/>
+                            <editors:TextEdit PlaceholderText="User" Text="{Binding UserName}" TextColor="#008bff"  HorizontalOptions="FillAndExpand" Margin="0,25,15,0"/>
+                            <editors:PasswordEdit PlaceholderText="Password" Text="{Binding Password}" TextColor="#008bff"  HorizontalOptions="FillAndExpand" Margin="0,25,15,0"/>
+                            <Button Text="Είσοδος" Margin="0,15,0,10" BackgroundColor="{StaticResource Primary}" TextColor="White" FontAttributes="Bold" CornerRadius="30" Command="{Binding LoginCommand}"/>
+                            <Button Text="Σύνδεση" TextTransform="None" BackgroundColor="White" CornerRadius="30" TextColor="{StaticResource  Primary}" Command="{Binding ConnectionCommand}"/>
+                            <Button Text="Create Parameters" CornerRadius="30" Margin="0,30" BackgroundColor="White" TextColor="{StaticResource  Primary}" Command="{Binding UpdateTableCommand}"/>
                         </StackLayout>
                     </Frame>
                 </StackLayout>

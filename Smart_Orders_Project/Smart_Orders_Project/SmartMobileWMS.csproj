@@ -18,6 +18,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Resources\Parameters.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Parameters.resx</DependentUpon>
+    </Compile>
     <Compile Update="Views\WMSViews\PositionExportPage.xaml.cs">
       <DependentUpon>PositionExportPage.xaml</DependentUpon>
     </Compile>
@@ -27,6 +32,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Resources\Parameters.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Parameters.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\BarCodeValuesPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
