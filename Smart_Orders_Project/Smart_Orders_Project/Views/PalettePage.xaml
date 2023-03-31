@@ -25,6 +25,7 @@
                                        HorizontalOptions="Center"/>
                                     <dxe:NumericEdit Value="{Binding Quantity}" SelectValueOnFocus="True"
                                              WidthRequest="60" HeightRequest="30"
+                                                     IsReadOnly="{Binding SN}"
                                              HorizontalOptions="EndAndExpand"/>
                                 </StackLayout>
                             </Frame>

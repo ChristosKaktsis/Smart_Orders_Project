@@ -12,21 +12,26 @@ namespace SmartMobileWMS.Repositories
     {
         protected async Task<string> GetParamAsync(string parName)
         {
-            return await Task.Run(async () => {
-                string queryString = $@"SELECT ParamName, Parameter
-                From XamarinMobWMSParameters where ParamName='{parName}'";
-                using (SqlConnection connection = new SqlConnection(ConnectionStrings.ConnectionString))
+            string queryString = $@"SELECT ParamName, Parameter
+                From XamarinMobWMSParameters where ParamName='{parName}' and GCRecord is null";
+            using (SqlConnection connection = new SqlConnection(ConnectionStrings.ConnectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(queryString, connection);
+                SqlDataReader reader = await command.ExecuteReaderAsync();
+                if (!reader.HasRows)
                 {
-                    connection.Open();
-                    SqlCommand command = new SqlCommand(queryString, connection);
-                    SqlDataReader reader = await command.ExecuteReaderAsync();
-                    if (!reader.HasRows)
-                        return null;
-                    await reader.ReadAsync();
-
-                    return await Task.FromResult(reader["Parameter"].ToString());
+                    NotifyUser(parName);
+                    return string.Empty;
                 }
-            });
+                await reader.ReadAsync();
+                if (reader["Parameter"] == string.Empty) 
+                { 
+                    NotifyUser(parName);
+                    return string.Empty;
+                } 
+                return await Task.FromResult(reader["Parameter"].ToString());
+            }
         }
         /// <summary>
         /// Executes a query get method and returns JSON result 
@@ -35,6 +40,7 @@ namespace SmartMobileWMS.Repositories
         /// <returns></returns>
         protected async Task<string> ExecuteGetMethod(string method)
         {
+            if (string.IsNullOrWhiteSpace(method)) return string.Empty;
             var jsonResult = new StringBuilder();
 
             using (SqlConnection connection = new SqlConnection(ConnectionStrings.ConnectionString))
@@ -57,6 +63,13 @@ namespace SmartMobileWMS.Repositories
                 SqlCommand command = new SqlCommand(method, connection);
                 return await command.ExecuteNonQueryAsync();
             }
+        }
+        protected async void NotifyUser(string parameter)
+        {
+            await AppShell.Current.DisplayAlert(
+                            "",
+                            $"Δεν βρέθηκε η μέθοδος {parameter} ή είναι κενή.",
+                            "OK");
         }
     }
 }

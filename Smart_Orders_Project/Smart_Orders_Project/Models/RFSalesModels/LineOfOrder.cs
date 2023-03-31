@@ -26,6 +26,7 @@ namespace SmartMobileWMS.Models
             get => _quantity;
             set
             {
+                if (Product.SN) value = 1;
                 _quantity = decimal.Round(value, 1, MidpointRounding.AwayFromZero);
                 Sum = (double)value * Product.Price;
             }

@@ -97,7 +97,7 @@ namespace SmartMobileWMS.Views
             _viewModel.DisplayFounder = string.Empty;
             await _viewModel.FindPalette(Product_text.Text);
             _viewModel.LoadContent();
-            if (Product_text.HasError = !_viewModel.IsPaletteValid())
+            if (Product_text.HasError = !await _viewModel.IsPaletteValid())
             {
                 await DisplayAlert("Προσοχή", "Η παλέτα δεν ακολουθεί την εντολή συλλογής", "Οκ");
                 Reset();
@@ -107,7 +107,7 @@ namespace SmartMobileWMS.Views
         private async void GoForProduct()
         {
             _viewModel.DisplayFounder = string.Empty;
-            _viewModel.FindProduct(Product_text.Text);
+            await _viewModel.FindProduct(Product_text.Text);
             if (Product_text.HasError = _viewModel.FoundProduct == null)
             {
                 Product_text.ErrorText = "Το είδος δεν βρέθηκε στη Θέση";

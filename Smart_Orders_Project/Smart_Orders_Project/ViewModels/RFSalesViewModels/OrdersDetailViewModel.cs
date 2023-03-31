@@ -193,8 +193,8 @@ namespace SmartMobileWMS.ViewModels
             IsBusy = true;
             try
             {
-                if(string.IsNullOrWhiteSpace(search)) return;
                 CustomerCollection.Clear();
+                if (string.IsNullOrWhiteSpace(search)) return;
                 CustomerRepository repository = new CustomerRepository();
                 var items = await repository.GetItemAsync(search);
                 items.ForEach(item =>{CustomerCollection.Add(item);});
@@ -208,6 +208,9 @@ namespace SmartMobileWMS.ViewModels
         private void AddNewLine(Product item)
         {
             if (item == null) return;
+            if (!IsQualified(item)) {
+                NotifySNNotValid();
+                return; }
             var newLine = new LineOfOrder
             {
                 Oid = Guid.NewGuid(),
@@ -217,6 +220,22 @@ namespace SmartMobileWMS.ViewModels
             };
             LineCollection.Add(newLine);
         }
+
+        
+
+        /// <summary>
+        /// Checks if the item is a serial number and if it can be added to the list.You can only add 1 serial number item in the list
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        private bool IsQualified(Product item)
+        {
+            if (item == null) return false;
+            if (!item.SN) return true;
+            if(LineCollection.Where(l => l.Product.Oid == item.Oid).Any()) return false;
+            return true;
+        }
+
         public void DeleteLine(LineOfOrder item)
         {
             if (item == null) return;

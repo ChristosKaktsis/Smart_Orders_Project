@@ -49,11 +49,11 @@
                                         <Label Text="{Binding Product.CodeDisplay}" FontAttributes="Bold"/>
                                     </StackLayout>
                                     <StackLayout HorizontalOptions="EndAndExpand">
-                                        <Label Text="{Binding Sum,StringFormat='{0} €'}" HorizontalOptions="EndAndExpand"/>
+                                        <Label Text="{Binding Sum,StringFormat='{0} €'}" FontSize="18" HorizontalOptions="EndAndExpand"/>
                                         <dxe:NumericEdit Value="{Binding Quantity}" SelectValueOnFocus="True"
-                                             WidthRequest="60" HeightRequest="30"
+                                             HeightRequest="30"
                                              HorizontalOptions="EndAndExpand"
-                                                         Unfocused="NumericEdit_Unfocused"/>
+                                             Unfocused="NumericEdit_Unfocused"/>
                                     </StackLayout>
                                 </StackLayout>
                             </Frame>
@@ -87,9 +87,10 @@
                 <Frame x:Name="Scan_Frame"  Padding="7">
                     <StackLayout Orientation="Horizontal" HeightRequest="40">
                         <ImageButton Source="search.png" Padding="5" BackgroundColor="White" Clicked="ImageButton_Clicked"/>
-                        <Label Text="Scan Code" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"/>
+                        <ImageButton Source="barcode.png" Padding="5" BackgroundColor="White" Clicked="ImageButton_Clicked_1"/>
                         <dxe:TextEdit x:Name="Scan_Code_Edit"
-                                      HorizontalOptions="EndAndExpand" WidthRequest="220"
+                                      PlaceholderText="Scan Code"
+                                      HorizontalOptions="FillAndExpand"
                                       Unfocused="Scan_Code_Edit_Unfocused"/>
                     </StackLayout>
                 </Frame>
@@ -126,7 +127,7 @@
                         <Label Text="{Binding DisplayProvider,Mode=OneWay}" FontSize="20" FontAttributes="Bold"/>
                         <dxe:TextEdit x:Name="Search" 
                                           PlaceholderText="Αναζήτηση"
-                                          TextChanged="Search_TextChanged"
+                                          Completed="Search_Completed"
                                           ClearIconVisibility="Auto"
                                           Grid.Row="1"/>
                         <dxcv:DXCollectionView x:Name="CustomersCollection" 

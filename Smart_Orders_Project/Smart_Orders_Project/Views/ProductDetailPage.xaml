@@ -17,6 +17,7 @@
             <Button IsVisible="true" HeightRequest="1" BackgroundColor="Transparent"/>
             <Frame x:Name="Scan_Frame"  Padding="7">
                 <StackLayout Orientation="Horizontal" HeightRequest="40">
+                    <ImageButton Source="barcode.png" Clicked="Button_Clicked"/>
                     <Label Text="Scan Code" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"/>
                     <dxe:TextEdit x:Name="Scan_Code_Edit"
                                       HorizontalOptions="EndAndExpand" WidthRequest="220"

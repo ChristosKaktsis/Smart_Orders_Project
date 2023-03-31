@@ -165,6 +165,12 @@ namespace SmartMobileWMS.ViewModels
         {
             await Shell.Current.GoToAsync("..");
         }
+        protected async void NotifySNNotValid()
+        {
+            await Shell.Current.DisplayAlert("Το Serial Number υπάρχει",
+                "Δεν μπορείτε να εισάγεται στη λίστα το ίδιο Serial Number πάνω απο μία φορές", 
+                "Οκ");
+        }
         private async void OnBackButtonPressed()
         {
             var answer = await Shell.Current.DisplayAlert("Ερώτηση;", "Θέλετε να αποχωρήσετε", "Ναί", "Όχι");

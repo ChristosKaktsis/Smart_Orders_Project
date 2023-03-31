@@ -8,7 +8,8 @@
         <ToolbarItem Text="Cart" Clicked="ToolbarItem_Clicked" IconImageSource="cart.png"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout x:DataType="vm:PositionBaseViewModel" Margin="11" Spacing="30" >
+        <StackLayout x:DataType="vm:PositionBaseViewModel" Margin="11" Spacing="0" >
+            <Button IsVisible="true" HeightRequest="1" BackgroundColor="Transparent"/>
             <dxp:DXPopup x:Name="SpacePopUp"
                          AllowScrim="True"
                          ScrimColor="{StaticResource BackGroundDarkTranc}">
@@ -175,6 +176,8 @@
                         BackgroundColor="{StaticResource Primary}"
                         HeightRequest="80" HorizontalOptions="EndAndExpand" 
                         FontSize="Body" CornerRadius="10"/>
+                <ActivityIndicator IsRunning="{Binding IsBusy}"
+                                   Grid.Row="4" Grid.Column="1" />
             </Grid>
         </StackLayout>
     </ContentPage.Content>

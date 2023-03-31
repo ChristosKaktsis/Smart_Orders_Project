@@ -77,7 +77,7 @@ namespace SmartMobileWMS.ViewModels
         {
             ConString = $"User ID={phonebook["User ID"]};Password={phonebook["Password"]};Pooling={phonebook["Pooling"]};Data Source={phonebook["Data Source"]};Initial Catalog={phonebook["Initial Catalog"]}";
             ConnectionString = ConString;
-            await Shell.Current.DisplayAlert("Connection String", ConnectionString, "OK");
+            //await Shell.Current.DisplayAlert("Connection String", ConnectionString, "OK");
         }
 
         public Command SaveCommand { get; }

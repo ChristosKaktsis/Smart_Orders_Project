@@ -55,7 +55,7 @@ namespace SmartMobileWMS.Views
 
         private async void Search_TextChanged(object sender, EventArgs e)
         {
-            await _viewModel.GetCustomers(Search.Text);
+            //await _viewModel.GetCustomers(Search.Text);
         }
 
         private void SwipeItem_Invoked(object sender, SwipeItemTapEventArgs e)
@@ -76,6 +76,20 @@ namespace SmartMobileWMS.Views
         private async void custom_popup_TextChanged(object sender, TextChangedEventArgs e)
         {
             await _viewModel.SearchProduct(((ProductPopup)sender).Text);
+        }
+
+        private async void Search_Completed(object sender, EventArgs e)
+        {
+            await _viewModel.GetCustomers(Search.Text);
+        }
+
+        private async void ImageButton_Clicked_1(object sender, EventArgs e)
+        {
+            await Shell.Current.Navigation.PushAsync(new ImageBarcodeScanner(doit));
+        }
+        private async void doit(string r)
+        {
+            await _viewModel.GetProduct(r);
         }
     }
 }

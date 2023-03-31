@@ -55,5 +55,13 @@ namespace SmartMobileWMS.Views
         {
             await _viewModel.SearchProduct(((ProductPopup)sender).Text);
         }
+        private async void ImageButton_Clicked_1(object sender, EventArgs e)
+        {
+            await Shell.Current.Navigation.PushAsync(new ImageBarcodeScanner(doit));
+        }
+        private async void doit(string r)
+        {
+            await _viewModel.GetProduct(r);
+        }
     }
 }

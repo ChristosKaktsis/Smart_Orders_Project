@@ -121,7 +121,7 @@ namespace SmartMobileWMS.ViewModels
             catch (Exception Ex)
             {
                 Debug.WriteLine(Ex);
-                await Shell.Current.DisplayAlert("", "Κάτι πήγε λάθος στην σύδεση \n"+Ex.Message, "Οκ");
+                await Shell.Current.DisplayAlert("", "Κάτι πήγε λάθος \n"+Ex.Message, "Οκ");
             }
             finally
             {

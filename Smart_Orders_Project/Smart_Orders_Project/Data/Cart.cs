@@ -24,6 +24,7 @@ namespace SmartMobileWMS.Data
                 foreach (var item in CartItems)
                 {
                     item.Type = type;
+                    if (!await CanExecute(item)) return;
                     var result = await positionChangeRepository.AddItem(item);
                     Debug.WriteLine($"Saved? {result}");
                 }
@@ -35,6 +36,24 @@ namespace SmartMobileWMS.Data
                 Debug.WriteLine(ex);
                 await Shell.Current.DisplayAlert("", $"Η ενέργεια SavePosition δεν πραγματοποιήθηκε", "Ok");
             }
+        }
+
+        private static async Task<bool> CanExecute(PositionChange item)
+        {
+            if (!item.Product.SN) return true;
+            var doesExist = await ProductExistInPosition(
+                item.Product.CodeDisplay, item.Position.Oid.ToString());
+            if (item.Type == 0)
+                return !doesExist;
+            return doesExist;
+        }
+        private static async Task<bool> ProductExistInPosition(string position, string product)
+        {
+            var productRepository = new ProductRepository();
+            var item = await productRepository.GetItemAsync(product, position);
+            if (item == null)
+                return false;
+            return (item.Quantity > 0);
         }
     }
 }

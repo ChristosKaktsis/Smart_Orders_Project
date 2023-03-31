@@ -142,6 +142,13 @@ namespace SmartMobileWMS.ViewModels
             }
             return result;
         }
+        public async Task<bool> ProductExistInPosition(string position, string product)
+        {
+            var item = await productRepository.GetItemAsync(product,position);
+            if (item == null)
+                return false;
+            return (item.Quantity > 0 );
+        }
         public bool ProductHasError
         {
             get { return productHasError; }
@@ -248,6 +255,7 @@ namespace SmartMobileWMS.ViewModels
         {
             if (string.IsNullOrWhiteSpace(productID))
                 return false;
+            if(SSCCDigits<=0) return false;
             return productID.Length >= SSCCDigits;
         }
         public Palette Palette

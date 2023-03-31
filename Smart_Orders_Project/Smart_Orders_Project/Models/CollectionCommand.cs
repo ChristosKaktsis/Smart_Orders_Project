@@ -26,6 +26,8 @@ namespace SmartMobileWMS.Models
             get => collected;
             set => SetProperty(ref collected, value);
         }
+        [JsonPropertyName("ΑφοράΓραμμήΕντολήςΣυλλογής")]
+        public string ParentId { get; set; }
         TaskStatus status;
         public TaskStatus Status
         {

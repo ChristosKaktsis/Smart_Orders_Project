@@ -76,6 +76,11 @@ namespace SmartMobileWMS.Views
             var answer = await PositionCheck();
             if (!answer)
                 return;
+            if (!await IsProductSNApproved())
+            {
+                Reset();
+                return;
+            }
             await _viewModel.ExecuteSavePosition(1);
             Reset();
         }
@@ -97,19 +102,35 @@ namespace SmartMobileWMS.Views
             bool result = false;
             if (_viewModel.Position == null || _viewModel.Product == null)
                 return result;
+            result = await _viewModel.AnyProductLeft(_viewModel.Position.Oid.ToString(), _viewModel.Product.CodeDisplay, _viewModel.Quantity);
+            if (!result)
+            {
+                bool answer = await DisplayAlert("Προσοχή", 
+                    "Η ποσότητα που αφαιρείτε είναι μεγαλήτερη απο αυτή που έχει η θέση", 
+                    "ΟΚ", "Άκυρο");
+                    result = answer;
+            }
 
-            var pleft = await _viewModel.AnyProductLeft(_viewModel.Position.Oid.ToString(), _viewModel.Product.Oid.ToString(), _viewModel.Quantity);
-            if (!pleft)
-            {
-                bool answer = await DisplayAlert("Προσοχή", "Η ποσότητα που αφαιρείτε είναι μεγαλήτερη απο αυτή που έχει η θέση", "ΟΚ", "Άκυρο");
-                if (answer)
-                    result = true;
-            }
-            else
-            {
-                result = true;
-            }
             return result;
+        }
+        private async Task<bool> IsProductSNApproved()
+        {
+            if (!_viewModel.Product.SN) return true;
+            if (!await _viewModel.ProductExistInPosition(_viewModel.Position.Oid.ToString(), _viewModel.Product.CodeDisplay))
+            {
+                await DisplayAlert("Serial Number",
+                   $"Το είδος {_viewModel.Product.CodeDisplay} είναι Serial Number το οποίο δεν υπάρχει στη θέση ",
+                   "ΟΚ");
+                return false;
+            }
+            if (_viewModel.Quantity > 1)
+            {
+                await DisplayAlert("Ποσότητα Serial Number",
+                $"Το είδος {_viewModel.Product.CodeDisplay} είναι Serial Number και δεν μπορείτε να εξάγετε ποσότητα μεγαλύτερη απο 1.",
+                "ΟΚ");
+                return false;
+            }
+            return true;
         }
         private void OpenPopUp_Button(object sender, EventArgs e)
         {

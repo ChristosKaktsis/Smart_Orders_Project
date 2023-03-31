@@ -41,11 +41,6 @@ namespace SmartMobileWMS.Views
             Scan_Code_Edit.Focus();
         }
 
-        private async void Search_TextChanged(object sender, EventArgs e)
-        {
-            await _viewModel.GetProviders(Search.Text);
-        }
-
         private void SwipeItem_Invoked(object sender, SwipeItemTapEventArgs e)
         {
             _viewModel.DeleteLine(e.Item as RFPurchaseLine);
@@ -63,6 +58,19 @@ namespace SmartMobileWMS.Views
         private async void custom_popup_TextChanged(object sender, TextChangedEventArgs e)
         {
             await _viewModel.SearchProduct(((ProductPopup)sender).Text);
+        }
+
+        private async void Search_Completed(object sender, EventArgs e)
+        {
+            await _viewModel.GetProviders(Search.Text);
+        }
+        private async void ImageButton_Clicked_1(object sender, EventArgs e)
+        {
+            await Shell.Current.Navigation.PushAsync(new ImageBarcodeScanner(doit));
+        }
+        private async void doit(string r)
+        {
+            await _viewModel.GetProduct(r);
         }
     }
 }

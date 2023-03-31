@@ -57,6 +57,8 @@ namespace SmartMobileWMS.Models
         public float Height { get; set; }
         public int Type { get; set; }
         public string UnitOfMeasure { get; set; }
+        public bool SN { get; set; }
+
         //nonPressistant
         int _quantity;
         [JsonPropertyName("Ποσότητα")]
@@ -65,11 +67,11 @@ namespace SmartMobileWMS.Models
             get => _quantity; 
             set 
             {
+                if (SN) value = 1;
                 SetProperty(ref _quantity, value);
             }  
         }
         int _quantity2;
-
         public int Quantity2
         {
             get => _quantity2;

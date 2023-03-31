@@ -86,12 +86,20 @@ namespace SmartMobileWMS.Views
             if (_viewModel.Position == null || _viewModel.Product == null)
                 return result;
 
-            var pleft = await _viewModel.AnyProductLeft(_viewModel.Position.Oid.ToString(), _viewModel.Product.Oid.ToString(), _viewModel.Quantity);
+            var pleft = await _viewModel.AnyProductLeft(_viewModel.Position.Oid.ToString(), _viewModel.Product.CodeDisplay, _viewModel.Quantity);
             if (!pleft)
             {
-                bool answer = await DisplayAlert("Προσοχή", "Η ποσότητα που αφαιρείτε είναι μεγαλήτερη απο αυτή που έχει η θέση", "ΟΚ", "Άκυρο");
-                if (answer)
-                    result = true;
+                bool answer = await DisplayAlert("Προσοχή",
+                    "Η ποσότητα που αφαιρείτε είναι μεγαλήτερη απο αυτή που έχει η θέση",
+                    "ΟΚ", "Άκυρο");
+                result = answer;
+                if (_viewModel.Product.SN)
+                {
+                    await DisplayAlert("Serial Number",
+                    $"Το είδος {_viewModel.Product.CodeDisplay} είναι Serial Number το οποίο δεν υπάρχει στη θέση ",
+                    "ΟΚ");
+                    result = false;
+                }
             }
             else
             {

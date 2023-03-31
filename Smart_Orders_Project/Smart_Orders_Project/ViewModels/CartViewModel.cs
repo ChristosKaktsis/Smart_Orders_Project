@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -103,12 +104,8 @@ namespace SmartMobileWMS.ViewModels
                 var item = await productRepository.GetItemAsync(id);
                 if (item == null) await Shell.Current.DisplayAlert("", "Το είδος δεν βρέθηκε", "ΟΚ");
                 item.Quantity = 1;
-                Cart.CartItems.Add(new PositionChange
-                {
-                    Quantity = item.Quantity,
-                    Product = item,
-                    Position = Position
-                });
+                AddToCart(item);
+                
             }
             catch (Exception ex)
             {
@@ -117,6 +114,22 @@ namespace SmartMobileWMS.ViewModels
             }
             finally { IsBusy = false; }
         }
+
+        private void AddToCart(Product item)
+        {
+            if (item == null) return;
+            if (item.SN)
+                if (Cart.CartItems.Where(c => c.Product.Oid == item.Oid).Any()) {
+                    NotifySNNotValid();
+                    return; }
+            Cart.CartItems.Add(new PositionChange
+            {
+                Quantity = item.Quantity,
+                Product = item,
+                Position = Position
+            });
+        }
+
         public void RemoveItem(PositionChange item)
         {
             if (item == null) return;

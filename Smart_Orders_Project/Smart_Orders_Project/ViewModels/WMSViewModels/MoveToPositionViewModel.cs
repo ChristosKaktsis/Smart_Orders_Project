@@ -127,6 +127,9 @@ namespace SmartMobileWMS.ViewModels
                 //move to positionTo
                 foreach (var item in ProductList)
                 {
+                    if (item.SN)
+                        if (await ProductExistInPosition(PositionTo.Oid.ToString(),
+                            item.CodeDisplay)) continue;
                     var pChange = new PositionChange
                     {
                         Position = PositionTo,

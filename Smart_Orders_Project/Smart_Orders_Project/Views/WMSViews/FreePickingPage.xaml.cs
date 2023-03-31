@@ -184,7 +184,7 @@ namespace SmartMobileWMS.Views
             if (_viewModel.Position == null || _viewModel.Product == null)
                 return result;
 
-            var pleft = await _viewModel.AnyProductLeft(_viewModel.Position.Oid.ToString(), _viewModel.Product.Oid.ToString(), _viewModel.Quantity);
+            var pleft = await _viewModel.AnyProductLeft(_viewModel.Position.Oid.ToString(), _viewModel.Product.CodeDisplay, _viewModel.Quantity);
             if (!pleft)
             {
                 bool answer = await DisplayAlert("Προσοχή", "Η ποσότητα που αφαιρείται είναι μεγαλύτερη απο αυτή που έχει η θέση", "Συνέχεια", "Άκυρο");

@@ -47,7 +47,7 @@
                                         <dxe:NumericEdit Value="{Binding Quantity}"
                                                          IsReadOnly="True"
                                                          SelectValueOnFocus="True"
-                                             WidthRequest="60" HeightRequest="30"
+                                             HeightRequest="30"
                                              HorizontalOptions="EndAndExpand"/>
                                     </StackLayout>
                                 </StackLayout>
@@ -78,9 +78,10 @@
                 <Frame x:Name="Scan_Frame"  Padding="7">
                     <StackLayout Orientation="Horizontal" HeightRequest="40">
                         <ImageButton Source="search.png" Padding="5" BackgroundColor="White" Clicked="ImageButton_Clicked"/>
-                        <Label Text="Scan Code" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"/>
+                        <ImageButton Source="barcode.png" Padding="5" BackgroundColor="White" Clicked="ImageButton_Clicked_1"/>
                         <dxe:TextEdit x:Name="Scan_Code_Edit"
-                                      HorizontalOptions="EndAndExpand" WidthRequest="220"
+                                      PlaceholderText="Scan Code"
+                                      HorizontalOptions="FillAndExpand"
                                       Unfocused="Scan_Code_Edit_Unfocused"/>
                     </StackLayout>
                 </Frame>

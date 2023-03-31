@@ -27,7 +27,9 @@ namespace SmartMobileWMS.ViewModels
         {
             ProductCollection = new ObservableCollection<Product>();
         }
-        public Palette Palette { get => palette; set => SetProperty(ref palette, value); }
+        public Palette Palette { 
+            get => palette; 
+            set => SetProperty(ref palette, value); }
         public void LoadContent()
         {
             try
@@ -69,6 +71,9 @@ namespace SmartMobileWMS.ViewModels
                 if (item != null)
                 {
                     item.Quantity++;
+                    if (!CanAddSNItem(item)) {
+                        NotifySNNotValid();
+                        return; }
                     ProductCollection.Add(item);
                 }
                 else
@@ -82,6 +87,13 @@ namespace SmartMobileWMS.ViewModels
             {
                 IsBusy = false;
             }
+        }
+        private bool CanAddSNItem(Product item)
+        {
+            if (!item.SN) return true;
+            if (ProductCollection.Where(i =>
+            i.CodeDisplay == item.CodeDisplay).Any()) return false;
+            return true;
         }
         public void DeleteProduct(string id)
         {

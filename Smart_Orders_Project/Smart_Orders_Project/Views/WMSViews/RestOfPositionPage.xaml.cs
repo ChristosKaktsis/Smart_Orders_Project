@@ -31,5 +31,11 @@ namespace SmartMobileWMS.Views
             await _viewModel.LoadPosition(Position_Text.Text);
             await _viewModel.LoadProductsFromPosition(_viewModel.Position);
         }
+
+        private async void Position_Text_Completed(object sender, EventArgs e)
+        {
+            await _viewModel.LoadPosition(Position_Text.Text);
+            await _viewModel.LoadProductsFromPosition(_viewModel.Position);
+        }
     }
 }

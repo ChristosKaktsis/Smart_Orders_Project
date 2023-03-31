@@ -112,10 +112,17 @@ namespace SmartMobileWMS.ViewModels
             Product.Quantity = Quantity;
             AddToList(Product,Position);
         }
-        public void AddToList(Product pro, Position position)
+        public async void AddToList(Product pro, Position position)
         {
             if (position == null || pro == null)
                 return;
+            if (IsSNInTheList(pro) || IsSNInThePositions(pro)) {
+                await AppShell.Current.DisplayAlert(
+                    "Serial Number έχει καταχωρηθεί", 
+                    $"Το Serial Number {pro.CodeDisplay} έχει καταχωριθεί στην λίστα", 
+                    "ΟΚ");
+                return;
+            }
             CheckQuantity(pro);
             var sameItem = Positions.Where(x => x.Oid == position.Oid);
             if (sameItem.Any())
@@ -137,13 +144,48 @@ namespace SmartMobileWMS.ViewModels
             }
             
         }
+        /// <summary>
+        /// Checks if there is a SN product in the Product list and 
+        /// checks if it is or its about to be added more than 1
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
+        private bool IsSNInTheList(Product p)
+        {
+            if (!p.SN) return false;
+            var sameItem = ProductList.Where(
+               x => x.CodeDisplay == p.CodeDisplay).FirstOrDefault();
+            if (sameItem == null)
+                return false;
+            if((sameItem.Quantity2 + p.Quantity) > 1)
+            {
+                return true;
+            }
+            return false;
+        }
+        private bool IsSNInThePositions(Product p)
+        {
+            if (!p.SN) return false;
+            var currentPosition = Positions.Where(x => x.Products.Where(i => i.CodeDisplay == p.CodeDisplay).Any());
+            if (!currentPosition.Any()) return false;
+            var samePosition = currentPosition.FirstOrDefault();
+            var sameProduct = samePosition.Products.Where(
+                    pro => pro.CodeDisplay == p.CodeDisplay).FirstOrDefault();
+            if (sameProduct == null)
+                return false;
+            if ((sameProduct.Quantity + p.Quantity) > 1)
+            {
+                return true;
+            }
+            return false;
+        }
         public bool ProductCheck()
         {
             bool result = false;
             if (Product == null)
                 return result;
             var haslist = ProductList.Where(
-                x => x.CodeDisplay == Product.CodeDisplay).Any();
+                x => x.Oid == Product.Oid).Any();
             if (haslist)
                 result = true;
             return result;
@@ -193,6 +235,9 @@ namespace SmartMobileWMS.ViewModels
                 return;
             var sameItem = ProductList.Where(
                 x => x.CodeDisplay == p.CodeDisplay).FirstOrDefault();
+            if (sameItem == null) 
+                sameItem = ProductList.Where(
+                x => x.Oid == p.Oid && string.IsNullOrEmpty(x.BarCode)).FirstOrDefault();
             if (sameItem == null)
                 return;
             var cal = sameItem.Quantity2 + p.Quantity;

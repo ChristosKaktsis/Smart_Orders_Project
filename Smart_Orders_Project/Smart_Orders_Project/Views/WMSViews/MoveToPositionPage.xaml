@@ -11,8 +11,8 @@
         <ToolbarItem Text="Cart" Clicked="Close_ProductPopUp_Clicked" IconImageSource="cart.png"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout x:DataType="vm:MoveToPositionViewModel" Margin="11" Spacing="30" >
-
+        <StackLayout x:DataType="vm:MoveToPositionViewModel" Margin="11" Spacing="0" >
+            <Button IsVisible="true" HeightRequest="1" BackgroundColor="Transparent"/>
             <dxp:DXPopup x:Name="SpacePopUp"
                          AllowScrim="True"
                          ScrimColor="{StaticResource BackGroundDarkTranc}">
@@ -113,7 +113,6 @@
                 </StackLayout>
 
             </dxp:DXPopup>
-
             <Grid RowSpacing="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50"/>

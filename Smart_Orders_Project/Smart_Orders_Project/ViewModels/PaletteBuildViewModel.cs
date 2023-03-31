@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -88,9 +89,12 @@ namespace SmartMobileWMS.ViewModels
                 IsBusy = true;
                 HasError = false;
                 var item = await productRepository.GetItemAsync(id);
-                if(item != null)
+                if (item != null)
                 {
                     item.Quantity++;
+                    if (!CanAddSNItem(item)) {
+                        NotifySNNotValid();
+                        return; }
                     ProductCollection.Add(item);
                 }
                 else
@@ -105,6 +109,15 @@ namespace SmartMobileWMS.ViewModels
                 IsBusy = false;
             }
         }
+
+        private bool CanAddSNItem(Product item)
+        {
+            if (!item.SN) return true;
+            if (ProductCollection.Where(i => 
+            i.CodeDisplay == item.CodeDisplay).Any()) return false;
+            return true;
+        }
+
         public bool HasError 
         { 
             get => hasError;

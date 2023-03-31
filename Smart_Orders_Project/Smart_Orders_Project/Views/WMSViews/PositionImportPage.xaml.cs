@@ -1,6 +1,7 @@
 ﻿using SmartMobileWMS.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -80,9 +81,38 @@ namespace SmartMobileWMS.Views
         }
         private async void SaveProduct()
         {
-            await _viewModel.ExecuteSavePosition(0);
+            try
+            {
+                if (!await IsProductSNApproved()) {
+                    Reset();
+                    return; } 
+
+                await _viewModel.ExecuteSavePosition(0);
+            }
+            catch (Exception ex) { Debug.WriteLine(ex); }
             Reset();
         }
+
+        private async Task<bool> IsProductSNApproved()
+        {
+            if(!_viewModel.Product.SN) return true;
+            if (await _viewModel.ProductExistInPosition(_viewModel.Position.Oid.ToString(), _viewModel.Product.CodeDisplay))
+            {
+                await DisplayAlert("Serial Number",
+                $"Το είδος {_viewModel.Product.CodeDisplay} είναι Serial Number και υπάρχει στη θέση {_viewModel.Position.Description} ",
+                "ΟΚ");
+                return false;
+            }
+            if(_viewModel.Quantity > 1)
+            {
+                await DisplayAlert("Ποσότητα Serial Number",
+                $"Το είδος {_viewModel.Product.CodeDisplay} είναι Serial Number και δεν μπορείτε να εισάγετε ποσότητα μεγαλύτερη απο 1.",
+                "ΟΚ");
+                return false;
+            }
+            return true;
+        }
+
         private void Reset()
         {
             Product_text.Focus();

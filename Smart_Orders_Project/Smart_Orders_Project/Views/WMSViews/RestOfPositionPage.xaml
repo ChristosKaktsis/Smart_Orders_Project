@@ -10,11 +10,12 @@
         <Grid Margin="10" x:DataType="vm:RestOfPositionViewModel">
             <StackLayout>
                 <dxe:TextEdit x:Name="Position_Text" PlaceholderText="Θέση"
-                              Unfocused="Position_Text_Unfocused"
+                              Completed="Position_Text_Completed"
                               ErrorText="{Binding ErrorMessage}" BottomTextFontSize="16"
                               HasError="{Binding PositionHasError}"/>
                 <Label x:Name="Position_Label" Text="{Binding Position.Description}" FontSize="16" 
                        HorizontalOptions="End"/>
+                <Button IsVisible="true" HeightRequest="1" BackgroundColor="Transparent"/>
                 <Frame Margin="5" Padding="0" CornerRadius="5">
                     <StackLayout>
                         <CollectionView ItemsSource="{Binding ProductList}" BackgroundColor="{StaticResource BackGround}">
@@ -25,7 +26,7 @@
                                             <Grid>
                                                 <StackLayout>
                                                     <Label Text="{Binding Name}"/>
-                                                    <Label Text="{Binding BarCode}"/>
+                                                    <Label Text="{Binding CodeDisplay}"/>
                                                 </StackLayout>
                                                 <Label Grid.Column="1" HorizontalOptions="End" 
                                                        Text="{Binding Quantity,StringFormat=' {0}'}" FontSize="15" FontAttributes="Bold"/>
