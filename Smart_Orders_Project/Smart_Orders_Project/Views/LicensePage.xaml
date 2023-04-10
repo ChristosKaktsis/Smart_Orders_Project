@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:vm="clr-namespace:SmartMobileWMS.ViewModels"
+             x:Class="SmartMobileWMS.Views.LicensePage"
+             Title="Αριθμός Σειράς">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Frame">
+                <Setter Property="HasShadow" Value="False"/>
+            </Style>
+            <Style TargetType="Label">
+                <Setter Property="FontSize" Value="15"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid x:DataType="vm:LicenseViewModel">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="150"/>
+            </Grid.RowDefinitions>
+            <Frame>
+                <Label Text="{Binding Device_Number}" FontSize="100"/>
+            </Frame>
+            <StackLayout Grid.Row="1" Margin="10" VerticalOptions="End">
+                <Label Text="Η συσκευή θα πρέπει να έχει αριθμό σειράς για να ενεργοποιηθεί."/>
+                <Label Text="Μπορείτε να κάνετε εγγραφή την συσκευή σας πατώντας το κουμπί εγγραφή."/>
+                <Label Text="Μπορείτε να κάνετε διαγραφή του αριθμου σειράς απο το σύστημα πατώντας το κουμπί διαγραφή."/>
+                <Label Text="Δεν μπορείτε να ξεπεράσετε τον αριθμό εγγραφών απο το πλήθος αδειών χρήσης που έχετε."/>
+                <Label Text="Δεν μπορούν να υπάρχουν συσκευές με τον ίδιο αριθμό σειράς."/>
+                <StackLayout Orientation="Horizontal" Margin="0,30,0,0">
+                    <Button VerticalOptions="EndAndExpand" HorizontalOptions="FillAndExpand"
+                        Text="Διαγραφη" BackgroundColor="{StaticResource TradicLight}"
+                        Command="{Binding Delete_Device_Command}"/>
+                    <Button VerticalOptions="EndAndExpand" HorizontalOptions="FillAndExpand"
+                        Text="Εγγραφη" BackgroundColor="{StaticResource Analogous}"
+                        Command="{Binding Register_Device_Command}"/>
+                </StackLayout>
+            </StackLayout>
+            
+        </Grid>
+        <ActivityIndicator IsRunning="{Binding IsBusy}"/>
+    </Grid>
+</ContentPage>

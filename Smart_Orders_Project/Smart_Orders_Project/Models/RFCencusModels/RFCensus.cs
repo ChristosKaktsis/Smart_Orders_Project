@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json.Serialization;
+using Xamarin.Forms;
 
 namespace SmartMobileWMS.Models
 {
@@ -28,7 +29,6 @@ namespace SmartMobileWMS.Models
         public DateTime CreationDate { get; set; }
         public Position Position { get; set; }
         public User UserCreator { get; set; }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

@@ -161,6 +161,7 @@ namespace SmartMobileWMS.ViewModels
                 Preferences.Set(nameof(ZeroValues), value);
             }
         }
+        
         public async void GoBack()
         {
             await Shell.Current.GoToAsync("..");

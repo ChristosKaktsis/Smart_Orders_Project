@@ -45,10 +45,9 @@
                                     </StackLayout>
                                     <StackLayout HorizontalOptions="EndAndExpand">
                                         <dxe:NumericEdit Value="{Binding Quantity}"
-                                                         IsReadOnly="True"
-                                                         SelectValueOnFocus="True"
-                                             HeightRequest="30"
-                                             HorizontalOptions="EndAndExpand"/>
+                                                         SelectValueOnFocus="True" HeightRequest="30"
+                                             HorizontalOptions="EndAndExpand"
+                                                         Completed="NumericEdit_Completed"/>
                                     </StackLayout>
                                 </StackLayout>
                             </Frame>

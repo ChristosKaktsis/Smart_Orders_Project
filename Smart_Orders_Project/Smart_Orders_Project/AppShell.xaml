@@ -94,7 +94,9 @@
     <FlyoutItem Title="Σύνδεση" Icon="connection.png">
         <ShellContent Route="ConnectionPage" ContentTemplate="{DataTemplate local:ConnectionPage}" />
     </FlyoutItem>
-    
+    <FlyoutItem Title="License" Icon="verified.png">
+        <ShellContent Route="LicensePage" ContentTemplate="{DataTemplate local:LicensePage}" />
+    </FlyoutItem>
     <!-- When the Flyout is visible this will be a menu item you can tie a click behavior to  -->
     <MenuItem Text="Logout" IconImageSource="logout.png" StyleClass="MenuItemLayoutStyle" Clicked="OnMenuItemClicked">
     </MenuItem>

@@ -1,4 +1,5 @@
-﻿using SmartMobileWMS.ViewModels;
+﻿using SmartMobileWMS.Models;
+using SmartMobileWMS.ViewModels;
 using SmartMobileWMS.Views.CustomViews;
 using System;
 using System.Collections.Generic;
@@ -62,6 +63,13 @@ namespace SmartMobileWMS.Views
         private async void doit(string r)
         {
             await _viewModel.GetProduct(r);
+        }
+        private async void NumericEdit_Completed(object sender, EventArgs e)
+        {
+            var num = (View)sender;
+            var item = num.BindingContext;
+            if(item is RFCensus)
+                await _viewModel.UpdateCensus(item as RFCensus);
         }
     }
 }

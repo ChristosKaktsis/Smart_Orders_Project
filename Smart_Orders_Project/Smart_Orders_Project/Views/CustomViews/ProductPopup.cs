@@ -98,7 +98,7 @@ namespace SmartMobileWMS.Views.CustomViews
             };
             searchText.BindingContext = this;
             searchText.SetBinding(TextEdit.TextProperty, "Text");
-            searchText.TextChanged += (sender, args) =>
+            searchText.Completed += (sender, args) =>
             {
                 OnTextChanged(args);
             };
@@ -112,7 +112,8 @@ namespace SmartMobileWMS.Views.CustomViews
             itemCollection.SelectionChanged += (sender, args) =>
             {
                 OnSelectionChanged(args);
-                SelectedProduct = (Product)args.SelectedItems[0];
+                if(args.SelectedItems.Any())
+                    SelectedProduct = (Product)args.SelectedItems[0];
                 this.IsOpen = false;
             };
             grid.Children.Add(itemCollection, 0, 2);

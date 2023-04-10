@@ -1,15 +1,12 @@
 ﻿using DevExpress.Persistent.Base;
-using DevExpress.XtraRichEdit.Fields;
-using SmartMobileWMS.Models;
+using SmartMobileWMS.Constants;
 using SmartMobileWMS.Network;
 using SmartMobileWMS.Repositories;
 using SmartMobileWMS.Services;
 using SmartMobileWMS.Views;
 using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Diagnostics;
-using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -27,15 +24,36 @@ namespace SmartMobileWMS.ViewModels
 
         public LoginViewModel()
         {
-            LoginCommand = new Command(OnLoginClicked);
+            LoginCommand = new Command(async() => await OnLoginClicked());
             ConnectionCommand = new Command(OnConnectionClicked);
             UpdateTableCommand = new Command(async () => await UpdateParameters());
         }
         public void OnAppearing()
         {
             CheckForDatabase();
+            CheckForLicense();
         }
 
+        /// <summary>
+        /// Check for license exist. If not clear device id value.
+        /// Device id is used when we check if device is activated 
+        /// </summary>
+        private async void CheckForLicense()
+        {
+            try
+            {
+                if(await DatabaseService.ParameterExist("getVat"))
+                    if (!await ActivationService.IsDeviceActive())
+                        InfoStrings.Device_ID = string.Empty;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+        }
+        /// <summary>
+        /// Check all database cases and notify user.
+        /// </summary>
         private async void CheckForDatabase()
         {
             IsBusy = true;
@@ -69,7 +87,10 @@ namespace SmartMobileWMS.ViewModels
             }
             finally { IsBusy = false; }
         }
-
+        /// <summary>
+        /// Get connected Sql server version and check if correck version
+        /// </summary>
+        /// <returns>true if varsion is SQL Server 2016 (13.x) or greater</returns>
         private async Task<bool> IsCorrectVersion()
         {
             var version = await DatabaseService.GetVersion();
@@ -85,42 +106,67 @@ namespace SmartMobileWMS.ViewModels
             }
             return true;
         }
+        /// <summary>
+        /// Inserts or Updates the parameters needed for the app to work. Parameters are in Resources.Parameters.resx file
+        /// </summary>
+        /// <returns></returns>
         private async Task UpdateParameters()
         {
             IsBusy = true;
             try
             {
-                var rows = await DatabaseService.NoOfParameters();
-                if (rows > 0)
+                string password = "exelixiswms!";
+                string result = await Shell.Current.DisplayPromptAsync(
+                    "Κωδικός ασφαλείας", 
+                    "Κωδικός ασφαλείας για να εκτελέσετε την διαδικασία ενημέρωσης παραμέτρων");
+                if (result != password)
                 {
-                     var answer = await Shell.Current.DisplayAlert(
+                    await Shell.Current.DisplayAlert(
+                        "Λάθος Κωδικός.","","OK"
+                        );
+                    return;
+                }
+                var rows = await DatabaseService.NoOfParameters();
+                if (rows == 0)
+                {
+                    await DatabaseParameter.CreateParameters();
+                    await Shell.Current.DisplayAlert(
+                        "Ολοκληρώθηκε", "", "OK"
+                        );
+                    return;
+                }
+                var answer = await Shell.Current.DisplayAlert(
                         "Αντικατάσταση των παράμετρων?",
                         "Οι Παράμετροι υπάρχουν ήδη στην βάση του Smart. " +
                         "Θέλετε να γίνει αντικατάσταση με τα καινούργια?",
-                        "Αντικατάσταση.","Άκυρο"
+                        "Αντικατάσταση.", "Άκυρο"
                         );
-                    if (answer)
-                    {
-                        await DatabaseParameter.DeleteParameters();
-                        await DatabaseParameter.CreateParameters();
-                    }
-                    return;
+                if (answer)
+                {
+                    await DatabaseParameter.CreateParameters();
+                    await Shell.Current.DisplayAlert(
+                        "Ολοκληρώθηκε", "", "OK"
+                        );
                 }
-
-                await DatabaseParameter.CreateParameters();
             }
             catch(Exception e) 
             {
                 Debug.WriteLine(e);
+                await Shell.Current.DisplayAlert(
+                      $"Δεν ήταν δυνατή η ενημέρωση των παραμέτρων",
+                      $"Δεν ήταν δυνατή η ενημέρωση των παραμέτρων. Βεβαιωθείτε πως έχετε κάνει σωστή σύνδεση στη βάση του Smart",
+                      "OK");
+                await Shell.Current.DisplayAlert(
+                     $"Δεν ήταν δυνατή η ενημέρωση των παραμέτρων",
+                     $"{e.Message}",
+                     "OK");
             }
             finally { IsBusy = false; }
         }
-
         private async void OnConnectionClicked(object obj)
         {
             await Shell.Current.Navigation.PushAsync(new ConnectionPage());
         }
-
         public string UserName
         {
             get => _userName;
@@ -131,7 +177,10 @@ namespace SmartMobileWMS.ViewModels
             get => _password;
             set => SetProperty(ref _password, value);
         }
-        private async void OnLoginClicked(object obj)
+        /// <summary>
+        /// Get user from smart Check password and go to Main menu if all correct
+        /// </summary>
+        private async Task OnLoginClicked()
         {
             try
             {
@@ -161,7 +210,11 @@ namespace SmartMobileWMS.ViewModels
                 IsBusy = false;
             }
         }
-
+        /// <summary>
+        /// Check if password is valid
+        /// </summary>
+        /// <param name="password">User Password from database</param>
+        /// <returns>true if password from db and password user input maches</returns>
         private bool CheckPassword(string password)
         {
             PasswordCryptographer.EnableRfc2898 = true;

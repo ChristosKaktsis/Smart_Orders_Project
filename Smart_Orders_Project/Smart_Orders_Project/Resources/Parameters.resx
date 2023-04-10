@@ -264,6 +264,9 @@
   <data name="getUserWithID" xml:space="preserve">
     <value>select Oid, UserName from [User] where UserName ='{0}'</value>
   </data>
+  <data name="getVAT" xml:space="preserve">
+    <value>SELECT ΑΦΜ as vat FROM ΣτοιχείαΕταιρίας FOR JSON PATH, WITHOUT_ARRAY_WRAPPER</value>
+  </data>
   <data name="postCollectedToCommand" xml:space="preserve">
     <value>INSERT INTO ΓραμμέςΕντολήςΣυλλογής (Oid ,Θέση ,BarCodeΕίδους ,Είδος , ΠοσότηταΕντολής,ΠοσότηταΣυλλογής, ΕντολήΣυλλογής, ΑφοράΓραμμήΕντολήςΣυλλογής) VALUES(Convert(uniqueidentifier, N'{0}'), Convert(uniqueidentifier, N'{1}'),'{2}',Convert(uniqueidentifier, N'{3}'),'{4}','{5}',Convert(uniqueidentifier, N'{6}'),Convert(uniqueidentifier, N'{7}'))</value>
   </data>
@@ -313,7 +316,7 @@
     <value>UPDATE RFΑγορές SET Προμηθευτής = '{0}',ΠαραστατικόΠρομηθευτή = '{1}', Ολοκληρώθηκε = '{2}', UpdSmart = '{2}' WHERE Oid = '{3}' </value>
   </data>
   <data name="putRFCensus" xml:space="preserve">
-    <value>UPDATE RFΑπογραφή SET Ποσότητα = '{0}' WHERE Oid = '{1}' </value>
+    <value>UPDATE RFΑπογραφή SET Ποσότητα = {0} WHERE Oid = '{1}' </value>
   </data>
   <data name="putRFCounter" xml:space="preserve">
     <value>UPDATE ΓενικόςΜετρητής  SET Τιμή = '{0}' WHERE Μετρητής = 'ΜετρητήςRF'</value>

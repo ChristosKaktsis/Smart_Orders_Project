@@ -17,5 +17,18 @@ namespace SmartMobileWMS.Repositories
             if (string.IsNullOrEmpty(result)) return null;
             return JsonSerializer.Deserialize<User>(result);
         }
+        public async Task<string> GetVAT()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat(await GetParamAsync("getVAT"));
+            string result = await ExecuteGetMethod(sb.ToString());
+            if (string.IsNullOrEmpty(result)) return null;
+            var vat = JsonSerializer.Deserialize<VAT>(result);
+            return vat.vat;
+        }
+        class VAT
+        {
+            public string vat { get; set; }
+        }
     }
 }

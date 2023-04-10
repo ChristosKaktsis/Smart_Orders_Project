@@ -494,6 +494,15 @@ namespace SmartMobileWMS.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT ΑΦΜ as vat FROM ΣτοιχείαΕταιρίας FOR JSON PATH, WITHOUT_ARRAY_WRAPPER.
+        /// </summary>
+        internal static string getVAT {
+            get {
+                return ResourceManager.GetString("getVAT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to INSERT INTO ΓραμμέςΕντολήςΣυλλογής (Oid ,Θέση ,BarCodeΕίδους ,Είδος , ΠοσότηταΕντολής,ΠοσότηταΣυλλογής, ΕντολήΣυλλογής, ΑφοράΓραμμήΕντολήςΣυλλογής) VALUES(Convert(uniqueidentifier, N&apos;{0}&apos;), Convert(uniqueidentifier, N&apos;{1}&apos;),&apos;{2}&apos;,Convert(uniqueidentifier, N&apos;{3}&apos;),&apos;{4}&apos;,&apos;{5}&apos;,Convert(uniqueidentifier, N&apos;{6}&apos;),Convert(uniqueidentifier, N&apos;{7}&apos;)).
         /// </summary>
         internal static string postCollectedToCommand {
@@ -638,7 +647,7 @@ namespace SmartMobileWMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UPDATE RFΑπογραφή SET Ποσότητα = &apos;{0}&apos; WHERE Oid = &apos;{1}&apos; .
+        ///   Looks up a localized string similar to UPDATE RFΑπογραφή SET Ποσότητα = {0} WHERE Oid = &apos;{1}&apos; .
         /// </summary>
         internal static string putRFCensus {
             get {

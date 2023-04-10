@@ -32,7 +32,7 @@
                             <editors:PasswordEdit PlaceholderText="Password" Text="{Binding Password}" TextColor="#008bff"  HorizontalOptions="FillAndExpand" Margin="0,25,15,0"/>
                             <Button Text="Είσοδος" Margin="0,15,0,10" BackgroundColor="{StaticResource Primary}" TextColor="White" FontAttributes="Bold" CornerRadius="30" Command="{Binding LoginCommand}"/>
                             <Button Text="Σύνδεση" TextTransform="None" BackgroundColor="White" CornerRadius="30" TextColor="{StaticResource  Primary}" Command="{Binding ConnectionCommand}"/>
-                            <Button Text="Create Parameters" CornerRadius="30" Margin="0,30" BackgroundColor="White" TextColor="{StaticResource  Primary}" Command="{Binding UpdateTableCommand}"/>
+                            <Button Text="Δημιουργια παραμετρων" CornerRadius="30" Margin="0,30" BackgroundColor="White" TextColor="{StaticResource  Primary}" Command="{Binding UpdateTableCommand}"/>
                         </StackLayout>
                     </Frame>
                 </StackLayout>

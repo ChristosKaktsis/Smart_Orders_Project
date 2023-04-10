@@ -44,9 +44,12 @@ namespace SmartMobileWMS.Repositories
             return JsonSerializer.Deserialize<IEnumerable<RFCensus>>(result).OrderBy(x=>x.CreationDate);
         }
 
-        public Task<bool> UpdateItem(RFCensus item)
+        public async Task<bool> UpdateItem(RFCensus item)
         {
-            throw new NotImplementedException();
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat(await GetParamAsync("putRFCensus"), item.Quantity,item.Oid);
+            var result = await ExecutePostMethod(sb.ToString());
+            return result != 0;
         }
     }
 }

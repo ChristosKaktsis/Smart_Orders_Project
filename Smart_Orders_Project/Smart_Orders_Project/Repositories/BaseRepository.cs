@@ -1,7 +1,9 @@
 ﻿using SmartMobileWMS.Constants;
 using SmartMobileWMS.Models;
+using SmartMobileWMS.Services;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +18,7 @@ namespace SmartMobileWMS.Repositories
                 From XamarinMobWMSParameters where ParamName='{parName}' and GCRecord is null";
             using (SqlConnection connection = new SqlConnection(ConnectionStrings.ConnectionString))
             {
-                connection.Open();
+                await connection.OpenAsync();
                 SqlCommand command = new SqlCommand(queryString, connection);
                 SqlDataReader reader = await command.ExecuteReaderAsync();
                 if (!reader.HasRows)
@@ -57,13 +59,16 @@ namespace SmartMobileWMS.Repositories
         }
         protected async Task<int> ExecutePostMethod(string method)
         {
+            if (await ActivationService.UseExpired()) return 0;
             using (SqlConnection connection = new SqlConnection(ConnectionStrings.ConnectionString))
             {
-                connection.Open();
+                await connection.OpenAsync();
                 SqlCommand command = new SqlCommand(method, connection);
                 return await command.ExecuteNonQueryAsync();
             }
         }
+
+
         protected async void NotifyUser(string parameter)
         {
             await AppShell.Current.DisplayAlert(

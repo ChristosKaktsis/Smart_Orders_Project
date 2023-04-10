@@ -17,8 +17,9 @@ namespace SmartMobileWMS.ViewModels
     class OrdersDetailViewModel : BaseViewModel
     {
         private LineRepository lineRepository = new LineRepository();
+        private CounterRepository counterRepository = new CounterRepository();
+
         private RFSale RFSale;
-        private Counter counter;
         public OrdersDetailViewModel(RFSale rFSale = null)
         {
             OpenPopUp = new Command(() => { Customer_Popup_isOpen = !Customer_Popup_isOpen; });
@@ -91,7 +92,6 @@ namespace SmartMobileWMS.ViewModels
         public void OnAppearing()
         {
             LoadRecievers();
-            GetCounter();
             LoadCartItems();
         }
         private bool loadedFromCart;
@@ -115,22 +115,6 @@ namespace SmartMobileWMS.ViewModels
             }
         }
 
-        private async void GetCounter()
-        {
-            try
-            {
-                CounterRepository repository = new CounterRepository();
-                var item = await repository.GetItemAsync();
-                if (item != null)
-                {
-                    counter = item;
-                    return;
-                }
-                counter = new Counter { Value = 0 };
-                await repository.AddItem(counter);
-            }
-            catch(Exception ex) { Debug.WriteLine(ex); }
-        }
         private async void LoadRecievers()
         {
             try
@@ -248,6 +232,7 @@ namespace SmartMobileWMS.ViewModels
             {
                 RFSale.Customer = Customer;
                 RFSale.Reciever = Reciever;
+                var counter = await GetCounter();
                 if (string.IsNullOrEmpty(RFSale.RFCount))
                 {
                     counter.Value++;
@@ -280,12 +265,26 @@ namespace SmartMobileWMS.ViewModels
             finally { IsBusy = false; }
         }
 
+        /// <summary>
+        /// Gets the counter or creates new if not exist 
+        /// </summary>
+        /// <returns></returns>
+        private async Task<Counter> GetCounter()
+        {
+            try
+            {
+                var item = await counterRepository.GetItemAsync();
+                if (item != null) return item;
+                var counter = new Counter { Value = 0 };
+                await counterRepository.AddItem(counter);
+                return counter;
+            }
+            catch (Exception ex) { Debug.WriteLine(ex); return null; }
+        }
         private async Task UpdateCounter(Counter counter)
         {
-            CounterRepository counterRepository = new CounterRepository();
             await counterRepository.UpdateItem(counter);
         }
-
         private async Task SaveLineOfOrder()
         {
             

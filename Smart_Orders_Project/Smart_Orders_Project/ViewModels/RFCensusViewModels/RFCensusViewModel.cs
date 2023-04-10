@@ -182,7 +182,8 @@ namespace SmartMobileWMS.ViewModels
                     CreationDate = DateTime.Now,
                 };
                 var result = await censusRepository.AddItem(item);
-                AddToList(item);
+                if(result)
+                    AddToList(item);
             }
             catch (Exception ex)
             {
@@ -191,7 +192,25 @@ namespace SmartMobileWMS.ViewModels
             }
             finally { IsBusy = false; }
         }
-
+        public async Task UpdateCensus(RFCensus item)
+        {
+            IsBusy = true;
+            try
+            {
+                var result = await censusRepository.UpdateItem(item);
+                if (!result)
+                    await Shell.Current.DisplayAlert("Η αλλαγή δεν αποθηκεύτηκε", "", "ΟΚ");
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex);
+                await Shell.Current.DisplayAlert("Η αλλαγή δεν αποθηκεύτηκε", "", "ΟΚ");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
         private void AddToList(RFCensus item)
         {
             if(item == null) return;

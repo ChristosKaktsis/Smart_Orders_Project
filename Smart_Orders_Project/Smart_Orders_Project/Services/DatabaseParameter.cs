@@ -1,4 +1,5 @@
 ﻿using SmartMobileWMS.Constants;
+using SmartMobileWMS.Network;
 using SmartMobileWMS.Resources;
 using System;
 using System.Collections;
@@ -25,24 +26,35 @@ namespace SmartMobileWMS.Services
                     string resourceKey = entry.Key.ToString();
                     string resource = entry.Value.ToString();
                     resource = resource.Replace("'", "''");
-                    await AddToDatabase(resourceKey, resource);
+                    if(!await UpdateEntry(resourceKey, resource))
+                        if(!await DatabaseService.ParameterExist(resourceKey))
+                            await AddToDatabase(resourceKey, resource);
                 }
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e);
+                throw e;
             }
         }
-
-        private static async Task AddToDatabase(string resourceKey, string resource)
+        private static async Task<bool> UpdateEntry(string resourceKey, string resource)
         {
-            var method = "INSERT INTO XamarinMobWMSParameters(Oid,ParamName,Parameter) Values(NEWID(),'{0}','{1}');";
-            StringBuilder sb = new StringBuilder();
-            sb.AppendFormat(method, resourceKey,resource);
+            var method = $"UPDATE XamarinMobWMSParameters SET Parameter = '{resource}' Where ParamName = '{resourceKey}' and GCRecord is null and DoNotUpdate != 1";
             using (SqlConnection connection = new SqlConnection(ConnectionStrings.ConnectionString))
             {
                 await connection.OpenAsync();
-                SqlCommand command = new SqlCommand(sb.ToString(), connection);
+                SqlCommand command = new SqlCommand(method, connection);
+                var result = await command.ExecuteNonQueryAsync();
+                return result != 0;
+            }
+        }
+        private static async Task AddToDatabase(string resourceKey, string resource)
+        {
+            var method = $"INSERT INTO XamarinMobWMSParameters(Oid,ParamName,Parameter,DoNotUpdate) Values(NEWID(),'{resourceKey}','{resource}',0);";
+            using (SqlConnection connection = new SqlConnection(ConnectionStrings.ConnectionString))
+            {
+                await connection.OpenAsync();
+                SqlCommand command = new SqlCommand(method, connection);
                 await command.ExecuteNonQueryAsync();
             }
         }
